@@ -258,7 +258,7 @@ export const MigrateMISyncCompleteCommandInput: msRest.CompositeMapper = {
 };
 
 export const CommandProperties: msRest.CompositeMapper = {
-  serializedName: "CommandProperties",
+  serializedName: "Unknown",
   type: {
     name: "Composite",
     polymorphicDiscriminator: {
@@ -630,7 +630,7 @@ export const SsisMigrationInfo: msRest.CompositeMapper = {
 };
 
 export const ConnectionInfo: msRest.CompositeMapper = {
-  serializedName: "ConnectionInfo",
+  serializedName: "Unknown",
   type: {
     name: "Composite",
     polymorphicDiscriminator: {
@@ -881,7 +881,7 @@ export const MigrateSsisTaskInput: msRest.CompositeMapper = {
 };
 
 export const ProjectTaskProperties: msRest.CompositeMapper = {
-  serializedName: "ProjectTaskProperties",
+  serializedName: "Unknown",
   type: {
     name: "Composite",
     polymorphicDiscriminator: {
@@ -1173,12 +1173,6 @@ export const MigrateOracleAzureDbPostgreSqlSyncDatabaseInput: msRest.CompositeMa
     name: "Composite",
     className: "MigrateOracleAzureDbPostgreSqlSyncDatabaseInput",
     modelProperties: {
-      caseManipulation: {
-        serializedName: "caseManipulation",
-        type: {
-          name: "String"
-        }
-      },
       name: {
         serializedName: "name",
         type: {
@@ -2829,7 +2823,7 @@ export const MigrateOracleAzureDbPostgreSqlSyncTaskOutputMigrationLevel: msRest.
 };
 
 export const MigrateOracleAzureDbForPostgreSqlSyncTaskProperties: msRest.CompositeMapper = {
-  serializedName: "Migrate.Oracle.AzureDbForPostgreSql.Sync",
+  serializedName: "Migrate.Oracle.Sql.Sync",
   type: {
     name: "Composite",
     polymorphicDiscriminator: ProjectTaskProperties.type.polymorphicDiscriminator,
@@ -6268,12 +6262,6 @@ export const MigrateSqlServerSqlMITaskInput: msRest.CompositeMapper = {
         type: {
           name: "String"
         }
-      },
-      aadDomainName: {
-        serializedName: "aadDomainName",
-        type: {
-          name: "String"
-        }
       }
     }
   }
@@ -7822,9 +7810,9 @@ export const MigrationEligibilityInfo: msRest.CompositeMapper = {
     name: "Composite",
     className: "MigrationEligibilityInfo",
     modelProperties: {
-      isEligibleForMigration: {
+      isEligibileForMigration: {
         readOnly: true,
-        serializedName: "isEligibleForMigration",
+        serializedName: "isEligibileForMigration",
         type: {
           name: "Boolean"
         }
@@ -8795,7 +8783,7 @@ export const ApiError: msRest.CompositeMapper = {
 };
 
 export const FileStorageInfo: msRest.CompositeMapper = {
-  serializedName: "FileStorageInfo",
+  serializedName: "Unknown",
   type: {
     name: "Composite",
     className: "FileStorageInfo",
@@ -10040,10 +10028,21 @@ export const CheckOCIDriverTaskOutput: msRest.CompositeMapper = {
     className: "CheckOCIDriverTaskOutput",
     modelProperties: {
       installedDriver: {
+        readOnly: true,
         serializedName: "installedDriver",
         type: {
-          name: "Composite",
-          className: "OracleOCIDriverInfo"
+          name: "Dictionary",
+          value: {
+            type: {
+              name: "Sequence",
+              element: {
+                type: {
+                  name: "Composite",
+                  className: "OracleOCIDriverInfo"
+                }
+              }
+            }
+          }
         }
       },
       validationErrors: {
@@ -11053,7 +11052,7 @@ export const FileList: msRest.CompositeMapper = {
 export const discriminators = {
   'CommandProperties.Migrate.SqlServer.AzureDbSqlMi.Complete' : MigrateMISyncCompleteCommandProperties,
   'CommandProperties.Migrate.Sync.Complete.Database' : MigrateSyncCompleteCommandProperties,
-  'CommandProperties' : CommandProperties,
+  'Unknown' : CommandProperties,
   'MigrateSsisTaskOutput.SsisProjectLevelOutput' : MigrateSsisTaskOutputProjectLevel,
   'MigrateSsisTaskOutput.MigrationLevelOutput' : MigrateSsisTaskOutputMigrationLevel,
   'MigrateSsisTaskOutput' : MigrateSsisTaskOutput,
@@ -11062,7 +11061,7 @@ export const discriminators = {
   'ConnectionInfo.OracleConnectionInfo' : OracleConnectionInfo,
   'ConnectionInfo.MySqlConnectionInfo' : MySqlConnectionInfo,
   'ConnectionInfo.MongoDbConnectionInfo' : MongoDbConnectionInfo,
-  'ConnectionInfo' : ConnectionInfo,
+  'Unknown' : ConnectionInfo,
   'ConnectionInfo.SqlConnectionInfo' : SqlConnectionInfo,
   'ProjectTaskProperties.Migrate.Ssis' : MigrateSsisTaskProperties,
   'ProjectTaskProperties.GetTDECertificates.Sql' : GetTdeCertificatesSqlTaskProperties,
@@ -11077,7 +11076,7 @@ export const discriminators = {
   'MigrateOracleAzureDbPostgreSqlSyncTaskOutput.DatabaseLevelOutput' : MigrateOracleAzureDbPostgreSqlSyncTaskOutputDatabaseLevel,
   'MigrateOracleAzureDbPostgreSqlSyncTaskOutput.MigrationLevelOutput' : MigrateOracleAzureDbPostgreSqlSyncTaskOutputMigrationLevel,
   'MigrateOracleAzureDbPostgreSqlSyncTaskOutput' : MigrateOracleAzureDbPostgreSqlSyncTaskOutput,
-  'ProjectTaskProperties.Migrate.Oracle.AzureDbForPostgreSql.Sync' : MigrateOracleAzureDbForPostgreSqlSyncTaskProperties,
+  'ProjectTaskProperties.Migrate.Oracle.Sql.Sync' : MigrateOracleAzureDbForPostgreSqlSyncTaskProperties,
   'MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutput.DatabaseLevelErrorOutput' : MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutputDatabaseError,
   'MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutput.ErrorOutput' : MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutputError,
   'MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutput.TableLevelOutput' : MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutputTableLevel,
@@ -11139,7 +11138,7 @@ export const discriminators = {
   'ProjectTaskProperties.ConnectToSource.SqlServer.Sync' : ConnectToSourceSqlServerSyncTaskProperties,
   'ProjectTaskProperties.ConnectToSource.SqlServer' : ConnectToSourceSqlServerTaskProperties,
   'ProjectTaskProperties.Connect.MongoDb' : ConnectToMongoDbTaskProperties,
-  'ProjectTaskProperties' : ProjectTaskProperties,
+  'Unknown' : ProjectTaskProperties,
   'ProjectTaskProperties.ConnectToSource.MySql' : ConnectToSourceMySqlTaskProperties,
   'MigrateSchemaSqlServerSqlDbTaskOutput' : MigrateSchemaSqlServerSqlDbTaskOutput,
   'ProjectTaskProperties.MigrateSchemaSqlServerSqlDb' : MigrateSchemaSqlServerSqlDbTaskProperties,

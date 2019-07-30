@@ -172,7 +172,7 @@ export interface CommandProperties {
   /**
    * Polymorphic Discriminator
    */
-  commandType: "CommandProperties";
+  commandType: "Unknown";
   /**
    * Array of errors. This is ignored if submitted.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -456,7 +456,7 @@ export interface ConnectionInfo {
   /**
    * Polymorphic Discriminator
    */
-  type: "ConnectionInfo";
+  type: "Unknown";
   /**
    * User name
    */
@@ -672,7 +672,7 @@ export interface ProjectTaskProperties {
   /**
    * Polymorphic Discriminator
    */
-  taskType: "ProjectTaskProperties";
+  taskType: "Unknown";
   /**
    * Array of errors. This is ignored if submitted.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -857,10 +857,6 @@ export interface ValidateOracleAzureDbPostgreSqlSyncTaskOutput {
  * Database specific information for Oracle to Azure Database for PostgreSQL migration task inputs
  */
 export interface MigrateOracleAzureDbPostgreSqlSyncDatabaseInput {
-  /**
-   * How to handle object name casing: either Preserve or ToLower
-   */
-  caseManipulation?: string;
   /**
    * Name of the migration pipeline
    */
@@ -1963,7 +1959,7 @@ export interface MigrateOracleAzureDbForPostgreSqlSyncTaskProperties {
   /**
    * Polymorphic Discriminator
    */
-  taskType: "Migrate.Oracle.AzureDbForPostgreSql.Sync";
+  taskType: "Migrate.Oracle.Sql.Sync";
   /**
    * Array of errors. This is ignored if submitted.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -4470,12 +4466,6 @@ export interface MigrateSqlServerSqlMITaskInput extends SqlMigrationTaskInput {
    * include: 'CreateBackup', 'ExistingBackup'
    */
   backupMode?: BackupMode;
-  /**
-   * Azure Active Directory domain name in the format of 'contoso.com' for federated Azure AD or
-   * 'contoso.onmicrosoft.com' for managed domain, required if and only if Windows logins are
-   * selected
-   */
-  aadDomainName?: string;
 }
 
 /**
@@ -5611,7 +5601,7 @@ export interface MigrationEligibilityInfo {
    * Whether object is eligible for migration or not.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly isEligibleForMigration?: boolean;
+  readonly isEligibileForMigration?: boolean;
   /**
    * Information about eligibility failure for the server object.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -7169,8 +7159,9 @@ export interface CheckOCIDriverTaskInput {
 export interface CheckOCIDriverTaskOutput {
   /**
    * Information about the installed driver if found and valid.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  installedDriver?: OracleOCIDriverInfo;
+  readonly installedDriver?: { [propertyName: string]: OracleOCIDriverInfo[] };
   /**
    * Validation errors
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
