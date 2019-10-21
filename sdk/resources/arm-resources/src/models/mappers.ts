@@ -233,6 +233,49 @@ export const Deployment: msRest.CompositeMapper = {
     name: "Composite",
     className: "Deployment",
     modelProperties: {
+      properties: {
+        required: true,
+        serializedName: "properties",
+        type: {
+          name: "Composite",
+          className: "DeploymentProperties"
+        }
+      }
+    }
+  }
+};
+
+export const DeploymentWithLocation: msRest.CompositeMapper = {
+  serializedName: "DeploymentWithLocation",
+  type: {
+    name: "Composite",
+    className: "DeploymentWithLocation",
+    modelProperties: {
+      location: {
+        required: true,
+        serializedName: "location",
+        type: {
+          name: "String"
+        }
+      },
+      properties: {
+        required: true,
+        serializedName: "properties",
+        type: {
+          name: "Composite",
+          className: "DeploymentProperties"
+        }
+      }
+    }
+  }
+};
+
+export const UnscopedDeployment: msRest.CompositeMapper = {
+  serializedName: "UnscopedDeployment",
+  type: {
+    name: "Composite",
+    className: "UnscopedDeployment",
+    modelProperties: {
       location: {
         serializedName: "location",
         type: {

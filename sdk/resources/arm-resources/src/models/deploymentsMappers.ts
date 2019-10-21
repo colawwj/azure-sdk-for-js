@@ -26,6 +26,7 @@ export {
   DeploymentWhatIf,
   DeploymentWhatIfProperties,
   DeploymentWhatIfSettings,
+  DeploymentWithLocation,
   ErrorAdditionalInfo,
   ErrorResponse,
   GenericResource,
@@ -46,6 +47,7 @@ export {
   TagValue,
   TemplateHashResult,
   TemplateLink,
+  UnscopedDeployment,
   WhatIfChange,
   WhatIfOperationResult,
   WhatIfPropertyChange
