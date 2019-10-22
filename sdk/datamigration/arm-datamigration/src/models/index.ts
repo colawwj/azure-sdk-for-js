@@ -1845,7 +1845,8 @@ export interface MigrateOracleAzureDbPostgreSqlSyncTaskOutputDatabaseLevel {
   /**
    * Migration state that this database is in. Possible values include: 'UNDEFINED', 'CONFIGURING',
    * 'INITIALIAZING', 'STARTING', 'RUNNING', 'READY_TO_COMPLETE', 'COMPLETING', 'COMPLETE',
-   * 'CANCELLING', 'CANCELLED', 'FAILED'
+   * 'CANCELLING', 'CANCELLED', 'FAILED', 'VALIDATING', 'VALIDATION_COMPLETE', 'VALIDATION_FAILED',
+   * 'RESTORE_IN_PROGRESS', 'RESTORE_COMPLETED', 'BACKUP_IN_PROGRESS', 'BACKUP_COMPLETED'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly migrationState?: SyncDatabaseMigrationReportingState;
@@ -2167,7 +2168,8 @@ export interface MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutputDatabaseLeve
   /**
    * Migration state that this database is in. Possible values include: 'UNDEFINED', 'CONFIGURING',
    * 'INITIALIAZING', 'STARTING', 'RUNNING', 'READY_TO_COMPLETE', 'COMPLETING', 'COMPLETE',
-   * 'CANCELLING', 'CANCELLED', 'FAILED'
+   * 'CANCELLING', 'CANCELLED', 'FAILED', 'VALIDATING', 'VALIDATION_COMPLETE', 'VALIDATION_FAILED',
+   * 'RESTORE_IN_PROGRESS', 'RESTORE_COMPLETED', 'BACKUP_IN_PROGRESS', 'BACKUP_COMPLETED'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly migrationState?: SyncDatabaseMigrationReportingState;
@@ -2271,6 +2273,24 @@ export interface MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutputMigrationLev
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly targetServer?: string;
+  /**
+   * Source server type. Possible values include: 'Access', 'DB2', 'MySQL', 'Oracle', 'SQL',
+   * 'Sybase', 'PostgreSQL', 'MongoDB', 'SQLRDS', 'MySQLRDS', 'PostgreSQLRDS'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly sourceServerType?: ScenarioSource;
+  /**
+   * Target server type. Possible values include: 'SQLServer', 'SQLDB', 'SQLDW', 'SQLMI',
+   * 'AzureDBForMySql', 'AzureDBForPostgreeSQL', 'MongoDB'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly targetServerType?: ScenarioTarget;
+  /**
+   * Migration status. Possible values include: 'UNDEFINED', 'VALIDATING', 'PENDING', 'COMPLETE',
+   * 'ACTION_REQUIRED', 'FAILED'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly state?: ReplicateMigrationState;
 }
 
 /**
@@ -2327,7 +2347,7 @@ export interface MigratePostgreSqlAzureDbForPostgreSqlSyncTaskProperties {
   /**
    * Polymorphic Discriminator
    */
-  taskType: "Migrate.PostgreSql.AzureDbForPostgreSql.Sync";
+  taskType: "Migrate.PostgreSql.AzureDbForPostgreSql.SyncV2";
   /**
    * Array of errors. This is ignored if submitted.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -2535,7 +2555,8 @@ export interface MigrateMySqlAzureDbForMySqlSyncTaskOutputDatabaseLevel {
   /**
    * Migration state that this database is in. Possible values include: 'UNDEFINED', 'CONFIGURING',
    * 'INITIALIAZING', 'STARTING', 'RUNNING', 'READY_TO_COMPLETE', 'COMPLETING', 'COMPLETE',
-   * 'CANCELLING', 'CANCELLED', 'FAILED'
+   * 'CANCELLING', 'CANCELLED', 'FAILED', 'VALIDATING', 'VALIDATION_COMPLETE', 'VALIDATION_FAILED',
+   * 'RESTORE_IN_PROGRESS', 'RESTORE_COMPLETED', 'BACKUP_IN_PROGRESS', 'BACKUP_COMPLETED'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly migrationState?: SyncDatabaseMigrationReportingState;
@@ -2902,7 +2923,8 @@ export interface MigrateSqlServerSqlDbSyncTaskOutputDatabaseLevel {
   /**
    * Migration state that this database is in. Possible values include: 'UNDEFINED', 'CONFIGURING',
    * 'INITIALIAZING', 'STARTING', 'RUNNING', 'READY_TO_COMPLETE', 'COMPLETING', 'COMPLETE',
-   * 'CANCELLING', 'CANCELLED', 'FAILED'
+   * 'CANCELLING', 'CANCELLED', 'FAILED', 'VALIDATING', 'VALIDATION_COMPLETE', 'VALIDATION_FAILED',
+   * 'RESTORE_IN_PROGRESS', 'RESTORE_COMPLETED', 'BACKUP_IN_PROGRESS', 'BACKUP_COMPLETED'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly migrationState?: SyncDatabaseMigrationReportingState;
@@ -8017,11 +8039,40 @@ export type SyncTableMigrationState = 'BEFORE_LOAD' | 'FULL_LOAD' | 'COMPLETED' 
 /**
  * Defines values for SyncDatabaseMigrationReportingState.
  * Possible values include: 'UNDEFINED', 'CONFIGURING', 'INITIALIAZING', 'STARTING', 'RUNNING',
- * 'READY_TO_COMPLETE', 'COMPLETING', 'COMPLETE', 'CANCELLING', 'CANCELLED', 'FAILED'
+ * 'READY_TO_COMPLETE', 'COMPLETING', 'COMPLETE', 'CANCELLING', 'CANCELLED', 'FAILED',
+ * 'VALIDATING', 'VALIDATION_COMPLETE', 'VALIDATION_FAILED', 'RESTORE_IN_PROGRESS',
+ * 'RESTORE_COMPLETED', 'BACKUP_IN_PROGRESS', 'BACKUP_COMPLETED'
  * @readonly
  * @enum {string}
  */
-export type SyncDatabaseMigrationReportingState = 'UNDEFINED' | 'CONFIGURING' | 'INITIALIAZING' | 'STARTING' | 'RUNNING' | 'READY_TO_COMPLETE' | 'COMPLETING' | 'COMPLETE' | 'CANCELLING' | 'CANCELLED' | 'FAILED';
+export type SyncDatabaseMigrationReportingState = 'UNDEFINED' | 'CONFIGURING' | 'INITIALIAZING' | 'STARTING' | 'RUNNING' | 'READY_TO_COMPLETE' | 'COMPLETING' | 'COMPLETE' | 'CANCELLING' | 'CANCELLED' | 'FAILED' | 'VALIDATING' | 'VALIDATION_COMPLETE' | 'VALIDATION_FAILED' | 'RESTORE_IN_PROGRESS' | 'RESTORE_COMPLETED' | 'BACKUP_IN_PROGRESS' | 'BACKUP_COMPLETED';
+
+/**
+ * Defines values for ReplicateMigrationState.
+ * Possible values include: 'UNDEFINED', 'VALIDATING', 'PENDING', 'COMPLETE', 'ACTION_REQUIRED',
+ * 'FAILED'
+ * @readonly
+ * @enum {string}
+ */
+export type ReplicateMigrationState = 'UNDEFINED' | 'VALIDATING' | 'PENDING' | 'COMPLETE' | 'ACTION_REQUIRED' | 'FAILED';
+
+/**
+ * Defines values for ScenarioTarget.
+ * Possible values include: 'SQLServer', 'SQLDB', 'SQLDW', 'SQLMI', 'AzureDBForMySql',
+ * 'AzureDBForPostgreeSQL', 'MongoDB'
+ * @readonly
+ * @enum {string}
+ */
+export type ScenarioTarget = 'SQLServer' | 'SQLDB' | 'SQLDW' | 'SQLMI' | 'AzureDBForMySql' | 'AzureDBForPostgreeSQL' | 'MongoDB';
+
+/**
+ * Defines values for ScenarioSource.
+ * Possible values include: 'Access', 'DB2', 'MySQL', 'Oracle', 'SQL', 'Sybase', 'PostgreSQL',
+ * 'MongoDB', 'SQLRDS', 'MySQLRDS', 'PostgreSQLRDS'
+ * @readonly
+ * @enum {string}
+ */
+export type ScenarioSource = 'Access' | 'DB2' | 'MySQL' | 'Oracle' | 'SQL' | 'Sybase' | 'PostgreSQL' | 'MongoDB' | 'SQLRDS' | 'MySQLRDS' | 'PostgreSQLRDS';
 
 /**
  * Defines values for ValidationStatus.
