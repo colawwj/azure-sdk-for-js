@@ -38,9 +38,6 @@ class AutomationClient extends AutomationClientContext {
   variable: operations.VariableOperations;
   webhook: operations.WebhookOperations;
   watcher: operations.WatcherOperations;
-  softwareUpdateConfigurations: operations.SoftwareUpdateConfigurations;
-  softwareUpdateConfigurationRuns: operations.SoftwareUpdateConfigurationRuns;
-  softwareUpdateConfigurationMachineRuns: operations.SoftwareUpdateConfigurationMachineRuns;
   sourceControl: operations.SourceControlOperations;
   sourceControlSyncJob: operations.SourceControlSyncJobOperations;
   sourceControlSyncJobStreams: operations.SourceControlSyncJobStreams;
@@ -58,6 +55,9 @@ class AutomationClient extends AutomationClientContext {
   testJobStreams: operations.TestJobStreams;
   testJob: operations.TestJobOperations;
   python2Package: operations.Python2Package;
+  softwareUpdateConfigurations: operations.SoftwareUpdateConfigurations;
+  softwareUpdateConfigurationRuns: operations.SoftwareUpdateConfigurationRuns;
+  softwareUpdateConfigurationMachineRuns: operations.SoftwareUpdateConfigurationMachineRuns;
 
   /**
    * Initializes a new instance of the AutomationClient class.
@@ -89,9 +89,6 @@ class AutomationClient extends AutomationClientContext {
     this.variable = new operations.VariableOperations(this);
     this.webhook = new operations.WebhookOperations(this);
     this.watcher = new operations.WatcherOperations(this);
-    this.softwareUpdateConfigurations = new operations.SoftwareUpdateConfigurations(this);
-    this.softwareUpdateConfigurationRuns = new operations.SoftwareUpdateConfigurationRuns(this);
-    this.softwareUpdateConfigurationMachineRuns = new operations.SoftwareUpdateConfigurationMachineRuns(this);
     this.sourceControl = new operations.SourceControlOperations(this);
     this.sourceControlSyncJob = new operations.SourceControlSyncJobOperations(this);
     this.sourceControlSyncJobStreams = new operations.SourceControlSyncJobStreams(this);
@@ -109,6 +106,9 @@ class AutomationClient extends AutomationClientContext {
     this.testJobStreams = new operations.TestJobStreams(this);
     this.testJob = new operations.TestJobOperations(this);
     this.python2Package = new operations.Python2Package(this);
+    this.softwareUpdateConfigurations = new operations.SoftwareUpdateConfigurations(this);
+    this.softwareUpdateConfigurationRuns = new operations.SoftwareUpdateConfigurationRuns(this);
+    this.softwareUpdateConfigurationMachineRuns = new operations.SoftwareUpdateConfigurationMachineRuns(this);
   }
 }
 

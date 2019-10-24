@@ -1689,567 +1689,6 @@ export interface WatcherUpdateParameters {
 }
 
 /**
- * Windows specific update configuration.
- */
-export interface WindowsProperties {
-  /**
-   * Update classification included in the software update configuration. A comma separated string
-   * with required values. Possible values include: 'Unclassified', 'Critical', 'Security',
-   * 'UpdateRollup', 'FeaturePack', 'ServicePack', 'Definition', 'Tools', 'Updates'
-   */
-  includedUpdateClassifications?: WindowsUpdateClasses;
-  /**
-   * KB numbers excluded from the software update configuration.
-   */
-  excludedKbNumbers?: string[];
-  /**
-   * KB numbers included from the software update configuration.
-   */
-  includedKbNumbers?: string[];
-  /**
-   * Reboot setting for the software update configuration.
-   */
-  rebootSetting?: string;
-}
-
-/**
- * Linux specific update configuration.
- */
-export interface LinuxProperties {
-  /**
-   * Update classifications included in the software update configuration. Possible values include:
-   * 'Unclassified', 'Critical', 'Security', 'Other'
-   */
-  includedPackageClassifications?: LinuxUpdateClasses;
-  /**
-   * packages excluded from the software update configuration.
-   */
-  excludedPackageNameMasks?: string[];
-  /**
-   * packages included from the software update configuration.
-   */
-  includedPackageNameMasks?: string[];
-  /**
-   * Reboot setting for the software update configuration.
-   */
-  rebootSetting?: string;
-}
-
-/**
- * Tag filter information for the VM.
- */
-export interface TagSettingsProperties {
-  /**
-   * Dictionary of tags with its list of values.
-   */
-  tags?: { [propertyName: string]: string[] };
-  /**
-   * Filter VMs by Any or All specified tags. Possible values include: 'All', 'Any'
-   */
-  filterOperator?: TagOperators;
-}
-
-/**
- * Azure query for the update configuration.
- */
-export interface AzureQueryProperties {
-  /**
-   * List of Subscription or Resource Group ARM Ids.
-   */
-  scope?: string[];
-  /**
-   * List of locations to scope the query to.
-   */
-  locations?: string[];
-  /**
-   * Tag settings for the VM.
-   */
-  tagSettings?: TagSettingsProperties;
-}
-
-/**
- * Non Azure query for the update configuration.
- */
-export interface NonAzureQueryProperties {
-  /**
-   * Log Analytics Saved Search name.
-   */
-  functionAlias?: string;
-  /**
-   * Workspace Id for Log Analytics in which the saved Search is resided.
-   */
-  workspaceId?: string;
-}
-
-/**
- * Group specific to the update configuration.
- */
-export interface TargetProperties {
-  /**
-   * List of Azure queries in the software update configuration.
-   */
-  azureQueries?: AzureQueryProperties[];
-  /**
-   * List of non Azure queries in the software update configuration.
-   */
-  nonAzureQueries?: NonAzureQueryProperties[];
-}
-
-/**
- * Update specific properties of the software update configuration.
- */
-export interface UpdateConfiguration {
-  /**
-   * operating system of target machines. Possible values include: 'Windows', 'Linux'
-   */
-  operatingSystem: OperatingSystemType;
-  /**
-   * Windows specific update configuration.
-   */
-  windows?: WindowsProperties;
-  /**
-   * Linux specific update configuration.
-   */
-  linux?: LinuxProperties;
-  /**
-   * Maximum time allowed for the software update configuration run. Duration needs to be specified
-   * using the format PT[n]H[n]M[n]S as per ISO8601
-   */
-  duration?: string;
-  /**
-   * List of azure resource Ids for azure virtual machines targeted by the software update
-   * configuration.
-   */
-  azureVirtualMachines?: string[];
-  /**
-   * List of names of non-azure machines targeted by the software update configuration.
-   */
-  nonAzureComputerNames?: string[];
-  /**
-   * Group targets for the software update configuration.
-   */
-  targets?: TargetProperties;
-}
-
-/**
- * Task properties of the software update configuration.
- */
-export interface TaskProperties {
-  /**
-   * Gets or sets the parameters of the task.
-   */
-  parameters?: { [propertyName: string]: string };
-  /**
-   * Gets or sets the name of the runbook.
-   */
-  source?: string;
-}
-
-/**
- * Task properties of the software update configuration.
- */
-export interface SoftwareUpdateConfigurationTasks {
-  /**
-   * Pre task properties.
-   */
-  preTask?: TaskProperties;
-  /**
-   * Post task properties.
-   */
-  postTask?: TaskProperties;
-}
-
-/**
- * Software update configuration properties.
- */
-export interface SoftwareUpdateConfiguration extends BaseResource {
-  /**
-   * Resource name.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Resource Id.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Resource type
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * update specific properties for the Software update configuration
-   */
-  updateConfiguration: UpdateConfiguration;
-  /**
-   * Schedule information for the Software update configuration
-   */
-  scheduleInfo: ScheduleProperties;
-  /**
-   * Provisioning state for the software update configuration, which only appears in the response.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly provisioningState?: string;
-  /**
-   * Details of provisioning error
-   */
-  error?: ErrorResponse;
-  /**
-   * Creation time of the resource, which only appears in the response.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly creationTime?: Date;
-  /**
-   * CreatedBy property, which only appears in the response.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly createdBy?: string;
-  /**
-   * Last time resource was modified, which only appears in the response.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly lastModifiedTime?: Date;
-  /**
-   * LastModifiedBy property, which only appears in the response.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly lastModifiedBy?: string;
-  /**
-   * Tasks information for the Software update configuration.
-   */
-  tasks?: SoftwareUpdateConfigurationTasks;
-}
-
-/**
- * object returned when requesting a collection of software update configuration
- */
-export interface CollectionItemUpdateConfiguration {
-  /**
-   * List of azure resource Ids for azure virtual machines targeted by the software update
-   * configuration.
-   */
-  azureVirtualMachines?: string[];
-  /**
-   * Maximum time allowed for the software update configuration run. Duration needs to be specified
-   * using the format PT[n]H[n]M[n]S as per ISO8601
-   */
-  duration?: string;
-}
-
-/**
- * Software update configuration collection item properties.
- */
-export interface SoftwareUpdateConfigurationCollectionItem {
-  /**
-   * Name of the software update configuration.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Resource Id of the software update configuration
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Update specific properties of the software update configuration.
-   */
-  updateConfiguration?: CollectionItemUpdateConfiguration;
-  /**
-   * execution frequency of the schedule associated with the software update configuration.
-   * Possible values include: 'OneTime', 'Day', 'Hour', 'Week', 'Month', 'Minute'
-   */
-  frequency?: ScheduleFrequency;
-  /**
-   * the start time of the update.
-   */
-  startTime?: Date;
-  /**
-   * Creation time of the software update configuration, which only appears in the response.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly creationTime?: Date;
-  /**
-   * Last time software update configuration was modified, which only appears in the response.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly lastModifiedTime?: Date;
-  /**
-   * Provisioning state for the software update configuration, which only appears in the response.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly provisioningState?: string;
-  /**
-   * ext run time of the update.
-   */
-  nextRun?: Date;
-}
-
-/**
- * result of listing all software update configuration
- */
-export interface SoftwareUpdateConfigurationListResult {
-  /**
-   * outer object returned when listing all software update configurations
-   */
-  value?: SoftwareUpdateConfigurationCollectionItem[];
-}
-
-/**
- * Software update configuration Run Navigation model.
- */
-export interface UpdateConfigurationNavigation {
-  /**
-   * Name of the software update configuration triggered the software update configuration run
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-}
-
-/**
- * Task properties of the software update configuration.
- */
-export interface SoftareUpdateConfigurationRunTaskProperties {
-  /**
-   * The status of the task.
-   */
-  status?: string;
-  /**
-   * The name of the source of the task.
-   */
-  source?: string;
-  /**
-   * The job id of the task.
-   */
-  jobId?: string;
-}
-
-/**
- * Software update configuration run tasks model.
- */
-export interface SoftareUpdateConfigurationRunTasks {
-  /**
-   * Pre task properties.
-   */
-  preTask?: SoftareUpdateConfigurationRunTaskProperties;
-  /**
-   * Post task properties.
-   */
-  postTask?: SoftareUpdateConfigurationRunTaskProperties;
-}
-
-/**
- * Software update configuration Run properties.
- */
-export interface SoftwareUpdateConfigurationRun {
-  /**
-   * Name of the software update configuration run.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Resource Id of the software update configuration run
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * software update configuration triggered this run
-   */
-  softwareUpdateConfiguration?: UpdateConfigurationNavigation;
-  /**
-   * Status of the software update configuration run.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly status?: string;
-  /**
-   * Configured duration for the software update configuration run.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly configuredDuration?: string;
-  /**
-   * Operating system target of the software update configuration triggered this run
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly osType?: string;
-  /**
-   * Start time of the software update configuration run.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly startTime?: Date;
-  /**
-   * End time of the software update configuration run.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly endTime?: Date;
-  /**
-   * Number of computers in the software update configuration run.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly computerCount?: number;
-  /**
-   * Number of computers with failed status.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly failedCount?: number;
-  /**
-   * Creation time of the resource, which only appears in the response.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly creationTime?: Date;
-  /**
-   * CreatedBy property, which only appears in the response.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly createdBy?: string;
-  /**
-   * Last time resource was modified, which only appears in the response.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly lastModifiedTime?: Date;
-  /**
-   * LastModifiedBy property, which only appears in the response.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly lastModifiedBy?: string;
-  /**
-   * Software update configuration tasks triggered in this run
-   */
-  tasks?: SoftareUpdateConfigurationRunTasks;
-}
-
-/**
- * result of listing all software update configuration runs
- */
-export interface SoftwareUpdateConfigurationRunListResult {
-  /**
-   * outer object returned when listing all software update configuration runs
-   */
-  value?: SoftwareUpdateConfigurationRun[];
-  /**
-   * link to next page of results.
-   */
-  nextLink?: string;
-}
-
-/**
- * Software update configuration machine run job navigation properties.
- */
-export interface JobNavigation {
-  /**
-   * Id of the job associated with the software update configuration run
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-}
-
-/**
- * Software update configuration machine run model.
- */
-export interface SoftwareUpdateConfigurationMachineRun {
-  /**
-   * Name of the software update configuration machine run
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Resource Id of the software update configuration machine run
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * name of the updated computer
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly targetComputer?: string;
-  /**
-   * type of the updated computer.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly targetComputerType?: string;
-  /**
-   * software update configuration triggered this run
-   */
-  softwareUpdateConfiguration?: UpdateConfigurationNavigation;
-  /**
-   * Status of the software update configuration machine run.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly status?: string;
-  /**
-   * Operating system target of the software update configuration triggered this run
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly osType?: string;
-  /**
-   * correlation id of the software update configuration machine run
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly correlationId?: string;
-  /**
-   * source computer id of the software update configuration machine run
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly sourceComputerId?: string;
-  /**
-   * Start time of the software update configuration machine run.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly startTime?: Date;
-  /**
-   * End time of the software update configuration machine run.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly endTime?: Date;
-  /**
-   * configured duration for the software update configuration run.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly configuredDuration?: string;
-  /**
-   * Job associated with the software update configuration machine run
-   */
-  job?: JobNavigation;
-  /**
-   * Creation time of the resource, which only appears in the response.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly creationTime?: Date;
-  /**
-   * createdBy property, which only appears in the response.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly createdBy?: string;
-  /**
-   * Last time resource was modified, which only appears in the response.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly lastModifiedTime?: Date;
-  /**
-   * lastModifiedBy property, which only appears in the response.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly lastModifiedBy?: string;
-  /**
-   * Details of provisioning error
-   */
-  error?: ErrorResponse;
-}
-
-/**
- * result of listing all software update configuration machine runs
- */
-export interface SoftwareUpdateConfigurationMachineRunListResult {
-  /**
-   * outer object returned when listing all software update configuration machine runs
-   */
-  value?: SoftwareUpdateConfigurationMachineRun[];
-  /**
-   * link to next page of results.
-   */
-  nextLink?: string;
-}
-
-/**
  * Definition of the source control.
  */
 export interface SourceControl extends ProxyResource {
@@ -3602,6 +3041,517 @@ export interface PythonPackageUpdateParameters {
 }
 
 /**
+ * Windows specific update configuration.
+ */
+export interface WindowsProperties {
+  /**
+   * Update classification included in the software update configuration. A comma-separated string
+   * with required values. Possible values include: 'Unclassified', 'Critical', 'Security',
+   * 'UpdateRollup', 'FeaturePack', 'ServicePack', 'Definition', 'Tools', 'Updates'
+   */
+  includedUpdateClassifications?: WindowsUpdateClasses;
+  /**
+   * KB numbers excluded from the software update configuration.
+   */
+  excludedKbNumbers?: string[];
+  /**
+   * KB numbers included from the software update configuration.
+   */
+  includedKbNumbers?: string[];
+  /**
+   * Reboot setting for the software update configuration.
+   */
+  rebootSetting?: string;
+}
+
+/**
+ * Linux specific update configuration.
+ */
+export interface LinuxProperties {
+  /**
+   * Update classifications included in the software update configuration. Possible values include:
+   * 'Unclassified', 'Critical', 'Security', 'Other'
+   */
+  includedPackageClassifications?: LinuxUpdateClasses;
+  /**
+   * Packages excluded from the software update configuration.
+   */
+  excludedPackageNameMasks?: string[];
+  /**
+   * Packages included from the software update configuration.
+   */
+  includedPackageNameMasks?: string[];
+  /**
+   * Reboot setting for the software update configuration.
+   */
+  rebootSetting?: string;
+}
+
+/**
+ * Tag filter information for the VM.
+ */
+export interface TagSettingsProperties {
+  /**
+   * Dictionary of tags with its list of values.
+   */
+  tags?: { [propertyName: string]: string[] };
+  /**
+   * Filter VMs by Any or All specified tags. Possible values include: 'All', 'Any'
+   */
+  filterOperator?: TagOperators;
+}
+
+/**
+ * Azure query for the update configuration.
+ */
+export interface AzureQueryProperties {
+  /**
+   * List of Subscription or Resource Group ARM IDs.
+   */
+  scope?: string[];
+  /**
+   * List of locations to scope the query to.
+   */
+  locations?: string[];
+  /**
+   * Tag settings for the VM.
+   */
+  tagSettings?: TagSettingsProperties;
+}
+
+/**
+ * Non-Azure query for the update configuration.
+ */
+export interface NonAzureQueryProperties {
+  /**
+   * Log Analytics Saved Search name.
+   */
+  functionAlias?: string;
+  /**
+   * Workspace ID for Log Analytics in which the saved Search is resided.
+   */
+  workspaceId?: string;
+}
+
+/**
+ * Group specific to the update configuration.
+ */
+export interface TargetProperties {
+  /**
+   * List of Azure queries in the software update configuration.
+   */
+  azureQueries?: AzureQueryProperties[];
+  /**
+   * List of non-Azure queries in the software update configuration.
+   */
+  nonAzureQueries?: NonAzureQueryProperties[];
+}
+
+/**
+ * Update specific properties of the software update configuration.
+ */
+export interface UpdateConfiguration {
+  /**
+   * Operating system of target machines. Possible values include: 'Windows', 'Linux'
+   */
+  operatingSystem: OperatingSystemType;
+  /**
+   * Windows specific update configuration.
+   */
+  windows?: WindowsProperties;
+  /**
+   * Linux specific update configuration.
+   */
+  linux?: LinuxProperties;
+  /**
+   * Maximum time allowed for the software update configuration run. Duration needs to be specified
+   * using the format PT[n]H[n]M[n]S as per ISO8601.
+   */
+  duration?: string;
+  /**
+   * List of azure resource IDs for azure virtual machines targeted by the software update
+   * configuration.
+   */
+  azureVirtualMachines?: string[];
+  /**
+   * List of names of non-azure machines targeted by the software update configuration.
+   */
+  nonAzureComputerNames?: string[];
+  /**
+   * Group targets for the software update configuration.
+   */
+  targets?: TargetProperties;
+}
+
+/**
+ * Task properties of the software update configuration.
+ */
+export interface TaskProperties {
+  /**
+   * Gets or sets the parameters of the task.
+   */
+  parameters?: { [propertyName: string]: string };
+  /**
+   * Gets or sets the name of the runbook.
+   */
+  source?: string;
+}
+
+/**
+ * Task properties of the software update configuration.
+ */
+export interface SoftwareUpdateConfigurationTasks {
+  /**
+   * Pre task properties.
+   */
+  preTask?: TaskProperties;
+  /**
+   * Post task properties.
+   */
+  postTask?: TaskProperties;
+}
+
+/**
+ * Software update configuration properties.
+ */
+export interface SoftwareUpdateConfiguration extends BaseResource {
+  /**
+   * Resource name.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Resource Id.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Resource type
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * Update specific properties for the Software update configuration.
+   */
+  updateConfiguration: UpdateConfiguration;
+  /**
+   * Schedule information for the Software update configuration.
+   */
+  scheduleInfo: ScheduleProperties;
+  /**
+   * Provisioning state for the software update configuration, which only appears in the response.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: string;
+  /**
+   * Details of provisioning error.
+   */
+  error?: ErrorResponse;
+  /**
+   * Creation time of the resource, which only appears in the response.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly creationTime?: Date;
+  /**
+   * CreatedBy property, which only appears in the response.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly createdBy?: string;
+  /**
+   * Last time the resource was modified, which only appears in the response.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly lastModifiedTime?: Date;
+  /**
+   * LastModifiedBy property, which only appears in the response.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly lastModifiedBy?: string;
+  /**
+   * Tasks information for the software update configuration.
+   */
+  tasks?: SoftwareUpdateConfigurationTasks;
+}
+
+/**
+ * Software update configuration collection item properties.
+ */
+export interface SoftwareUpdateConfigurationCollectionItem {
+  /**
+   * Name of the software update configuration.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Resource ID of the software update configuration.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Update specific properties of the software update configuration.
+   */
+  updateConfiguration?: UpdateConfiguration;
+  /**
+   * Tasks information for the software update configuration.
+   */
+  tasks?: SoftwareUpdateConfigurationTasks;
+  /**
+   * Execution frequency of the schedule associated with the software update configuration.
+   * Possible values include: 'OneTime', 'Day', 'Hour', 'Week', 'Month', 'Minute'
+   */
+  frequency?: ScheduleFrequency;
+  /**
+   * The start time of the update.
+   */
+  startTime?: Date;
+  /**
+   * Creation time of the software update configuration, which only appears in the response.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly creationTime?: Date;
+  /**
+   * Last time software update configuration was modified, which only appears in the response.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly lastModifiedTime?: Date;
+  /**
+   * Provisioning state for the software update configuration, which only appears in the response.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: string;
+  /**
+   * Next run time of the update.
+   */
+  nextRun?: Date;
+}
+
+/**
+ * Software update configuration Run Navigation model.
+ */
+export interface UpdateConfigurationNavigation {
+  /**
+   * Name of the software update configuration triggered the software update configuration run.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+}
+
+/**
+ * Task properties of the software update configuration.
+ */
+export interface SoftwareUpdateConfigurationRunTaskProperties {
+  /**
+   * The status of the task.
+   */
+  status?: string;
+  /**
+   * The name of the source of the task.
+   */
+  source?: string;
+  /**
+   * The job ID of the task.
+   */
+  jobId?: string;
+}
+
+/**
+ * Software update configuration run tasks model.
+ */
+export interface SoftwareUpdateConfigurationRunTasks {
+  /**
+   * Pre task properties.
+   */
+  preTask?: SoftwareUpdateConfigurationRunTaskProperties;
+  /**
+   * Post task properties.
+   */
+  postTask?: SoftwareUpdateConfigurationRunTaskProperties;
+}
+
+/**
+ * Software update configuration run properties.
+ */
+export interface SoftwareUpdateConfigurationRun {
+  /**
+   * Name of the software update configuration run.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Resource ID of the software update configuration run.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Software update configuration triggered this run.
+   */
+  softwareUpdateConfiguration?: UpdateConfigurationNavigation;
+  /**
+   * Status of the software update configuration run.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly status?: string;
+  /**
+   * Configured duration for the software update configuration run.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly configuredDuration?: string;
+  /**
+   * Operating system target of the software update configuration triggered this run
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly osType?: string;
+  /**
+   * Start time of the software update configuration run.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly startTime?: Date;
+  /**
+   * End time of the software update configuration run.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly endTime?: Date;
+  /**
+   * Number of computers in the software update configuration run.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly computerCount?: number;
+  /**
+   * Number of computers with failed status.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly failedCount?: number;
+  /**
+   * Creation time of the resource, which only appears in the response.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly creationTime?: Date;
+  /**
+   * CreatedBy property, which only appears in the response.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly createdBy?: string;
+  /**
+   * Last time resource was modified, which only appears in the response.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly lastModifiedTime?: Date;
+  /**
+   * LastModifiedBy property, which only appears in the response.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly lastModifiedBy?: string;
+  /**
+   * Software update configuration tasks triggered in this run
+   */
+  tasks?: SoftwareUpdateConfigurationRunTasks;
+}
+
+/**
+ * Software update configuration machine run job navigation properties.
+ */
+export interface JobNavigation {
+  /**
+   * ID of the job associated with the software update configuration run.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+}
+
+/**
+ * Software update configuration machine run model.
+ */
+export interface SoftwareUpdateConfigurationMachineRun {
+  /**
+   * Name of the software update configuration machine run.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Resource ID of the software update configuration machine run.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the updated computer.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly targetComputer?: string;
+  /**
+   * Type of the updated computer.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly targetComputerType?: string;
+  /**
+   * Software update configuration triggered this run.
+   */
+  softwareUpdateConfiguration?: UpdateConfigurationNavigation;
+  /**
+   * Status of the software update configuration machine run.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly status?: string;
+  /**
+   * Operating system target of the software update configuration triggered this run.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly osType?: string;
+  /**
+   * Correlation ID of the software update configuration machine run
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly correlationId?: string;
+  /**
+   * Source computer ID of the software update configuration machine run.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly sourceComputerId?: string;
+  /**
+   * Start time of the software update configuration machine run.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly startTime?: Date;
+  /**
+   * End time of the software update configuration machine run.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly endTime?: Date;
+  /**
+   * Configured duration for the software update configuration run.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly configuredDuration?: string;
+  /**
+   * Job associated with the software update configuration machine run
+   */
+  job?: JobNavigation;
+  /**
+   * Creation time of the resource, which only appears in the response.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly creationTime?: Date;
+  /**
+   * createdBy property, which only appears in the response.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly createdBy?: string;
+  /**
+   * Last time resource was modified, which only appears in the response.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly lastModifiedTime?: Date;
+  /**
+   * lastModifiedBy property, which only appears in the response.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly lastModifiedBy?: string;
+  /**
+   * Details of provisioning error.
+   */
+  error?: ErrorResponse;
+}
+
+/**
  * Optional Parameters.
  */
 export interface StatisticsListByAutomationAccountOptionalParams extends msRest.RequestOptionsBase {
@@ -3634,7 +3584,7 @@ export interface DscConfigurationListByAutomationAccountOptionalParams extends m
    */
   skip?: number;
   /**
-   * The the number of rows to take.
+   * The number of rows to take.
    */
   top?: number;
   /**
@@ -3681,116 +3631,6 @@ export interface WatcherListByAutomationAccountOptionalParams extends msRest.Req
    * The filter to apply on the operation.
    */
   filter?: string;
-}
-
-/**
- * Optional Parameters.
- */
-export interface SoftwareUpdateConfigurationsCreateOptionalParams extends msRest.RequestOptionsBase {
-  /**
-   * Identifies this specific client request.
-   */
-  clientRequestId?: string;
-}
-
-/**
- * Optional Parameters.
- */
-export interface SoftwareUpdateConfigurationsGetByNameOptionalParams extends msRest.RequestOptionsBase {
-  /**
-   * Identifies this specific client request.
-   */
-  clientRequestId?: string;
-}
-
-/**
- * Optional Parameters.
- */
-export interface SoftwareUpdateConfigurationsDeleteMethodOptionalParams extends msRest.RequestOptionsBase {
-  /**
-   * Identifies this specific client request.
-   */
-  clientRequestId?: string;
-}
-
-/**
- * Optional Parameters.
- */
-export interface SoftwareUpdateConfigurationsListOptionalParams extends msRest.RequestOptionsBase {
-  /**
-   * Identifies this specific client request.
-   */
-  clientRequestId?: string;
-  /**
-   * The filter to apply on the operation.
-   */
-  filter?: string;
-}
-
-/**
- * Optional Parameters.
- */
-export interface SoftwareUpdateConfigurationRunsGetByIdOptionalParams extends msRest.RequestOptionsBase {
-  /**
-   * Identifies this specific client request.
-   */
-  clientRequestId?: string;
-}
-
-/**
- * Optional Parameters.
- */
-export interface SoftwareUpdateConfigurationRunsListOptionalParams extends msRest.RequestOptionsBase {
-  /**
-   * Identifies this specific client request.
-   */
-  clientRequestId?: string;
-  /**
-   * The filter to apply on the operation. You can use the following filters: 'properties/osType',
-   * 'properties/status', 'properties/startTime', and 'properties/softwareUpdateConfiguration/name'
-   */
-  filter?: string;
-  /**
-   * Number of entries you skip before returning results
-   */
-  skip?: string;
-  /**
-   * Maximum number of entries returned in the results collection
-   */
-  top?: string;
-}
-
-/**
- * Optional Parameters.
- */
-export interface SoftwareUpdateConfigurationMachineRunsGetByIdOptionalParams extends msRest.RequestOptionsBase {
-  /**
-   * Identifies this specific client request.
-   */
-  clientRequestId?: string;
-}
-
-/**
- * Optional Parameters.
- */
-export interface SoftwareUpdateConfigurationMachineRunsListOptionalParams extends msRest.RequestOptionsBase {
-  /**
-   * Identifies this specific client request.
-   */
-  clientRequestId?: string;
-  /**
-   * The filter to apply on the operation. You can use the following filters: 'properties/osType',
-   * 'properties/status', 'properties/startTime', and 'properties/softwareUpdateConfiguration/name'
-   */
-  filter?: string;
-  /**
-   * number of entries you skip before returning results
-   */
-  skip?: string;
-  /**
-   * Maximum number of entries returned in the results collection
-   */
-  top?: string;
 }
 
 /**
@@ -3964,7 +3804,7 @@ export interface DscNodeListByAutomationAccountOptionalParams extends msRest.Req
    */
   skip?: number;
   /**
-   * The the number of rows to take.
+   * The number of rows to take.
    */
   top?: number;
   /**
@@ -4006,7 +3846,7 @@ export interface DscNodeConfigurationListByAutomationAccountOptionalParams exten
    */
   skip?: number;
   /**
-   * The the number of rows to take.
+   * The number of rows to take.
    */
   top?: number;
   /**
@@ -4023,6 +3863,148 @@ export interface TestJobStreamsListByTestJobOptionalParams extends msRest.Reques
    * The filter to apply on the operation.
    */
   filter?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface SoftwareUpdateConfigurationsCreateOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Identifies this specific client request.
+   */
+  clientRequestId?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface SoftwareUpdateConfigurationsGetByNameOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Identifies this specific client request.
+   */
+  clientRequestId?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface SoftwareUpdateConfigurationsDeleteMethodOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Identifies this specific client request.
+   */
+  clientRequestId?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface SoftwareUpdateConfigurationsListOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Identifies this specific client request.
+   */
+  clientRequestId?: string;
+  /**
+   * The filter to apply on the operation.
+   */
+  filter?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface SoftwareUpdateConfigurationsListNextOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Identifies this specific client request.
+   */
+  clientRequestId?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface SoftwareUpdateConfigurationRunsGetByIdOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Identifies this specific client request.
+   */
+  clientRequestId?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface SoftwareUpdateConfigurationRunsListOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Identifies this specific client request.
+   */
+  clientRequestId?: string;
+  /**
+   * The filter to apply on the operation. You can use the following filters: 'properties/osType',
+   * 'properties/status', 'properties/startTime', and
+   * 'properties/softwareUpdateConfiguration/name'.
+   */
+  filter?: string;
+  /**
+   * Number of entries you skip before returning results.
+   */
+  skip?: string;
+  /**
+   * Maximum number of entries returned in the results collection.
+   */
+  top?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface SoftwareUpdateConfigurationRunsListNextOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Identifies this specific client request.
+   */
+  clientRequestId?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface SoftwareUpdateConfigurationMachineRunsGetByIdOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Identifies this specific client request.
+   */
+  clientRequestId?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface SoftwareUpdateConfigurationMachineRunsListOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Identifies this specific client request.
+   */
+  clientRequestId?: string;
+  /**
+   * The filter to apply on the operation. You can use the following filters: 'properties/osType',
+   * 'properties/status', 'properties/startTime', and
+   * 'properties/softwareUpdateConfiguration/name'.
+   */
+  filter?: string;
+  /**
+   * Number of entries you skip before returning results.
+   */
+  skip?: string;
+  /**
+   * Maximum number of entries returned in the results collection.
+   */
+  top?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface SoftwareUpdateConfigurationMachineRunsListNextOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Identifies this specific client request.
+   */
+  clientRequestId?: string;
 }
 
 /**
@@ -4387,6 +4369,42 @@ export interface RunbookListResult extends Array<Runbook> {
 }
 
 /**
+ * @interface
+ * Result of listing all software update configuration.
+ * @extends Array<SoftwareUpdateConfigurationCollectionItem>
+ */
+export interface SoftwareUpdateConfigurationListResult extends Array<SoftwareUpdateConfigurationCollectionItem> {
+  /**
+   * Link to next page of results.
+   */
+  nextLink?: string;
+}
+
+/**
+ * @interface
+ * Result of listing all software update configuration runs.
+ * @extends Array<SoftwareUpdateConfigurationRun>
+ */
+export interface SoftwareUpdateConfigurationRunListResult extends Array<SoftwareUpdateConfigurationRun> {
+  /**
+   * Link to next page of results.
+   */
+  nextLink?: string;
+}
+
+/**
+ * @interface
+ * Result of listing all software update configuration machine runs.
+ * @extends Array<SoftwareUpdateConfigurationMachineRun>
+ */
+export interface SoftwareUpdateConfigurationMachineRunListResult extends Array<SoftwareUpdateConfigurationMachineRun> {
+  /**
+   * Link to next page of results.
+   */
+  nextLink?: string;
+}
+
+/**
  * Defines values for SkuNameEnum.
  * Possible values include: 'Free', 'Basic'
  * @readonly
@@ -4477,39 +4495,6 @@ export type ScheduleDay = 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Fri
  * @enum {string}
  */
 export type ScheduleFrequency = 'OneTime' | 'Day' | 'Hour' | 'Week' | 'Month' | 'Minute';
-
-/**
- * Defines values for OperatingSystemType.
- * Possible values include: 'Windows', 'Linux'
- * @readonly
- * @enum {string}
- */
-export type OperatingSystemType = 'Windows' | 'Linux';
-
-/**
- * Defines values for WindowsUpdateClasses.
- * Possible values include: 'Unclassified', 'Critical', 'Security', 'UpdateRollup', 'FeaturePack',
- * 'ServicePack', 'Definition', 'Tools', 'Updates'
- * @readonly
- * @enum {string}
- */
-export type WindowsUpdateClasses = 'Unclassified' | 'Critical' | 'Security' | 'UpdateRollup' | 'FeaturePack' | 'ServicePack' | 'Definition' | 'Tools' | 'Updates';
-
-/**
- * Defines values for LinuxUpdateClasses.
- * Possible values include: 'Unclassified', 'Critical', 'Security', 'Other'
- * @readonly
- * @enum {string}
- */
-export type LinuxUpdateClasses = 'Unclassified' | 'Critical' | 'Security' | 'Other';
-
-/**
- * Defines values for TagOperators.
- * Possible values include: 'All', 'Any'
- * @readonly
- * @enum {string}
- */
-export type TagOperators = 'All' | 'Any';
 
 /**
  * Defines values for SourceType.
@@ -4625,6 +4610,39 @@ export type RunbookProvisioningState = 'Succeeded';
  * @enum {string}
  */
 export type HttpStatusCode = 'Continue' | 'SwitchingProtocols' | 'OK' | 'Created' | 'Accepted' | 'NonAuthoritativeInformation' | 'NoContent' | 'ResetContent' | 'PartialContent' | 'MultipleChoices' | 'Ambiguous' | 'MovedPermanently' | 'Moved' | 'Found' | 'Redirect' | 'SeeOther' | 'RedirectMethod' | 'NotModified' | 'UseProxy' | 'Unused' | 'TemporaryRedirect' | 'RedirectKeepVerb' | 'BadRequest' | 'Unauthorized' | 'PaymentRequired' | 'Forbidden' | 'NotFound' | 'MethodNotAllowed' | 'NotAcceptable' | 'ProxyAuthenticationRequired' | 'RequestTimeout' | 'Conflict' | 'Gone' | 'LengthRequired' | 'PreconditionFailed' | 'RequestEntityTooLarge' | 'RequestUriTooLong' | 'UnsupportedMediaType' | 'RequestedRangeNotSatisfiable' | 'ExpectationFailed' | 'UpgradeRequired' | 'InternalServerError' | 'NotImplemented' | 'BadGateway' | 'ServiceUnavailable' | 'GatewayTimeout' | 'HttpVersionNotSupported';
+
+/**
+ * Defines values for OperatingSystemType.
+ * Possible values include: 'Windows', 'Linux'
+ * @readonly
+ * @enum {string}
+ */
+export type OperatingSystemType = 'Windows' | 'Linux';
+
+/**
+ * Defines values for WindowsUpdateClasses.
+ * Possible values include: 'Unclassified', 'Critical', 'Security', 'UpdateRollup', 'FeaturePack',
+ * 'ServicePack', 'Definition', 'Tools', 'Updates'
+ * @readonly
+ * @enum {string}
+ */
+export type WindowsUpdateClasses = 'Unclassified' | 'Critical' | 'Security' | 'UpdateRollup' | 'FeaturePack' | 'ServicePack' | 'Definition' | 'Tools' | 'Updates';
+
+/**
+ * Defines values for LinuxUpdateClasses.
+ * Possible values include: 'Unclassified', 'Critical', 'Security', 'Other'
+ * @readonly
+ * @enum {string}
+ */
+export type LinuxUpdateClasses = 'Unclassified' | 'Critical' | 'Security' | 'Other';
+
+/**
+ * Defines values for TagOperators.
+ * Possible values include: 'All', 'Any'
+ * @readonly
+ * @enum {string}
+ */
+export type TagOperators = 'All' | 'Any';
 
 /**
  * Defines values for CountType.
@@ -6206,146 +6224,6 @@ export type WatcherListByAutomationAccountNextResponse = WatcherListResult & {
 };
 
 /**
- * Contains response data for the create operation.
- */
-export type SoftwareUpdateConfigurationsCreateResponse = SoftwareUpdateConfiguration & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: SoftwareUpdateConfiguration;
-    };
-};
-
-/**
- * Contains response data for the getByName operation.
- */
-export type SoftwareUpdateConfigurationsGetByNameResponse = SoftwareUpdateConfiguration & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: SoftwareUpdateConfiguration;
-    };
-};
-
-/**
- * Contains response data for the list operation.
- */
-export type SoftwareUpdateConfigurationsListResponse = SoftwareUpdateConfigurationListResult & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: SoftwareUpdateConfigurationListResult;
-    };
-};
-
-/**
- * Contains response data for the getById operation.
- */
-export type SoftwareUpdateConfigurationRunsGetByIdResponse = SoftwareUpdateConfigurationRun & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: SoftwareUpdateConfigurationRun;
-    };
-};
-
-/**
- * Contains response data for the list operation.
- */
-export type SoftwareUpdateConfigurationRunsListResponse = SoftwareUpdateConfigurationRunListResult & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: SoftwareUpdateConfigurationRunListResult;
-    };
-};
-
-/**
- * Contains response data for the getById operation.
- */
-export type SoftwareUpdateConfigurationMachineRunsGetByIdResponse = SoftwareUpdateConfigurationMachineRun & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: SoftwareUpdateConfigurationMachineRun;
-    };
-};
-
-/**
- * Contains response data for the list operation.
- */
-export type SoftwareUpdateConfigurationMachineRunsListResponse = SoftwareUpdateConfigurationMachineRunListResult & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: SoftwareUpdateConfigurationMachineRunListResult;
-    };
-};
-
-/**
  * Contains response data for the createOrUpdate operation.
  */
 export type SourceControlCreateOrUpdateResponse = SourceControl & {
@@ -7697,5 +7575,205 @@ export type Python2PackageListByAutomationAccountNextResponse = ModuleListResult
        * The response body as parsed JSON or XML
        */
       parsedBody: ModuleListResult;
+    };
+};
+
+/**
+ * Contains response data for the create operation.
+ */
+export type SoftwareUpdateConfigurationsCreateResponse = SoftwareUpdateConfiguration & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SoftwareUpdateConfiguration;
+    };
+};
+
+/**
+ * Contains response data for the getByName operation.
+ */
+export type SoftwareUpdateConfigurationsGetByNameResponse = SoftwareUpdateConfiguration & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SoftwareUpdateConfiguration;
+    };
+};
+
+/**
+ * Contains response data for the list operation.
+ */
+export type SoftwareUpdateConfigurationsListResponse = SoftwareUpdateConfigurationListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SoftwareUpdateConfigurationListResult;
+    };
+};
+
+/**
+ * Contains response data for the listNext operation.
+ */
+export type SoftwareUpdateConfigurationsListNextResponse = SoftwareUpdateConfigurationListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SoftwareUpdateConfigurationListResult;
+    };
+};
+
+/**
+ * Contains response data for the getById operation.
+ */
+export type SoftwareUpdateConfigurationRunsGetByIdResponse = SoftwareUpdateConfigurationRun & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SoftwareUpdateConfigurationRun;
+    };
+};
+
+/**
+ * Contains response data for the list operation.
+ */
+export type SoftwareUpdateConfigurationRunsListResponse = SoftwareUpdateConfigurationRunListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SoftwareUpdateConfigurationRunListResult;
+    };
+};
+
+/**
+ * Contains response data for the listNext operation.
+ */
+export type SoftwareUpdateConfigurationRunsListNextResponse = SoftwareUpdateConfigurationRunListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SoftwareUpdateConfigurationRunListResult;
+    };
+};
+
+/**
+ * Contains response data for the getById operation.
+ */
+export type SoftwareUpdateConfigurationMachineRunsGetByIdResponse = SoftwareUpdateConfigurationMachineRun & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SoftwareUpdateConfigurationMachineRun;
+    };
+};
+
+/**
+ * Contains response data for the list operation.
+ */
+export type SoftwareUpdateConfigurationMachineRunsListResponse = SoftwareUpdateConfigurationMachineRunListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SoftwareUpdateConfigurationMachineRunListResult;
+    };
+};
+
+/**
+ * Contains response data for the listNext operation.
+ */
+export type SoftwareUpdateConfigurationMachineRunsListNextResponse = SoftwareUpdateConfigurationMachineRunListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SoftwareUpdateConfigurationMachineRunListResult;
     };
 };
