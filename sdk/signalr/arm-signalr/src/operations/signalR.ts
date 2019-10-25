@@ -426,7 +426,7 @@ const checkNameAvailabilityOperationSpec: coreHttp.OperationSpec = {
       bodyMapper: Mappers.NameAvailability
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -449,7 +449,7 @@ const listBySubscriptionOperationSpec: coreHttp.OperationSpec = {
       bodyMapper: Mappers.SignalRResourceList
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -473,7 +473,7 @@ const listByResourceGroupOperationSpec: coreHttp.OperationSpec = {
       bodyMapper: Mappers.SignalRResourceList
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -498,7 +498,7 @@ const listKeysOperationSpec: coreHttp.OperationSpec = {
       bodyMapper: Mappers.SignalRKeys
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -523,7 +523,7 @@ const getOperationSpec: coreHttp.OperationSpec = {
       bodyMapper: Mappers.SignalRResource
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -555,7 +555,7 @@ const beginRegenerateKeyOperationSpec: coreHttp.OperationSpec = {
       bodyMapper: Mappers.SignalRKeys
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -583,12 +583,15 @@ const beginCreateOrUpdateOperationSpec: coreHttp.OperationSpec = {
     mapper: Mappers.SignalRCreateParameters
   },
   responses: {
+    200: {
+      bodyMapper: Mappers.SignalRResource
+    },
     201: {
       bodyMapper: Mappers.SignalRResource
     },
     202: {},
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -612,7 +615,7 @@ const beginDeleteMethodOperationSpec: coreHttp.OperationSpec = {
     202: {},
     204: {},
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -645,7 +648,7 @@ const beginUpdateOperationSpec: coreHttp.OperationSpec = {
     },
     202: {},
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -669,7 +672,7 @@ const beginRestartOperationSpec: coreHttp.OperationSpec = {
     202: {},
     204: {},
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -690,7 +693,7 @@ const listBySubscriptionNextOperationSpec: coreHttp.OperationSpec = {
       bodyMapper: Mappers.SignalRResourceList
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -711,7 +714,7 @@ const listByResourceGroupNextOperationSpec: coreHttp.OperationSpec = {
       bodyMapper: Mappers.SignalRResourceList
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer

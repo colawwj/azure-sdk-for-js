@@ -95,7 +95,7 @@ const listOperationSpec: coreHttp.OperationSpec = {
       bodyMapper: Mappers.OperationList
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -116,7 +116,7 @@ const listNextOperationSpec: coreHttp.OperationSpec = {
       bodyMapper: Mappers.OperationList
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
