@@ -924,7 +924,8 @@ export interface NetworkConfiguration {
    * The list of public IPs which the Batch service will use when provisioning Compute Nodes. The
    * number of IPs specified here limits the maximum size of the Pool - 50 dedicated nodes or 20
    * low-priority nodes can be allocated for each public IP. For example, a pool needing 150
-   * dedicated VMs would need at least 3 public IPs specified. This is of the form:
+   * dedicated VMs would need at least 3 public IPs specified. Each element of this collection is
+   * of the form:
    * /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/publicIPAddresses/{ip}.
    */
   publicIPs?: string[];
@@ -1352,19 +1353,19 @@ export interface ResizeOperationStatus {
 
 /**
  * An interface representing AzureBlobFileSystemConfiguration.
- * @summary Blobfuse file system details.
+ * @summary Information used to connect to an Azure Storage Container using Blobfuse.
  */
 export interface AzureBlobFileSystemConfiguration {
   /**
-   * The Azure Storage account name.
+   * The Azure Storage Account name.
    */
   accountName: string;
   /**
-   * The Azure Blob Storage container name.
+   * The Azure Blob Storage Container name.
    */
   containerName: string;
   /**
-   * The Azure Storage account key. This property is mutually exclusive with sasKey and one must be
+   * The Azure Storage Account key. This property is mutually exclusive with sasKey and one must be
    * specified.
    */
   accountKey?: string;
@@ -1388,7 +1389,7 @@ export interface AzureBlobFileSystemConfiguration {
 
 /**
  * An interface representing NFSMountConfiguration.
- * @summary NFS file system detail.
+ * @summary Information used to connect to an NFS file system.
  */
 export interface NFSMountConfiguration {
   /**
@@ -1402,14 +1403,15 @@ export interface NFSMountConfiguration {
    */
   relativeMountPath: string;
   /**
-   * Specifies various mount options that can be used.
+   * Additional command line options to pass to the mount command. These are 'net use' options in
+   * Windows and 'mount' options in Linux.
    */
   mountOptions?: string;
 }
 
 /**
  * An interface representing CIFSMountConfiguration.
- * @summary CIFS file system details.
+ * @summary Information used to connect to a CIFS file system.
  */
 export interface CIFSMountConfiguration {
   /**
@@ -1427,18 +1429,19 @@ export interface CIFSMountConfiguration {
    */
   relativeMountPath: string;
   /**
-   * Specifies various mount options that can be used.
+   * Additional command line options to pass to the mount command. These are 'net use' options in
+   * Windows and 'mount' options in Linux.
    */
   mountOptions?: string;
   /**
-   * The password to authenticate with.
+   * The password to use for authentication against the CIFS file system.
    */
   password: string;
 }
 
 /**
  * An interface representing AzureFileShareConfiguration.
- * @summary Azure Files details.
+ * @summary Information used to connect to an Azure Fileshare.
  */
 export interface AzureFileShareConfiguration {
   /**
@@ -1446,7 +1449,7 @@ export interface AzureFileShareConfiguration {
    */
   accountName: string;
   /**
-   * The Azure Files URL.
+   * The Azure Files URL. This is of the form 'https://{account}.file.core.windows.net/'.
    */
   azureFileUrl: string;
   /**
@@ -1460,18 +1463,19 @@ export interface AzureFileShareConfiguration {
    */
   relativeMountPath: string;
   /**
-   * Specifies various mount options that can be used.
+   * Additional command line options to pass to the mount command. These are 'net use' options in
+   * Windows and 'mount' options in Linux.
    */
   mountOptions?: string;
 }
 
 /**
- * Each property is mutually exclusive.
+ * An interface representing MountConfiguration.
  * @summary The file system to mount on each node.
  */
 export interface MountConfiguration {
   /**
-   * The Azure Storage container to mount using blob FUSE on each node. This property is mutually
+   * The Azure Storage Container to mount using blob FUSE on each node. This property is mutually
    * exclusive with all other properties.
    */
   azureBlobFileSystemConfiguration?: AzureBlobFileSystemConfiguration;
@@ -1486,8 +1490,8 @@ export interface MountConfiguration {
    */
   cifsMountConfiguration?: CIFSMountConfiguration;
   /**
-   * The Azure File Share to mount on each node. This is CIFS based for linux and net use for for
-   * windows, and this property is mutually exclusive with all other properties.
+   * The Azure File Share to mount on each node. This property is mutually exclusive with all other
+   * properties.
    */
   azureFileShareConfiguration?: AzureFileShareConfiguration;
 }
@@ -1537,7 +1541,7 @@ export interface Pool extends ProxyResource {
    * The size of virtual machines in the pool. All VMs in a pool are the same size. For information
    * about available sizes of virtual machines for Cloud Services pools (pools created with
    * cloudServiceConfiguration), see Sizes for Cloud Services
-   * (http://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/). Batch
+   * (https://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/). Batch
    * supports all Cloud Services VM sizes except ExtraSmall. For information about available VM
    * sizes for pools using images from the Virtual Machines Marketplace (pools created with
    * virtualMachineConfiguration) see Sizes for Virtual Machines (Linux)

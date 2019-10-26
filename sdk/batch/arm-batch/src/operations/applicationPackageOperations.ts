@@ -27,7 +27,9 @@ export class ApplicationPackageOperations {
   }
 
   /**
-   * Activates the specified application package.
+   * Activates the specified application package. This should be done after the `ApplicationPackage`
+   * was created and uploaded. This needs to be done before an `ApplicationPackage` can be used on
+   * Pools or Tasks
    * @param resourceGroupName The name of the resource group that contains the Batch account.
    * @param accountName The name of the Batch account.
    * @param applicationName The name of the application. This must be unique within the account.
@@ -71,7 +73,9 @@ export class ApplicationPackageOperations {
   }
 
   /**
-   * Creates an application package record.
+   * Creates an application package record. The record contains the SAS where the package should be
+   * uploaded to.  Once it is uploaded the `ApplicationPackage` needs to be activated using
+   * `ApplicationPackageActive` before it can be used.
    * @param resourceGroupName The name of the resource group that contains the Batch account.
    * @param accountName The name of the Batch account.
    * @param applicationName The name of the application. This must be unique within the account.
