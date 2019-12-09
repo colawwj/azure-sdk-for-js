@@ -9,6 +9,7 @@
 export {
   AddressDetails,
   Agreement,
+  AgreementListResult,
   Amount,
   AvailableBalance,
   AzurePlan,
@@ -30,7 +31,6 @@ export {
   ErrorDetails,
   ErrorResponse,
   Invoice,
-  InvoiceListResult,
   InvoiceSection,
   LineOfCredit,
   Participants,

@@ -30,7 +30,6 @@ export {
   ErrorDetails,
   ErrorResponse,
   Invoice,
-  InvoiceListResult,
   InvoiceSection,
   LineOfCredit,
   Participants,
@@ -39,7 +38,14 @@ export {
   Policy,
   PolicyPropertiesEnableMicrosoftAzurePlan,
   Product,
+  ProductsListResult,
+  ProductsTransferHeaders,
   Reseller,
   Resource,
-  Transaction
+  Transaction,
+  TransferProductRequestProperties,
+  UpdateAutoRenewOperation,
+  UpdateAutoRenewRequest,
+  ValidateProductTransferEligibilityError,
+  ValidateProductTransferEligibilityResult
 } from "../models/mappers";

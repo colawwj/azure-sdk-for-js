@@ -30,7 +30,6 @@ export {
   ErrorDetails,
   ErrorResponse,
   Invoice,
-  InvoiceListResult,
   InvoiceSection,
   LineOfCredit,
   Participants,

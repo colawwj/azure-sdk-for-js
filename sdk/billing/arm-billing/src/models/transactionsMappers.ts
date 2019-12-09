@@ -30,7 +30,6 @@ export {
   ErrorDetails,
   ErrorResponse,
   Invoice,
-  InvoiceListResult,
   InvoiceSection,
   LineOfCredit,
   Participants,
@@ -41,5 +40,6 @@ export {
   Product,
   Reseller,
   Resource,
-  Transaction
+  Transaction,
+  TransactionListResult
 } from "../models/mappers";
