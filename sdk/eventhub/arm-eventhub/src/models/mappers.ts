@@ -317,6 +317,24 @@ export const Destination: msRest.CompositeMapper = {
         type: {
           name: "String"
         }
+      },
+      dataLakeSubscriptionId: {
+        serializedName: "properties.dataLakeSubscriptionId",
+        type: {
+          name: "String"
+        }
+      },
+      dataLakeAccountName: {
+        serializedName: "properties.dataLakeAccountName",
+        type: {
+          name: "String"
+        }
+      },
+      dataLakeFolderPath: {
+        serializedName: "properties.dataLakeFolderPath",
+        type: {
+          name: "String"
+        }
       }
     }
   }
@@ -933,6 +951,34 @@ export const AuthorizationRuleListResult: msRest.CompositeMapper = {
             type: {
               name: "Composite",
               className: "AuthorizationRule"
+            }
+          }
+        }
+      },
+      nextLink: {
+        serializedName: "nextLink",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const NetworkRuleSetListResult: msRest.CompositeMapper = {
+  serializedName: "NetworkRuleSetListResult",
+  type: {
+    name: "Composite",
+    className: "NetworkRuleSetListResult",
+    modelProperties: {
+      value: {
+        serializedName: "",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "NetworkRuleSet"
             }
           }
         }
