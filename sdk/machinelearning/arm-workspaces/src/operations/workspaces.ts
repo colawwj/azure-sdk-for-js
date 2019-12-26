@@ -12,17 +12,17 @@ import * as msRest from "@azure/ms-rest-js";
 import * as Models from "../models";
 import * as Mappers from "../models/workspacesMappers";
 import * as Parameters from "../models/parameters";
-import { MachineLearningWorkspacesManagementClientContext } from "../machineLearningWorkspacesManagementClientContext";
+import { AzureMLManagementClientContext } from "../azureMLManagementClientContext";
 
 /** Class representing a Workspaces. */
 export class Workspaces {
-  private readonly client: MachineLearningWorkspacesManagementClientContext;
+  private readonly client: AzureMLManagementClientContext;
 
   /**
    * Create a Workspaces.
-   * @param {MachineLearningWorkspacesManagementClientContext} client Reference to the service client.
+   * @param {AzureMLManagementClientContext} client Reference to the service client.
    */
-  constructor(client: MachineLearningWorkspacesManagementClientContext) {
+  constructor(client: AzureMLManagementClientContext) {
     this.client = client;
   }
 
