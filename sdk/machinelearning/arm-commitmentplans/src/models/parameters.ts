@@ -30,26 +30,6 @@ export const apiVersion: msRest.OperationQueryParameter = {
     }
   }
 };
-export const commitmentAssociationName: msRest.OperationURLParameter = {
-  parameterPath: "commitmentAssociationName",
-  mapper: {
-    required: true,
-    serializedName: "commitmentAssociationName",
-    type: {
-      name: "String"
-    }
-  }
-};
-export const commitmentPlanName: msRest.OperationURLParameter = {
-  parameterPath: "commitmentPlanName",
-  mapper: {
-    required: true,
-    serializedName: "commitmentPlanName",
-    type: {
-      name: "String"
-    }
-  }
-};
 export const nextPageLink: msRest.OperationURLParameter = {
   parameterPath: "nextPageLink",
   mapper: {
@@ -71,23 +51,21 @@ export const resourceGroupName: msRest.OperationURLParameter = {
     }
   }
 };
-export const skipToken: msRest.OperationQueryParameter = {
-  parameterPath: [
-    "options",
-    "skipToken"
-  ],
-  mapper: {
-    serializedName: "$skipToken",
-    type: {
-      name: "String"
-    }
-  }
-};
 export const subscriptionId: msRest.OperationURLParameter = {
   parameterPath: "subscriptionId",
   mapper: {
     required: true,
     serializedName: "subscriptionId",
+    type: {
+      name: "String"
+    }
+  }
+};
+export const workspaceName: msRest.OperationURLParameter = {
+  parameterPath: "workspaceName",
+  mapper: {
+    required: true,
+    serializedName: "workspaceName",
     type: {
       name: "String"
     }

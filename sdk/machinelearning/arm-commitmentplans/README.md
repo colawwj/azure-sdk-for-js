@@ -1,6 +1,6 @@
-## Azure AzureMLCommitmentPlansManagementClient SDK for JavaScript
+## Azure AzureMLManagementClient SDK for JavaScript
 
-This package contains an isomorphic SDK for AzureMLCommitmentPlansManagementClient.
+This package contains an isomorphic SDK for AzureMLManagementClient.
 
 ### Currently supported environments
 
@@ -9,32 +9,33 @@ This package contains an isomorphic SDK for AzureMLCommitmentPlansManagementClie
 
 ### How to Install
 
-```
+```bash
 npm install @azure/arm-commitmentplans
 ```
 
 ### How to use
 
-#### nodejs - Authentication, client creation and list skus as an example written in TypeScript.
+#### nodejs - Authentication, client creation and list operations as an example written in TypeScript.
 
 ##### Install @azure/ms-rest-nodeauth
 
-```
-npm install @azure/ms-rest-nodeauth
+- Please install minimum version of `"@azure/ms-rest-nodeauth": "^3.0.0"`.
+```bash
+npm install @azure/ms-rest-nodeauth@"^3.0.0"
 ```
 
 ##### Sample code
 
-```ts
+```typescript
 import * as msRest from "@azure/ms-rest-js";
 import * as msRestAzure from "@azure/ms-rest-azure-js";
 import * as msRestNodeAuth from "@azure/ms-rest-nodeauth";
-import { AzureMLCommitmentPlansManagementClient, AzureMLCommitmentPlansManagementModels, AzureMLCommitmentPlansManagementMappers } from "@azure/arm-commitmentplans";
+import { AzureMLManagementClient, AzureMLManagementModels, AzureMLManagementMappers } from "@azure/arm-commitmentplans";
 const subscriptionId = process.env["AZURE_SUBSCRIPTION_ID"];
 
 msRestNodeAuth.interactiveLogin().then((creds) => {
-  const client = new AzureMLCommitmentPlansManagementClient(creds, subscriptionId);
-  client.skus.list().then((result) => {
+  const client = new AzureMLManagementClient(creds, subscriptionId);
+  client.operations.list().then((result) => {
     console.log("The result is:");
     console.log(result);
   });
@@ -43,11 +44,11 @@ msRestNodeAuth.interactiveLogin().then((creds) => {
 });
 ```
 
-#### browser - Authentication, client creation and list skus as an example written in JavaScript.
+#### browser - Authentication, client creation and list operations as an example written in JavaScript.
 
 ##### Install @azure/ms-rest-browserauth
 
-```
+```bash
 npm install @azure/ms-rest-browserauth
 ```
 
@@ -76,8 +77,8 @@ See https://github.com/Azure/ms-rest-browserauth to learn how to authenticate to
           // may cause redirects
           authManager.login();
         }
-        const client = new Azure.ArmCommitmentplans.AzureMLCommitmentPlansManagementClient(res.creds, subscriptionId);
-        client.skus.list().then((result) => {
+        const client = new Azure.ArmCommitmentplans.AzureMLManagementClient(res.creds, subscriptionId);
+        client.operations.list().then((result) => {
           console.log("The result is:");
           console.log(result);
         }).catch((err) => {
@@ -95,5 +96,4 @@ See https://github.com/Azure/ms-rest-browserauth to learn how to authenticate to
 
 - [Microsoft Azure SDK for Javascript](https://github.com/Azure/azure-sdk-for-js)
 
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-js%2Fsdk%2Fmachinelearning%2Farm-commitmentplans%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-js/sdk/machinelearning/arm-commitmentplans/README.png)

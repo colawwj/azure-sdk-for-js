@@ -8,7 +8,5 @@
  * regenerated.
  */
 
-export * from "./skus";
-export * from "./commitmentAssociations";
-export * from "./commitmentPlans";
-export * from "./usageHistory";
+export * from "./operations";
+export * from "./workspaces";
