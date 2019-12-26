@@ -1,6 +1,6 @@
-## Azure AzureMLWebServicesManagementClient SDK for JavaScript
+## Azure AzureMLManagementClient SDK for JavaScript
 
-This package contains an isomorphic SDK for AzureMLWebServicesManagementClient.
+This package contains an isomorphic SDK for AzureMLManagementClient.
 
 ### Currently supported environments
 
@@ -9,7 +9,7 @@ This package contains an isomorphic SDK for AzureMLWebServicesManagementClient.
 
 ### How to Install
 
-```
+```bash
 npm install @azure/arm-webservices
 ```
 
@@ -19,21 +19,22 @@ npm install @azure/arm-webservices
 
 ##### Install @azure/ms-rest-nodeauth
 
-```
-npm install @azure/ms-rest-nodeauth
+- Please install minimum version of `"@azure/ms-rest-nodeauth": "^3.0.0"`.
+```bash
+npm install @azure/ms-rest-nodeauth@"^3.0.0"
 ```
 
 ##### Sample code
 
-```ts
+```typescript
 import * as msRest from "@azure/ms-rest-js";
 import * as msRestAzure from "@azure/ms-rest-azure-js";
 import * as msRestNodeAuth from "@azure/ms-rest-nodeauth";
-import { AzureMLWebServicesManagementClient, AzureMLWebServicesManagementModels, AzureMLWebServicesManagementMappers } from "@azure/arm-webservices";
+import { AzureMLManagementClient, AzureMLManagementModels, AzureMLManagementMappers } from "@azure/arm-webservices";
 const subscriptionId = process.env["AZURE_SUBSCRIPTION_ID"];
 
 msRestNodeAuth.interactiveLogin().then((creds) => {
-  const client = new AzureMLWebServicesManagementClient(creds, subscriptionId);
+  const client = new AzureMLManagementClient(creds, subscriptionId);
   client.operations.list().then((result) => {
     console.log("The result is:");
     console.log(result);
@@ -47,7 +48,7 @@ msRestNodeAuth.interactiveLogin().then((creds) => {
 
 ##### Install @azure/ms-rest-browserauth
 
-```
+```bash
 npm install @azure/ms-rest-browserauth
 ```
 
@@ -76,7 +77,7 @@ See https://github.com/Azure/ms-rest-browserauth to learn how to authenticate to
           // may cause redirects
           authManager.login();
         }
-        const client = new Azure.ArmWebservices.AzureMLWebServicesManagementClient(res.creds, subscriptionId);
+        const client = new Azure.ArmWebservices.AzureMLManagementClient(res.creds, subscriptionId);
         client.operations.list().then((result) => {
           console.log("The result is:");
           console.log(result);
@@ -95,5 +96,4 @@ See https://github.com/Azure/ms-rest-browserauth to learn how to authenticate to
 
 - [Microsoft Azure SDK for Javascript](https://github.com/Azure/azure-sdk-for-js)
 
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-js%2Fsdk%2Fmachinelearning%2Farm-webservices%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-js/sdk/machinelearning/arm-webservices/README.png)

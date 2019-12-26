@@ -12,17 +12,17 @@ import * as msRest from "@azure/ms-rest-js";
 import * as Models from "../models";
 import * as Mappers from "../models/operationsMappers";
 import * as Parameters from "../models/parameters";
-import { AzureMLWebServicesManagementClientContext } from "../azureMLWebServicesManagementClientContext";
+import { AzureMLManagementClientContext } from "../azureMLManagementClientContext";
 
 /** Class representing a Operations. */
 export class Operations {
-  private readonly client: AzureMLWebServicesManagementClientContext;
+  private readonly client: AzureMLManagementClientContext;
 
   /**
    * Create a Operations.
-   * @param {AzureMLWebServicesManagementClientContext} client Reference to the service client.
+   * @param {AzureMLManagementClientContext} client Reference to the service client.
    */
-  constructor(client: AzureMLWebServicesManagementClientContext) {
+  constructor(client: AzureMLManagementClientContext) {
     this.client = client;
   }
 
@@ -35,13 +35,13 @@ export class Operations {
   /**
    * @param callback The callback
    */
-  list(callback: msRest.ServiceCallback<Models.OperationEntityListResult>): void;
+  list(callback: msRest.ServiceCallback<Models.OperationListResult>): void;
   /**
    * @param options The optional parameters
    * @param callback The callback
    */
-  list(options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.OperationEntityListResult>): void;
-  list(options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.OperationEntityListResult>, callback?: msRest.ServiceCallback<Models.OperationEntityListResult>): Promise<Models.OperationsListResponse> {
+  list(options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.OperationListResult>): void;
+  list(options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.OperationListResult>, callback?: msRest.ServiceCallback<Models.OperationListResult>): Promise<Models.OperationsListResponse> {
     return this.client.sendOperationRequest(
       {
         options
@@ -64,10 +64,10 @@ const listOperationSpec: msRest.OperationSpec = {
   ],
   responses: {
     200: {
-      bodyMapper: Mappers.OperationEntityListResult
+      bodyMapper: Mappers.OperationListResult
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer

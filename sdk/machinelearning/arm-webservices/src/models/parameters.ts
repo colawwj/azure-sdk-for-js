@@ -41,45 +41,11 @@ export const nextPageLink: msRest.OperationURLParameter = {
   },
   skipEncoding: true
 };
-export const region0: msRest.OperationQueryParameter = {
-  parameterPath: [
-    "options",
-    "region"
-  ],
-  mapper: {
-    serializedName: "region",
-    type: {
-      name: "String"
-    }
-  }
-};
-export const region1: msRest.OperationQueryParameter = {
-  parameterPath: "region",
-  mapper: {
-    required: true,
-    serializedName: "region",
-    type: {
-      name: "String"
-    }
-  }
-};
 export const resourceGroupName: msRest.OperationURLParameter = {
   parameterPath: "resourceGroupName",
   mapper: {
     required: true,
     serializedName: "resourceGroupName",
-    type: {
-      name: "String"
-    }
-  }
-};
-export const skiptoken: msRest.OperationQueryParameter = {
-  parameterPath: [
-    "options",
-    "skiptoken"
-  ],
-  mapper: {
-    serializedName: "$skiptoken",
     type: {
       name: "String"
     }
@@ -95,11 +61,11 @@ export const subscriptionId: msRest.OperationURLParameter = {
     }
   }
 };
-export const webServiceName: msRest.OperationURLParameter = {
-  parameterPath: "webServiceName",
+export const workspaceName: msRest.OperationURLParameter = {
+  parameterPath: "workspaceName",
   mapper: {
     required: true,
-    serializedName: "webServiceName",
+    serializedName: "workspaceName",
     type: {
       name: "String"
     }

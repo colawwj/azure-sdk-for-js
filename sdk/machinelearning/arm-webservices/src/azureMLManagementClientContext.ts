@@ -15,18 +15,18 @@ import * as msRestAzure from "@azure/ms-rest-azure-js";
 const packageName = "@azure/arm-webservices";
 const packageVersion = "0.1.1";
 
-export class AzureMLWebServicesManagementClientContext extends msRestAzure.AzureServiceClient {
+export class AzureMLManagementClientContext extends msRestAzure.AzureServiceClient {
   credentials: msRest.ServiceClientCredentials;
   subscriptionId: string;
   apiVersion?: string;
 
   /**
-   * Initializes a new instance of the AzureMLWebServicesManagementClient class.
+   * Initializes a new instance of the AzureMLManagementClient class.
    * @param credentials Credentials needed for the client to connect to Azure.
-   * @param subscriptionId The Azure subscription ID.
+   * @param subscriptionId The Microsoft Azure subscription ID.
    * @param [options] The parameter options
    */
-  constructor(credentials: msRest.ServiceClientCredentials, subscriptionId: string, options?: Models.AzureMLWebServicesManagementClientOptions) {
+  constructor(credentials: msRest.ServiceClientCredentials, subscriptionId: string, options?: Models.AzureMLManagementClientOptions) {
     if (credentials == undefined) {
       throw new Error('\'credentials\' cannot be null.');
     }
@@ -44,7 +44,7 @@ export class AzureMLWebServicesManagementClientContext extends msRestAzure.Azure
 
     super(credentials, options);
 
-    this.apiVersion = '2017-01-01';
+    this.apiVersion = '2019-10-01';
     this.acceptLanguage = 'en-US';
     this.longRunningOperationRetryTimeout = 30;
     this.baseUri = options.baseUri || this.baseUri || "https://management.azure.com";

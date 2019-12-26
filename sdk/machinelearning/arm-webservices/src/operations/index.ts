@@ -9,4 +9,4 @@
  */
 
 export * from "./operations";
-export * from "./webServices";
+export * from "./workspaces";

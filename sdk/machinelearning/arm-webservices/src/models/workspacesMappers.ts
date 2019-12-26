@@ -7,8 +7,12 @@
  */
 
 export {
+  BaseResource,
   ErrorResponse,
-  Operation,
-  OperationDisplay,
-  OperationListResult
+  Resource,
+  Sku,
+  Workspace,
+  WorkspaceKeysResponse,
+  WorkspaceListResult,
+  WorkspaceUpdateParameters
 } from "../models/mappers";

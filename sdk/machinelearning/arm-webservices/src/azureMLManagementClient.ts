@@ -12,33 +12,33 @@ import * as msRest from "@azure/ms-rest-js";
 import * as Models from "./models";
 import * as Mappers from "./models/mappers";
 import * as operations from "./operations";
-import { AzureMLWebServicesManagementClientContext } from "./azureMLWebServicesManagementClientContext";
+import { AzureMLManagementClientContext } from "./azureMLManagementClientContext";
 
 
-class AzureMLWebServicesManagementClient extends AzureMLWebServicesManagementClientContext {
+class AzureMLManagementClient extends AzureMLManagementClientContext {
   // Operation groups
   operations: operations.Operations;
-  webServices: operations.WebServices;
+  workspaces: operations.Workspaces;
 
   /**
-   * Initializes a new instance of the AzureMLWebServicesManagementClient class.
+   * Initializes a new instance of the AzureMLManagementClient class.
    * @param credentials Credentials needed for the client to connect to Azure.
-   * @param subscriptionId The Azure subscription ID.
+   * @param subscriptionId The Microsoft Azure subscription ID.
    * @param [options] The parameter options
    */
-  constructor(credentials: msRest.ServiceClientCredentials, subscriptionId: string, options?: Models.AzureMLWebServicesManagementClientOptions) {
+  constructor(credentials: msRest.ServiceClientCredentials, subscriptionId: string, options?: Models.AzureMLManagementClientOptions) {
     super(credentials, subscriptionId, options);
     this.operations = new operations.Operations(this);
-    this.webServices = new operations.WebServices(this);
+    this.workspaces = new operations.Workspaces(this);
   }
 }
 
 // Operation Specifications
 
 export {
-  AzureMLWebServicesManagementClient,
-  AzureMLWebServicesManagementClientContext,
-  Models as AzureMLWebServicesManagementModels,
-  Mappers as AzureMLWebServicesManagementMappers
+  AzureMLManagementClient,
+  AzureMLManagementClientContext,
+  Models as AzureMLManagementModels,
+  Mappers as AzureMLManagementMappers
 };
 export * from "./operations";
