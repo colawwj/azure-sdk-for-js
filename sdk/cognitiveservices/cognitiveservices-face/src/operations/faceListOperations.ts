@@ -58,25 +58,29 @@ export class FaceListOperations {
    * * 'recognition_02': Recognition model released in 2019 March. 'recognition_02' is recommended
    * since its overall accuracy is improved compared with 'recognition_01'.
    * @param faceListId Id referencing a particular face list.
+   * @param name User defined name, maximum length is 128.
    * @param [options] The optional parameters
    * @returns Promise<msRest.RestResponse>
    */
-  create(faceListId: string, options?: Models.FaceListCreateOptionalParams): Promise<msRest.RestResponse>;
+  create(faceListId: string, name: string, options?: Models.FaceListCreateOptionalParams): Promise<msRest.RestResponse>;
   /**
    * @param faceListId Id referencing a particular face list.
+   * @param name User defined name, maximum length is 128.
    * @param callback The callback
    */
-  create(faceListId: string, callback: msRest.ServiceCallback<void>): void;
+  create(faceListId: string, name: string, callback: msRest.ServiceCallback<void>): void;
   /**
    * @param faceListId Id referencing a particular face list.
+   * @param name User defined name, maximum length is 128.
    * @param options The optional parameters
    * @param callback The callback
    */
-  create(faceListId: string, options: Models.FaceListCreateOptionalParams, callback: msRest.ServiceCallback<void>): void;
-  create(faceListId: string, options?: Models.FaceListCreateOptionalParams | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+  create(faceListId: string, name: string, options: Models.FaceListCreateOptionalParams, callback: msRest.ServiceCallback<void>): void;
+  create(faceListId: string, name: string, options?: Models.FaceListCreateOptionalParams | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
     return this.client.sendOperationRequest(
       {
         faceListId,
+        name,
         options
       },
       createOperationSpec,
@@ -373,10 +377,7 @@ const createOperationSpec: msRest.OperationSpec = {
   ],
   requestBody: {
     parameterPath: {
-      name: [
-        "options",
-        "name"
-      ],
+      name: "name",
       userData: [
         "options",
         "userData"
@@ -387,7 +388,7 @@ const createOperationSpec: msRest.OperationSpec = {
       ]
     },
     mapper: {
-      ...Mappers.MetaDataContract,
+      ...Mappers.MetaDataContractMandatoryName,
       required: true
     }
   },

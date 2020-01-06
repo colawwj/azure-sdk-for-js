@@ -548,8 +548,8 @@ export interface PersistedFace {
 }
 
 /**
- * A combination of user defined name and user specified data for the person,
- * largePersonGroup/personGroup, and largeFaceList/faceList.
+ * A combination of user defined name and user specified data for the person and
+ * largePersonGroup/personGroup.
  */
 export interface NameAndUserDataContract {
   /**
@@ -564,7 +564,7 @@ export interface NameAndUserDataContract {
 
 /**
  * A combination of user defined name and user specified data and recognition model name for
- * largePersonGroup/personGroup, and largeFaceList/faceList.
+ * largePersonGroup/personGroup.
  */
 export interface MetaDataContract extends NameAndUserDataContract {
   /**
@@ -676,6 +676,31 @@ export interface TrainingStatus {
    * Show failure message when training failed (omitted when training succeed).
    */
   message?: string;
+}
+
+/**
+ * A combination of user defined name and user specified data for largeFaceList/faceList.
+ */
+export interface NameAndUserDataContractMandatoryName {
+  /**
+   * User defined name, maximum length is 128.
+   */
+  name: string;
+  /**
+   * User specified data. Length should not exceed 16KB.
+   */
+  userData?: string;
+}
+
+/**
+ * A combination of user defined name and user specified data and recognition model name for
+ * largeFaceList/faceList.
+ */
+export interface MetaDataContractMandatoryName extends NameAndUserDataContractMandatoryName {
+  /**
+   * Possible values include: 'recognition_01', 'recognition_02'. Default value: 'recognition_01'.
+   */
+  recognitionModel?: RecognitionModel;
 }
 
 /**
@@ -1165,10 +1190,6 @@ export interface PersonGroupListOptionalParams extends msRest.RequestOptionsBase
  */
 export interface FaceListCreateOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * User defined name, maximum length is 128.
-   */
-  name?: string;
-  /**
    * User specified data. Length should not exceed 16KB.
    */
   userData?: string;
@@ -1432,10 +1453,6 @@ export interface LargePersonGroupListOptionalParams extends msRest.RequestOption
  * Optional Parameters.
  */
 export interface LargeFaceListCreateOptionalParams extends msRest.RequestOptionsBase {
-  /**
-   * User defined name, maximum length is 128.
-   */
-  name?: string;
   /**
    * User specified data. Length should not exceed 16KB.
    */

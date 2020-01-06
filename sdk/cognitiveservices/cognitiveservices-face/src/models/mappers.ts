@@ -1486,6 +1486,54 @@ export const TrainingStatus: msRest.CompositeMapper = {
   }
 };
 
+export const NameAndUserDataContractMandatoryName: msRest.CompositeMapper = {
+  serializedName: "NameAndUserDataContractMandatoryName",
+  type: {
+    name: "Composite",
+    className: "NameAndUserDataContractMandatoryName",
+    modelProperties: {
+      name: {
+        required: true,
+        serializedName: "name",
+        constraints: {
+          MaxLength: 128
+        },
+        type: {
+          name: "String"
+        }
+      },
+      userData: {
+        serializedName: "userData",
+        constraints: {
+          MaxLength: 16384
+        },
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const MetaDataContractMandatoryName: msRest.CompositeMapper = {
+  serializedName: "MetaDataContractMandatoryName",
+  type: {
+    name: "Composite",
+    className: "MetaDataContractMandatoryName",
+    modelProperties: {
+      ...NameAndUserDataContractMandatoryName.type.modelProperties,
+      recognitionModel: {
+        nullable: false,
+        serializedName: "recognitionModel",
+        defaultValue: 'recognition_01',
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const ApplySnapshotRequest: msRest.CompositeMapper = {
   serializedName: "ApplySnapshotRequest",
   type: {
