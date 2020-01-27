@@ -108,7 +108,7 @@ const createOperationSpec: msRest.OperationSpec = {
     Parameters.acceptLanguage
   ],
   responses: {
-    204: {},
+    200: {},
     default: {
       bodyMapper: Mappers.ErrorResponse
     }
@@ -131,7 +131,7 @@ const deleteMethodOperationSpec: msRest.OperationSpec = {
     Parameters.acceptLanguage
   ],
   responses: {
-    204: {},
+    200: {},
     default: {
       bodyMapper: Mappers.ErrorResponse
     }
