@@ -83,7 +83,8 @@ export const expand0: msRest.OperationQueryParameter = {
     type: {
       name: "Enum",
       allowedValues: [
-        "geoReplicationStats"
+        "geoReplicationStats",
+        "blobRestoreStatus"
       ]
     }
   }
@@ -99,6 +100,21 @@ export const expand1: msRest.OperationQueryParameter = {
       name: "Enum",
       allowedValues: [
         "kerb"
+      ]
+    }
+  }
+};
+export const expand2: msRest.OperationQueryParameter = {
+  parameterPath: [
+    "options",
+    "expand"
+  ],
+  mapper: {
+    serializedName: "$expand",
+    type: {
+      name: "Enum",
+      allowedValues: [
+        "deleted"
       ]
     }
   }
