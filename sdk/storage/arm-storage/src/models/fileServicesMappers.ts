@@ -61,6 +61,7 @@ export {
   StorageAccount,
   StorageAccountInternetEndpoints,
   StorageAccountMicrosoftEndpoints,
+  TagFilter,
   TagProperty,
   TrackedResource,
   UpdateHistoryProperty,

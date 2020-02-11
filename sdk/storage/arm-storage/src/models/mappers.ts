@@ -2156,6 +2156,45 @@ export const ManagementPolicyAction: msRest.CompositeMapper = {
   }
 };
 
+export const TagFilter: msRest.CompositeMapper = {
+  serializedName: "TagFilter",
+  type: {
+    name: "Composite",
+    className: "TagFilter",
+    modelProperties: {
+      name: {
+        required: true,
+        serializedName: "name",
+        constraints: {
+          MaxLength: 128,
+          MinLength: 1
+        },
+        type: {
+          name: "String"
+        }
+      },
+      op: {
+        required: true,
+        serializedName: "op",
+        type: {
+          name: "String"
+        }
+      },
+      value: {
+        required: true,
+        serializedName: "value",
+        constraints: {
+          MaxLength: 256,
+          MinLength: 1
+        },
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const ManagementPolicyFilter: msRest.CompositeMapper = {
   serializedName: "ManagementPolicyFilter",
   type: {
@@ -2181,6 +2220,18 @@ export const ManagementPolicyFilter: msRest.CompositeMapper = {
           element: {
             type: {
               name: "String"
+            }
+          }
+        }
+      },
+      blobIndexMatch: {
+        serializedName: "blobIndexMatch",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "TagFilter"
             }
           }
         }
