@@ -169,6 +169,10 @@ export interface Cache extends BaseResource {
    */
   readonly mountAddresses?: string[];
   /**
+   * The IPv4 maximum transmission unit configured for the subnet. Default value: 1500.
+   */
+  mtu?: number;
+  /**
    * ARM provisioning state, see
    * https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property.
    * Possible values include: 'Succeeded', 'Failed', 'Cancelled', 'Creating', 'Deleting',
@@ -190,7 +194,25 @@ export interface Cache extends BaseResource {
 }
 
 /**
- * An NFSv3 mount point for use as a Storage Target.
+ * A namespace junction.
+ */
+export interface NamespaceJunction {
+  /**
+   * Namespace path on a Cache for a Storage Target.
+   */
+  namespacePath?: string;
+  /**
+   * Path in Storage Target to which namespacePath points.
+   */
+  targetPath?: string;
+  /**
+   * NFS export where targetPath exists.
+   */
+  nfsExport?: string;
+}
+
+/**
+ * properties pertained to Nfs3Target
  */
 export interface Nfs3Target {
   /**
@@ -205,7 +227,7 @@ export interface Nfs3Target {
 }
 
 /**
- * Storage container for use as a CLFS Storage Target.
+ * properties pertained to ClfsTarget
  */
 export interface ClfsTarget {
   /**
@@ -215,13 +237,224 @@ export interface ClfsTarget {
 }
 
 /**
- * Storage container for use as an Unknown Storage Target.
+ * properties pertained to UnknownTarget
  */
 export interface UnknownTarget {
   /**
    * Dictionary of string->string pairs containing information about the Storage Target.
    */
   unknownMap?: { [propertyName: string]: string };
+}
+
+/**
+ * Contains the possible cases for StorageTargetProperties.
+ */
+export type StorageTargetPropertiesUnion = StorageTargetProperties | Nfs3TargetProperties | ClfsTargetProperties | UnknownTargetProperties;
+
+/**
+ * Properties of the Storage Target.
+ */
+export interface StorageTargetProperties {
+  /**
+   * Polymorphic Discriminator
+   */
+  targetBaseType: "StorageTargetProperties";
+  /**
+   * List of Cache namespace junctions to target for namespace associations.
+   */
+  junctions?: NamespaceJunction[];
+  /**
+   * Type of the Storage Target.
+   */
+  targetType?: string;
+  /**
+   * ARM provisioning state, see
+   * https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property.
+   * Possible values include: 'Succeeded', 'Failed', 'Cancelled', 'Creating', 'Deleting',
+   * 'Updating'
+   */
+  provisioningState?: ProvisioningStateType;
+  /**
+   * Properties when targetType is nfs3.
+   */
+  nfs3?: Nfs3Target;
+  /**
+   * Properties when targetType is clfs.
+   */
+  clfs?: ClfsTarget;
+  /**
+   * Properties when targetType is unknown.
+   */
+  unknown?: UnknownTarget;
+}
+
+/**
+ * Resource used by a Cache.
+ */
+export interface StorageTargetResource extends BaseResource {
+  /**
+   * Name of the Storage Target.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Resource ID of the Storage Target.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Type of the Storage Target; Microsoft.StorageCache/Cache/StorageTarget
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+}
+
+/**
+ * Type of the Storage Target.
+ */
+export interface StorageTarget extends StorageTargetResource {
+  /**
+   * List of Cache namespace junctions to target for namespace associations.
+   */
+  junctions?: NamespaceJunction[];
+  /**
+   * Type of the Storage Target.
+   */
+  targetType?: string;
+  /**
+   * ARM provisioning state, see
+   * https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property.
+   * Possible values include: 'Succeeded', 'Failed', 'Cancelled', 'Creating', 'Deleting',
+   * 'Updating'
+   */
+  provisioningState?: ProvisioningStateType;
+  /**
+   * Properties when targetType is nfs3.
+   */
+  nfs3?: Nfs3Target;
+  /**
+   * Properties when targetType is clfs.
+   */
+  clfs?: ClfsTarget;
+  /**
+   * Properties when targetType is unknown.
+   */
+  unknown?: UnknownTarget;
+  /**
+   * Polymorphic Discriminator
+   */
+  targetBaseType: string;
+}
+
+/**
+ * An NFSv3 mount point for use as a Storage Target.
+ */
+export interface Nfs3TargetProperties {
+  /**
+   * Polymorphic Discriminator
+   */
+  targetBaseType: "nfs3";
+  /**
+   * List of Cache namespace junctions to target for namespace associations.
+   */
+  junctions?: NamespaceJunction[];
+  /**
+   * Type of the Storage Target.
+   */
+  targetType?: string;
+  /**
+   * ARM provisioning state, see
+   * https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property.
+   * Possible values include: 'Succeeded', 'Failed', 'Cancelled', 'Creating', 'Deleting',
+   * 'Updating'
+   */
+  provisioningState?: ProvisioningStateType;
+  /**
+   * Properties when targetType is nfs3.
+   */
+  nfs3?: Nfs3Target;
+  /**
+   * Properties when targetType is clfs.
+   */
+  clfs?: ClfsTarget;
+  /**
+   * Properties when targetType is unknown.
+   */
+  unknown?: UnknownTarget;
+}
+
+/**
+ * Storage container for use as a CLFS Storage Target.
+ */
+export interface ClfsTargetProperties {
+  /**
+   * Polymorphic Discriminator
+   */
+  targetBaseType: "clfs";
+  /**
+   * List of Cache namespace junctions to target for namespace associations.
+   */
+  junctions?: NamespaceJunction[];
+  /**
+   * Type of the Storage Target.
+   */
+  targetType?: string;
+  /**
+   * ARM provisioning state, see
+   * https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property.
+   * Possible values include: 'Succeeded', 'Failed', 'Cancelled', 'Creating', 'Deleting',
+   * 'Updating'
+   */
+  provisioningState?: ProvisioningStateType;
+  /**
+   * Properties when targetType is nfs3.
+   */
+  nfs3?: Nfs3Target;
+  /**
+   * Properties when targetType is clfs.
+   */
+  clfs?: ClfsTarget;
+  /**
+   * Properties when targetType is unknown.
+   */
+  unknown?: UnknownTarget;
+}
+
+/**
+ * Storage container for use as an Unknown Storage Target.
+ */
+export interface UnknownTargetProperties {
+  /**
+   * Polymorphic Discriminator
+   */
+  targetBaseType: "unknown";
+  /**
+   * List of Cache namespace junctions to target for namespace associations.
+   */
+  junctions?: NamespaceJunction[];
+  /**
+   * Type of the Storage Target.
+   */
+  targetType?: string;
+  /**
+   * ARM provisioning state, see
+   * https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property.
+   * Possible values include: 'Succeeded', 'Failed', 'Cancelled', 'Creating', 'Deleting',
+   * 'Updating'
+   */
+  provisioningState?: ProvisioningStateType;
+  /**
+   * Properties when targetType is nfs3.
+   */
+  nfs3?: Nfs3Target;
+  /**
+   * Properties when targetType is clfs.
+   */
+  clfs?: ClfsTarget;
+  /**
+   * Properties when targetType is unknown.
+   */
+  unknown?: UnknownTarget;
 }
 
 /**
@@ -308,72 +541,6 @@ export interface ResourceSku {
    * restrictions.
    */
   restrictions?: Restriction[];
-}
-
-/**
- * A namespace junction.
- */
-export interface NamespaceJunction {
-  /**
-   * Namespace path on a Cache for a Storage Target.
-   */
-  namespacePath?: string;
-  /**
-   * Path in Storage Target to which namespacePath points.
-   */
-  targetPath?: string;
-  /**
-   * NFS export where targetPath exists.
-   */
-  nfsExport?: string;
-}
-
-/**
- * A storage system being cached by a Cache.
- */
-export interface StorageTarget extends BaseResource {
-  /**
-   * Name of the Storage Target.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Resource ID of the Storage Target.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Type of the Storage Target; Microsoft.StorageCache/Cache/StorageTarget
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * List of Cache namespace junctions to target for namespace associations.
-   */
-  junctions?: NamespaceJunction[];
-  /**
-   * Type of the Storage Target. Possible values include: 'nfs3', 'clfs', 'unknown'
-   */
-  targetType?: StorageTargetType;
-  /**
-   * ARM provisioning state, see
-   * https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property.
-   * Possible values include: 'Succeeded', 'Failed', 'Cancelled', 'Creating', 'Deleting',
-   * 'Updating'
-   */
-  provisioningState?: ProvisioningStateType;
-  /**
-   * Properties when targetType is nfs3.
-   */
-  nfs3?: Nfs3Target;
-  /**
-   * Properties when targetType is clfs.
-   */
-  clfs?: ClfsTarget;
-  /**
-   * Properties when targetType is unknown.
-   */
-  unknown?: UnknownTarget;
 }
 
 /**
@@ -552,20 +719,20 @@ export type ProvisioningStateType = 'Succeeded' | 'Failed' | 'Cancelled' | 'Crea
 export type FirmwareStatusType = 'available' | 'unavailable';
 
 /**
- * Defines values for ReasonCode.
- * Possible values include: 'QuotaId', 'NotAvailableForSubscription'
- * @readonly
- * @enum {string}
- */
-export type ReasonCode = 'QuotaId' | 'NotAvailableForSubscription';
-
-/**
  * Defines values for StorageTargetType.
  * Possible values include: 'nfs3', 'clfs', 'unknown'
  * @readonly
  * @enum {string}
  */
 export type StorageTargetType = 'nfs3' | 'clfs' | 'unknown';
+
+/**
+ * Defines values for ReasonCode.
+ * Possible values include: 'QuotaId', 'NotAvailableForSubscription'
+ * @readonly
+ * @enum {string}
+ */
+export type ReasonCode = 'QuotaId' | 'NotAvailableForSubscription';
 
 /**
  * Contains response data for the list operation.

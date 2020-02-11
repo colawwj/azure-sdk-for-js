@@ -7,6 +7,7 @@
  */
 
 export {
+  discriminators,
   BaseResource,
   Cache,
   CacheHealth,
@@ -18,5 +19,6 @@ export {
   NamespaceJunction,
   Nfs3Target,
   StorageTarget,
+  StorageTargetResource,
   UnknownTarget
 } from "../models/mappers";
