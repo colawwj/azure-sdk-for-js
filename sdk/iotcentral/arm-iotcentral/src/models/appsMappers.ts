@@ -15,7 +15,7 @@ export {
   AppTemplate,
   AppTemplatesResult,
   BaseResource,
-  ErrorDetails,
+  CloudError,
   ErrorResponseBody,
   OperationInputs,
   Resource
