@@ -1459,6 +1459,50 @@ export interface PrivateLinkResourceListResult {
 }
 
 /**
+ * The key vault properties for the encryption scope. This is a required field if encryption scope
+ * 'source' attribute is set to 'Microsoft.KeyVault'.
+ */
+export interface EncryptionScopeKeyVaultProperties {
+  /**
+   * The object identifier for a key vault key object. When applied, the encryption scope will use
+   * the key referenced by the identifier to enable customer-managed key support on this encryption
+   * scope.
+   */
+  keyUri?: string;
+}
+
+/**
+ * The Encryption Scope resource.
+ */
+export interface EncryptionScope extends Resource {
+  /**
+   * The provider for the encryption scope. Possible values (case-insensitive):  Microsoft.Storage,
+   * Microsoft.KeyVault. Possible values include: 'Microsoft.Storage', 'Microsoft.KeyVault'
+   */
+  source?: EncryptionScopeSource;
+  /**
+   * The state of the encryption scope. Possible values (case-insensitive):  Enabled, Disabled.
+   * Possible values include: 'Enabled', 'Disabled'
+   */
+  state?: EncryptionScopeState;
+  /**
+   * Gets the creation date and time of the encryption scope in UTC.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly creationTime?: Date;
+  /**
+   * Gets the last modification date and time of the encryption scope in UTC.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly lastModifiedTime?: Date;
+  /**
+   * The key vault properties for the encryption scope. This is a required field if encryption
+   * scope 'source' attribute is set to 'Microsoft.KeyVault'.
+   */
+  keyVaultProperties?: EncryptionScopeKeyVaultProperties;
+}
+
+/**
  * An error response from the storage resource provider.
  */
 export interface ErrorResponse {
@@ -1863,7 +1907,11 @@ export interface BlobServiceProperties extends Resource {
    */
   deleteRetentionPolicy?: DeleteRetentionPolicy;
   /**
-   * Automatic Snapshot is enabled if set to true.
+   * Versioning is enabled if set to true.
+   */
+  isVersioningEnabled?: boolean;
+  /**
+   * Deprecated in favor of isVersioningEnabled property.
    */
   automaticSnapshotPolicyEnabled?: boolean;
   /**
@@ -2266,6 +2314,21 @@ export interface UsageListResult extends Array<Usage> {
 
 /**
  * @interface
+ * List of encryption scopes requested, and if paging is required, a URL to the next page of
+ * encryption scopes.
+ * @extends Array<EncryptionScope>
+ */
+export interface EncryptionScopeListResult extends Array<EncryptionScope> {
+  /**
+   * Request URL that can be used to query next page of encryption scopes. Returned when total
+   * number of requested encryption scopes exceeds the maximum page size.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly nextLink?: string;
+}
+
+/**
+ * @interface
  * An interface representing the BlobServiceItems.
  * @extends Array<BlobServiceProperties>
  */
@@ -2529,6 +2592,22 @@ export type HttpProtocol = 'https,http' | 'https';
  * @enum {string}
  */
 export type SignedResource = 'b' | 'c' | 'f' | 's';
+
+/**
+ * Defines values for EncryptionScopeSource.
+ * Possible values include: 'Microsoft.Storage', 'Microsoft.KeyVault'
+ * @readonly
+ * @enum {string}
+ */
+export type EncryptionScopeSource = 'Microsoft.Storage' | 'Microsoft.KeyVault';
+
+/**
+ * Defines values for EncryptionScopeState.
+ * Possible values include: 'Enabled', 'Disabled'
+ * @readonly
+ * @enum {string}
+ */
+export type EncryptionScopeState = 'Enabled' | 'Disabled';
 
 /**
  * Defines values for PublicAccess.
@@ -3039,6 +3118,106 @@ export type PrivateLinkResourcesListByStorageAccountResponse = PrivateLinkResour
        * The response body as parsed JSON or XML
        */
       parsedBody: PrivateLinkResourceListResult;
+    };
+};
+
+/**
+ * Contains response data for the put operation.
+ */
+export type EncryptionScopesPutResponse = EncryptionScope & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: EncryptionScope;
+    };
+};
+
+/**
+ * Contains response data for the patch operation.
+ */
+export type EncryptionScopesPatchResponse = EncryptionScope & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: EncryptionScope;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type EncryptionScopesGetResponse = EncryptionScope & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: EncryptionScope;
+    };
+};
+
+/**
+ * Contains response data for the list operation.
+ */
+export type EncryptionScopesListResponse = EncryptionScopeListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: EncryptionScopeListResult;
+    };
+};
+
+/**
+ * Contains response data for the listNext operation.
+ */
+export type EncryptionScopesListNextResponse = EncryptionScopeListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: EncryptionScopeListResult;
     };
 };
 
