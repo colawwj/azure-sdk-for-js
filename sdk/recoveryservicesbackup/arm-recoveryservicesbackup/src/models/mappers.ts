@@ -4544,6 +4544,508 @@ export const ValidateOperationsResponse: msRest.CompositeMapper = {
   }
 };
 
+export const AADProperties: msRest.CompositeMapper = {
+  serializedName: "AADProperties",
+  type: {
+    name: "Composite",
+    className: "AADProperties",
+    modelProperties: {
+      servicePrincipalClientId: {
+        serializedName: "servicePrincipalClientId",
+        type: {
+          name: "String"
+        }
+      },
+      tenantId: {
+        serializedName: "tenantId",
+        type: {
+          name: "String"
+        }
+      },
+      authority: {
+        serializedName: "authority",
+        type: {
+          name: "String"
+        }
+      },
+      audience: {
+        serializedName: "audience",
+        type: {
+          name: "String"
+        }
+      },
+      servicePrincipalObjectId: {
+        serializedName: "servicePrincipalObjectId",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const AADPropertiesResource: msRest.CompositeMapper = {
+  serializedName: "AADPropertiesResource",
+  type: {
+    name: "Composite",
+    className: "AADPropertiesResource",
+    modelProperties: {
+      ...Resource.type.modelProperties,
+      properties: {
+        serializedName: "properties",
+        type: {
+          name: "Composite",
+          className: "AADProperties"
+        }
+      }
+    }
+  }
+};
+
+export const ClientScriptForConnect: msRest.CompositeMapper = {
+  serializedName: "ClientScriptForConnect",
+  type: {
+    name: "Composite",
+    className: "ClientScriptForConnect",
+    modelProperties: {
+      scriptContent: {
+        serializedName: "scriptContent",
+        type: {
+          name: "String"
+        }
+      },
+      scriptExtension: {
+        serializedName: "scriptExtension",
+        type: {
+          name: "String"
+        }
+      },
+      osType: {
+        serializedName: "osType",
+        type: {
+          name: "String"
+        }
+      },
+      url: {
+        serializedName: "url",
+        type: {
+          name: "String"
+        }
+      },
+      scriptNameSuffix: {
+        serializedName: "scriptNameSuffix",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const CrrAccessToken: msRest.CompositeMapper = {
+  serializedName: "CrrAccessToken",
+  type: {
+    name: "Composite",
+    className: "CrrAccessToken",
+    modelProperties: {
+      accessTokenString: {
+        serializedName: "accessTokenString",
+        type: {
+          name: "String"
+        }
+      },
+      subscriptionId: {
+        serializedName: "subscriptionId",
+        type: {
+          name: "String"
+        }
+      },
+      resourceGroupName: {
+        serializedName: "resourceGroupName",
+        type: {
+          name: "String"
+        }
+      },
+      resourceName: {
+        serializedName: "resourceName",
+        type: {
+          name: "String"
+        }
+      },
+      resourceId: {
+        serializedName: "resourceId",
+        type: {
+          name: "String"
+        }
+      },
+      recoveryPointId: {
+        serializedName: "recoveryPointId",
+        type: {
+          name: "String"
+        }
+      },
+      recoveryPointTime: {
+        serializedName: "recoveryPointTime",
+        type: {
+          name: "String"
+        }
+      },
+      containerName: {
+        serializedName: "containerName",
+        type: {
+          name: "String"
+        }
+      },
+      containerType: {
+        serializedName: "containerType",
+        type: {
+          name: "String"
+        }
+      },
+      backupManagementType: {
+        serializedName: "backupManagementType",
+        type: {
+          name: "String"
+        }
+      },
+      datasourceType: {
+        serializedName: "datasourceType",
+        type: {
+          name: "String"
+        }
+      },
+      datasourceName: {
+        serializedName: "datasourceName",
+        type: {
+          name: "String"
+        }
+      },
+      datasourceId: {
+        serializedName: "datasourceId",
+        type: {
+          name: "String"
+        }
+      },
+      datasourceContainerName: {
+        serializedName: "datasourceContainerName",
+        type: {
+          name: "String"
+        }
+      },
+      coordinatorServiceStampId: {
+        serializedName: "coordinatorServiceStampId",
+        type: {
+          name: "String"
+        }
+      },
+      coordinatorServiceStampUri: {
+        serializedName: "coordinatorServiceStampUri",
+        type: {
+          name: "String"
+        }
+      },
+      protectionServiceStampId: {
+        serializedName: "protectionServiceStampId",
+        type: {
+          name: "String"
+        }
+      },
+      protectionServiceStampUri: {
+        serializedName: "protectionServiceStampUri",
+        type: {
+          name: "String"
+        }
+      },
+      tokenExtendedInformation: {
+        serializedName: "tokenExtendedInformation",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const CrossRegionRestoreRequest: msRest.CompositeMapper = {
+  serializedName: "CrossRegionRestoreRequest",
+  type: {
+    name: "Composite",
+    className: "CrossRegionRestoreRequest",
+    modelProperties: {
+      crossRegionRestoreAccessDetails: {
+        serializedName: "crossRegionRestoreAccessDetails",
+        type: {
+          name: "Composite",
+          className: "CrrAccessToken"
+        }
+      },
+      restoreRequest: {
+        serializedName: "restoreRequest",
+        type: {
+          name: "Composite",
+          className: "RestoreRequest"
+        }
+      }
+    }
+  }
+};
+
+export const CrossRegionRestoreRequestResource: msRest.CompositeMapper = {
+  serializedName: "CrossRegionRestoreRequestResource",
+  type: {
+    name: "Composite",
+    className: "CrossRegionRestoreRequestResource",
+    modelProperties: {
+      ...Resource.type.modelProperties,
+      properties: {
+        serializedName: "properties",
+        type: {
+          name: "Composite",
+          className: "CrossRegionRestoreRequest"
+        }
+      }
+    }
+  }
+};
+
+export const CrrAccessTokenResource: msRest.CompositeMapper = {
+  serializedName: "CrrAccessTokenResource",
+  type: {
+    name: "Composite",
+    className: "CrrAccessTokenResource",
+    modelProperties: {
+      ...Resource.type.modelProperties,
+      properties: {
+        serializedName: "properties",
+        type: {
+          name: "Composite",
+          className: "CrrAccessToken"
+        }
+      }
+    }
+  }
+};
+
+export const InstantItemRecoveryTarget: msRest.CompositeMapper = {
+  serializedName: "InstantItemRecoveryTarget",
+  type: {
+    name: "Composite",
+    className: "InstantItemRecoveryTarget",
+    modelProperties: {
+      clientScripts: {
+        serializedName: "clientScripts",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "ClientScriptForConnect"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const OperationStatusError: msRest.CompositeMapper = {
+  serializedName: "OperationStatusError",
+  type: {
+    name: "Composite",
+    className: "OperationStatusError",
+    modelProperties: {
+      code: {
+        serializedName: "code",
+        type: {
+          name: "String"
+        }
+      },
+      message: {
+        serializedName: "message",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const OperationStatusExtendedInfo: msRest.CompositeMapper = {
+  serializedName: "OperationStatusExtendedInfo",
+  type: {
+    name: "Composite",
+    polymorphicDiscriminator: {
+      serializedName: "objectType",
+      clientName: "objectType"
+    },
+    uberParent: "OperationStatusExtendedInfo",
+    className: "OperationStatusExtendedInfo",
+    modelProperties: {
+      objectType: {
+        required: true,
+        serializedName: "objectType",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const OperationStatus: msRest.CompositeMapper = {
+  serializedName: "OperationStatus",
+  type: {
+    name: "Composite",
+    className: "OperationStatus",
+    modelProperties: {
+      id: {
+        serializedName: "id",
+        type: {
+          name: "String"
+        }
+      },
+      name: {
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      status: {
+        serializedName: "status",
+        type: {
+          name: "String"
+        }
+      },
+      startTime: {
+        serializedName: "startTime",
+        type: {
+          name: "DateTime"
+        }
+      },
+      endTime: {
+        serializedName: "endTime",
+        type: {
+          name: "DateTime"
+        }
+      },
+      error: {
+        serializedName: "error",
+        type: {
+          name: "Composite",
+          className: "OperationStatusError"
+        }
+      },
+      properties: {
+        serializedName: "properties",
+        type: {
+          name: "Composite",
+          className: "OperationStatusExtendedInfo"
+        }
+      }
+    }
+  }
+};
+
+export const OperationStatusJobExtendedInfo: msRest.CompositeMapper = {
+  serializedName: "OperationStatusJobExtendedInfo",
+  type: {
+    name: "Composite",
+    polymorphicDiscriminator: OperationStatusExtendedInfo.type.polymorphicDiscriminator,
+    uberParent: "OperationStatusExtendedInfo",
+    className: "OperationStatusJobExtendedInfo",
+    modelProperties: {
+      ...OperationStatusExtendedInfo.type.modelProperties,
+      jobId: {
+        serializedName: "jobId",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const OperationStatusJobsExtendedInfo: msRest.CompositeMapper = {
+  serializedName: "OperationStatusJobsExtendedInfo",
+  type: {
+    name: "Composite",
+    polymorphicDiscriminator: OperationStatusExtendedInfo.type.polymorphicDiscriminator,
+    uberParent: "OperationStatusExtendedInfo",
+    className: "OperationStatusJobsExtendedInfo",
+    modelProperties: {
+      ...OperationStatusExtendedInfo.type.modelProperties,
+      jobIds: {
+        serializedName: "jobIds",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      failedJobsError: {
+        serializedName: "failedJobsError",
+        type: {
+          name: "Dictionary",
+          value: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const OperationStatusProvisionILRExtendedInfo: msRest.CompositeMapper = {
+  serializedName: "OperationStatusProvisionILRExtendedInfo",
+  type: {
+    name: "Composite",
+    polymorphicDiscriminator: OperationStatusExtendedInfo.type.polymorphicDiscriminator,
+    uberParent: "OperationStatusExtendedInfo",
+    className: "OperationStatusProvisionILRExtendedInfo",
+    modelProperties: {
+      ...OperationStatusExtendedInfo.type.modelProperties,
+      recoveryTarget: {
+        serializedName: "recoveryTarget",
+        type: {
+          name: "Composite",
+          className: "InstantItemRecoveryTarget"
+        }
+      }
+    }
+  }
+};
+
+export const OperationStatusRecoveryPointExtendedInfo: msRest.CompositeMapper = {
+  serializedName: "OperationStatusRecoveryPointExtendedInfo",
+  type: {
+    name: "Composite",
+    polymorphicDiscriminator: OperationStatusExtendedInfo.type.polymorphicDiscriminator,
+    uberParent: "OperationStatusExtendedInfo",
+    className: "OperationStatusRecoveryPointExtendedInfo",
+    modelProperties: {
+      ...OperationStatusExtendedInfo.type.modelProperties,
+      updatedRecoveryPoint: {
+        serializedName: "updatedRecoveryPoint",
+        type: {
+          name: "Composite",
+          className: "RecoveryPoint"
+        }
+      },
+      deletedBackupItemVersion: {
+        serializedName: "deletedBackupItemVersion",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const FeatureSupportRequest: msRest.CompositeMapper = {
   serializedName: "FeatureSupportRequest",
   type: {
@@ -6617,46 +7119,6 @@ export const BMSWorkloadItemQueryObject: msRest.CompositeMapper = {
   }
 };
 
-export const ClientScriptForConnect: msRest.CompositeMapper = {
-  serializedName: "ClientScriptForConnect",
-  type: {
-    name: "Composite",
-    className: "ClientScriptForConnect",
-    modelProperties: {
-      scriptContent: {
-        serializedName: "scriptContent",
-        type: {
-          name: "String"
-        }
-      },
-      scriptExtension: {
-        serializedName: "scriptExtension",
-        type: {
-          name: "String"
-        }
-      },
-      osType: {
-        serializedName: "osType",
-        type: {
-          name: "String"
-        }
-      },
-      url: {
-        serializedName: "url",
-        type: {
-          name: "String"
-        }
-      },
-      scriptNameSuffix: {
-        serializedName: "scriptNameSuffix",
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
 export const ContainerIdentityInfo: msRest.CompositeMapper = {
   serializedName: "ContainerIdentityInfo",
   type: {
@@ -6854,28 +7316,6 @@ export const ILRRequestResource: msRest.CompositeMapper = {
   }
 };
 
-export const InstantItemRecoveryTarget: msRest.CompositeMapper = {
-  serializedName: "InstantItemRecoveryTarget",
-  type: {
-    name: "Composite",
-    className: "InstantItemRecoveryTarget",
-    modelProperties: {
-      clientScripts: {
-        serializedName: "clientScripts",
-        type: {
-          name: "Sequence",
-          element: {
-            type: {
-              name: "Composite",
-              className: "ClientScriptForConnect"
-            }
-          }
-        }
-      }
-    }
-  }
-};
-
 export const MabContainerExtendedInfo: msRest.CompositeMapper = {
   serializedName: "MabContainerExtendedInfo",
   type: {
@@ -7016,178 +7456,6 @@ export const MabContainer: msRest.CompositeMapper = {
         serializedName: "containerHealthState",
         type: {
           name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const OperationStatusError: msRest.CompositeMapper = {
-  serializedName: "OperationStatusError",
-  type: {
-    name: "Composite",
-    className: "OperationStatusError",
-    modelProperties: {
-      code: {
-        serializedName: "code",
-        type: {
-          name: "String"
-        }
-      },
-      message: {
-        serializedName: "message",
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const OperationStatusExtendedInfo: msRest.CompositeMapper = {
-  serializedName: "OperationStatusExtendedInfo",
-  type: {
-    name: "Composite",
-    polymorphicDiscriminator: {
-      serializedName: "objectType",
-      clientName: "objectType"
-    },
-    uberParent: "OperationStatusExtendedInfo",
-    className: "OperationStatusExtendedInfo",
-    modelProperties: {
-      objectType: {
-        required: true,
-        serializedName: "objectType",
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const OperationStatus: msRest.CompositeMapper = {
-  serializedName: "OperationStatus",
-  type: {
-    name: "Composite",
-    className: "OperationStatus",
-    modelProperties: {
-      id: {
-        serializedName: "id",
-        type: {
-          name: "String"
-        }
-      },
-      name: {
-        serializedName: "name",
-        type: {
-          name: "String"
-        }
-      },
-      status: {
-        serializedName: "status",
-        type: {
-          name: "String"
-        }
-      },
-      startTime: {
-        serializedName: "startTime",
-        type: {
-          name: "DateTime"
-        }
-      },
-      endTime: {
-        serializedName: "endTime",
-        type: {
-          name: "DateTime"
-        }
-      },
-      error: {
-        serializedName: "error",
-        type: {
-          name: "Composite",
-          className: "OperationStatusError"
-        }
-      },
-      properties: {
-        serializedName: "properties",
-        type: {
-          name: "Composite",
-          className: "OperationStatusExtendedInfo"
-        }
-      }
-    }
-  }
-};
-
-export const OperationStatusJobExtendedInfo: msRest.CompositeMapper = {
-  serializedName: "OperationStatusJobExtendedInfo",
-  type: {
-    name: "Composite",
-    polymorphicDiscriminator: OperationStatusExtendedInfo.type.polymorphicDiscriminator,
-    uberParent: "OperationStatusExtendedInfo",
-    className: "OperationStatusJobExtendedInfo",
-    modelProperties: {
-      ...OperationStatusExtendedInfo.type.modelProperties,
-      jobId: {
-        serializedName: "jobId",
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const OperationStatusJobsExtendedInfo: msRest.CompositeMapper = {
-  serializedName: "OperationStatusJobsExtendedInfo",
-  type: {
-    name: "Composite",
-    polymorphicDiscriminator: OperationStatusExtendedInfo.type.polymorphicDiscriminator,
-    uberParent: "OperationStatusExtendedInfo",
-    className: "OperationStatusJobsExtendedInfo",
-    modelProperties: {
-      ...OperationStatusExtendedInfo.type.modelProperties,
-      jobIds: {
-        serializedName: "jobIds",
-        type: {
-          name: "Sequence",
-          element: {
-            type: {
-              name: "String"
-            }
-          }
-        }
-      },
-      failedJobsError: {
-        serializedName: "failedJobsError",
-        type: {
-          name: "Dictionary",
-          value: {
-            type: {
-              name: "String"
-            }
-          }
-        }
-      }
-    }
-  }
-};
-
-export const OperationStatusProvisionILRExtendedInfo: msRest.CompositeMapper = {
-  serializedName: "OperationStatusProvisionILRExtendedInfo",
-  type: {
-    name: "Composite",
-    polymorphicDiscriminator: OperationStatusExtendedInfo.type.polymorphicDiscriminator,
-    uberParent: "OperationStatusExtendedInfo",
-    className: "OperationStatusProvisionILRExtendedInfo",
-    modelProperties: {
-      ...OperationStatusExtendedInfo.type.modelProperties,
-      recoveryTarget: {
-        serializedName: "recoveryTarget",
-        type: {
-          name: "Composite",
-          className: "InstantItemRecoveryTarget"
         }
       }
     }
@@ -7770,6 +8038,11 @@ export const discriminators = {
   'ValidateOperationRequest.ValidateIaasVMRestoreOperationRequest' : ValidateIaasVMRestoreOperationRequest,
   'ValidateOperationRequest' : ValidateOperationRequest,
   'ValidateOperationRequest.ValidateRestoreOperationRequest' : ValidateRestoreOperationRequest,
+  'OperationStatusExtendedInfo' : OperationStatusExtendedInfo,
+  'OperationStatusExtendedInfo.OperationStatusJobExtendedInfo' : OperationStatusJobExtendedInfo,
+  'OperationStatusExtendedInfo.OperationStatusJobsExtendedInfo' : OperationStatusJobsExtendedInfo,
+  'OperationStatusExtendedInfo.OperationStatusProvisionILRExtendedInfo' : OperationStatusProvisionILRExtendedInfo,
+  'OperationStatusExtendedInfo.OperationStatusRecoveryPointExtendedInfo' : OperationStatusRecoveryPointExtendedInfo,
   'FeatureSupportRequest.AzureBackupGoals' : AzureBackupGoalFeatureSupportRequest,
   'ProtectionIntent.RecoveryServiceVaultItem' : AzureRecoveryServiceVaultProtectionIntent,
   'ProtectionIntent.AzureResourceItem' : AzureResourceProtectionIntent,
@@ -7820,10 +8093,6 @@ export const discriminators = {
   'WorkloadProtectableItem.IaaSVMProtectableItem' : IaaSVMProtectableItem,
   'ILRRequest' : ILRRequest,
   'ProtectionContainer.Windows' : MabContainer,
-  'OperationStatusExtendedInfo' : OperationStatusExtendedInfo,
-  'OperationStatusExtendedInfo.OperationStatusJobExtendedInfo' : OperationStatusJobExtendedInfo,
-  'OperationStatusExtendedInfo.OperationStatusJobsExtendedInfo' : OperationStatusJobsExtendedInfo,
-  'OperationStatusExtendedInfo.OperationStatusProvisionILRExtendedInfo' : OperationStatusProvisionILRExtendedInfo,
   'ProtectableContainer' : ProtectableContainer,
   'ProtectionContainer' : ProtectionContainer,
   'WorkloadItem' : WorkloadItem,

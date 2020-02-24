@@ -8,6 +8,8 @@
 
 export {
   discriminators,
+  AADProperties,
+  AADPropertiesResource,
   AzureBackupServerContainer,
   AzureBackupServerEngine,
   AzureFileShareBackupRequest,
@@ -102,6 +104,10 @@ export {
   BEKDetails,
   CloudError,
   ContainerIdentityInfo,
+  CrossRegionRestoreRequest,
+  CrossRegionRestoreRequestResource,
+  CrrAccessToken,
+  CrrAccessTokenResource,
   DailyRetentionFormat,
   DailyRetentionSchedule,
   Day,

@@ -4122,6 +4122,310 @@ export interface ValidateOperationsResponse {
 }
 
 /**
+ * An interface representing AADProperties.
+ */
+export interface AADProperties {
+  servicePrincipalClientId?: string;
+  tenantId?: string;
+  authority?: string;
+  audience?: string;
+  servicePrincipalObjectId?: string;
+}
+
+/**
+ * An interface representing AADPropertiesResource.
+ */
+export interface AADPropertiesResource extends Resource {
+  /**
+   * AADPropertiesResource properties
+   */
+  properties?: AADProperties;
+}
+
+/**
+ * Client script details for file / folder restore.
+ */
+export interface ClientScriptForConnect {
+  /**
+   * File content of the client script for file / folder restore.
+   */
+  scriptContent?: string;
+  /**
+   * File extension of the client script for file / folder restore - .ps1 , .sh , etc.
+   */
+  scriptExtension?: string;
+  /**
+   * OS type - Windows, Linux etc. for which this file / folder restore client script works.
+   */
+  osType?: string;
+  /**
+   * URL of Executable from where to source the content. If this is not null then ScriptContent
+   * should not be used
+   */
+  url?: string;
+  /**
+   * Mandatory suffix that should be added to the name of script that is given for download to
+   * user.
+   * If its null or empty then , ignore it.
+   */
+  scriptNameSuffix?: string;
+}
+
+/**
+ * Container level access token for CRR
+ */
+export interface CrrAccessToken {
+  /**
+   * Access token used for authentication
+   */
+  accessTokenString?: string;
+  /**
+   * Subscription Id of the source vault
+   */
+  subscriptionId?: string;
+  /**
+   * Resource Group name of the source vault
+   */
+  resourceGroupName?: string;
+  /**
+   * Resource Name of the source vault
+   */
+  resourceName?: string;
+  /**
+   * Resource Id of the source vault
+   */
+  resourceId?: string;
+  /**
+   * Recovery Point Id
+   */
+  recoveryPointId?: string;
+  /**
+   * Recovery Point Time
+   */
+  recoveryPointTime?: string;
+  /**
+   * Container Unique name
+   */
+  containerName?: string;
+  /**
+   * Container Type
+   */
+  containerType?: string;
+  /**
+   * Backup Management Type
+   */
+  backupManagementType?: string;
+  /**
+   * Datasource Type
+   */
+  datasourceType?: string;
+  /**
+   * Datasource Friendly Name
+   */
+  datasourceName?: string;
+  /**
+   * Datasource Id
+   */
+  datasourceId?: string;
+  /**
+   * Datasource Container Unique Name
+   */
+  datasourceContainerName?: string;
+  /**
+   * CoordinatorServiceStampId to be used by BCM in restore call
+   */
+  coordinatorServiceStampId?: string;
+  /**
+   * CoordinatorServiceStampUri to be used by BCM in restore call
+   */
+  coordinatorServiceStampUri?: string;
+  /**
+   * ProtectionServiceStampId to be used by BCM in restore call
+   */
+  protectionServiceStampId?: string;
+  /**
+   * ProtectionServiceStampUri to be used by BCM in restore call
+   */
+  protectionServiceStampUri?: string;
+  /**
+   * Extended Information about the token like FileSpec etc.
+   */
+  tokenExtendedInformation?: string;
+}
+
+/**
+ * An interface representing CrossRegionRestoreRequest.
+ */
+export interface CrossRegionRestoreRequest {
+  /**
+   * Access details for cross region restore
+   */
+  crossRegionRestoreAccessDetails?: CrrAccessToken;
+  /**
+   * Request object for triggering restore
+   */
+  restoreRequest?: RestoreRequestUnion;
+}
+
+/**
+ * An interface representing CrossRegionRestoreRequestResource.
+ */
+export interface CrossRegionRestoreRequestResource extends Resource {
+  /**
+   * CrossRegionRestoreRequestResource properties
+   */
+  properties?: CrossRegionRestoreRequest;
+}
+
+/**
+ * Container level access token for CRR
+ */
+export interface CrrAccessTokenResource extends Resource {
+  /**
+   * CrrAccessTokenResource properties
+   */
+  properties?: CrrAccessToken;
+}
+
+/**
+ * Target details for file / folder restore.
+ */
+export interface InstantItemRecoveryTarget {
+  /**
+   * List of client scripts.
+   */
+  clientScripts?: ClientScriptForConnect[];
+}
+
+/**
+ * Error information associated with operation status call.
+ */
+export interface OperationStatusError {
+  /**
+   * Error code of the operation failure.
+   */
+  code?: string;
+  /**
+   * Error message displayed if the operation failure.
+   */
+  message?: string;
+}
+
+/**
+ * Contains the possible cases for OperationStatusExtendedInfo.
+ */
+export type OperationStatusExtendedInfoUnion = OperationStatusExtendedInfo | OperationStatusJobExtendedInfo | OperationStatusJobsExtendedInfo | OperationStatusProvisionILRExtendedInfo | OperationStatusRecoveryPointExtendedInfo;
+
+/**
+ * Base class for additional information of operation status.
+ */
+export interface OperationStatusExtendedInfo {
+  /**
+   * Polymorphic Discriminator
+   */
+  objectType: "OperationStatusExtendedInfo";
+}
+
+/**
+ * Operation status.
+ */
+export interface OperationStatus {
+  /**
+   * ID of the operation.
+   */
+  id?: string;
+  /**
+   * Name of the operation.
+   */
+  name?: string;
+  /**
+   * Operation status. Possible values include: 'Invalid', 'InProgress', 'Succeeded', 'Failed',
+   * 'Canceled'
+   */
+  status?: OperationStatusValues;
+  /**
+   * Operation start time. Format: ISO-8601.
+   */
+  startTime?: Date;
+  /**
+   * Operation end time. Format: ISO-8601.
+   */
+  endTime?: Date;
+  /**
+   * Error information related to this operation.
+   */
+  error?: OperationStatusError;
+  /**
+   * Additional information associated with this operation.
+   */
+  properties?: OperationStatusExtendedInfoUnion;
+}
+
+/**
+ * Operation status job extended info.
+ */
+export interface OperationStatusJobExtendedInfo {
+  /**
+   * Polymorphic Discriminator
+   */
+  objectType: "OperationStatusJobExtendedInfo";
+  /**
+   * ID of the job created for this protected item.
+   */
+  jobId?: string;
+}
+
+/**
+ * Operation status extended info for list of jobs.
+ */
+export interface OperationStatusJobsExtendedInfo {
+  /**
+   * Polymorphic Discriminator
+   */
+  objectType: "OperationStatusJobsExtendedInfo";
+  /**
+   * IDs of the jobs created for the protected item.
+   */
+  jobIds?: string[];
+  /**
+   * Stores all the failed jobs along with the corresponding error codes.
+   */
+  failedJobsError?: { [propertyName: string]: string };
+}
+
+/**
+ * Operation status extended info for ILR provision action.
+ */
+export interface OperationStatusProvisionILRExtendedInfo {
+  /**
+   * Polymorphic Discriminator
+   */
+  objectType: "OperationStatusProvisionILRExtendedInfo";
+  /**
+   * Target details for file / folder restore.
+   */
+  recoveryTarget?: InstantItemRecoveryTarget;
+}
+
+/**
+ * Operation status extended info for Updated Recovery Point.
+ */
+export interface OperationStatusRecoveryPointExtendedInfo {
+  /**
+   * Polymorphic Discriminator
+   */
+  objectType: "OperationStatusRecoveryPointExtendedInfo";
+  /**
+   * Recovery Point info with updated source snapshot URI
+   */
+  updatedRecoveryPoint?: RecoveryPointUnion;
+  /**
+   * In case the share is in soft-deleted state, populate this field with deleted backup item
+   */
+  deletedBackupItemVersion?: string;
+}
+
+/**
  * Contains the possible cases for FeatureSupportRequest.
  */
 export type FeatureSupportRequestUnion = FeatureSupportRequest | AzureBackupGoalFeatureSupportRequest | AzureVMResourceFeatureSupportRequest;
@@ -6713,35 +7017,6 @@ export interface BMSWorkloadItemQueryObject {
 }
 
 /**
- * Client script details for file / folder restore.
- */
-export interface ClientScriptForConnect {
-  /**
-   * File content of the client script for file / folder restore.
-   */
-  scriptContent?: string;
-  /**
-   * File extension of the client script for file / folder restore - .ps1 , .sh , etc.
-   */
-  scriptExtension?: string;
-  /**
-   * OS type - Windows, Linux etc. for which this file / folder restore client script works.
-   */
-  osType?: string;
-  /**
-   * URL of Executable from where to source the content. If this is not null then ScriptContent
-   * should not be used
-   */
-  url?: string;
-  /**
-   * Mandatory suffix that should be added to the name of script that is given for download to
-   * user.
-   * If its null or empty then , ignore it.
-   */
-  scriptNameSuffix?: string;
-}
-
-/**
  * Container identity information
  */
 export interface ContainerIdentityInfo {
@@ -6938,16 +7213,6 @@ export interface ILRRequestResource extends Resource {
 }
 
 /**
- * Target details for file / folder restore.
- */
-export interface InstantItemRecoveryTarget {
-  /**
-   * List of client scripts.
-   */
-  clientScripts?: ClientScriptForConnect[];
-}
-
-/**
  * Additional information of the container.
  */
 export interface MabContainerExtendedInfo {
@@ -7052,116 +7317,6 @@ export interface MabContainer {
    * Health state of mab container.
    */
   containerHealthState?: string;
-}
-
-/**
- * Error information associated with operation status call.
- */
-export interface OperationStatusError {
-  /**
-   * Error code of the operation failure.
-   */
-  code?: string;
-  /**
-   * Error message displayed if the operation failure.
-   */
-  message?: string;
-}
-
-/**
- * Contains the possible cases for OperationStatusExtendedInfo.
- */
-export type OperationStatusExtendedInfoUnion = OperationStatusExtendedInfo | OperationStatusJobExtendedInfo | OperationStatusJobsExtendedInfo | OperationStatusProvisionILRExtendedInfo;
-
-/**
- * Base class for additional information of operation status.
- */
-export interface OperationStatusExtendedInfo {
-  /**
-   * Polymorphic Discriminator
-   */
-  objectType: "OperationStatusExtendedInfo";
-}
-
-/**
- * Operation status.
- */
-export interface OperationStatus {
-  /**
-   * ID of the operation.
-   */
-  id?: string;
-  /**
-   * Name of the operation.
-   */
-  name?: string;
-  /**
-   * Operation status. Possible values include: 'Invalid', 'InProgress', 'Succeeded', 'Failed',
-   * 'Canceled'
-   */
-  status?: OperationStatusValues;
-  /**
-   * Operation start time. Format: ISO-8601.
-   */
-  startTime?: Date;
-  /**
-   * Operation end time. Format: ISO-8601.
-   */
-  endTime?: Date;
-  /**
-   * Error information related to this operation.
-   */
-  error?: OperationStatusError;
-  /**
-   * Additional information associated with this operation.
-   */
-  properties?: OperationStatusExtendedInfoUnion;
-}
-
-/**
- * Operation status job extended info.
- */
-export interface OperationStatusJobExtendedInfo {
-  /**
-   * Polymorphic Discriminator
-   */
-  objectType: "OperationStatusJobExtendedInfo";
-  /**
-   * ID of the job created for this protected item.
-   */
-  jobId?: string;
-}
-
-/**
- * Operation status extended info for list of jobs.
- */
-export interface OperationStatusJobsExtendedInfo {
-  /**
-   * Polymorphic Discriminator
-   */
-  objectType: "OperationStatusJobsExtendedInfo";
-  /**
-   * IDs of the jobs created for the protected item.
-   */
-  jobIds?: string[];
-  /**
-   * Stores all the failed jobs along with the corresponding error codes.
-   */
-  failedJobsError?: { [propertyName: string]: string };
-}
-
-/**
- * Operation status extended info for ILR provision action.
- */
-export interface OperationStatusProvisionILRExtendedInfo {
-  /**
-   * Polymorphic Discriminator
-   */
-  objectType: "OperationStatusProvisionILRExtendedInfo";
-  /**
-   * Target details for file / folder restore.
-   */
-  recoveryTarget?: InstantItemRecoveryTarget;
 }
 
 /**
@@ -7364,6 +7519,30 @@ export interface JobsExportMethodOptionalParams extends msRest.RequestOptionsBas
  * Optional Parameters.
  */
 export interface BackupProtectedItemsListOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * OData filter options.
+   */
+  filter?: string;
+  /**
+   * skipToken Filter.
+   */
+  skipToken?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface RecoveryPointsCrrListOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * OData filter options.
+   */
+  filter?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface BackupProtectedItemsCrrListOptionalParams extends msRest.RequestOptionsBase {
   /**
    * OData filter options.
    */
@@ -7918,6 +8097,14 @@ export type HealthState = 'Passed' | 'ActionRequired' | 'ActionSuggested' | 'Inv
 export type ScheduleRunType = 'Invalid' | 'Daily' | 'Weekly';
 
 /**
+ * Defines values for OperationStatusValues.
+ * Possible values include: 'Invalid', 'InProgress', 'Succeeded', 'Failed', 'Canceled'
+ * @readonly
+ * @enum {string}
+ */
+export type OperationStatusValues = 'Invalid' | 'InProgress' | 'Succeeded' | 'Failed' | 'Canceled';
+
+/**
  * Defines values for SupportStatus.
  * Possible values include: 'Invalid', 'Supported', 'DefaultOFF', 'DefaultON', 'NotSupported'
  * @readonly
@@ -8037,14 +8224,6 @@ export type ContainerType = 'Invalid' | 'Unknown' | 'IaasVMContainer' | 'IaasVMS
  * @enum {string}
  */
 export type BackupItemType = 'Invalid' | 'VM' | 'FileFolder' | 'AzureSqlDb' | 'SQLDB' | 'Exchange' | 'Sharepoint' | 'VMwareVM' | 'SystemState' | 'Client' | 'GenericDataSource' | 'SQLDataBase' | 'AzureFileShare' | 'SAPHanaDatabase' | 'SAPAseDatabase';
-
-/**
- * Defines values for OperationStatusValues.
- * Possible values include: 'Invalid', 'InProgress', 'Succeeded', 'Failed', 'Canceled'
- * @readonly
- * @enum {string}
- */
-export type OperationStatusValues = 'Invalid' | 'InProgress' | 'Succeeded' | 'Failed' | 'Canceled';
 
 /**
  * Contains response data for the get operation.
@@ -8183,6 +8362,26 @@ export type RecoveryPointsGetResponse = RecoveryPointResource & {
        * The response body as parsed JSON or XML
        */
       parsedBody: RecoveryPointResource;
+    };
+};
+
+/**
+ * Contains response data for the getAccessToken operation.
+ */
+export type RecoveryPointsGetAccessTokenResponse = CrrAccessTokenResource & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: CrrAccessTokenResource;
     };
 };
 
@@ -8443,6 +8642,186 @@ export type OperationValidateResponse = ValidateOperationsResponse & {
        * The response body as parsed JSON or XML
        */
       parsedBody: ValidateOperationsResponse;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type AadPropertiesGetResponse = AADPropertiesResource & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: AADPropertiesResource;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type BackupCrrJobDetailsGetResponse = JobResource & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: JobResource;
+    };
+};
+
+/**
+ * Contains response data for the list operation.
+ */
+export type BackupCrrJobsListResponse = JobResourceList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: JobResourceList;
+    };
+};
+
+/**
+ * Contains response data for the listNext operation.
+ */
+export type BackupCrrJobsListNextResponse = JobResourceList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: JobResourceList;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type CrrOperationStatusGetResponse = OperationStatus & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: OperationStatus;
+    };
+};
+
+/**
+ * Contains response data for the list operation.
+ */
+export type RecoveryPointsCrrListResponse = RecoveryPointResourceList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: RecoveryPointResourceList;
+    };
+};
+
+/**
+ * Contains response data for the listNext operation.
+ */
+export type RecoveryPointsCrrListNextResponse = RecoveryPointResourceList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: RecoveryPointResourceList;
+    };
+};
+
+/**
+ * Contains response data for the list operation.
+ */
+export type BackupProtectedItemsCrrListResponse = ProtectedItemResourceList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ProtectedItemResourceList;
+    };
+};
+
+/**
+ * Contains response data for the listNext operation.
+ */
+export type BackupProtectedItemsCrrListNextResponse = ProtectedItemResourceList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ProtectedItemResourceList;
     };
 };
 
