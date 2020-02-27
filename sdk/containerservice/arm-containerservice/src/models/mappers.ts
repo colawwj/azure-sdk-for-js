@@ -1167,6 +1167,22 @@ export const ManagedClusterServicePrincipalProfile: msRest.CompositeMapper = {
   }
 };
 
+export const AgentPoolVersionProfile: msRest.CompositeMapper = {
+  serializedName: "AgentPoolVersionProfile",
+  type: {
+    name: "Composite",
+    className: "AgentPoolVersionProfile",
+    modelProperties: {
+      nodeImageVersion: {
+        serializedName: "nodeImageVersion",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const ManagedClusterAgentPoolProfileProperties: msRest.CompositeMapper = {
   serializedName: "ManagedClusterAgentPoolProfileProperties",
   type: {
@@ -1322,6 +1338,13 @@ export const ManagedClusterAgentPoolProfileProperties: msRest.CompositeMapper = 
               name: "String"
             }
           }
+        }
+      },
+      agentPoolVersionProfile: {
+        serializedName: "agentPoolVersionProfile",
+        type: {
+          name: "Composite",
+          className: "AgentPoolVersionProfile"
         }
       }
     }
@@ -1505,6 +1528,13 @@ export const AgentPool: msRest.CompositeMapper = {
               name: "String"
             }
           }
+        }
+      },
+      agentPoolVersionProfile: {
+        serializedName: "properties.agentPoolVersionProfile",
+        type: {
+          name: "Composite",
+          className: "AgentPoolVersionProfile"
         }
       }
     }
@@ -2016,6 +2046,28 @@ export const ManagedClusterIdentity: msRest.CompositeMapper = {
   }
 };
 
+export const ManagedClusterSKU: msRest.CompositeMapper = {
+  serializedName: "ManagedClusterSKU",
+  type: {
+    name: "Composite",
+    className: "ManagedClusterSKU",
+    modelProperties: {
+      name: {
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      tier: {
+        serializedName: "tier",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const ManagedCluster: msRest.CompositeMapper = {
   serializedName: "ManagedCluster",
   type: {
@@ -2177,6 +2229,13 @@ export const ManagedCluster: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "ManagedClusterIdentity"
+        }
+      },
+      sku: {
+        serializedName: "sku",
+        type: {
+          name: "Composite",
+          className: "ManagedClusterSKU"
         }
       }
     }

@@ -9,6 +9,7 @@
 export {
   discriminators,
   AgentPool,
+  AgentPoolVersionProfile,
   BaseResource,
   CloudError,
   ContainerService,
@@ -46,6 +47,7 @@ export {
   ManagedClusterPropertiesAutoScalerProfile,
   ManagedClusterPropertiesIdentityProfileValue,
   ManagedClusterServicePrincipalProfile,
+  ManagedClusterSKU,
   ManagedClusterUpgradeProfile,
   ManagedClusterWindowsProfile,
   NetworkProfile,

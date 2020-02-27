@@ -801,6 +801,16 @@ export interface ManagedClusterServicePrincipalProfile {
 }
 
 /**
+ * The agent pool's node image version.
+ */
+export interface AgentPoolVersionProfile {
+  /**
+   * The node image version.
+   */
+  nodeImageVersion?: string;
+}
+
+/**
  * Properties for the container service agent pool profile.
  */
 export interface ManagedClusterAgentPoolProfileProperties {
@@ -933,6 +943,10 @@ export interface ManagedClusterAgentPoolProfileProperties {
    * key=value:NoSchedule.
    */
   nodeTaints?: string[];
+  /**
+   * AgentPoolVersionProfile contains the agent pool components' version information.
+   */
+  agentPoolVersionProfile?: AgentPoolVersionProfile;
 }
 
 /**
@@ -1078,6 +1092,10 @@ export interface AgentPool extends SubResource {
    * key=value:NoSchedule.
    */
   nodeTaints?: string[];
+  /**
+   * AgentPoolVersionProfile contains the agent pool components' version information.
+   */
+  agentPoolVersionProfile?: AgentPoolVersionProfile;
 }
 
 /**
@@ -1346,6 +1364,20 @@ export interface ManagedClusterIdentity {
 }
 
 /**
+ * An interface representing ManagedClusterSKU.
+ */
+export interface ManagedClusterSKU {
+  /**
+   * Name of a managed cluster SKU. Possible values include: 'Basic'
+   */
+  name?: ManagedClusterSKUName;
+  /**
+   * Tier of a managed cluster SKU. Possible values include: 'Paid', 'Free'
+   */
+  tier?: ManagedClusterSKUTier;
+}
+
+/**
  * Managed cluster.
  */
 export interface ManagedCluster extends Resource {
@@ -1438,6 +1470,10 @@ export interface ManagedCluster extends Resource {
    * The identity of the managed cluster, if configured.
    */
   identity?: ManagedClusterIdentity;
+  /**
+   * The managed cluster SKU.
+   */
+  sku?: ManagedClusterSKU;
 }
 
 /**
@@ -1874,6 +1910,22 @@ export type LoadBalancerSku = 'standard' | 'basic';
  * @enum {string}
  */
 export type ResourceIdentityType = 'SystemAssigned' | 'None';
+
+/**
+ * Defines values for ManagedClusterSKUName.
+ * Possible values include: 'Basic'
+ * @readonly
+ * @enum {string}
+ */
+export type ManagedClusterSKUName = 'Basic';
+
+/**
+ * Defines values for ManagedClusterSKUTier.
+ * Possible values include: 'Paid', 'Free'
+ * @readonly
+ * @enum {string}
+ */
+export type ManagedClusterSKUTier = 'Paid' | 'Free';
 
 /**
  * Contains response data for the list operation.
