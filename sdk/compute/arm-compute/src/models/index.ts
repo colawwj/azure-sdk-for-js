@@ -182,21 +182,6 @@ export interface UpdateResource extends BaseResource {
    * Resource tags
    */
   tags?: { [propertyName: string]: string };
-  /**
-   * Resource Id
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Resource name
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Resource type
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
 }
 
 /**
@@ -649,7 +634,7 @@ export interface VirtualMachineExtensionUpdate extends UpdateResource {
   /**
    * Specifies the type of the extension; an example is "CustomScriptExtension".
    */
-  virtualMachineExtensionUpdateType?: string;
+  type?: string;
   /**
    * Specifies the version of the script handler.
    */
@@ -3402,6 +3387,23 @@ export interface VirtualMachineScaleSetVMExtensionsSummary {
 }
 
 /**
+ * Summary for an orchestration service of a virtual machine scale set.
+ */
+export interface OrchestrationServiceSummary {
+  /**
+   * The name of the service. Possible values include: 'AutomaticRepairs'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly serviceName?: OrchestrationServiceNames;
+  /**
+   * The current state of the service. Possible values include: 'NotRunning', 'Running',
+   * 'Suspended'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly serviceState?: OrchestrationServiceState;
+}
+
+/**
  * The instance view of a virtual machine scale set.
  */
 export interface VirtualMachineScaleSetInstanceView {
@@ -3419,6 +3421,11 @@ export interface VirtualMachineScaleSetInstanceView {
    * The resource status information.
    */
   statuses?: InstanceViewStatus[];
+  /**
+   * The orchestration services information.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly orchestrationServices?: OrchestrationServiceSummary[];
 }
 
 /**
@@ -4012,6 +4019,16 @@ export interface VMScaleSetConvertToSinglePlacementGroupInput {
 }
 
 /**
+ * An interface representing OrchestrationServiceStateInput.
+ */
+export interface OrchestrationServiceStateInput {
+  /**
+   * The action to be performed. Possible values include: 'Resume', 'Suspend'
+   */
+  action: OrchestrationServiceStateAction;
+}
+
+/**
  * Describes the properties of a run command parameter.
  */
 export interface RunCommandInputParameter {
@@ -4382,6 +4399,11 @@ export interface CreationData {
    */
   imageReference?: ImageDiskReference;
   /**
+   * Required if creating from a Gallery Image. The id of the ImageDiskReference will be the ARM id
+   * of the shared galley image version from which to create a disk.
+   */
+  galleryImageReference?: ImageDiskReference;
+  /**
    * If createOption is Import, this is the URI of a blob to be imported into a managed disk.
    */
   sourceUri?: string;
@@ -4492,7 +4514,18 @@ export interface Encryption {
    * The type of key used to encrypt the data of the disk. Possible values include:
    * 'EncryptionAtRestWithPlatformKey', 'EncryptionAtRestWithCustomerKey'
    */
-  type: EncryptionType;
+  type?: EncryptionType;
+}
+
+/**
+ * An interface representing ShareInfoElement.
+ */
+export interface ShareInfoElement {
+  /**
+   * A relative URI containing the ID of the VM that has the disk attached.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly vmUri?: string;
 }
 
 /**
@@ -4504,6 +4537,12 @@ export interface Disk extends Resource {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly managedBy?: string;
+  /**
+   * List of relative URIs containing the IDs of the VMs that have the disk attached. maxShares
+   * should be set to a value greater than one for disks to allow attaching them to multiple VMs.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly managedByExtended?: string[];
   sku?: DiskSku;
   /**
    * The Logical zone list for Disk.
@@ -4566,6 +4605,17 @@ export interface Disk extends Resource {
    */
   diskMBpsReadWrite?: number;
   /**
+   * The total number of IOPS that will be allowed across all VMs mounting the shared disk as
+   * ReadOnly. One operation can transfer between 4k and 256k bytes.
+   */
+  diskIOPSReadOnly?: number;
+  /**
+   * The total throughput (MBps) that will be allowed across all VMs mounting the shared disk as
+   * ReadOnly. MBps means millions of bytes per second - MB here uses the ISO notation, of powers
+   * of 10.
+   */
+  diskMBpsReadOnly?: number;
+  /**
    * The state of the disk. Possible values include: 'Unattached', 'Attached', 'Reserved',
    * 'ActiveSAS', 'ReadyToUpload', 'ActiveUpload'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -4576,6 +4626,17 @@ export interface Disk extends Resource {
    * managed keys.
    */
   encryption?: Encryption;
+  /**
+   * The maximum number of VMs that can attach to the disk at the same time. Value greater than one
+   * indicates a disk that can be mounted on multiple VMs at the same time.
+   */
+  maxShares?: number;
+  /**
+   * Details of the list of all VMs that have the disk attached. maxShares should be set to a value
+   * greater than one for disks to allow attaching them to multiple VMs.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly shareInfo?: ShareInfoElement[];
 }
 
 /**
@@ -4608,6 +4669,22 @@ export interface DiskUpdate {
    * bytes per second - MB here uses the ISO notation, of powers of 10.
    */
   diskMBpsReadWrite?: number;
+  /**
+   * The total number of IOPS that will be allowed across all VMs mounting the shared disk as
+   * ReadOnly. One operation can transfer between 4k and 256k bytes.
+   */
+  diskIOPSReadOnly?: number;
+  /**
+   * The total throughput (MBps) that will be allowed across all VMs mounting the shared disk as
+   * ReadOnly. MBps means millions of bytes per second - MB here uses the ISO notation, of powers
+   * of 10.
+   */
+  diskMBpsReadOnly?: number;
+  /**
+   * The maximum number of VMs that can attach to the disk at the same time. Value greater than one
+   * indicates a disk that can be mounted on multiple VMs at the same time.
+   */
+  maxShares?: number;
   /**
    * Encryption property can be used to encrypt data at rest with customer managed keys or platform
    * managed keys.
@@ -4849,9 +4926,34 @@ export interface Gallery extends Resource {
 }
 
 /**
+ * The Update Resource model definition.
+ */
+export interface UpdateResourceDefinition extends BaseResource {
+  /**
+   * Resource Id
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Resource name
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Resource type
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * Resource tags
+   */
+  tags?: { [propertyName: string]: string };
+}
+
+/**
  * Specifies information about the Shared Image Gallery that you want to update.
  */
-export interface GalleryUpdate extends UpdateResource {
+export interface GalleryUpdate extends UpdateResourceDefinition {
   /**
    * The description of this Shared Image Gallery resource. This property is updatable.
    */
@@ -4903,7 +5005,7 @@ export interface GalleryApplication extends Resource {
 /**
  * Specifies information about the gallery Application Definition that you want to update.
  */
-export interface GalleryApplicationUpdate extends UpdateResource {
+export interface GalleryApplicationUpdate extends UpdateResourceDefinition {
   /**
    * The description of this gallery Application Definition resource. This property is updatable.
    */
@@ -5064,7 +5166,7 @@ export interface GalleryApplicationVersion extends Resource {
 /**
  * Specifies information about the gallery Application Version that you want to update.
  */
-export interface GalleryApplicationVersionUpdate extends UpdateResource {
+export interface GalleryApplicationVersionUpdate extends UpdateResourceDefinition {
   publishingProfile: GalleryApplicationVersionPublishingProfile;
   /**
    * The current state of the gallery Application Version. The provisioning state, which only
@@ -5205,7 +5307,7 @@ export interface GalleryImage extends Resource {
 /**
  * Specifies information about the gallery Image Definition that you want to update.
  */
-export interface GalleryImageUpdate extends UpdateResource {
+export interface GalleryImageUpdate extends UpdateResourceDefinition {
   /**
    * The description of this gallery Image Definition resource. This property is updatable.
    */
@@ -5342,7 +5444,7 @@ export interface GalleryImageVersion extends Resource {
 /**
  * Specifies information about the gallery Image Version that you want to update.
  */
-export interface GalleryImageVersionUpdate extends UpdateResource {
+export interface GalleryImageVersionUpdate extends UpdateResourceDefinition {
   publishingProfile?: GalleryImageVersionPublishingProfile;
   /**
    * The current state of the gallery Image Version. The provisioning state, which only appears in
@@ -5356,6 +5458,46 @@ export interface GalleryImageVersionUpdate extends UpdateResource {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly replicationStatus?: ReplicationStatus;
+}
+
+/**
+ * This is the disk image encryption base class.
+ */
+export interface DiskImageEncryption {
+  /**
+   * A relative URI containing the resource ID of the disk encryption set.
+   */
+  diskEncryptionSetId?: string;
+}
+
+/**
+ * Contains encryption settings for an OS disk image.
+ */
+export interface OSDiskImageEncryption extends DiskImageEncryption {
+}
+
+/**
+ * Contains encryption settings for a data disk image.
+ */
+export interface DataDiskImageEncryption extends DiskImageEncryption {
+  /**
+   * This property specifies the logical unit number of the data disk. This value is used to
+   * identify data disks within the Virtual Machine and therefore must be unique for each data disk
+   * attached to the Virtual Machine.
+   */
+  lun: number;
+}
+
+/**
+ * Optional. Allows users to provide customer managed keys for encrypting the OS and data disks in
+ * the gallery artifact.
+ */
+export interface EncryptionImages {
+  osDiskImage?: OSDiskImageEncryption;
+  /**
+   * A list of encryption specifications for data disk images.
+   */
+  dataDiskImages?: DataDiskImageEncryption[];
 }
 
 /**
@@ -5376,6 +5518,7 @@ export interface TargetRegion {
    * updatable. Possible values include: 'Standard_LRS', 'Standard_ZRS'
    */
   storageAccountType?: StorageAccountType;
+  encryption?: EncryptionImages;
 }
 
 /**
@@ -6618,6 +6761,22 @@ export type OperatingSystemStateTypes = 'Generalized' | 'Specialized';
 export type IPVersion = 'IPv4' | 'IPv6';
 
 /**
+ * Defines values for OrchestrationServiceNames.
+ * Possible values include: 'AutomaticRepairs'
+ * @readonly
+ * @enum {string}
+ */
+export type OrchestrationServiceNames = 'AutomaticRepairs';
+
+/**
+ * Defines values for OrchestrationServiceState.
+ * Possible values include: 'NotRunning', 'Running', 'Suspended'
+ * @readonly
+ * @enum {string}
+ */
+export type OrchestrationServiceState = 'NotRunning' | 'Running' | 'Suspended';
+
+/**
  * Defines values for VirtualMachineScaleSetSkuScaleType.
  * Possible values include: 'Automatic', 'None'
  * @readonly
@@ -6664,6 +6823,14 @@ export type RollingUpgradeActionType = 'Start' | 'Cancel';
  * @enum {string}
  */
 export type IntervalInMins = 'ThreeMins' | 'FiveMins' | 'ThirtyMins' | 'SixtyMins';
+
+/**
+ * Defines values for OrchestrationServiceStateAction.
+ * Possible values include: 'Resume', 'Suspend'
+ * @readonly
+ * @enum {string}
+ */
+export type OrchestrationServiceStateAction = 'Resume' | 'Suspend';
 
 /**
  * Defines values for ResourceSkuCapacityScaleType.
