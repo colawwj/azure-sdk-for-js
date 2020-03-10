@@ -7,7 +7,6 @@
  */
 
 export {
-  AccessUri,
   AdditionalCapabilities,
   AdditionalUnattendContent,
   ApiEntityReference,
@@ -55,9 +54,7 @@ export {
   DiskEncryptionSettings,
   DiskImageEncryption,
   DiskInstanceView,
-  DiskList,
   DiskSku,
-  DiskUpdate,
   Encryption,
   EncryptionImages,
   EncryptionSetIdentity,
@@ -83,7 +80,6 @@ export {
   GalleryImageVersionUpdate,
   GalleryOSDiskImage,
   GalleryUpdate,
-  GrantAccessData,
   HardwareProfile,
   Image,
   ImageDataDisk,
@@ -131,7 +127,9 @@ export {
   SourceVault,
   SshConfiguration,
   SshPublicKey,
+  SshPublicKeyGenerateKeyPairResult,
   SshPublicKeyResource,
+  SshPublicKeysGroupListResult,
   StorageProfile,
   SubResource,
   SubResourceReadOnly,
