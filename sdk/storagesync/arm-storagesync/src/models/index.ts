@@ -86,6 +86,60 @@ export interface SubscriptionState {
 }
 
 /**
+ * Private endpoint object properties.
+ */
+export interface PrivateEndpoint {
+  /**
+   * Full identifier of the private endpoint resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+}
+
+/**
+ * An object that represents the approval state of the private link connection.
+ */
+export interface PrivateLinkServiceConnectionState {
+  /**
+   * Indicates whether the connection has been approved, rejected or removed by the key vault
+   * owner. Possible values include: 'Pending', 'Approved', 'Rejected', 'Disconnected'
+   */
+  status?: PrivateEndpointServiceConnectionStatus;
+  /**
+   * The reason for approval or rejection.
+   */
+  description?: string;
+  /**
+   * A message indicating if changes on the service provider require any updates on the consumer.
+   */
+  actionsRequired?: string;
+}
+
+/**
+ * Private endpoint connection item.
+ */
+export interface PrivateEndpointConnectionItem {
+  /**
+   * Full identifier of the private endpoint connection.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Properties of the private endpoint object.
+   */
+  privateEndpoint?: PrivateEndpoint;
+  /**
+   * Approval state of the private link connection.
+   */
+  privateLinkServiceConnectionState?: PrivateLinkServiceConnectionState;
+  /**
+   * Provisioning state of the private endpoint connection. Possible values include: 'Succeeded',
+   * 'Creating', 'Updating', 'Deleting', 'Failed', 'Disconnected'
+   */
+  provisioningState?: PrivateEndpointConnectionProvisioningState;
+}
+
+/**
  * An interface representing Resource.
  */
 export interface Resource extends BaseResource {
@@ -136,6 +190,11 @@ export interface StorageSyncService extends TrackedResource {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly storageSyncServiceUid?: string;
+  /**
+   * List of private endpoint connections associated with the storage sync service.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly privateEndpointConnections?: PrivateEndpointConnectionItem[];
 }
 
 /**
@@ -256,6 +315,9 @@ export interface StorageSyncServiceCreateParameters {
    * and a value with a length no greater than 256 characters.
    */
   tags?: { [propertyName: string]: string };
+  /**
+   * StorageSyncService Body Properties object.
+   */
   properties?: any;
 }
 
@@ -327,6 +389,17 @@ export interface ServerEndpointCreateParameters extends ProxyResource {
    * Offline data transfer share name
    */
   offlineDataTransferShareName?: string;
+  /**
+   * Policy for how namespace and files are recalled during FastDr. Possible values include:
+   * 'NamespaceOnly', 'NamespaceThenModifiedFiles', 'AvoidTieredFiles'
+   */
+  initialDownloadPolicy?: InitialDownloadPolicy;
+  /**
+   * Policy for enabling follow-the-sun business models: link local cache to cloud behavior to
+   * pre-populate before local access. Possible values include: 'DownloadNewAndModifiedFiles',
+   * 'UpdateLocallyCachedFiles'
+   */
+  localCacheMode?: LocalCacheMode;
 }
 
 /**
@@ -405,6 +478,12 @@ export interface ServerEndpointUpdateParameters {
    * Offline data transfer share name
    */
   offlineDataTransferShareName?: string;
+  /**
+   * Policy for enabling follow-the-sun business models: link local cache to cloud behavior to
+   * pre-populate before local access. Possible values include: 'DownloadNewAndModifiedFiles',
+   * 'UpdateLocallyCachedFiles'
+   */
+  localCacheMode?: LocalCacheMode;
 }
 
 /**
@@ -573,17 +652,159 @@ export interface ServerEndpointSyncStatus {
 /**
  * Server endpoint cloud tiering status object.
  */
+export interface CloudTieringSpaceSavings {
+  /**
+   * Last updated timestamp
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly lastUpdatedTimestamp?: Date;
+  /**
+   * Volume size
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly volumeSizeBytes?: number;
+  /**
+   * Total size of content in the azure file share
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly totalSizeCloudBytes?: number;
+  /**
+   * Cached content size on the server
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly cachedSizeBytes?: number;
+  /**
+   * Percentage of cached size over total size
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly spaceSavingsPercent?: number;
+  /**
+   * Count of bytes saved on the server
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly spaceSavingsBytes?: number;
+}
+
+/**
+ * Server endpoint cloud tiering status object.
+ */
+export interface CloudTieringCachePerformance {
+  /**
+   * Last updated timestamp
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly lastUpdatedTimestamp?: Date;
+  /**
+   * Count of bytes that were served from the local server
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly cacheHitBytes?: number;
+  /**
+   * Count of bytes that were served from the cloud
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly cacheMissBytes?: number;
+  /**
+   * Percentage of total bytes (hit + miss) that were served from the local server
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly cacheHitBytesPercent?: number;
+}
+
+/**
+ * Files not tiering error object
+ */
+export interface FilesNotTieringError {
+  /**
+   * Error code (HResult)
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly errorCode?: number;
+  /**
+   * Count of files with this error
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly fileCount?: number;
+}
+
+/**
+ * Server endpoint cloud tiering status object.
+ */
+export interface CloudTieringFilesNotTiering {
+  /**
+   * Last updated timestamp
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly lastUpdatedTimestamp?: Date;
+  /**
+   * Last cloud tiering result (HResult)
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly totalFileCount?: number;
+  /**
+   * Array of tiering errors
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly errors?: FilesNotTieringError[];
+}
+
+/**
+ * Status of the volume free space policy
+ */
+export interface CloudTieringVolumeFreeSpacePolicyStatus {
+  /**
+   * Last updated timestamp
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly lastUpdatedTimestamp?: Date;
+  /**
+   * In the case where multiple server endpoints are present in a volume, an effective free space
+   * policy is applied.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly effectiveVolumeFreeSpacePolicy?: number;
+  /**
+   * Current volume free space percentage.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly currentVolumeFreeSpacePercent?: number;
+}
+
+/**
+ * Status of the date policy
+ */
+export interface CloudTieringDatePolicyStatus {
+  /**
+   * Last updated timestamp
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly lastUpdatedTimestamp?: Date;
+  /**
+   * Most recent access time of tiered files
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly tieredFilesMostRecentAccessTimestamp?: Date;
+}
+
+/**
+ * Server endpoint cloud tiering status object.
+ */
 export interface ServerEndpointCloudTieringStatus {
+  /**
+   * Last updated timestamp
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly lastUpdatedTimestamp?: Date;
   /**
    * Cloud tiering health state. Possible values include: 'Healthy', 'Error'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly health?: Health;
   /**
-   * Last updated timestamp
+   * The last updated timestamp of health state
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly lastUpdatedTimestamp?: Date;
+  readonly healthLastUpdatedTimestamp?: Date;
   /**
    * Last cloud tiering result (HResult)
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -594,6 +815,31 @@ export interface ServerEndpointCloudTieringStatus {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly lastSuccessTimestamp?: Date;
+  /**
+   * Information regarding how much local space cloud tiering is saving.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly spaceSavings?: CloudTieringSpaceSavings;
+  /**
+   * Information regarding how well the local cache on the server is performing.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly cachePerformance?: CloudTieringCachePerformance;
+  /**
+   * Information regarding files that failed to be tiered
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly filesNotTiering?: CloudTieringFilesNotTiering;
+  /**
+   * Status of the volume free space policy
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly volumeFreeSpacePolicyStatus?: CloudTieringVolumeFreeSpacePolicyStatus;
+  /**
+   * Status of the date policy
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly datePolicyStatus?: CloudTieringDatePolicyStatus;
 }
 
 /**
@@ -709,6 +955,17 @@ export interface ServerEndpoint extends ProxyResource {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly recallStatus?: ServerEndpointRecallStatus;
+  /**
+   * Policy for how namespace and files are recalled during FastDr. Possible values include:
+   * 'NamespaceOnly', 'NamespaceThenModifiedFiles', 'AvoidTieredFiles'
+   */
+  initialDownloadPolicy?: InitialDownloadPolicy;
+  /**
+   * Policy for enabling follow-the-sun business models: link local cache to cloud behavior to
+   * pre-populate before local access. Possible values include: 'DownloadNewAndModifiedFiles',
+   * 'UpdateLocallyCachedFiles'
+   */
+  localCacheMode?: LocalCacheMode;
 }
 
 /**
@@ -1045,6 +1302,25 @@ export interface PostBackupResponse {
 }
 
 /**
+ * Private endpoint connection resource.
+ */
+export interface PrivateEndpointConnection extends BaseResource {
+  /**
+   * Properties of the private endpoint object.
+   */
+  privateEndpoint?: PrivateEndpoint;
+  /**
+   * Approval state of the private link connection.
+   */
+  privateLinkServiceConnectionState?: PrivateLinkServiceConnectionState;
+  /**
+   * Provisioning state of the private endpoint connection. Possible values include: 'Succeeded',
+   * 'Creating', 'Updating', 'Deleting', 'Failed', 'Disconnected'
+   */
+  provisioningState?: PrivateEndpointConnectionProvisioningState;
+}
+
+/**
  * Parameters for updating an Storage sync service.
  */
 export interface StorageSyncServiceUpdateParameters {
@@ -1087,6 +1363,36 @@ export interface OperationStatus {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly error?: StorageSyncApiError;
+}
+
+/**
+ * A private link resource
+ */
+export interface PrivateLinkResource extends Resource {
+  /**
+   * Group identifier of private link resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly groupId?: string;
+  /**
+   * Required member names of private link resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly requiredMembers?: string[];
+  /**
+   * Required DNS zone names of the the private link resource.
+   */
+  requiredZoneNames?: string[];
+}
+
+/**
+ * A list of private link resources
+ */
+export interface PrivateLinkResourceListResult {
+  /**
+   * Array of private link resources
+   */
+  value?: PrivateLinkResource[];
 }
 
 /**
@@ -1211,6 +1517,20 @@ export interface StorageSyncServicesListByResourceGroupHeaders {
  * Defines headers for ListBySubscription operation.
  */
 export interface StorageSyncServicesListBySubscriptionHeaders {
+  /**
+   * request id.
+   */
+  xMsRequestId: string;
+  /**
+   * correlation request id.
+   */
+  xMsCorrelationRequestId: string;
+}
+
+/**
+ * Defines headers for ListByStorageSyncService operation.
+ */
+export interface PrivateEndpointConnectionsListByStorageSyncServiceHeaders {
   /**
    * request id.
    */
@@ -1737,6 +2057,14 @@ export interface StorageSyncServiceArray extends Array<StorageSyncService> {
 
 /**
  * @interface
+ * Array of PrivateEndpointConnection
+ * @extends Array<PrivateEndpointConnection>
+ */
+export interface PrivateEndpointConnectionArray extends Array<PrivateEndpointConnection> {
+}
+
+/**
+ * @interface
  * Array of SyncGroup
  * @extends Array<SyncGroup>
  */
@@ -1784,12 +2112,45 @@ export interface WorkflowArray extends Array<Workflow> {
 export type Reason = 'Registered' | 'Unregistered' | 'Warned' | 'Suspended' | 'Deleted';
 
 /**
+ * Defines values for PrivateEndpointServiceConnectionStatus.
+ * Possible values include: 'Pending', 'Approved', 'Rejected', 'Disconnected'
+ * @readonly
+ * @enum {string}
+ */
+export type PrivateEndpointServiceConnectionStatus = 'Pending' | 'Approved' | 'Rejected' | 'Disconnected';
+
+/**
+ * Defines values for PrivateEndpointConnectionProvisioningState.
+ * Possible values include: 'Succeeded', 'Creating', 'Updating', 'Deleting', 'Failed',
+ * 'Disconnected'
+ * @readonly
+ * @enum {string}
+ */
+export type PrivateEndpointConnectionProvisioningState = 'Succeeded' | 'Creating' | 'Updating' | 'Deleting' | 'Failed' | 'Disconnected';
+
+/**
  * Defines values for ChangeDetectionMode.
  * Possible values include: 'Default', 'Recursive'
  * @readonly
  * @enum {string}
  */
 export type ChangeDetectionMode = 'Default' | 'Recursive';
+
+/**
+ * Defines values for InitialDownloadPolicy.
+ * Possible values include: 'NamespaceOnly', 'NamespaceThenModifiedFiles', 'AvoidTieredFiles'
+ * @readonly
+ * @enum {string}
+ */
+export type InitialDownloadPolicy = 'NamespaceOnly' | 'NamespaceThenModifiedFiles' | 'AvoidTieredFiles';
+
+/**
+ * Defines values for LocalCacheMode.
+ * Possible values include: 'DownloadNewAndModifiedFiles', 'UpdateLocallyCachedFiles'
+ * @readonly
+ * @enum {string}
+ */
+export type LocalCacheMode = 'DownloadNewAndModifiedFiles' | 'UpdateLocallyCachedFiles';
 
 /**
  * Defines values for NameAvailabilityReason.
@@ -2091,6 +2452,91 @@ export type StorageSyncServicesListBySubscriptionResponse = StorageSyncServiceAr
        * The response body as parsed JSON or XML
        */
       parsedBody: StorageSyncServiceArray;
+    };
+};
+
+/**
+ * Contains response data for the listByStorageSyncService operation.
+ */
+export type PrivateLinkResourcesListByStorageSyncServiceResponse = PrivateLinkResourceListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateLinkResourceListResult;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type PrivateEndpointConnectionsGetResponse = PrivateEndpointConnection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateEndpointConnection;
+    };
+};
+
+/**
+ * Contains response data for the create operation.
+ */
+export type PrivateEndpointConnectionsCreateResponse = PrivateEndpointConnection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateEndpointConnection;
+    };
+};
+
+/**
+ * Contains response data for the listByStorageSyncService operation.
+ */
+export type PrivateEndpointConnectionsListByStorageSyncServiceResponse = PrivateEndpointConnectionArray & PrivateEndpointConnectionsListByStorageSyncServiceHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: PrivateEndpointConnectionsListByStorageSyncServiceHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateEndpointConnectionArray;
     };
 };
 
