@@ -674,7 +674,7 @@ const listQueryResultsForManagementGroupOperationSpec: msRest.OperationSpec = {
     Parameters.managementGroupName
   ],
   queryParameters: [
-    Parameters.apiVersion3,
+    Parameters.apiVersion2,
     Parameters.top,
     Parameters.orderBy,
     Parameters.select,
@@ -706,7 +706,7 @@ const summarizeForManagementGroupOperationSpec: msRest.OperationSpec = {
     Parameters.managementGroupName
   ],
   queryParameters: [
-    Parameters.apiVersion3,
+    Parameters.apiVersion2,
     Parameters.top,
     Parameters.from,
     Parameters.to,
@@ -734,7 +734,7 @@ const listQueryResultsForSubscriptionOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion3,
+    Parameters.apiVersion2,
     Parameters.top,
     Parameters.orderBy,
     Parameters.select,
@@ -765,7 +765,7 @@ const summarizeForSubscriptionOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion3,
+    Parameters.apiVersion2,
     Parameters.top,
     Parameters.from,
     Parameters.to,
@@ -794,7 +794,7 @@ const listQueryResultsForResourceGroupOperationSpec: msRest.OperationSpec = {
     Parameters.resourceGroupName
   ],
   queryParameters: [
-    Parameters.apiVersion3,
+    Parameters.apiVersion2,
     Parameters.top,
     Parameters.orderBy,
     Parameters.select,
@@ -826,7 +826,7 @@ const summarizeForResourceGroupOperationSpec: msRest.OperationSpec = {
     Parameters.resourceGroupName
   ],
   queryParameters: [
-    Parameters.apiVersion3,
+    Parameters.apiVersion2,
     Parameters.top,
     Parameters.from,
     Parameters.to,
@@ -854,7 +854,7 @@ const listQueryResultsForResourceOperationSpec: msRest.OperationSpec = {
     Parameters.resourceId
   ],
   queryParameters: [
-    Parameters.apiVersion3,
+    Parameters.apiVersion2,
     Parameters.top,
     Parameters.orderBy,
     Parameters.select,
@@ -886,7 +886,7 @@ const summarizeForResourceOperationSpec: msRest.OperationSpec = {
     Parameters.resourceId
   ],
   queryParameters: [
-    Parameters.apiVersion3,
+    Parameters.apiVersion2,
     Parameters.top,
     Parameters.from,
     Parameters.to,
@@ -916,7 +916,7 @@ const listQueryResultsForPolicySetDefinitionOperationSpec: msRest.OperationSpec 
     Parameters.policySetDefinitionName
   ],
   queryParameters: [
-    Parameters.apiVersion3,
+    Parameters.apiVersion2,
     Parameters.top,
     Parameters.orderBy,
     Parameters.select,
@@ -949,7 +949,7 @@ const summarizeForPolicySetDefinitionOperationSpec: msRest.OperationSpec = {
     Parameters.policySetDefinitionName
   ],
   queryParameters: [
-    Parameters.apiVersion3,
+    Parameters.apiVersion2,
     Parameters.top,
     Parameters.from,
     Parameters.to,
@@ -979,7 +979,7 @@ const listQueryResultsForPolicyDefinitionOperationSpec: msRest.OperationSpec = {
     Parameters.policyDefinitionName
   ],
   queryParameters: [
-    Parameters.apiVersion3,
+    Parameters.apiVersion2,
     Parameters.top,
     Parameters.orderBy,
     Parameters.select,
@@ -1012,7 +1012,7 @@ const summarizeForPolicyDefinitionOperationSpec: msRest.OperationSpec = {
     Parameters.policyDefinitionName
   ],
   queryParameters: [
-    Parameters.apiVersion3,
+    Parameters.apiVersion2,
     Parameters.top,
     Parameters.from,
     Parameters.to,
@@ -1042,7 +1042,7 @@ const listQueryResultsForSubscriptionLevelPolicyAssignmentOperationSpec: msRest.
     Parameters.policyAssignmentName
   ],
   queryParameters: [
-    Parameters.apiVersion3,
+    Parameters.apiVersion2,
     Parameters.top,
     Parameters.orderBy,
     Parameters.select,
@@ -1075,7 +1075,7 @@ const summarizeForSubscriptionLevelPolicyAssignmentOperationSpec: msRest.Operati
     Parameters.policyAssignmentName
   ],
   queryParameters: [
-    Parameters.apiVersion3,
+    Parameters.apiVersion2,
     Parameters.top,
     Parameters.from,
     Parameters.to,
@@ -1106,7 +1106,7 @@ const listQueryResultsForResourceGroupLevelPolicyAssignmentOperationSpec: msRest
     Parameters.policyAssignmentName
   ],
   queryParameters: [
-    Parameters.apiVersion3,
+    Parameters.apiVersion2,
     Parameters.top,
     Parameters.orderBy,
     Parameters.select,
@@ -1140,7 +1140,7 @@ const summarizeForResourceGroupLevelPolicyAssignmentOperationSpec: msRest.Operat
     Parameters.policyAssignmentName
   ],
   queryParameters: [
-    Parameters.apiVersion3,
+    Parameters.apiVersion2,
     Parameters.top,
     Parameters.from,
     Parameters.to,
@@ -1167,7 +1167,7 @@ const beginTriggerSubscriptionEvaluationOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion3
+    Parameters.apiVersion2
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -1190,7 +1190,7 @@ const beginTriggerResourceGroupEvaluationOperationSpec: msRest.OperationSpec = {
     Parameters.resourceGroupName
   ],
   queryParameters: [
-    Parameters.apiVersion3
+    Parameters.apiVersion2
   ],
   headerParameters: [
     Parameters.acceptLanguage
