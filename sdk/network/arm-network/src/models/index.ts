@@ -1127,6 +1127,10 @@ export interface Subnet extends SubResource {
    */
   readonly ipConfigurationProfiles?: IPConfigurationProfile[];
   /**
+   * Array of IpAllocation which reference this subnet.
+   */
+  ipAllocations?: SubResource[];
+  /**
    * An array of references to the external resources using subnet.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
@@ -4550,134 +4554,6 @@ export interface ExpressRouteCrossConnection extends Resource {
 }
 
 /**
- * Virtual Hub identifier.
- */
-export interface VirtualHubId {
-  /**
-   * The resource URI for the Virtual Hub where the ExpressRoute gateway is or will be deployed.
-   * The Virtual Hub resource and the ExpressRoute gateway resource reside in the same
-   * subscription.
-   */
-  id?: string;
-}
-
-/**
- * ExpressRoute circuit peering identifier.
- */
-export interface ExpressRouteCircuitPeeringId {
-  /**
-   * The ID of the ExpressRoute circuit peering.
-   */
-  id?: string;
-}
-
-/**
- * Minimum and maximum number of scale units to deploy.
- */
-export interface ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds {
-  /**
-   * Minimum number of scale units deployed for ExpressRoute gateway.
-   */
-  min?: number;
-  /**
-   * Maximum number of scale units deployed for ExpressRoute gateway.
-   */
-  max?: number;
-}
-
-/**
- * Configuration for auto scaling.
- */
-export interface ExpressRouteGatewayPropertiesAutoScaleConfiguration {
-  /**
-   * Minimum and maximum number of scale units to deploy.
-   */
-  bounds?: ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds;
-}
-
-/**
- * ExpressRouteConnection resource.
- */
-export interface ExpressRouteConnection extends SubResource {
-  /**
-   * The provisioning state of the express route connection resource. Possible values include:
-   * 'Succeeded', 'Updating', 'Deleting', 'Failed'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly provisioningState?: ProvisioningState;
-  /**
-   * The ExpressRoute circuit peering.
-   */
-  expressRouteCircuitPeering: ExpressRouteCircuitPeeringId;
-  /**
-   * Authorization key to establish the connection.
-   */
-  authorizationKey?: string;
-  /**
-   * The routing weight associated to the connection.
-   */
-  routingWeight?: number;
-  /**
-   * Enable internet security.
-   */
-  enableInternetSecurity?: boolean;
-  /**
-   * The name of the resource.
-   */
-  name: string;
-}
-
-/**
- * ExpressRoute gateway resource.
- */
-export interface ExpressRouteGateway extends Resource {
-  /**
-   * Configuration for auto scaling.
-   */
-  autoScaleConfiguration?: ExpressRouteGatewayPropertiesAutoScaleConfiguration;
-  /**
-   * List of ExpressRoute connections to the ExpressRoute gateway.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly expressRouteConnections?: ExpressRouteConnection[];
-  /**
-   * The provisioning state of the express route gateway resource. Possible values include:
-   * 'Succeeded', 'Updating', 'Deleting', 'Failed'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly provisioningState?: ProvisioningState;
-  /**
-   * The Virtual Hub where the ExpressRoute gateway is or will be deployed.
-   */
-  virtualHub: VirtualHubId;
-  /**
-   * A unique read-only string that changes whenever the resource is updated.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly etag?: string;
-}
-
-/**
- * List of ExpressRoute gateways.
- */
-export interface ExpressRouteGatewayList {
-  /**
-   * List of ExpressRoute gateways.
-   */
-  value?: ExpressRouteGateway[];
-}
-
-/**
- * ExpressRouteConnection list.
- */
-export interface ExpressRouteConnectionList {
-  /**
-   * The list of ExpressRoute connections.
-   */
-  value?: ExpressRouteConnection[];
-}
-
-/**
  * Real-time inventory of available ExpressRoute port bandwidths.
  * @summary ExpressRoutePorts Location Bandwidths
  */
@@ -4896,6 +4772,10 @@ export interface FirewallPolicy extends Resource {
    * The operation mode for Threat Intelligence. Possible values include: 'Alert', 'Deny', 'Off'
    */
   threatIntelMode?: AzureFirewallThreatIntelMode;
+  /**
+   * The operation mode for Intrusion system. Possible values include: 'Alert', 'Deny', 'Off'
+   */
+  intrusionSystemMode?: FirewallPolicyIntrusionSystemMode;
   /**
    * A unique read-only string that changes whenever the resource is updated.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -5198,6 +5078,51 @@ export interface NetworkRuleCondition {
    * List of destination IpGroups for this rule.
    */
   destinationIpGroups?: string[];
+}
+
+/**
+ * IpAllocation resource.
+ */
+export interface IpAllocation extends Resource {
+  /**
+   * The Subnet that using the prefix of this IpAllocation resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly subnet?: SubResource;
+  /**
+   * The VirtualNetwork that using the prefix of this IpAllocation resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly virtualNetwork?: SubResource;
+  /**
+   * The type for the IpAllocation. Possible values include: 'Undefined', 'Hypernet'
+   */
+  ipAllocationType?: IpAllocationType;
+  /**
+   * The address prefix for the IpAllocation.
+   */
+  prefix?: string;
+  /**
+   * The address prefix length for the IpAllocation. Default value: 0.
+   */
+  prefixLength?: number;
+  /**
+   * The address prefix Type for the IpAllocation. Possible values include: 'IPv4', 'IPv6'
+   */
+  prefixType?: IPVersion;
+  /**
+   * The IPAM allocation ID.
+   */
+  ipamAllocationId?: string;
+  /**
+   * IpAllocation tags.
+   */
+  allocationTags?: { [propertyName: string]: string };
+  /**
+   * A unique read-only string that changes whenever the resource is updated.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly etag?: string;
 }
 
 /**
@@ -8312,6 +8237,37 @@ export interface PatchRouteFilter extends SubResource {
 }
 
 /**
+ * Security Partner Provider resource.
+ */
+export interface SecurityPartnerProvider extends Resource {
+  /**
+   * The provisioning state of the Security Partner Provider resource. Possible values include:
+   * 'Succeeded', 'Updating', 'Deleting', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState;
+  /**
+   * The security provider name. Possible values include: 'ZScaler', 'IBoss', 'Checkpoint'
+   */
+  securityProviderName?: SecurityProviderName;
+  /**
+   * The connection status with the Security Partner Provider. Possible values include: 'Unknown',
+   * 'PartiallyConnected', 'Connected', 'NotConnected'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly connectionStatus?: SecurityPartnerProviderConnectionStatus;
+  /**
+   * The virtualHub to which the Security Partner Provider belongs.
+   */
+  virtualHub?: SubResource;
+  /**
+   * A unique read-only string that changes whenever the resource is updated.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly etag?: string;
+}
+
+/**
  * Contains bgp community information offered in Service Community resources.
  */
 export interface BGPCommunity {
@@ -8652,6 +8608,10 @@ export interface VirtualNetwork extends Resource {
    * Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET.
    */
   bgpCommunities?: VirtualNetworkBgpCommunities;
+  /**
+   * Array of IpAllocation which reference this VNET.
+   */
+  ipAllocations?: SubResource[];
   /**
    * A unique read-only string that changes whenever the resource is updated.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -10141,6 +10101,10 @@ export interface VirtualHub extends Resource {
    */
   azureFirewall?: SubResource;
   /**
+   * The securityPartnerProvider associated with this VirtualHub.
+   */
+  securityPartnerProvider?: SubResource;
+  /**
    * List of all vnet connections with this VirtualHub.
    */
   virtualNetworkConnections?: HubVirtualNetworkConnection[];
@@ -10720,6 +10684,134 @@ export interface P2SVpnConnectionHealth {
 }
 
 /**
+ * Virtual Hub identifier.
+ */
+export interface VirtualHubId {
+  /**
+   * The resource URI for the Virtual Hub where the ExpressRoute gateway is or will be deployed.
+   * The Virtual Hub resource and the ExpressRoute gateway resource reside in the same
+   * subscription.
+   */
+  id?: string;
+}
+
+/**
+ * ExpressRoute circuit peering identifier.
+ */
+export interface ExpressRouteCircuitPeeringId {
+  /**
+   * The ID of the ExpressRoute circuit peering.
+   */
+  id?: string;
+}
+
+/**
+ * Minimum and maximum number of scale units to deploy.
+ */
+export interface ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds {
+  /**
+   * Minimum number of scale units deployed for ExpressRoute gateway.
+   */
+  min?: number;
+  /**
+   * Maximum number of scale units deployed for ExpressRoute gateway.
+   */
+  max?: number;
+}
+
+/**
+ * Configuration for auto scaling.
+ */
+export interface ExpressRouteGatewayPropertiesAutoScaleConfiguration {
+  /**
+   * Minimum and maximum number of scale units to deploy.
+   */
+  bounds?: ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds;
+}
+
+/**
+ * ExpressRouteConnection resource.
+ */
+export interface ExpressRouteConnection extends SubResource {
+  /**
+   * The provisioning state of the express route connection resource. Possible values include:
+   * 'Succeeded', 'Updating', 'Deleting', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState;
+  /**
+   * The ExpressRoute circuit peering.
+   */
+  expressRouteCircuitPeering: ExpressRouteCircuitPeeringId;
+  /**
+   * Authorization key to establish the connection.
+   */
+  authorizationKey?: string;
+  /**
+   * The routing weight associated to the connection.
+   */
+  routingWeight?: number;
+  /**
+   * Enable internet security.
+   */
+  enableInternetSecurity?: boolean;
+  /**
+   * The name of the resource.
+   */
+  name: string;
+}
+
+/**
+ * ExpressRoute gateway resource.
+ */
+export interface ExpressRouteGateway extends Resource {
+  /**
+   * Configuration for auto scaling.
+   */
+  autoScaleConfiguration?: ExpressRouteGatewayPropertiesAutoScaleConfiguration;
+  /**
+   * List of ExpressRoute connections to the ExpressRoute gateway.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly expressRouteConnections?: ExpressRouteConnection[];
+  /**
+   * The provisioning state of the express route gateway resource. Possible values include:
+   * 'Succeeded', 'Updating', 'Deleting', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState;
+  /**
+   * The Virtual Hub where the ExpressRoute gateway is or will be deployed.
+   */
+  virtualHub: VirtualHubId;
+  /**
+   * A unique read-only string that changes whenever the resource is updated.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly etag?: string;
+}
+
+/**
+ * List of ExpressRoute gateways.
+ */
+export interface ExpressRouteGatewayList {
+  /**
+   * List of ExpressRoute gateways.
+   */
+  value?: ExpressRouteGateway[];
+}
+
+/**
+ * ExpressRouteConnection list.
+ */
+export interface ExpressRouteConnectionList {
+  /**
+   * The list of ExpressRoute connections.
+   */
+  value?: ExpressRouteConnection[];
+}
+
+/**
  * Defines contents of a web application firewall global configuration.
  */
 export interface PolicySettings {
@@ -10999,6 +11091,16 @@ export interface ApplicationGatewaysBeginBackendHealthOnDemandOptionalParams ext
  * Optional Parameters.
  */
 export interface FirewallPoliciesGetOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Expands referenced resources.
+   */
+  expand?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface IpAllocationsGetOptionalParams extends msRest.RequestOptionsBase {
   /**
    * Expands referenced resources.
    */
@@ -11655,6 +11757,18 @@ export interface FirewallPolicyRuleGroupListResult extends Array<FirewallPolicyR
 
 /**
  * @interface
+ * Response for the ListIpAllocations API service call.
+ * @extends Array<IpAllocation>
+ */
+export interface IpAllocationListResult extends Array<IpAllocation> {
+  /**
+   * The URL to get the next set of results.
+   */
+  nextLink?: string;
+}
+
+/**
+ * @interface
  * Response for the ListIpGroups API service call.
  * @extends Array<IpGroup>
  */
@@ -12053,6 +12167,18 @@ export interface RouteTableListResult extends Array<RouteTable> {
 export interface RouteListResult extends Array<Route> {
   /**
    * The URL to get the next set of results.
+   */
+  nextLink?: string;
+}
+
+/**
+ * @interface
+ * Response for ListSecurityPartnerProviders API service call.
+ * @extends Array<SecurityPartnerProvider>
+ */
+export interface SecurityPartnerProviderListResult extends Array<SecurityPartnerProvider> {
+  /**
+   * URL to get the next set of results.
    */
   nextLink?: string;
 }
@@ -12810,6 +12936,14 @@ export type ExpressRouteLinkAdminState = 'Enabled' | 'Disabled';
 export type ExpressRoutePortsEncapsulation = 'Dot1Q' | 'QinQ';
 
 /**
+ * Defines values for FirewallPolicyIntrusionSystemMode.
+ * Possible values include: 'Alert', 'Deny', 'Off'
+ * @readonly
+ * @enum {string}
+ */
+export type FirewallPolicyIntrusionSystemMode = 'Alert' | 'Deny' | 'Off';
+
+/**
  * Defines values for FirewallPolicyNatRuleActionType.
  * Possible values include: 'DNAT'
  * @readonly
@@ -12840,6 +12974,14 @@ export type FirewallPolicyRuleConditionApplicationProtocolType = 'Http' | 'Https
  * @enum {string}
  */
 export type FirewallPolicyRuleConditionNetworkProtocol = 'TCP' | 'UDP' | 'Any' | 'ICMP';
+
+/**
+ * Defines values for IpAllocationType.
+ * Possible values include: 'Undefined', 'Hypernet'
+ * @readonly
+ * @enum {string}
+ */
+export type IpAllocationType = 'Undefined' | 'Hypernet';
 
 /**
  * Defines values for LoadBalancerSkuName.
@@ -13131,6 +13273,22 @@ export type ConnectionMonitorSourceStatus = 'Unknown' | 'Active' | 'Inactive';
  * @enum {string}
  */
 export type PublicIPPrefixSkuName = 'Standard';
+
+/**
+ * Defines values for SecurityProviderName.
+ * Possible values include: 'ZScaler', 'IBoss', 'Checkpoint'
+ * @readonly
+ * @enum {string}
+ */
+export type SecurityProviderName = 'ZScaler' | 'IBoss' | 'Checkpoint';
+
+/**
+ * Defines values for SecurityPartnerProviderConnectionStatus.
+ * Possible values include: 'Unknown', 'PartiallyConnected', 'Connected', 'NotConnected'
+ * @readonly
+ * @enum {string}
+ */
+export type SecurityPartnerProviderConnectionStatus = 'Unknown' | 'PartiallyConnected' | 'Connected' | 'NotConnected';
 
 /**
  * Defines values for VirtualNetworkPeeringState.
@@ -14254,6 +14412,26 @@ export type AzureFirewallsListAllResponse = AzureFirewallListResult & {
  * Contains response data for the beginCreateOrUpdate operation.
  */
 export type AzureFirewallsBeginCreateOrUpdateResponse = AzureFirewall & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: AzureFirewall;
+    };
+};
+
+/**
+ * Contains response data for the beginUpdateTags operation.
+ */
+export type AzureFirewallsBeginUpdateTagsResponse = AzureFirewall & {
   /**
    * The underlying HTTP response.
    */
@@ -16192,186 +16370,6 @@ export type ExpressRouteCrossConnectionPeeringsListNextResponse = ExpressRouteCr
 };
 
 /**
- * Contains response data for the listBySubscription operation.
- */
-export type ExpressRouteGatewaysListBySubscriptionResponse = ExpressRouteGatewayList & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ExpressRouteGatewayList;
-    };
-};
-
-/**
- * Contains response data for the listByResourceGroup operation.
- */
-export type ExpressRouteGatewaysListByResourceGroupResponse = ExpressRouteGatewayList & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ExpressRouteGatewayList;
-    };
-};
-
-/**
- * Contains response data for the createOrUpdate operation.
- */
-export type ExpressRouteGatewaysCreateOrUpdateResponse = ExpressRouteGateway & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ExpressRouteGateway;
-    };
-};
-
-/**
- * Contains response data for the get operation.
- */
-export type ExpressRouteGatewaysGetResponse = ExpressRouteGateway & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ExpressRouteGateway;
-    };
-};
-
-/**
- * Contains response data for the beginCreateOrUpdate operation.
- */
-export type ExpressRouteGatewaysBeginCreateOrUpdateResponse = ExpressRouteGateway & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ExpressRouteGateway;
-    };
-};
-
-/**
- * Contains response data for the createOrUpdate operation.
- */
-export type ExpressRouteConnectionsCreateOrUpdateResponse = ExpressRouteConnection & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ExpressRouteConnection;
-    };
-};
-
-/**
- * Contains response data for the get operation.
- */
-export type ExpressRouteConnectionsGetResponse = ExpressRouteConnection & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ExpressRouteConnection;
-    };
-};
-
-/**
- * Contains response data for the list operation.
- */
-export type ExpressRouteConnectionsListResponse = ExpressRouteConnectionList & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ExpressRouteConnectionList;
-    };
-};
-
-/**
- * Contains response data for the beginCreateOrUpdate operation.
- */
-export type ExpressRouteConnectionsBeginCreateOrUpdateResponse = ExpressRouteConnection & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ExpressRouteConnection;
-    };
-};
-
-/**
  * Contains response data for the list operation.
  */
 export type ExpressRoutePortsLocationsListResponse = ExpressRoutePortsLocationListResult & {
@@ -16888,6 +16886,166 @@ export type FirewallPolicyRuleGroupsListNextResponse = FirewallPolicyRuleGroupLi
        * The response body as parsed JSON or XML
        */
       parsedBody: FirewallPolicyRuleGroupListResult;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type IpAllocationsGetResponse = IpAllocation & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: IpAllocation;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdate operation.
+ */
+export type IpAllocationsCreateOrUpdateResponse = IpAllocation & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: IpAllocation;
+    };
+};
+
+/**
+ * Contains response data for the updateTags operation.
+ */
+export type IpAllocationsUpdateTagsResponse = IpAllocation & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: IpAllocation;
+    };
+};
+
+/**
+ * Contains response data for the list operation.
+ */
+export type IpAllocationsListResponse = IpAllocationListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: IpAllocationListResult;
+    };
+};
+
+/**
+ * Contains response data for the listByResourceGroup operation.
+ */
+export type IpAllocationsListByResourceGroupResponse = IpAllocationListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: IpAllocationListResult;
+    };
+};
+
+/**
+ * Contains response data for the beginCreateOrUpdate operation.
+ */
+export type IpAllocationsBeginCreateOrUpdateResponse = IpAllocation & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: IpAllocation;
+    };
+};
+
+/**
+ * Contains response data for the listNext operation.
+ */
+export type IpAllocationsListNextResponse = IpAllocationListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: IpAllocationListResult;
+    };
+};
+
+/**
+ * Contains response data for the listByResourceGroupNext operation.
+ */
+export type IpAllocationsListByResourceGroupNextResponse = IpAllocationListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: IpAllocationListResult;
     };
 };
 
@@ -21492,6 +21650,166 @@ export type RoutesListNextResponse = RouteListResult & {
 };
 
 /**
+ * Contains response data for the get operation.
+ */
+export type SecurityPartnerProvidersGetResponse = SecurityPartnerProvider & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SecurityPartnerProvider;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdate operation.
+ */
+export type SecurityPartnerProvidersCreateOrUpdateResponse = SecurityPartnerProvider & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SecurityPartnerProvider;
+    };
+};
+
+/**
+ * Contains response data for the updateTags operation.
+ */
+export type SecurityPartnerProvidersUpdateTagsResponse = SecurityPartnerProvider & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SecurityPartnerProvider;
+    };
+};
+
+/**
+ * Contains response data for the listByResourceGroup operation.
+ */
+export type SecurityPartnerProvidersListByResourceGroupResponse = SecurityPartnerProviderListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SecurityPartnerProviderListResult;
+    };
+};
+
+/**
+ * Contains response data for the list operation.
+ */
+export type SecurityPartnerProvidersListResponse = SecurityPartnerProviderListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SecurityPartnerProviderListResult;
+    };
+};
+
+/**
+ * Contains response data for the beginCreateOrUpdate operation.
+ */
+export type SecurityPartnerProvidersBeginCreateOrUpdateResponse = SecurityPartnerProvider & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SecurityPartnerProvider;
+    };
+};
+
+/**
+ * Contains response data for the listByResourceGroupNext operation.
+ */
+export type SecurityPartnerProvidersListByResourceGroupNextResponse = SecurityPartnerProviderListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SecurityPartnerProviderListResult;
+    };
+};
+
+/**
+ * Contains response data for the listNext operation.
+ */
+export type SecurityPartnerProvidersListNextResponse = SecurityPartnerProviderListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SecurityPartnerProviderListResult;
+    };
+};
+
+/**
  * Contains response data for the list operation.
  */
 export type BgpServiceCommunitiesListResponse = BgpServiceCommunityListResult & {
@@ -25468,6 +25786,186 @@ export type VirtualHubRouteTableV2sListNextResponse = ListVirtualHubRouteTableV2
        * The response body as parsed JSON or XML
        */
       parsedBody: ListVirtualHubRouteTableV2sResult;
+    };
+};
+
+/**
+ * Contains response data for the listBySubscription operation.
+ */
+export type ExpressRouteGatewaysListBySubscriptionResponse = ExpressRouteGatewayList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ExpressRouteGatewayList;
+    };
+};
+
+/**
+ * Contains response data for the listByResourceGroup operation.
+ */
+export type ExpressRouteGatewaysListByResourceGroupResponse = ExpressRouteGatewayList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ExpressRouteGatewayList;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdate operation.
+ */
+export type ExpressRouteGatewaysCreateOrUpdateResponse = ExpressRouteGateway & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ExpressRouteGateway;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type ExpressRouteGatewaysGetResponse = ExpressRouteGateway & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ExpressRouteGateway;
+    };
+};
+
+/**
+ * Contains response data for the beginCreateOrUpdate operation.
+ */
+export type ExpressRouteGatewaysBeginCreateOrUpdateResponse = ExpressRouteGateway & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ExpressRouteGateway;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdate operation.
+ */
+export type ExpressRouteConnectionsCreateOrUpdateResponse = ExpressRouteConnection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ExpressRouteConnection;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type ExpressRouteConnectionsGetResponse = ExpressRouteConnection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ExpressRouteConnection;
+    };
+};
+
+/**
+ * Contains response data for the list operation.
+ */
+export type ExpressRouteConnectionsListResponse = ExpressRouteConnectionList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ExpressRouteConnectionList;
+    };
+};
+
+/**
+ * Contains response data for the beginCreateOrUpdate operation.
+ */
+export type ExpressRouteConnectionsBeginCreateOrUpdateResponse = ExpressRouteConnection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ExpressRouteConnection;
     };
 };
 
