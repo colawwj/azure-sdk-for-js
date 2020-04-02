@@ -7,9 +7,8 @@
  */
 
 export {
+  DownloadUrl,
+  EaInvoicesDownloadHeaders,
   ErrorDetails,
-  ErrorResponse,
-  Operation,
-  OperationDisplay,
-  OperationListResult
+  ErrorResponse
 } from "../models/mappers";
