@@ -5165,6 +5165,24 @@ export const GatewayHostnameConfigurationContract: msRest.CompositeMapper = {
         type: {
           name: "Boolean"
         }
+      },
+      tls10Enabled: {
+        serializedName: "properties.tls10Enabled",
+        type: {
+          name: "Boolean"
+        }
+      },
+      tls11Enabled: {
+        serializedName: "properties.tls11Enabled",
+        type: {
+          name: "Boolean"
+        }
+      },
+      http2Enabled: {
+        serializedName: "properties.http2Enabled",
+        type: {
+          name: "Boolean"
+        }
       }
     }
   }

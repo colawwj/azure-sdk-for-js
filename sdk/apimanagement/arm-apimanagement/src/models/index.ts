@@ -3042,6 +3042,18 @@ export interface GatewayHostnameConfigurationContract extends Resource {
    * Determines whether gateway requests client certificate
    */
   negotiateClientCertificate?: boolean;
+  /**
+   * Specifies if TLS 1.0 is supported
+   */
+  tls10Enabled?: boolean;
+  /**
+   * Specifies if TLS 1.1 is supported
+   */
+  tls11Enabled?: boolean;
+  /**
+   * Specifies if HTTP/2.0 is supported
+   */
+  http2Enabled?: boolean;
 }
 
 /**
