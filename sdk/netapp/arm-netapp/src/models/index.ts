@@ -420,32 +420,9 @@ export interface VolumePropertiesExportPolicy {
 }
 
 /**
- * Mount Target
+ * Mount target properties
  */
-export interface MountTarget {
-  /**
-   * Resource location
-   */
-  location: string;
-  /**
-   * Resource Id
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Resource name
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Resource type
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * Resource tags
-   */
-  tags?: { [propertyName: string]: string };
+export interface MountTargetProperties {
   /**
    * mountTargetId. UUID v4 used to identify the MountTarget
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -582,7 +559,7 @@ export interface Volume extends BaseResource {
   /**
    * mountTargets. List of mount targets
    */
-  mountTargets?: MountTarget[];
+  mountTargets?: MountTargetProperties[];
   /**
    * What type of volume is this
    */
@@ -677,6 +654,53 @@ export interface VolumePatch extends BaseResource {
    * exportPolicy. Set of export policy rules
    */
   exportPolicy?: VolumePatchPropertiesExportPolicy;
+}
+
+/**
+ * Mount Target
+ */
+export interface MountTarget {
+  /**
+   * Resource location
+   */
+  location: string;
+  /**
+   * Resource Id
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Resource name
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Resource type
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * Resource tags
+   */
+  tags?: { [propertyName: string]: string };
+  /**
+   * mountTargetId. UUID v4 used to identify the MountTarget
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly mountTargetId?: string;
+  /**
+   * fileSystemId. UUID v4 used to identify the MountTarget
+   */
+  fileSystemId: string;
+  /**
+   * ipAddress. The mount target's IPv4 address
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly ipAddress?: string;
+  /**
+   * smbServerFQDN. The SMB server's Fully Qualified Domain Name, FQDN
+   */
+  smbServerFqdn?: string;
 }
 
 /**
