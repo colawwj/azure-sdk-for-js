@@ -150,6 +150,7 @@ export {
   Ipv6ExpressRouteCircuitPeeringConfig,
   ListVirtualWANsResult,
   LoadBalancer,
+  LoadBalancerBackendAddress,
   LoadBalancerSku,
   LoadBalancingRule,
   LocalNetworkGateway,
