@@ -2205,15 +2205,15 @@ export interface MetricAlertResourcePatch {
   /**
    * the description of the metric alert that will be included in the alert email.
    */
-  description: string;
+  description?: string;
   /**
    * Alert severity {0, 1, 2, 3, 4}
    */
-  severity: number;
+  severity?: number;
   /**
    * the flag that indicates whether the metric alert is enabled.
    */
-  enabled: boolean;
+  enabled?: boolean;
   /**
    * the list of resource id's that this metric alert is scoped to.
    */
@@ -2221,26 +2221,28 @@ export interface MetricAlertResourcePatch {
   /**
    * how often the metric alert is evaluated represented in ISO 8601 duration format.
    */
-  evaluationFrequency: string;
+  evaluationFrequency?: string;
   /**
    * the period of time (in ISO 8601 duration format) that is used to monitor alert activity based
    * on the threshold.
    */
-  windowSize: string;
+  windowSize?: string;
   /**
    * the resource type of the target resource(s) on which the alert is created/updated. Mandatory
    * for MultipleResourceMultipleMetricCriteria.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  targetResourceType?: string;
+  readonly targetResourceType?: string;
   /**
    * the region of the target resource(s) on which the alert is created/updated. Mandatory for
    * MultipleResourceMultipleMetricCriteria.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  targetResourceRegion?: string;
+  readonly targetResourceRegion?: string;
   /**
    * defines the specific alert criteria information.
    */
-  criteria: MetricAlertCriteriaUnion;
+  criteria?: MetricAlertCriteriaUnion;
   /**
    * the flag that indicates whether the alert should be auto resolved or not. The default is true.
    */

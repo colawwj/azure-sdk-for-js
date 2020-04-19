@@ -3758,21 +3758,18 @@ export const MetricAlertResourcePatch: msRest.CompositeMapper = {
         }
       },
       description: {
-        required: true,
         serializedName: "properties.description",
         type: {
           name: "String"
         }
       },
       severity: {
-        required: true,
         serializedName: "properties.severity",
         type: {
           name: "Number"
         }
       },
       enabled: {
-        required: true,
         serializedName: "properties.enabled",
         type: {
           name: "Boolean"
@@ -3790,33 +3787,32 @@ export const MetricAlertResourcePatch: msRest.CompositeMapper = {
         }
       },
       evaluationFrequency: {
-        required: true,
         serializedName: "properties.evaluationFrequency",
         type: {
           name: "TimeSpan"
         }
       },
       windowSize: {
-        required: true,
         serializedName: "properties.windowSize",
         type: {
           name: "TimeSpan"
         }
       },
       targetResourceType: {
+        readOnly: true,
         serializedName: "properties.targetResourceType",
         type: {
           name: "String"
         }
       },
       targetResourceRegion: {
+        readOnly: true,
         serializedName: "properties.targetResourceRegion",
         type: {
           name: "String"
         }
       },
       criteria: {
-        required: true,
         serializedName: "properties.criteria",
         type: {
           name: "Composite",
