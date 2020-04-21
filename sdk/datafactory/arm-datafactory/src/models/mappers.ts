@@ -4915,7 +4915,6 @@ export const QuickBooksLinkedService: msRest.CompositeMapper = {
         }
       },
       accessToken: {
-        required: true,
         serializedName: "typeProperties.accessToken",
         type: {
           name: "Composite",
@@ -4923,8 +4922,15 @@ export const QuickBooksLinkedService: msRest.CompositeMapper = {
         }
       },
       accessTokenSecret: {
-        required: true,
         serializedName: "typeProperties.accessTokenSecret",
+        type: {
+          name: "Composite",
+          className: "SecretBase"
+        }
+      },
+      refreshToken: {
+        required: true,
+        serializedName: "typeProperties.refreshToken",
         type: {
           name: "Composite",
           className: "SecretBase"

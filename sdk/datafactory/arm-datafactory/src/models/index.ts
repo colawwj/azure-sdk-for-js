@@ -3450,25 +3450,30 @@ export interface QuickBooksLinkedService {
    */
   endpoint: any;
   /**
-   * The company ID of the QuickBooks company to authorize.
+   * The company ID associated with your QuickBooks account.
    */
   companyId: any;
   /**
-   * The consumer key for OAuth 1.0 authentication.
+   * The client ID associated with your QuickBooks application.
    */
   consumerKey: any;
   /**
-   * The consumer secret for OAuth 1.0 authentication.
+   * The client secret associated with your QuickBooks application.
    */
   consumerSecret: SecretBaseUnion;
   /**
-   * The access token for OAuth 1.0 authentication.
+   * The access token for OAuth 2.0 authentication. This is deprecated from OAuth 2.0.
    */
-  accessToken: SecretBaseUnion;
+  accessToken?: SecretBaseUnion;
   /**
-   * The access token secret for OAuth 1.0 authentication.
+   * The access token secret for OAuth 1.0 authentication. This is deprecated from OAuth 2.0.
    */
-  accessTokenSecret: SecretBaseUnion;
+  accessTokenSecret?: SecretBaseUnion;
+  /**
+   * The OAuth 2.0 refresh token associated with your QuickBooks application,used to refresh the
+   * access token when it expires.
+   */
+  refreshToken: SecretBaseUnion;
   /**
    * Specifies whether the data source endpoints are encrypted using HTTPS. The default value is
    * true.
