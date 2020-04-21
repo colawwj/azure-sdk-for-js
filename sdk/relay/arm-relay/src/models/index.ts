@@ -35,101 +35,11 @@ export interface Resource extends BaseResource {
 /**
  * Definition of resource.
  */
-export interface TrackedResource extends Resource {
-  /**
-   * Resource location.
-   */
-  location: string;
-  /**
-   * Resource tags.
-   */
-  tags?: { [propertyName: string]: string };
-}
-
-/**
- * Definition of resource.
- */
 export interface ResourceNamespacePatch extends Resource {
   /**
    * Resource tags.
    */
   tags?: { [propertyName: string]: string };
-}
-
-/**
- * Description of hybrid connection resource.
- */
-export interface HybridConnection extends Resource {
-  /**
-   * The time the hybrid connection was created.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly createdAt?: Date;
-  /**
-   * The time the namespace was updated.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly updatedAt?: Date;
-  /**
-   * The number of listeners for this hybrid connection. Note that min : 1 and max:25 are
-   * supported.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly listenerCount?: number;
-  /**
-   * Returns true if client authorization is needed for this hybrid connection; otherwise, false.
-   */
-  requiresClientAuthorization?: boolean;
-  /**
-   * The usermetadata is a placeholder to store user-defined string data for the hybrid connection
-   * endpoint. For example, it can be used to store descriptive data, such as a list of teams and
-   * their contact information. Also, user-defined configuration settings can be stored.
-   */
-  userMetadata?: string;
-}
-
-/**
- * Description of the WCF relay resource.
- */
-export interface WcfRelay extends Resource {
-  /**
-   * Returns true if the relay is dynamic; otherwise, false.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly isDynamic?: boolean;
-  /**
-   * The time the WCF relay was created.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly createdAt?: Date;
-  /**
-   * The time the namespace was updated.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly updatedAt?: Date;
-  /**
-   * The number of listeners for this relay. Note that min :1 and max:25 are supported.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly listenerCount?: number;
-  /**
-   * WCF relay type. Possible values include: 'NetTcp', 'Http'
-   */
-  relayType?: Relaytype;
-  /**
-   * Returns true if client authorization is needed for this relay; otherwise, false.
-   */
-  requiresClientAuthorization?: boolean;
-  /**
-   * Returns true if transport security is needed for this relay; otherwise, false.
-   */
-  requiresTransportSecurity?: boolean;
-  /**
-   * The usermetadata is a placeholder to store user-defined string data for the WCF Relay
-   * endpoint. For example, it can be used to store descriptive data, such as list of teams and
-   * their contact information. Also, user-defined configuration settings can be stored.
-   */
-  userMetadata?: string;
 }
 
 /**
@@ -140,6 +50,20 @@ export interface Sku {
    * The tier of this SKU. Possible values include: 'Standard'
    */
   tier?: SkuTier;
+}
+
+/**
+ * Definition of resource.
+ */
+export interface TrackedResource extends Resource {
+  /**
+   * Resource location.
+   */
+  location: string;
+  /**
+   * Resource tags.
+   */
+  tags?: { [propertyName: string]: string };
 }
 
 /**
@@ -213,58 +137,6 @@ export interface RelayUpdateParameters extends ResourceNamespacePatch {
 }
 
 /**
- * Description of a namespace authorization rule.
- */
-export interface AuthorizationRule extends Resource {
-  /**
-   * The rights associated with the rule.
-   */
-  rights: AccessRights[];
-}
-
-/**
- * Namespace/Relay Connection String
- */
-export interface AccessKeys {
-  /**
-   * Primary connection string of the created namespace authorization rule.
-   */
-  primaryConnectionString?: string;
-  /**
-   * Secondary connection string of the created namespace authorization rule.
-   */
-  secondaryConnectionString?: string;
-  /**
-   * A base64-encoded 256-bit primary key for signing and validating the SAS token.
-   */
-  primaryKey?: string;
-  /**
-   * A base64-encoded 256-bit secondary key for signing and validating the SAS token.
-   */
-  secondaryKey?: string;
-  /**
-   * A string that describes the authorization rule.
-   */
-  keyName?: string;
-}
-
-/**
- * Parameters supplied to the regenerate authorization rule operation, specifies which key neeeds
- * to be reset.
- */
-export interface RegenerateAccessKeyParameters {
-  /**
-   * The access key to regenerate. Possible values include: 'PrimaryKey', 'SecondaryKey'
-   */
-  keyType: KeyType;
-  /**
-   * Optional. If the key value is provided, this is set to key type, or autogenerated key value
-   * set for key type.
-   */
-  key?: string;
-}
-
-/**
  * Description of the check name availability request properties.
  */
 export interface CheckNameAvailability {
@@ -335,8 +207,8 @@ export interface Operation {
 }
 
 /**
- * Error reponse indicates Relay service is not able to process the incoming request. The reason is
- * provided in the error message.
+ * Error response indicates Relay service is not able to process the incoming request. The reason
+ * is provided in the error message.
  */
 export interface ErrorResponse {
   /**
@@ -347,6 +219,270 @@ export interface ErrorResponse {
    * Error message indicating why the operation failed.
    */
   message?: string;
+}
+
+/**
+ * The response from the List namespace operation.
+ */
+export interface NWRuleSetIpRules {
+  /**
+   * IP Mask
+   */
+  ipMask?: string;
+  /**
+   * The IP Filter Action. Possible values include: 'Allow'
+   */
+  action?: NetworkRuleIPAction;
+}
+
+/**
+ * Description of topic resource.
+ */
+export interface NetworkRuleSet extends Resource {
+  /**
+   * Default Action for Network Rule Set. Possible values include: 'Allow', 'Deny'
+   */
+  defaultAction?: DefaultAction;
+  /**
+   * List of IpRules
+   */
+  ipRules?: NWRuleSetIpRules[];
+}
+
+/**
+ * Private endpoint object properties.
+ */
+export interface PrivateEndpoint {
+  /**
+   * Full identifier of the private endpoint resource.
+   */
+  id?: string;
+}
+
+/**
+ * An object that represents the approval state of the private link connection.
+ */
+export interface PrivateLinkServiceConnectionState {
+  /**
+   * Indicates whether the connection has been approved, rejected or removed by the Relay Namespace
+   * owner. Possible values include: 'Pending', 'Approved', 'Rejected', 'Disconnected'
+   */
+  status?: PrivateEndpointServiceConnectionStatus;
+  /**
+   * The reason for approval or rejection.
+   */
+  description?: string;
+  /**
+   * A message indicating if changes on the service provider require any updates on the consumer.
+   */
+  actionRequired?: string;
+}
+
+/**
+ * Private endpoint connection resource.
+ */
+export interface PrivateEndpointConnection extends BaseResource {
+  /**
+   * Properties of the private endpoint object.
+   */
+  privateEndpoint?: PrivateEndpoint;
+  /**
+   * Approval state of the private link connection.
+   */
+  privateLinkServiceConnectionState?: PrivateLinkServiceConnectionState;
+  /**
+   * Provisioning state of the private endpoint connection. Possible values include: 'Unknown',
+   * 'Succeeded', 'Creating', 'Updating', 'UpdatingByProxy', 'Deleting', 'DeletingByProxy'
+   */
+  provisioningState?: PrivateEndpointConnectionProvisioningState;
+}
+
+/**
+ * Private endpoint connection item.
+ */
+export interface PrivateEndpointConnectionItem {
+  /**
+   * Properties of the private endpoint object.
+   */
+  privateEndpoint?: PrivateEndpoint;
+  /**
+   * Approval state of the private link connection.
+   */
+  privateLinkServiceConnectionState?: PrivateLinkServiceConnectionState;
+  /**
+   * Provisioning state of the private endpoint connection. Possible values include: 'Unknown',
+   * 'Succeeded', 'Creating', 'Updating', 'UpdatingByProxy', 'Deleting', 'DeletingByProxy'
+   */
+  provisioningState?: PrivateEndpointConnectionProvisioningState;
+}
+
+/**
+ * Operation Status object properties.
+ */
+export interface OperationStatusItem {
+  /**
+   * Full identifier of the private endpoint connection resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * name of the private endpoint connection resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Status of private endpoint connection operation.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly status?: string;
+}
+
+/**
+ * A private link resource
+ */
+export interface PrivateLinkResource extends Resource {
+  /**
+   * Group identifier of private link resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly groupId?: string;
+  /**
+   * Required member names of private link resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly requiredMembers?: string[];
+  /**
+   * Required DNS zone names of the the private link resource.
+   */
+  requiredZoneNames?: string[];
+}
+
+/**
+ * Description of a namespace authorization rule.
+ */
+export interface AuthorizationRule extends Resource {
+  /**
+   * The rights associated with the rule.
+   */
+  rights: AccessRights[];
+}
+
+/**
+ * Namespace/Relay Connection String
+ */
+export interface AccessKeys {
+  /**
+   * Primary connection string of the created namespace authorization rule.
+   */
+  primaryConnectionString?: string;
+  /**
+   * Secondary connection string of the created namespace authorization rule.
+   */
+  secondaryConnectionString?: string;
+  /**
+   * A base64-encoded 256-bit primary key for signing and validating the SAS token.
+   */
+  primaryKey?: string;
+  /**
+   * A base64-encoded 256-bit secondary key for signing and validating the SAS token.
+   */
+  secondaryKey?: string;
+  /**
+   * A string that describes the authorization rule.
+   */
+  keyName?: string;
+}
+
+/**
+ * Parameters supplied to the regenerate authorization rule operation, specifies which key needs to
+ * be reset.
+ */
+export interface RegenerateAccessKeyParameters {
+  /**
+   * The access key to regenerate. Possible values include: 'PrimaryKey', 'SecondaryKey'
+   */
+  keyType: KeyType;
+  /**
+   * Optional. If the key value is provided, this is set to key type, or autogenerated key value
+   * set for key type.
+   */
+  key?: string;
+}
+
+/**
+ * Description of hybrid connection resource.
+ */
+export interface HybridConnection extends Resource {
+  /**
+   * The time the hybrid connection was created.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly createdAt?: Date;
+  /**
+   * The time the namespace was updated.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly updatedAt?: Date;
+  /**
+   * The number of listeners for this hybrid connection. Note that min : 1 and max:25 are
+   * supported.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly listenerCount?: number;
+  /**
+   * Returns true if client authorization is needed for this hybrid connection; otherwise, false.
+   */
+  requiresClientAuthorization?: boolean;
+  /**
+   * The user meta data is a placeholder to store user-defined string data for the hybrid
+   * connection endpoint. For example, it can be used to store descriptive data, such as a list of
+   * teams and their contact information. Also, user-defined configuration settings can be stored.
+   */
+  userMetadata?: string;
+}
+
+/**
+ * Description of the WCF relay resource.
+ */
+export interface WcfRelay extends Resource {
+  /**
+   * Returns true if the relay is dynamic; otherwise, false.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly isDynamic?: boolean;
+  /**
+   * The time the WCF relay was created.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly createdAt?: Date;
+  /**
+   * The time the namespace was updated.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly updatedAt?: Date;
+  /**
+   * The number of listeners for this relay. Note that min :1 and max:25 are supported.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly listenerCount?: number;
+  /**
+   * WCF relay type. Possible values include: 'NetTcp', 'Http'
+   */
+  relayType?: RelayType;
+  /**
+   * Returns true if client authorization is needed for this relay; otherwise, false.
+   */
+  requiresClientAuthorization?: boolean;
+  /**
+   * Returns true if transport security is needed for this relay; otherwise, false.
+   */
+  requiresTransportSecurity?: boolean;
+  /**
+   * The user meta data is a placeholder to store user-defined string data for the WCF Relay
+   * endpoint. For example, it can be used to store descriptive data, such as list of teams and
+   * their contact information. Also, user-defined configuration settings can be stored.
+   */
+  userMetadata?: string;
 }
 
 /**
@@ -397,6 +533,30 @@ export interface AuthorizationRuleListResult extends Array<AuthorizationRule> {
 
 /**
  * @interface
+ * A list of private link resources
+ * @extends Array<PrivateEndpointConnection>
+ */
+export interface PrivateEndpointConnectionListResult extends Array<PrivateEndpointConnection> {
+  /**
+   * The link used to get the next page of operations.
+   */
+  nextLink?: string;
+}
+
+/**
+ * @interface
+ * A list of private link resources
+ * @extends Array<PrivateLinkResource>
+ */
+export interface PrivateLinkResourceListResult extends Array<PrivateLinkResource> {
+  /**
+   * The link used to get the next page of operations.
+   */
+  nextLink?: string;
+}
+
+/**
+ * @interface
  * The response of the list hybrid connection operation.
  * @extends Array<HybridConnection>
  */
@@ -421,14 +581,6 @@ export interface WcfRelaysListResult extends Array<WcfRelay> {
 }
 
 /**
- * Defines values for Relaytype.
- * Possible values include: 'NetTcp', 'Http'
- * @readonly
- * @enum {string}
- */
-export type Relaytype = 'NetTcp' | 'Http';
-
-/**
  * Defines values for SkuTier.
  * Possible values include: 'Standard'
  * @readonly
@@ -443,6 +595,48 @@ export type SkuTier = 'Standard';
  * @enum {string}
  */
 export type ProvisioningStateEnum = 'Created' | 'Succeeded' | 'Deleted' | 'Failed' | 'Updating' | 'Unknown';
+
+/**
+ * Defines values for UnavailableReason.
+ * Possible values include: 'None', 'InvalidName', 'SubscriptionIsDisabled', 'NameInUse',
+ * 'NameInLockdown', 'TooManyNamespaceInCurrentSubscription'
+ * @readonly
+ * @enum {string}
+ */
+export type UnavailableReason = 'None' | 'InvalidName' | 'SubscriptionIsDisabled' | 'NameInUse' | 'NameInLockdown' | 'TooManyNamespaceInCurrentSubscription';
+
+/**
+ * Defines values for NetworkRuleIPAction.
+ * Possible values include: 'Allow'
+ * @readonly
+ * @enum {string}
+ */
+export type NetworkRuleIPAction = 'Allow';
+
+/**
+ * Defines values for DefaultAction.
+ * Possible values include: 'Allow', 'Deny'
+ * @readonly
+ * @enum {string}
+ */
+export type DefaultAction = 'Allow' | 'Deny';
+
+/**
+ * Defines values for PrivateEndpointServiceConnectionStatus.
+ * Possible values include: 'Pending', 'Approved', 'Rejected', 'Disconnected'
+ * @readonly
+ * @enum {string}
+ */
+export type PrivateEndpointServiceConnectionStatus = 'Pending' | 'Approved' | 'Rejected' | 'Disconnected';
+
+/**
+ * Defines values for PrivateEndpointConnectionProvisioningState.
+ * Possible values include: 'Unknown', 'Succeeded', 'Creating', 'Updating', 'UpdatingByProxy',
+ * 'Deleting', 'DeletingByProxy'
+ * @readonly
+ * @enum {string}
+ */
+export type PrivateEndpointConnectionProvisioningState = 'Unknown' | 'Succeeded' | 'Creating' | 'Updating' | 'UpdatingByProxy' | 'Deleting' | 'DeletingByProxy';
 
 /**
  * Defines values for AccessRights.
@@ -461,13 +655,12 @@ export type AccessRights = 'Manage' | 'Send' | 'Listen';
 export type KeyType = 'PrimaryKey' | 'SecondaryKey';
 
 /**
- * Defines values for UnavailableReason.
- * Possible values include: 'None', 'InvalidName', 'SubscriptionIsDisabled', 'NameInUse',
- * 'NameInLockdown', 'TooManyNamespaceInCurrentSubscription'
+ * Defines values for RelayType.
+ * Possible values include: 'NetTcp', 'Http'
  * @readonly
  * @enum {string}
  */
-export type UnavailableReason = 'None' | 'InvalidName' | 'SubscriptionIsDisabled' | 'NameInUse' | 'NameInLockdown' | 'TooManyNamespaceInCurrentSubscription';
+export type RelayType = 'NetTcp' | 'Http';
 
 /**
  * Contains response data for the list operation.
@@ -626,6 +819,46 @@ export type NamespacesUpdateResponse = RelayNamespace & {
        * The response body as parsed JSON or XML
        */
       parsedBody: RelayNamespace;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdateNetworkRuleSet operation.
+ */
+export type NamespacesCreateOrUpdateNetworkRuleSetResponse = NetworkRuleSet & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: NetworkRuleSet;
+    };
+};
+
+/**
+ * Contains response data for the getNetworkRuleSet operation.
+ */
+export type NamespacesGetNetworkRuleSetResponse = NetworkRuleSet & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: NetworkRuleSet;
     };
 };
 
@@ -812,7 +1045,7 @@ export type NamespacesListAuthorizationRulesNextResponse = AuthorizationRuleList
 /**
  * Contains response data for the listByNamespace operation.
  */
-export type HybridConnectionsListByNamespaceResponse = HybridConnectionListResult & {
+export type PrivateEndpointConnectionsListByNamespaceResponse = PrivateEndpointConnectionListResult & {
   /**
    * The underlying HTTP response.
    */
@@ -825,14 +1058,14 @@ export type HybridConnectionsListByNamespaceResponse = HybridConnectionListResul
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: HybridConnectionListResult;
+      parsedBody: PrivateEndpointConnectionListResult;
     };
 };
 
 /**
- * Contains response data for the createOrUpdate operation.
+ * Contains response data for the put operation.
  */
-export type HybridConnectionsCreateOrUpdateResponse = HybridConnection & {
+export type PrivateEndpointConnectionsPutResponse = PrivateEndpointConnection & {
   /**
    * The underlying HTTP response.
    */
@@ -845,14 +1078,14 @@ export type HybridConnectionsCreateOrUpdateResponse = HybridConnection & {
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: HybridConnection;
+      parsedBody: PrivateEndpointConnection;
     };
 };
 
 /**
  * Contains response data for the get operation.
  */
-export type HybridConnectionsGetResponse = HybridConnection & {
+export type PrivateEndpointConnectionsGetResponse = PrivateEndpointConnection & {
   /**
    * The underlying HTTP response.
    */
@@ -865,7 +1098,107 @@ export type HybridConnectionsGetResponse = HybridConnection & {
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: HybridConnection;
+      parsedBody: PrivateEndpointConnection;
+    };
+};
+
+/**
+ * Contains response data for the beginPut operation.
+ */
+export type PrivateEndpointConnectionsBeginPutResponse = PrivateEndpointConnection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateEndpointConnection;
+    };
+};
+
+/**
+ * Contains response data for the listByNamespaceNext operation.
+ */
+export type PrivateEndpointConnectionsListByNamespaceNextResponse = PrivateEndpointConnectionListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateEndpointConnectionListResult;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type OperationStatusPrivateEndpointConnectionsGetResponse = OperationStatusItem & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: OperationStatusItem;
+    };
+};
+
+/**
+ * Contains response data for the privateLinkResourcesGet operation.
+ */
+export type PrivateLinkResourcesGetResponse = PrivateLinkResourceListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateLinkResourceListResult;
+    };
+};
+
+/**
+ * Contains response data for the privateLinkResourcesGetNext operation.
+ */
+export type PrivateLinkResourcesGetNextResponse = PrivateLinkResourceListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateLinkResourceListResult;
     };
 };
 
@@ -970,9 +1303,9 @@ export type HybridConnectionsRegenerateKeysResponse = AccessKeys & {
 };
 
 /**
- * Contains response data for the listByNamespaceNext operation.
+ * Contains response data for the listByNamespace operation.
  */
-export type HybridConnectionsListByNamespaceNextResponse = HybridConnectionListResult & {
+export type HybridConnectionsListByNamespaceResponse = HybridConnectionListResult & {
   /**
    * The underlying HTTP response.
    */
@@ -986,6 +1319,46 @@ export type HybridConnectionsListByNamespaceNextResponse = HybridConnectionListR
        * The response body as parsed JSON or XML
        */
       parsedBody: HybridConnectionListResult;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdate operation.
+ */
+export type HybridConnectionsCreateOrUpdateResponse = HybridConnection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: HybridConnection;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type HybridConnectionsGetResponse = HybridConnection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: HybridConnection;
     };
 };
 
@@ -1010,9 +1383,9 @@ export type HybridConnectionsListAuthorizationRulesNextResponse = AuthorizationR
 };
 
 /**
- * Contains response data for the listByNamespace operation.
+ * Contains response data for the listByNamespaceNext operation.
  */
-export type WCFRelaysListByNamespaceResponse = WcfRelaysListResult & {
+export type HybridConnectionsListByNamespaceNextResponse = HybridConnectionListResult & {
   /**
    * The underlying HTTP response.
    */
@@ -1025,47 +1398,7 @@ export type WCFRelaysListByNamespaceResponse = WcfRelaysListResult & {
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: WcfRelaysListResult;
-    };
-};
-
-/**
- * Contains response data for the createOrUpdate operation.
- */
-export type WCFRelaysCreateOrUpdateResponse = WcfRelay & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: WcfRelay;
-    };
-};
-
-/**
- * Contains response data for the get operation.
- */
-export type WCFRelaysGetResponse = WcfRelay & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: WcfRelay;
+      parsedBody: HybridConnectionListResult;
     };
 };
 
@@ -1170,9 +1503,9 @@ export type WCFRelaysRegenerateKeysResponse = AccessKeys & {
 };
 
 /**
- * Contains response data for the listByNamespaceNext operation.
+ * Contains response data for the listByNamespace operation.
  */
-export type WCFRelaysListByNamespaceNextResponse = WcfRelaysListResult & {
+export type WCFRelaysListByNamespaceResponse = WcfRelaysListResult & {
   /**
    * The underlying HTTP response.
    */
@@ -1186,6 +1519,46 @@ export type WCFRelaysListByNamespaceNextResponse = WcfRelaysListResult & {
        * The response body as parsed JSON or XML
        */
       parsedBody: WcfRelaysListResult;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdate operation.
+ */
+export type WCFRelaysCreateOrUpdateResponse = WcfRelay & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: WcfRelay;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type WCFRelaysGetResponse = WcfRelay & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: WcfRelay;
     };
 };
 
@@ -1206,5 +1579,25 @@ export type WCFRelaysListAuthorizationRulesNextResponse = AuthorizationRuleListR
        * The response body as parsed JSON or XML
        */
       parsedBody: AuthorizationRuleListResult;
+    };
+};
+
+/**
+ * Contains response data for the listByNamespaceNext operation.
+ */
+export type WCFRelaysListByNamespaceNextResponse = WcfRelaysListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: WcfRelaysListResult;
     };
 };
