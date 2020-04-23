@@ -355,6 +355,16 @@ export const resourceGroupName: msRest.OperationURLParameter = {
     }
   }
 };
+export const runCommandName: msRest.OperationURLParameter = {
+  parameterPath: "runCommandName",
+  mapper: {
+    required: true,
+    serializedName: "runCommandName",
+    type: {
+      name: "String"
+    }
+  }
+};
 export const select: msRest.OperationQueryParameter = {
   parameterPath: [
     "options",

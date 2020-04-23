@@ -4206,6 +4206,147 @@ export interface RunCommandResult {
 }
 
 /**
+ * The instance view of a virtual machine run command.
+ */
+export interface VirtualMachineRunCommandInstanceView {
+  /**
+   * Script execution status. Possible values include: 'Unknown', 'Pending', 'Running', 'Failed',
+   * 'Succeeded', 'TimedOut', 'Canceled'
+   */
+  executionState?: ExecutionState;
+  /**
+   * Script output stream.
+   */
+  output?: string;
+  /**
+   * Script error stream.
+   */
+  error?: string;
+  /**
+   * Script start time.
+   */
+  startTime?: Date;
+  /**
+   * Script end time.
+   */
+  endTime?: Date;
+  /**
+   * The resource status information.
+   */
+  statuses?: InstanceViewStatus[];
+}
+
+/**
+ * Describes the script sources for run command.
+ */
+export interface VirtualMachineRunCommandScriptSource {
+  /**
+   * Specifies the script content to be executed on the VM.
+   */
+  script?: string;
+  /**
+   * Specifies the script download location.
+   */
+  scriptUri?: string;
+}
+
+/**
+ * Describes a Virtual Machine run command.
+ */
+export interface VirtualMachineRunCommand extends Resource {
+  /**
+   * The source of the run command script.
+   */
+  source?: VirtualMachineRunCommandScriptSource;
+  /**
+   * The parameters used by the script.
+   */
+  parameters?: RunCommandInputParameter[];
+  /**
+   * The parameters used by the script.
+   */
+  protectedParameters?: RunCommandInputParameter[];
+  /**
+   * Specifies the user account on the VM when executing the run command.
+   */
+  runAsUser?: string;
+  /**
+   * Specifies the user account password on the VM when executing the run command.
+   */
+  runAsPassword?: string;
+  /**
+   * The timeout in seconds to execute the run command.
+   */
+  timeoutInSeconds?: number;
+  /**
+   * Specifies the Azure storage blob where script output stream will be uploaded.
+   */
+  outputBlobUri?: string;
+  /**
+   * Specifies the Azure storage blob where script error stream will be uploaded.
+   */
+  errorBlobUri?: string;
+  /**
+   * The provisioning state, which only appears in the response.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: string;
+  /**
+   * The virtual machine run command instance view.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly instanceView?: VirtualMachineRunCommandInstanceView;
+}
+
+/**
+ * Describes a Virtual Machine run command.
+ */
+export interface VirtualMachineRunCommandUpdate extends UpdateResource {
+  /**
+   * The source of the run command script.
+   */
+  source?: VirtualMachineRunCommandScriptSource;
+  /**
+   * The parameters used by the script.
+   */
+  parameters?: RunCommandInputParameter[];
+  /**
+   * The parameters used by the script.
+   */
+  protectedParameters?: RunCommandInputParameter[];
+  /**
+   * Specifies the user account on the VM when executing the run command.
+   */
+  runAsUser?: string;
+  /**
+   * Specifies the user account password on the VM when executing the run command.
+   */
+  runAsPassword?: string;
+  /**
+   * The timeout in seconds to execute the run command.
+   */
+  timeoutInSeconds?: number;
+  /**
+   * Specifies the Azure storage blob where script output stream will be uploaded.
+   */
+  outputBlobUri?: string;
+  /**
+   * Specifies the Azure storage blob where script error stream will be uploaded.
+   */
+  errorBlobUri?: string;
+  /**
+   * The provisioning state, which only appears in the response.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: string;
+  /**
+   * The virtual machine run command instance view.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly instanceView?: VirtualMachineRunCommandInstanceView;
+}
+
+/**
  * Describes scaling information of a SKU.
  */
 export interface ResourceSkuCapacity {
@@ -6246,6 +6387,26 @@ export interface VirtualMachineScaleSetVMsBeginPowerOffOptionalParams extends ms
 /**
  * Optional Parameters.
  */
+export interface VirtualMachineRunCommandsGetByVirtualMachineOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * The expand expression to apply on the operation.
+   */
+  expand?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface VirtualMachineRunCommandsListByVirtualMachineOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * The expand expression to apply on the operation.
+   */
+  expand?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
 export interface ResourceSkusListOptionalParams extends msRest.RequestOptionsBase {
   /**
    * The filter to apply on the operation.
@@ -6486,6 +6647,18 @@ export interface RunCommandListResult extends Array<RunCommandDocumentBase> {
   /**
    * The uri to fetch the next page of run commands. Call ListNext() with this to fetch the next
    * page of run commands.
+   */
+  nextLink?: string;
+}
+
+/**
+ * @interface
+ * The List run command operation response
+ * @extends Array<VirtualMachineRunCommand>
+ */
+export interface VirtualMachineRunCommandsListResult extends Array<VirtualMachineRunCommand> {
+  /**
+   * The uri to fetch the next page of run commands.
    */
   nextLink?: string;
 }
@@ -6924,6 +7097,15 @@ export type IntervalInMins = 'ThreeMins' | 'FiveMins' | 'ThirtyMins' | 'SixtyMin
  * @enum {string}
  */
 export type OrchestrationServiceStateAction = 'Resume' | 'Suspend';
+
+/**
+ * Defines values for ExecutionState.
+ * Possible values include: 'Unknown', 'Pending', 'Running', 'Failed', 'Succeeded', 'TimedOut',
+ * 'Canceled'
+ * @readonly
+ * @enum {string}
+ */
+export type ExecutionState = 'Unknown' | 'Pending' | 'Running' | 'Failed' | 'Succeeded' | 'TimedOut' | 'Canceled';
 
 /**
  * Defines values for ResourceSkuCapacityScaleType.
@@ -9599,6 +9781,126 @@ export type VirtualMachineRunCommandsGetResponse = RunCommandDocument & {
 };
 
 /**
+ * Contains response data for the createOrUpdate operation.
+ */
+export type VirtualMachineRunCommandsCreateOrUpdateResponse = VirtualMachineRunCommand & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: VirtualMachineRunCommand;
+    };
+};
+
+/**
+ * Contains response data for the update operation.
+ */
+export type VirtualMachineRunCommandsUpdateResponse = VirtualMachineRunCommand & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: VirtualMachineRunCommand;
+    };
+};
+
+/**
+ * Contains response data for the getByVirtualMachine operation.
+ */
+export type VirtualMachineRunCommandsGetByVirtualMachineResponse = VirtualMachineRunCommand & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: VirtualMachineRunCommand;
+    };
+};
+
+/**
+ * Contains response data for the listByVirtualMachine operation.
+ */
+export type VirtualMachineRunCommandsListByVirtualMachineResponse = VirtualMachineRunCommandsListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: VirtualMachineRunCommandsListResult;
+    };
+};
+
+/**
+ * Contains response data for the beginCreateOrUpdate operation.
+ */
+export type VirtualMachineRunCommandsBeginCreateOrUpdateResponse = VirtualMachineRunCommand & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: VirtualMachineRunCommand;
+    };
+};
+
+/**
+ * Contains response data for the beginUpdate operation.
+ */
+export type VirtualMachineRunCommandsBeginUpdateResponse = VirtualMachineRunCommand & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: VirtualMachineRunCommand;
+    };
+};
+
+/**
  * Contains response data for the listNext operation.
  */
 export type VirtualMachineRunCommandsListNextResponse = RunCommandListResult & {
@@ -9615,6 +9917,26 @@ export type VirtualMachineRunCommandsListNextResponse = RunCommandListResult & {
        * The response body as parsed JSON or XML
        */
       parsedBody: RunCommandListResult;
+    };
+};
+
+/**
+ * Contains response data for the listByVirtualMachineNext operation.
+ */
+export type VirtualMachineRunCommandsListByVirtualMachineNextResponse = VirtualMachineRunCommandsListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: VirtualMachineRunCommandsListResult;
     };
 };
 
