@@ -41,7 +41,7 @@ export interface Resource extends BaseResource {
    */
   readonly type?: string;
   /**
-   * The resource location.
+   * The resource location. Default value: 'unitedstates'.
    */
   location: string;
   /**

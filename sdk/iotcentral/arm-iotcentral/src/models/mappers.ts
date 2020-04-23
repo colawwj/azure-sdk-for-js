@@ -62,6 +62,7 @@ export const Resource: msRest.CompositeMapper = {
       location: {
         required: true,
         serializedName: "location",
+        defaultValue: 'unitedstates',
         type: {
           name: "String"
         }
