@@ -4099,7 +4099,7 @@ export const ScriptAction: msRest.CompositeMapper = {
         required: true,
         serializedName: "roles",
         type: {
-          name: "Object"
+          name: "String"
         }
       },
       parameters: {
@@ -10094,7 +10094,7 @@ export const DatasetZipDeflateCompression: msRest.CompositeMapper = {
       level: {
         serializedName: "level",
         type: {
-          name: "Object"
+          name: "String"
         }
       }
     },
@@ -10114,7 +10114,7 @@ export const DatasetDeflateCompression: msRest.CompositeMapper = {
       level: {
         serializedName: "level",
         type: {
-          name: "Object"
+          name: "String"
         }
       }
     },
@@ -10134,7 +10134,7 @@ export const DatasetGZipCompression: msRest.CompositeMapper = {
       level: {
         serializedName: "level",
         type: {
-          name: "Object"
+          name: "String"
         }
       }
     },
@@ -12023,7 +12023,7 @@ export const DelimitedTextDataset: msRest.CompositeMapper = {
       compressionLevel: {
         serializedName: "typeProperties.compressionLevel",
         type: {
-          name: "Object"
+          name: "String"
         }
       },
       quoteChar: {

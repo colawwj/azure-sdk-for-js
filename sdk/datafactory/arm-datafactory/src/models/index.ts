@@ -2707,9 +2707,10 @@ export interface ScriptAction {
    */
   uri: string;
   /**
-   * The node types on which the script action should be executed.
+   * The node types on which the script action should be executed. Possible values include:
+   * 'Headnode', 'Workernode', 'Zookeeper'
    */
-  roles: any;
+  roles: HdiNodeTypes;
   /**
    * The parameters for the script action.
    */
@@ -9525,9 +9526,9 @@ export interface DatasetZipDeflateCompression {
    */
   type: "ZipDeflate";
   /**
-   * The ZipDeflate compression level.
+   * The ZipDeflate compression level. Possible values include: 'Optimal', 'Fastest'
    */
-  level?: any;
+  level?: DatasetCompressionLevel;
 }
 
 /**
@@ -9539,9 +9540,9 @@ export interface DatasetDeflateCompression {
    */
   type: "Deflate";
   /**
-   * The Deflate compression level.
+   * The Deflate compression level. Possible values include: 'Optimal', 'Fastest'
    */
-  level?: any;
+  level?: DatasetCompressionLevel;
 }
 
 /**
@@ -9553,9 +9554,9 @@ export interface DatasetGZipCompression {
    */
   type: "GZip";
   /**
-   * The GZip compression level.
+   * The GZip compression level. Possible values include: 'Optimal', 'Fastest'
    */
-  level?: any;
+  level?: DatasetCompressionLevel;
 }
 
 /**
@@ -12443,9 +12444,10 @@ export interface DelimitedTextDataset {
   encodingName?: any;
   compressionCodec?: any;
   /**
-   * The data compression method used for DelimitedText.
+   * The data compression method used for DelimitedText. Possible values include: 'Optimal',
+   * 'Fastest'
    */
-  compressionLevel?: any;
+  compressionLevel?: DatasetCompressionLevel;
   /**
    * The quote character. Type: string (or Expression with resultType string).
    */
@@ -23424,6 +23426,14 @@ export type DataFlowDebugCommandType = 'executePreviewQuery' | 'executeStatistic
 export type GoogleAdWordsAuthenticationType = 'ServiceAuthentication' | 'UserAuthentication';
 
 /**
+ * Defines values for HdiNodeTypes.
+ * Possible values include: 'Headnode', 'Workernode', 'Zookeeper'
+ * @readonly
+ * @enum {string}
+ */
+export type HdiNodeTypes = 'Headnode' | 'Workernode' | 'Zookeeper';
+
+/**
  * Defines values for SparkServerType.
  * Possible values include: 'SharkServer', 'SharkServer2', 'SparkThriftServer'
  * @readonly
@@ -23625,6 +23635,14 @@ export type DynamicsDeploymentType = 'Online' | 'OnPremisesWithIfd';
  * @enum {string}
  */
 export type DynamicsAuthenticationType = 'Office365' | 'Ifd' | 'AADServicePrincipal';
+
+/**
+ * Defines values for DatasetCompressionLevel.
+ * Possible values include: 'Optimal', 'Fastest'
+ * @readonly
+ * @enum {string}
+ */
+export type DatasetCompressionLevel = 'Optimal' | 'Fastest';
 
 /**
  * Defines values for OrcCompressionCodec.
