@@ -7972,6 +7972,38 @@ export const ExpressRoutePort: msRest.CompositeMapper = {
   }
 };
 
+export const FirewallPolicyThreatIntelWhitelist: msRest.CompositeMapper = {
+  serializedName: "FirewallPolicyThreatIntelWhitelist",
+  type: {
+    name: "Composite",
+    className: "FirewallPolicyThreatIntelWhitelist",
+    modelProperties: {
+      ipAddresses: {
+        serializedName: "ipAddresses",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      fqdns: {
+        serializedName: "fqdns",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
 export const FirewallPolicy: msRest.CompositeMapper = {
   serializedName: "FirewallPolicy",
   type: {
@@ -8036,6 +8068,13 @@ export const FirewallPolicy: msRest.CompositeMapper = {
         serializedName: "properties.threatIntelMode",
         type: {
           name: "String"
+        }
+      },
+      threatIntelWhitelist: {
+        serializedName: "properties.threatIntelWhitelist",
+        type: {
+          name: "Composite",
+          className: "FirewallPolicyThreatIntelWhitelist"
         }
       },
       intrusionSystemMode: {

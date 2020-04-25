@@ -135,6 +135,7 @@ export {
   FirewallPolicyRuleCondition,
   FirewallPolicyRuleConditionApplicationProtocol,
   FirewallPolicyRuleGroup,
+  FirewallPolicyThreatIntelWhitelist,
   FlowLog,
   FlowLogFormatParameters,
   FrontendIPConfiguration,

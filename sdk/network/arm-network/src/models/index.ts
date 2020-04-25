@@ -4763,6 +4763,20 @@ export interface ExpressRoutePort extends Resource {
 }
 
 /**
+ * ThreatIntel Whitelist for Firewall Policy
+ */
+export interface FirewallPolicyThreatIntelWhitelist {
+  /**
+   * List of IP addresses for the ThreatIntel Whitelist.
+   */
+  ipAddresses?: string[];
+  /**
+   * List of FQDNs for the ThreatIntel Whitelist.
+   */
+  fqdns?: string[];
+}
+
+/**
  * FirewallPolicy Resource.
  */
 export interface FirewallPolicy extends Resource {
@@ -4795,6 +4809,10 @@ export interface FirewallPolicy extends Resource {
    * The operation mode for Threat Intelligence. Possible values include: 'Alert', 'Deny', 'Off'
    */
   threatIntelMode?: AzureFirewallThreatIntelMode;
+  /**
+   * ThreatIntel Whitelist for Firewall Policy.
+   */
+  threatIntelWhitelist?: FirewallPolicyThreatIntelWhitelist;
   /**
    * The operation mode for Intrusion system. Possible values include: 'Enabled', 'Disabled'
    */
