@@ -20,6 +20,8 @@ import { NetworkManagementClientContext } from "./networkManagementClientContext
 class NetworkManagementClient extends NetworkManagementClientContext {
   // Operation groups
   applicationGateways: operations.ApplicationGateways;
+  applicationGatewayPrivateLinkResources: operations.ApplicationGatewayPrivateLinkResources;
+  applicationGatewayPrivateEndpointConnections: operations.ApplicationGatewayPrivateEndpointConnections;
   applicationSecurityGroups: operations.ApplicationSecurityGroups;
   availableDelegations: operations.AvailableDelegations;
   availableResourceGroupDelegations: operations.AvailableResourceGroupDelegations;
@@ -42,7 +44,7 @@ class NetworkManagementClient extends NetworkManagementClientContext {
   expressRoutePorts: operations.ExpressRoutePorts;
   expressRouteLinks: operations.ExpressRouteLinks;
   firewallPolicies: operations.FirewallPolicies;
-  firewallPolicyRuleGroups: operations.FirewallPolicyRuleGroups;
+  firewallPolicyRuleCollectionGroups: operations.FirewallPolicyRuleCollectionGroups;
   ipAllocations: operations.IpAllocations;
   ipGroups: operations.IpGroups;
   loadBalancers: operations.LoadBalancers;
@@ -123,6 +125,8 @@ class NetworkManagementClient extends NetworkManagementClientContext {
   constructor(credentials: msRest.ServiceClientCredentials, subscriptionId: string, options?: Models.NetworkManagementClientOptions) {
     super(credentials, subscriptionId, options);
     this.applicationGateways = new operations.ApplicationGateways(this);
+    this.applicationGatewayPrivateLinkResources = new operations.ApplicationGatewayPrivateLinkResources(this);
+    this.applicationGatewayPrivateEndpointConnections = new operations.ApplicationGatewayPrivateEndpointConnections(this);
     this.applicationSecurityGroups = new operations.ApplicationSecurityGroups(this);
     this.availableDelegations = new operations.AvailableDelegations(this);
     this.availableResourceGroupDelegations = new operations.AvailableResourceGroupDelegations(this);
@@ -145,7 +149,7 @@ class NetworkManagementClient extends NetworkManagementClientContext {
     this.expressRoutePorts = new operations.ExpressRoutePorts(this);
     this.expressRouteLinks = new operations.ExpressRouteLinks(this);
     this.firewallPolicies = new operations.FirewallPolicies(this);
-    this.firewallPolicyRuleGroups = new operations.FirewallPolicyRuleGroups(this);
+    this.firewallPolicyRuleCollectionGroups = new operations.FirewallPolicyRuleCollectionGroups(this);
     this.ipAllocations = new operations.IpAllocations(this);
     this.ipGroups = new operations.IpGroups(this);
     this.loadBalancers = new operations.LoadBalancers(this);

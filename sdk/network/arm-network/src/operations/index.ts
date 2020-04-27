@@ -9,6 +9,8 @@
  */
 
 export * from "./applicationGateways";
+export * from "./applicationGatewayPrivateLinkResources";
+export * from "./applicationGatewayPrivateEndpointConnections";
 export * from "./applicationSecurityGroups";
 export * from "./availableDelegations";
 export * from "./availableResourceGroupDelegations";
@@ -31,7 +33,7 @@ export * from "./expressRoutePortsLocations";
 export * from "./expressRoutePorts";
 export * from "./expressRouteLinks";
 export * from "./firewallPolicies";
-export * from "./firewallPolicyRuleGroups";
+export * from "./firewallPolicyRuleCollectionGroups";
 export * from "./ipAllocations";
 export * from "./ipGroups";
 export * from "./loadBalancers";
