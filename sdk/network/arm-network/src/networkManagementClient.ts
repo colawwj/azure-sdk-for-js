@@ -41,8 +41,9 @@ class NetworkManagementClient extends NetworkManagementClientContext {
   expressRoutePortsLocations: operations.ExpressRoutePortsLocations;
   expressRoutePorts: operations.ExpressRoutePorts;
   expressRouteLinks: operations.ExpressRouteLinks;
+  expressRoutePortsLOA: operations.ExpressRoutePortsLOA;
   firewallPolicies: operations.FirewallPolicies;
-  firewallPolicyRuleGroups: operations.FirewallPolicyRuleGroups;
+  firewallPolicyRuleCollectionGroups: operations.FirewallPolicyRuleCollectionGroups;
   ipAllocations: operations.IpAllocations;
   ipGroups: operations.IpGroups;
   loadBalancers: operations.LoadBalancers;
@@ -144,8 +145,9 @@ class NetworkManagementClient extends NetworkManagementClientContext {
     this.expressRoutePortsLocations = new operations.ExpressRoutePortsLocations(this);
     this.expressRoutePorts = new operations.ExpressRoutePorts(this);
     this.expressRouteLinks = new operations.ExpressRouteLinks(this);
+    this.expressRoutePortsLOA = new operations.ExpressRoutePortsLOA(this);
     this.firewallPolicies = new operations.FirewallPolicies(this);
-    this.firewallPolicyRuleGroups = new operations.FirewallPolicyRuleGroups(this);
+    this.firewallPolicyRuleCollectionGroups = new operations.FirewallPolicyRuleCollectionGroups(this);
     this.ipAllocations = new operations.IpAllocations(this);
     this.ipGroups = new operations.IpGroups(this);
     this.loadBalancers = new operations.LoadBalancers(this);
