@@ -16563,28 +16563,6 @@ export interface AzureMySqlSource {
 }
 
 /**
- * The settings that will be leveraged for Sql source partitioning.
- */
-export interface SqlPartitionSettings {
-  /**
-   * The name of the column in integer or datetime type that will be used for proceeding
-   * partitioning. If not specified, the primary key of the table is auto-detected and used as the
-   * partition column. Type: string (or Expression with resultType string).
-   */
-  partitionColumnName?: any;
-  /**
-   * The maximum value of column specified in partitionColumnName that will be used for proceeding
-   * range partitioning. Type: string (or Expression with resultType string).
-   */
-  partitionUpperBound?: any;
-  /**
-   * The minimum value of column specified in partitionColumnName that will be used for proceeding
-   * range partitioning. Type: string (or Expression with resultType string).
-   */
-  partitionLowerBound?: any;
-}
-
-/**
  * A copy activity SQL Data Warehouse source.
  */
 export interface SqlDWSource {
@@ -16631,15 +16609,6 @@ export interface SqlDWSource {
    * StoredProcedureParameter.
    */
   storedProcedureParameters?: any;
-  /**
-   * The partition mechanism that will be used for Sql read in parallel. Possible values include:
-   * 'None', 'PhysicalPartitionsOfTable', 'DynamicRange'
-   */
-  partitionOption?: SqlPartitionOption;
-  /**
-   * The settings that will be leveraged for Sql source partitioning.
-   */
-  partitionSettings?: SqlPartitionSettings;
 }
 
 /**
@@ -16707,15 +16676,6 @@ export interface SqlMISource {
    * Which additional types to produce.
    */
   produceAdditionalTypes?: any;
-  /**
-   * The partition mechanism that will be used for Sql read in parallel. Possible values include:
-   * 'None', 'PhysicalPartitionsOfTable', 'DynamicRange'
-   */
-  partitionOption?: SqlPartitionOption;
-  /**
-   * The settings that will be leveraged for Sql source partitioning.
-   */
-  partitionSettings?: SqlPartitionSettings;
 }
 
 /**
@@ -16768,15 +16728,6 @@ export interface AzureSqlSource {
    * Which additional types to produce.
    */
   produceAdditionalTypes?: any;
-  /**
-   * The partition mechanism that will be used for Sql read in parallel. Possible values include:
-   * 'None', 'PhysicalPartitionsOfTable', 'DynamicRange'
-   */
-  partitionOption?: SqlPartitionOption;
-  /**
-   * The settings that will be leveraged for Sql source partitioning.
-   */
-  partitionSettings?: SqlPartitionSettings;
 }
 
 /**
@@ -16829,15 +16780,6 @@ export interface SqlServerSource {
    * Which additional types to produce.
    */
   produceAdditionalTypes?: any;
-  /**
-   * The partition mechanism that will be used for Sql read in parallel. Possible values include:
-   * 'None', 'PhysicalPartitionsOfTable', 'DynamicRange'
-   */
-  partitionOption?: SqlPartitionOption;
-  /**
-   * The settings that will be leveraged for Sql source partitioning.
-   */
-  partitionSettings?: SqlPartitionSettings;
 }
 
 /**
@@ -16892,15 +16834,6 @@ export interface SqlSource {
    * ReadCommitted. Type: string (or Expression with resultType string).
    */
   isolationLevel?: any;
-  /**
-   * The partition mechanism that will be used for Sql read in parallel. Possible values include:
-   * 'None', 'PhysicalPartitionsOfTable', 'DynamicRange'
-   */
-  partitionOption?: SqlPartitionOption;
-  /**
-   * The settings that will be leveraged for Sql source partitioning.
-   */
-  partitionSettings?: SqlPartitionSettings;
 }
 
 /**
@@ -23815,14 +23748,6 @@ export type CassandraSourceReadConsistencyLevels = 'ALL' | 'EACH_QUORUM' | 'QUOR
  * @enum {string}
  */
 export type TeradataPartitionOption = 'None' | 'Hash' | 'DynamicRange';
-
-/**
- * Defines values for SqlPartitionOption.
- * Possible values include: 'None', 'PhysicalPartitionsOfTable', 'DynamicRange'
- * @readonly
- * @enum {string}
- */
-export type SqlPartitionOption = 'None' | 'PhysicalPartitionsOfTable' | 'DynamicRange';
 
 /**
  * Defines values for StoredProcedureParameterType.
