@@ -1312,6 +1312,185 @@ export interface VirtualNetworkTap extends Resource {
 }
 
 /**
+ * AddressSpace contains an array of IP address ranges that can be used by subnets of the virtual
+ * network.
+ */
+export interface AddressSpace {
+  /**
+   * A list of address blocks reserved for this virtual network in CIDR notation.
+   */
+  addressPrefixes?: string[];
+}
+
+/**
+ * DhcpOptions contains an array of DNS servers available to VMs deployed in the virtual network.
+ * Standard DHCP option for a subnet overrides VNET DHCP options.
+ */
+export interface DhcpOptions {
+  /**
+   * The list of DNS servers IP addresses.
+   */
+  dnsServers?: string[];
+}
+
+/**
+ * Peerings in a virtual network resource.
+ */
+export interface VirtualNetworkPeering extends SubResource {
+  /**
+   * Whether the VMs in the local virtual network space would be able to access the VMs in remote
+   * virtual network space.
+   */
+  allowVirtualNetworkAccess?: boolean;
+  /**
+   * Whether the forwarded traffic from the VMs in the local virtual network will be
+   * allowed/disallowed in remote virtual network.
+   */
+  allowForwardedTraffic?: boolean;
+  /**
+   * If gateway links can be used in remote virtual networking to link to this virtual network.
+   */
+  allowGatewayTransit?: boolean;
+  /**
+   * If remote gateways can be used on this virtual network. If the flag is set to true, and
+   * allowGatewayTransit on remote peering is also true, virtual network will use gateways of
+   * remote virtual network for transit. Only one peering can have this flag set to true. This flag
+   * cannot be set if virtual network already has a gateway.
+   */
+  useRemoteGateways?: boolean;
+  /**
+   * The reference to the remote virtual network. The remote virtual network can be in the same or
+   * different region (preview). See here to register for the preview and learn more
+   * (https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-create-peering).
+   */
+  remoteVirtualNetwork?: SubResource;
+  /**
+   * The reference to the remote virtual network address space.
+   */
+  remoteAddressSpace?: AddressSpace;
+  /**
+   * The status of the virtual network peering. Possible values include: 'Initiated', 'Connected',
+   * 'Disconnected'
+   */
+  peeringState?: VirtualNetworkPeeringState;
+  /**
+   * The provisioning state of the virtual network peering resource. Possible values include:
+   * 'Succeeded', 'Updating', 'Deleting', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState;
+  /**
+   * The name of the resource that is unique within a resource group. This name can be used to
+   * access the resource.
+   */
+  name?: string;
+  /**
+   * A unique read-only string that changes whenever the resource is updated.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly etag?: string;
+}
+
+/**
+ * Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET.
+ */
+export interface VirtualNetworkBgpCommunities {
+  /**
+   * The BGP community associated with the virtual network.
+   */
+  virtualNetworkCommunity: string;
+  /**
+   * The BGP community associated with the region of the virtual network.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly regionalCommunity?: string;
+}
+
+/**
+ * Virtual Network resource.
+ */
+export interface VirtualNetwork extends Resource {
+  /**
+   * The AddressSpace that contains an array of IP address ranges that can be used by subnets.
+   */
+  addressSpace?: AddressSpace;
+  /**
+   * The dhcpOptions that contains an array of DNS servers available to VMs deployed in the virtual
+   * network.
+   */
+  dhcpOptions?: DhcpOptions;
+  /**
+   * A list of subnets in a Virtual Network.
+   */
+  subnets?: Subnet[];
+  /**
+   * A list of peerings in a Virtual Network.
+   */
+  virtualNetworkPeerings?: VirtualNetworkPeering[];
+  /**
+   * The resourceGuid property of the Virtual Network resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly resourceGuid?: string;
+  /**
+   * The provisioning state of the virtual network resource. Possible values include: 'Succeeded',
+   * 'Updating', 'Deleting', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState;
+  /**
+   * Indicates if DDoS protection is enabled for all the protected resources in the virtual
+   * network. It requires a DDoS protection plan associated with the resource. Default value:
+   * false.
+   */
+  enableDdosProtection?: boolean;
+  /**
+   * Indicates if VM protection is enabled for all the subnets in the virtual network. Default
+   * value: false.
+   */
+  enableVmProtection?: boolean;
+  /**
+   * The DDoS protection plan associated with the virtual network.
+   */
+  ddosProtectionPlan?: SubResource;
+  /**
+   * Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET.
+   */
+  bgpCommunities?: VirtualNetworkBgpCommunities;
+  /**
+   * Array of IpAllocation which reference this VNET.
+   */
+  ipAllocations?: SubResource[];
+  /**
+   * A unique read-only string that changes whenever the resource is updated.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly etag?: string;
+}
+
+/**
+ * Load balancer backend addresses.
+ */
+export interface LoadBalancerBackendAddress {
+  /**
+   * Reference to an existing virtual network.
+   */
+  virtualNetwork?: VirtualNetwork;
+  /**
+   * IP Address belonging to the referenced virtual network.
+   */
+  ipAddress?: string;
+  /**
+   * Reference to IP address defined in network interfaces.
+   */
+  networkInterfaceIPConfiguration?: NetworkInterfaceIPConfiguration;
+  /**
+   * Name of the backend address.
+   */
+  name?: string;
+}
+
+/**
  * Pool of backend IP addresses.
  */
 export interface BackendAddressPool extends SubResource {
@@ -1320,6 +1499,10 @@ export interface BackendAddressPool extends SubResource {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly backendIPConfigurations?: NetworkInterfaceIPConfiguration[];
+  /**
+   * An array of backend addresses.
+   */
+  loadBalancerBackendAddresses?: LoadBalancerBackendAddress[];
   /**
    * An array of references to load balancing rules that use this backend address pool.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -4767,10 +4950,10 @@ export interface ExpressRoutePort extends Resource {
  */
 export interface FirewallPolicy extends Resource {
   /**
-   * List of references to FirewallPolicyRuleGroups.
+   * List of references to FirewallPolicyRuleCollectionGroups.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly ruleGroups?: SubResource[];
+  readonly ruleCollectionGroups?: SubResource[];
   /**
    * The provisioning state of the firewall policy resource. Possible values include: 'Succeeded',
    * 'Updating', 'Deleting', 'Failed'
@@ -4807,43 +4990,43 @@ export interface FirewallPolicy extends Resource {
 }
 
 /**
- * Contains the possible cases for FirewallPolicyRule.
+ * Contains the possible cases for FirewallPolicyRuleCollection.
  */
-export type FirewallPolicyRuleUnion = FirewallPolicyRule | FirewallPolicyNatRule | FirewallPolicyFilterRule;
+export type FirewallPolicyRuleCollectionUnion = FirewallPolicyRuleCollection | FirewallPolicyNatRuleCollection | FirewallPolicyFilterRuleCollection;
 
 /**
- * Properties of the rule.
+ * Properties of the rule collection.
  */
-export interface FirewallPolicyRule {
+export interface FirewallPolicyRuleCollection {
   /**
    * Polymorphic Discriminator
    */
-  ruleType: "FirewallPolicyRule";
+  ruleCollectionType: "FirewallPolicyRuleCollection";
   /**
-   * The name of the rule.
+   * The name of the rule collection.
    */
   name?: string;
   /**
-   * Priority of the Firewall Policy Rule resource.
+   * Priority of the Firewall Policy Rule Collection resource.
    */
   priority?: number;
 }
 
 /**
- * Rule Group resource.
+ * Rule Collection Group resource.
  */
-export interface FirewallPolicyRuleGroup extends SubResource {
+export interface FirewallPolicyRuleCollectionGroup extends SubResource {
   /**
-   * Priority of the Firewall Policy Rule Group resource.
+   * Priority of the Firewall Policy Rule Collection Group resource.
    */
   priority?: number;
   /**
-   * Group of Firewall Policy rules.
+   * Group of Firewall Policy rule collections.
    */
-  rules?: FirewallPolicyRuleUnion[];
+  ruleCollections?: FirewallPolicyRuleCollectionUnion[];
   /**
-   * The provisioning state of the firewall policy rule group resource. Possible values include:
-   * 'Succeeded', 'Updating', 'Deleting', 'Failed'
+   * The provisioning state of the firewall policy rule collection group resource. Possible values
+   * include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly provisioningState?: ProvisioningState;
@@ -4865,116 +5048,108 @@ export interface FirewallPolicyRuleGroup extends SubResource {
 }
 
 /**
- * Properties of the FirewallPolicyNatRuleAction.
+ * Properties of the FirewallPolicyNatRuleCollectionAction.
  */
-export interface FirewallPolicyNatRuleAction {
+export interface FirewallPolicyNatRuleCollectionAction {
   /**
    * The type of action. Possible values include: 'DNAT'
    */
-  type?: FirewallPolicyNatRuleActionType;
+  type?: FirewallPolicyNatRuleCollectionActionType;
 }
 
 /**
- * Contains the possible cases for FirewallPolicyRuleCondition.
+ * Contains the possible cases for FirewallPolicyRule.
  */
-export type FirewallPolicyRuleConditionUnion = FirewallPolicyRuleCondition | ApplicationRuleCondition | NatRuleCondition | NetworkRuleCondition;
+export type FirewallPolicyRuleUnion = FirewallPolicyRule | ApplicationRule | NatRule | NetworkRule;
 
 /**
  * Properties of a rule.
  */
-export interface FirewallPolicyRuleCondition {
+export interface FirewallPolicyRule {
   /**
    * Polymorphic Discriminator
    */
-  ruleConditionType: "FirewallPolicyRuleCondition";
+  ruleType: "FirewallPolicyRule";
   /**
-   * Name of the rule condition.
+   * Name of the rule.
    */
   name?: string;
   /**
-   * Description of the rule condition.
+   * Description of the rule.
    */
   description?: string;
 }
 
 /**
- * Firewall Policy NAT Rule.
+ * Firewall Policy NAT Rule Collection.
  */
-export interface FirewallPolicyNatRule {
+export interface FirewallPolicyNatRuleCollection {
   /**
    * Polymorphic Discriminator
    */
-  ruleType: "FirewallPolicyNatRule";
+  ruleCollectionType: "FirewallPolicyNatRuleCollection";
   /**
-   * The name of the rule.
+   * The name of the rule collection.
    */
   name?: string;
   /**
-   * Priority of the Firewall Policy Rule resource.
+   * Priority of the Firewall Policy Rule Collection resource.
    */
   priority?: number;
   /**
-   * The action type of a Nat rule.
+   * The action type of a Nat rule collection.
    */
-  action?: FirewallPolicyNatRuleAction;
+  action?: FirewallPolicyNatRuleCollectionAction;
   /**
-   * The translated address for this NAT rule.
+   * List of rules included in a rule collection.
    */
-  translatedAddress?: string;
-  /**
-   * The translated port for this NAT rule.
-   */
-  translatedPort?: string;
-  /**
-   * The match conditions for incoming traffic.
-   */
-  ruleCondition?: FirewallPolicyRuleConditionUnion;
+  rules?: FirewallPolicyRuleUnion[];
 }
 
 /**
- * Properties of the FirewallPolicyFilterRuleAction.
+ * Properties of the FirewallPolicyFilterRuleCollectionAction.
  */
-export interface FirewallPolicyFilterRuleAction {
+export interface FirewallPolicyFilterRuleCollectionAction {
   /**
    * The type of action. Possible values include: 'Allow', 'Deny'
    */
-  type?: FirewallPolicyFilterRuleActionType;
+  type?: FirewallPolicyFilterRuleCollectionActionType;
 }
 
 /**
- * Firewall Policy Filter Rule.
+ * Firewall Policy Filter Rule Collection.
  */
-export interface FirewallPolicyFilterRule {
+export interface FirewallPolicyFilterRuleCollection {
   /**
    * Polymorphic Discriminator
    */
-  ruleType: "FirewallPolicyFilterRule";
+  ruleCollectionType: "FirewallPolicyFilterRuleCollection";
   /**
-   * The name of the rule.
+   * The name of the rule collection.
    */
   name?: string;
   /**
-   * Priority of the Firewall Policy Rule resource.
+   * Priority of the Firewall Policy Rule Collection resource.
    */
   priority?: number;
   /**
-   * The action type of a Filter rule.
+   * The action type of a Filter rule collection.
    */
-  action?: FirewallPolicyFilterRuleAction;
+  action?: FirewallPolicyFilterRuleCollectionAction;
   /**
-   * Collection of rule conditions used by a rule.
+   * List of rules included in a rule collection.
    */
-  ruleConditions?: FirewallPolicyRuleConditionUnion[];
+  rules?: FirewallPolicyRuleUnion[];
 }
 
 /**
  * Properties of the application rule protocol.
  */
-export interface FirewallPolicyRuleConditionApplicationProtocol {
+export interface FirewallPolicyRuleApplicationProtocol {
   /**
    * Protocol type. Possible values include: 'Http', 'Https'
    */
-  protocolType?: FirewallPolicyRuleConditionApplicationProtocolType;
+  protocolType?: FirewallPolicyRuleApplicationProtocolType;
   /**
    * Port number for the protocol, cannot be greater than 64000.
    */
@@ -4982,19 +5157,19 @@ export interface FirewallPolicyRuleConditionApplicationProtocol {
 }
 
 /**
- * Rule condition of type application.
+ * Rule of type application.
  */
-export interface ApplicationRuleCondition {
+export interface ApplicationRule {
   /**
    * Polymorphic Discriminator
    */
-  ruleConditionType: "ApplicationRuleCondition";
+  ruleType: "ApplicationRule";
   /**
-   * Name of the rule condition.
+   * Name of the rule.
    */
   name?: string;
   /**
-   * Description of the rule condition.
+   * Description of the rule.
    */
   description?: string;
   /**
@@ -5008,13 +5183,13 @@ export interface ApplicationRuleCondition {
   /**
    * Array of Application Protocols.
    */
-  protocols?: FirewallPolicyRuleConditionApplicationProtocol[];
+  protocols?: FirewallPolicyRuleApplicationProtocol[];
   /**
-   * List of FQDNs for this rule condition.
+   * List of FQDNs for this rule.
    */
   targetFqdns?: string[];
   /**
-   * List of FQDN Tags for this rule condition.
+   * List of FQDN Tags for this rule.
    */
   fqdnTags?: string[];
   /**
@@ -5024,25 +5199,25 @@ export interface ApplicationRuleCondition {
 }
 
 /**
- * Rule condition of type nat.
+ * Rule of type nat.
  */
-export interface NatRuleCondition {
+export interface NatRule {
   /**
    * Polymorphic Discriminator
    */
-  ruleConditionType: "NatRuleCondition";
+  ruleType: "NatRule";
   /**
-   * Name of the rule condition.
+   * Name of the rule.
    */
   name?: string;
   /**
-   * Description of the rule condition.
+   * Description of the rule.
    */
   description?: string;
   /**
-   * Array of FirewallPolicyRuleConditionNetworkProtocols.
+   * Array of FirewallPolicyRuleNetworkProtocols.
    */
-  ipProtocols?: FirewallPolicyRuleConditionNetworkProtocol[];
+  ipProtocols?: FirewallPolicyRuleNetworkProtocol[];
   /**
    * List of source IP addresses for this rule.
    */
@@ -5056,31 +5231,39 @@ export interface NatRuleCondition {
    */
   destinationPorts?: string[];
   /**
+   * The translated address for this NAT rule.
+   */
+  translatedAddress?: string;
+  /**
+   * The translated port for this NAT rule.
+   */
+  translatedPort?: string;
+  /**
    * List of source IpGroups for this rule.
    */
   sourceIpGroups?: string[];
 }
 
 /**
- * Rule condition of type network.
+ * Rule of type network.
  */
-export interface NetworkRuleCondition {
+export interface NetworkRule {
   /**
    * Polymorphic Discriminator
    */
-  ruleConditionType: "NetworkRuleCondition";
+  ruleType: "NetworkRule";
   /**
-   * Name of the rule condition.
+   * Name of the rule.
    */
   name?: string;
   /**
-   * Description of the rule condition.
+   * Description of the rule.
    */
   description?: string;
   /**
-   * Array of FirewallPolicyRuleConditionNetworkProtocols.
+   * Array of FirewallPolicyRuleNetworkProtocols.
    */
-  ipProtocols?: FirewallPolicyRuleConditionNetworkProtocol[];
+  ipProtocols?: FirewallPolicyRuleNetworkProtocol[];
   /**
    * List of source IP addresses for this rule.
    */
@@ -8535,75 +8718,6 @@ export interface Usage {
 }
 
 /**
- * AddressSpace contains an array of IP address ranges that can be used by subnets of the virtual
- * network.
- */
-export interface AddressSpace {
-  /**
-   * A list of address blocks reserved for this virtual network in CIDR notation.
-   */
-  addressPrefixes?: string[];
-}
-
-/**
- * Peerings in a virtual network resource.
- */
-export interface VirtualNetworkPeering extends SubResource {
-  /**
-   * Whether the VMs in the local virtual network space would be able to access the VMs in remote
-   * virtual network space.
-   */
-  allowVirtualNetworkAccess?: boolean;
-  /**
-   * Whether the forwarded traffic from the VMs in the local virtual network will be
-   * allowed/disallowed in remote virtual network.
-   */
-  allowForwardedTraffic?: boolean;
-  /**
-   * If gateway links can be used in remote virtual networking to link to this virtual network.
-   */
-  allowGatewayTransit?: boolean;
-  /**
-   * If remote gateways can be used on this virtual network. If the flag is set to true, and
-   * allowGatewayTransit on remote peering is also true, virtual network will use gateways of
-   * remote virtual network for transit. Only one peering can have this flag set to true. This flag
-   * cannot be set if virtual network already has a gateway.
-   */
-  useRemoteGateways?: boolean;
-  /**
-   * The reference to the remote virtual network. The remote virtual network can be in the same or
-   * different region (preview). See here to register for the preview and learn more
-   * (https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-create-peering).
-   */
-  remoteVirtualNetwork?: SubResource;
-  /**
-   * The reference to the remote virtual network address space.
-   */
-  remoteAddressSpace?: AddressSpace;
-  /**
-   * The status of the virtual network peering. Possible values include: 'Initiated', 'Connected',
-   * 'Disconnected'
-   */
-  peeringState?: VirtualNetworkPeeringState;
-  /**
-   * The provisioning state of the virtual network peering resource. Possible values include:
-   * 'Succeeded', 'Updating', 'Deleting', 'Failed'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly provisioningState?: ProvisioningState;
-  /**
-   * The name of the resource that is unique within a resource group. This name can be used to
-   * access the resource.
-   */
-  name?: string;
-  /**
-   * A unique read-only string that changes whenever the resource is updated.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly etag?: string;
-}
-
-/**
  * Response for ResourceNavigationLinks_List operation.
  */
 export interface ResourceNavigationLinksListResult {
@@ -8631,94 +8745,6 @@ export interface ServiceAssociationLinksListResult {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly nextLink?: string;
-}
-
-/**
- * DhcpOptions contains an array of DNS servers available to VMs deployed in the virtual network.
- * Standard DHCP option for a subnet overrides VNET DHCP options.
- */
-export interface DhcpOptions {
-  /**
-   * The list of DNS servers IP addresses.
-   */
-  dnsServers?: string[];
-}
-
-/**
- * Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET.
- */
-export interface VirtualNetworkBgpCommunities {
-  /**
-   * The BGP community associated with the virtual network.
-   */
-  virtualNetworkCommunity: string;
-  /**
-   * The BGP community associated with the region of the virtual network.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly regionalCommunity?: string;
-}
-
-/**
- * Virtual Network resource.
- */
-export interface VirtualNetwork extends Resource {
-  /**
-   * The AddressSpace that contains an array of IP address ranges that can be used by subnets.
-   */
-  addressSpace?: AddressSpace;
-  /**
-   * The dhcpOptions that contains an array of DNS servers available to VMs deployed in the virtual
-   * network.
-   */
-  dhcpOptions?: DhcpOptions;
-  /**
-   * A list of subnets in a Virtual Network.
-   */
-  subnets?: Subnet[];
-  /**
-   * A list of peerings in a Virtual Network.
-   */
-  virtualNetworkPeerings?: VirtualNetworkPeering[];
-  /**
-   * The resourceGuid property of the Virtual Network resource.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly resourceGuid?: string;
-  /**
-   * The provisioning state of the virtual network resource. Possible values include: 'Succeeded',
-   * 'Updating', 'Deleting', 'Failed'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly provisioningState?: ProvisioningState;
-  /**
-   * Indicates if DDoS protection is enabled for all the protected resources in the virtual
-   * network. It requires a DDoS protection plan associated with the resource. Default value:
-   * false.
-   */
-  enableDdosProtection?: boolean;
-  /**
-   * Indicates if VM protection is enabled for all the subnets in the virtual network. Default
-   * value: false.
-   */
-  enableVmProtection?: boolean;
-  /**
-   * The DDoS protection plan associated with the virtual network.
-   */
-  ddosProtectionPlan?: SubResource;
-  /**
-   * Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET.
-   */
-  bgpCommunities?: VirtualNetworkBgpCommunities;
-  /**
-   * Array of IpAllocation which reference this VNET.
-   */
-  ipAllocations?: SubResource[];
-  /**
-   * A unique read-only string that changes whenever the resource is updated.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly etag?: string;
 }
 
 /**
@@ -11881,10 +11907,10 @@ export interface FirewallPolicyListResult extends Array<FirewallPolicy> {
 
 /**
  * @interface
- * Response for ListFirewallPolicyRuleGroups API service call.
- * @extends Array<FirewallPolicyRuleGroup>
+ * Response for ListFirewallPolicyRuleCollectionGroups API service call.
+ * @extends Array<FirewallPolicyRuleCollectionGroup>
  */
-export interface FirewallPolicyRuleGroupListResult extends Array<FirewallPolicyRuleGroup> {
+export interface FirewallPolicyRuleCollectionGroupListResult extends Array<FirewallPolicyRuleCollectionGroup> {
   /**
    * URL to get the next set of results.
    */
@@ -12764,6 +12790,14 @@ export type PublicIPAddressSkuName = 'Basic' | 'Standard';
 export type DdosSettingsProtectionCoverage = 'Basic' | 'Standard';
 
 /**
+ * Defines values for VirtualNetworkPeeringState.
+ * Possible values include: 'Initiated', 'Connected', 'Disconnected'
+ * @readonly
+ * @enum {string}
+ */
+export type VirtualNetworkPeeringState = 'Initiated' | 'Connected' | 'Disconnected';
+
+/**
  * Defines values for TransportProtocol.
  * Possible values include: 'Udp', 'Tcp', 'All'
  * @readonly
@@ -13093,36 +13127,36 @@ export type ExpressRoutePortsEncapsulation = 'Dot1Q' | 'QinQ';
 export type FirewallPolicyIntrusionSystemMode = 'Enabled' | 'Disabled';
 
 /**
- * Defines values for FirewallPolicyNatRuleActionType.
+ * Defines values for FirewallPolicyNatRuleCollectionActionType.
  * Possible values include: 'DNAT'
  * @readonly
  * @enum {string}
  */
-export type FirewallPolicyNatRuleActionType = 'DNAT';
+export type FirewallPolicyNatRuleCollectionActionType = 'DNAT';
 
 /**
- * Defines values for FirewallPolicyFilterRuleActionType.
+ * Defines values for FirewallPolicyFilterRuleCollectionActionType.
  * Possible values include: 'Allow', 'Deny'
  * @readonly
  * @enum {string}
  */
-export type FirewallPolicyFilterRuleActionType = 'Allow' | 'Deny';
+export type FirewallPolicyFilterRuleCollectionActionType = 'Allow' | 'Deny';
 
 /**
- * Defines values for FirewallPolicyRuleConditionApplicationProtocolType.
+ * Defines values for FirewallPolicyRuleApplicationProtocolType.
  * Possible values include: 'Http', 'Https'
  * @readonly
  * @enum {string}
  */
-export type FirewallPolicyRuleConditionApplicationProtocolType = 'Http' | 'Https';
+export type FirewallPolicyRuleApplicationProtocolType = 'Http' | 'Https';
 
 /**
- * Defines values for FirewallPolicyRuleConditionNetworkProtocol.
+ * Defines values for FirewallPolicyRuleNetworkProtocol.
  * Possible values include: 'TCP', 'UDP', 'Any', 'ICMP'
  * @readonly
  * @enum {string}
  */
-export type FirewallPolicyRuleConditionNetworkProtocol = 'TCP' | 'UDP' | 'Any' | 'ICMP';
+export type FirewallPolicyRuleNetworkProtocol = 'TCP' | 'UDP' | 'Any' | 'ICMP';
 
 /**
  * Defines values for IpAllocationType.
@@ -13438,14 +13472,6 @@ export type SecurityProviderName = 'ZScaler' | 'IBoss' | 'Checkpoint';
  * @enum {string}
  */
 export type SecurityPartnerProviderConnectionStatus = 'Unknown' | 'PartiallyConnected' | 'Connected' | 'NotConnected';
-
-/**
- * Defines values for VirtualNetworkPeeringState.
- * Possible values include: 'Initiated', 'Connected', 'Disconnected'
- * @readonly
- * @enum {string}
- */
-export type VirtualNetworkPeeringState = 'Initiated' | 'Connected' | 'Disconnected';
 
 /**
  * Defines values for VirtualNetworkGatewayType.
@@ -16941,7 +16967,7 @@ export type FirewallPoliciesListAllNextResponse = FirewallPolicyListResult & {
 /**
  * Contains response data for the get operation.
  */
-export type FirewallPolicyRuleGroupsGetResponse = FirewallPolicyRuleGroup & {
+export type FirewallPolicyRuleCollectionGroupsGetResponse = FirewallPolicyRuleCollectionGroup & {
   /**
    * The underlying HTTP response.
    */
@@ -16954,14 +16980,14 @@ export type FirewallPolicyRuleGroupsGetResponse = FirewallPolicyRuleGroup & {
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: FirewallPolicyRuleGroup;
+      parsedBody: FirewallPolicyRuleCollectionGroup;
     };
 };
 
 /**
  * Contains response data for the createOrUpdate operation.
  */
-export type FirewallPolicyRuleGroupsCreateOrUpdateResponse = FirewallPolicyRuleGroup & {
+export type FirewallPolicyRuleCollectionGroupsCreateOrUpdateResponse = FirewallPolicyRuleCollectionGroup & {
   /**
    * The underlying HTTP response.
    */
@@ -16974,14 +17000,14 @@ export type FirewallPolicyRuleGroupsCreateOrUpdateResponse = FirewallPolicyRuleG
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: FirewallPolicyRuleGroup;
+      parsedBody: FirewallPolicyRuleCollectionGroup;
     };
 };
 
 /**
  * Contains response data for the list operation.
  */
-export type FirewallPolicyRuleGroupsListResponse = FirewallPolicyRuleGroupListResult & {
+export type FirewallPolicyRuleCollectionGroupsListResponse = FirewallPolicyRuleCollectionGroupListResult & {
   /**
    * The underlying HTTP response.
    */
@@ -16994,14 +17020,14 @@ export type FirewallPolicyRuleGroupsListResponse = FirewallPolicyRuleGroupListRe
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: FirewallPolicyRuleGroupListResult;
+      parsedBody: FirewallPolicyRuleCollectionGroupListResult;
     };
 };
 
 /**
  * Contains response data for the beginCreateOrUpdate operation.
  */
-export type FirewallPolicyRuleGroupsBeginCreateOrUpdateResponse = FirewallPolicyRuleGroup & {
+export type FirewallPolicyRuleCollectionGroupsBeginCreateOrUpdateResponse = FirewallPolicyRuleCollectionGroup & {
   /**
    * The underlying HTTP response.
    */
@@ -17014,14 +17040,14 @@ export type FirewallPolicyRuleGroupsBeginCreateOrUpdateResponse = FirewallPolicy
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: FirewallPolicyRuleGroup;
+      parsedBody: FirewallPolicyRuleCollectionGroup;
     };
 };
 
 /**
  * Contains response data for the listNext operation.
  */
-export type FirewallPolicyRuleGroupsListNextResponse = FirewallPolicyRuleGroupListResult & {
+export type FirewallPolicyRuleCollectionGroupsListNextResponse = FirewallPolicyRuleCollectionGroupListResult & {
   /**
    * The underlying HTTP response.
    */
@@ -17034,7 +17060,7 @@ export type FirewallPolicyRuleGroupsListNextResponse = FirewallPolicyRuleGroupLi
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: FirewallPolicyRuleGroupListResult;
+      parsedBody: FirewallPolicyRuleCollectionGroupListResult;
     };
 };
 
@@ -17542,6 +17568,46 @@ export type LoadBalancerBackendAddressPoolsListResponse = LoadBalancerBackendAdd
  * Contains response data for the get operation.
  */
 export type LoadBalancerBackendAddressPoolsGetResponse = BackendAddressPool & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: BackendAddressPool;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdate operation.
+ */
+export type LoadBalancerBackendAddressPoolsCreateOrUpdateResponse = BackendAddressPool & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: BackendAddressPool;
+    };
+};
+
+/**
+ * Contains response data for the beginCreateOrUpdate operation.
+ */
+export type LoadBalancerBackendAddressPoolsBeginCreateOrUpdateResponse = BackendAddressPool & {
   /**
    * The underlying HTTP response.
    */
