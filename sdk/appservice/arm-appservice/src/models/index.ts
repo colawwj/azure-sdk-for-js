@@ -642,6 +642,56 @@ export interface PushSettings extends ProxyOnlyResource {
 }
 
 /**
+ * The state of a private link connection
+ */
+export interface PrivateLinkConnectionState {
+  /**
+   * Status of a private link connection
+   */
+  status?: string;
+  /**
+   * Description of a private link connection
+   */
+  description?: string;
+  /**
+   * ActionsRequired for a private link connection
+   */
+  actionsRequired?: string;
+}
+
+/**
+ * Private Endpoint Connection Approval ARM resource.
+ */
+export interface PrivateLinkConnectionApprovalRequestResource extends ProxyOnlyResource {
+  privateLinkServiceConnectionState?: PrivateLinkConnectionState;
+}
+
+/**
+ * A wrapper for an ARM resource id
+ */
+export interface ArmIdWrapper {
+  /**
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+}
+
+/**
+ * Private Endpoint Connection ARM resource.
+ */
+export interface PrivateEndpointConnectionResource extends ProxyOnlyResource {
+  /**
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: string;
+  /**
+   * PrivateEndpoint of a remote private endpoint connection
+   */
+  privateEndpoint?: ArmIdWrapper;
+  privateLinkServiceConnectionState?: PrivateLinkConnectionState;
+}
+
+/**
  * A domain specific resource identifier.
  */
 export interface Identifier extends ProxyOnlyResource {
@@ -3165,6 +3215,50 @@ export interface Operation {
 }
 
 /**
+ * Properties of a private link resource
+ */
+export interface PrivateLinkResourceProperties {
+  /**
+   * GroupId of a private link resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly groupId?: string;
+  /**
+   * RequiredMembers of a private link resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly requiredMembers?: string[];
+  /**
+   * RequiredZoneNames of a private link resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly requiredZoneNames?: string[];
+}
+
+/**
+ * A private link resource
+ */
+export interface PrivateLinkResource {
+  id: string;
+  /**
+   * Name of a private link resource
+   */
+  name: string;
+  type: string;
+  /**
+   * Properties of a private link resource
+   */
+  properties: PrivateLinkResourceProperties;
+}
+
+/**
+ * Wrapper for a collection of private link resources
+ */
+export interface PrivateLinkResourcesWrapper {
+  value: PrivateLinkResource[];
+}
+
+/**
  * Class Representing Solution for problems detected.
  */
 export interface Solution {
@@ -4368,16 +4462,6 @@ export interface ApplicationLogsConfig {
 }
 
 /**
- * A wrapper for an ARM resource id
- */
-export interface ArmIdWrapper {
-  /**
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-}
-
-/**
  * Http logs to azure blob storage configuration.
  */
 export interface AzureBlobStorageHttpLogsConfig {
@@ -5503,90 +5587,6 @@ export interface PrivateAccess extends ProxyOnlyResource {
    * The Virtual Networks (and subnets) allowed to access the site privately.
    */
   virtualNetworks?: PrivateAccessVirtualNetwork[];
-}
-
-/**
- * The state of a private link connection
- */
-export interface PrivateLinkConnectionState {
-  /**
-   * Status of a private link connection
-   */
-  status?: string;
-  /**
-   * Description of a private link connection
-   */
-  description?: string;
-  /**
-   * ActionsRequired for a private link connection
-   */
-  actionsRequired?: string;
-}
-
-/**
- * Private Endpoint Connection ARM resource.
- */
-export interface PrivateEndpointConnectionResource extends ProxyOnlyResource {
-  /**
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly provisioningState?: string;
-  /**
-   * PrivateEndpoint of a remote private endpoint connection
-   */
-  privateEndpoint?: ArmIdWrapper;
-  privateLinkServiceConnectionState?: PrivateLinkConnectionState;
-}
-
-/**
- * Private Endpoint Connection Approval ARM resource.
- */
-export interface PrivateLinkConnectionApprovalRequestResource extends ProxyOnlyResource {
-  privateLinkServiceConnectionState?: PrivateLinkConnectionState;
-}
-
-/**
- * Properties of a private link resource
- */
-export interface PrivateLinkResourceProperties {
-  /**
-   * GroupId of a private link resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly groupId?: string;
-  /**
-   * RequiredMembers of a private link resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly requiredMembers?: string[];
-  /**
-   * RequiredZoneNames of a private link resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly requiredZoneNames?: string[];
-}
-
-/**
- * A private link resource
- */
-export interface PrivateLinkResource {
-  id: string;
-  /**
-   * Name of a private link resource
-   */
-  name: string;
-  type: string;
-  /**
-   * Properties of a private link resource
-   */
-  properties: PrivateLinkResourceProperties;
-}
-
-/**
- * Wrapper for a collection of private link resources
- */
-export interface PrivateLinkResourcesWrapper {
-  value: PrivateLinkResource[];
 }
 
 /**
@@ -7099,6 +7099,11 @@ export interface StaticSiteARMResource extends Resource {
    * Build properties to configure on the repository.
    */
   buildProperties?: StaticSiteBuildProperties;
+  /**
+   * Private endpoint connections referencing this resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly privateEndpointConnections?: PrivateEndpointConnectionResource[];
   sku?: SkuDescription;
 }
 
@@ -7207,6 +7212,11 @@ export interface StaticSitePatchResource extends ProxyOnlyResource {
    * Build properties to configure on the repository.
    */
   buildProperties?: StaticSiteBuildProperties;
+  /**
+   * Private endpoint connections referencing this resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly privateEndpointConnections?: PrivateEndpointConnectionResource[];
 }
 
 /**

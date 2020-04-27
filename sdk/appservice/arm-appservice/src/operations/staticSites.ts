@@ -536,8 +536,8 @@ export class StaticSites {
   }
 
   /**
-   * Description for Gets the application settings of a static site.
-   * @summary Gets the application settings of a static site.
+   * Description for Gets the application settings of a static site build.
+   * @summary Gets the application settings of a static site build.
    * @param resourceGroupName Name of the resource group to which the resource belongs.
    * @param name Name of the static site.
    * @param prId The stage site identifier.

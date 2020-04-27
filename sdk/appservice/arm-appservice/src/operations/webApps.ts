@@ -10640,7 +10640,7 @@ export class WebApps {
    * @summary Gets a private endpoint connection
    * @param resourceGroupName Name of the resource group to which the resource belongs.
    * @param name Name of the site.
-   * @param privateEndpointConnectionName
+   * @param privateEndpointConnectionName Name of the private endpoint connection.
    * @param [options] The optional parameters
    * @returns Promise<Models.WebAppsGetPrivateEndpointConnectionResponse>
    */
@@ -10648,14 +10648,14 @@ export class WebApps {
   /**
    * @param resourceGroupName Name of the resource group to which the resource belongs.
    * @param name Name of the site.
-   * @param privateEndpointConnectionName
+   * @param privateEndpointConnectionName Name of the private endpoint connection.
    * @param callback The callback
    */
   getPrivateEndpointConnection(resourceGroupName: string, name: string, privateEndpointConnectionName: string, callback: msRest.ServiceCallback<Models.PrivateEndpointConnectionResource>): void;
   /**
    * @param resourceGroupName Name of the resource group to which the resource belongs.
    * @param name Name of the site.
-   * @param privateEndpointConnectionName
+   * @param privateEndpointConnectionName Name of the private endpoint connection.
    * @param options The optional parameters
    * @param callback The callback
    */
