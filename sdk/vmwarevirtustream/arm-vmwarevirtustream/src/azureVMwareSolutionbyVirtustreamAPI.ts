@@ -18,6 +18,7 @@ import { AzureVMwareSolutionbyVirtustreamAPIContext } from "./azureVMwareSolutio
 class AzureVMwareSolutionbyVirtustreamAPI extends AzureVMwareSolutionbyVirtustreamAPIContext {
   // Operation groups
   operations: operations.Operations;
+  quota: operations.Quota;
   privateClouds: operations.PrivateClouds;
   clusters: operations.Clusters;
 
@@ -30,6 +31,7 @@ class AzureVMwareSolutionbyVirtustreamAPI extends AzureVMwareSolutionbyVirtustre
   constructor(credentials: msRest.ServiceClientCredentials, subscriptionId: string, options?: Models.AzureVMwareSolutionbyVirtustreamAPIOptions) {
     super(credentials, subscriptionId, options);
     this.operations = new operations.Operations(this);
+    this.quota = new operations.Quota(this);
     this.privateClouds = new operations.PrivateClouds(this);
     this.clusters = new operations.Clusters(this);
   }

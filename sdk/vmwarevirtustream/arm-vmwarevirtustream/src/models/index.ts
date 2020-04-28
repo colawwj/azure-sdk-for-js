@@ -12,6 +12,22 @@ import * as msRest from "@azure/ms-rest-js";
 export { BaseResource, CloudError };
 
 /**
+ * Subscription quotas
+ */
+export interface QuotaGet {
+  /**
+   * Remaining hosts quota by sku type
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly hostsRemaining?: { [propertyName: string]: number };
+  /**
+   * Host quota is active for current subscription
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly quotaEnabled?: boolean;
+}
+
+/**
  * The core properties of ARM resources
  */
 export interface Resource extends BaseResource {
@@ -528,6 +544,26 @@ export type OperationsListNextResponse = OperationList & {
        * The response body as parsed JSON or XML
        */
       parsedBody: OperationList;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type QuotaGetResponse = QuotaGet & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: QuotaGet;
     };
 };
 

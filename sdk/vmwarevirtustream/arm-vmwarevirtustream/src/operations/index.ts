@@ -9,5 +9,6 @@
  */
 
 export * from "./operations";
+export * from "./quota";
 export * from "./privateClouds";
 export * from "./clusters";

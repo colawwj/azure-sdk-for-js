@@ -12,6 +12,35 @@ import * as msRest from "@azure/ms-rest-js";
 export const CloudError = CloudErrorMapper;
 export const BaseResource = BaseResourceMapper;
 
+export const QuotaGet: msRest.CompositeMapper = {
+  serializedName: "QuotaGet",
+  type: {
+    name: "Composite",
+    className: "QuotaGet",
+    modelProperties: {
+      hostsRemaining: {
+        readOnly: true,
+        serializedName: "hostsRemaining",
+        type: {
+          name: "Dictionary",
+          value: {
+            type: {
+              name: "Number"
+            }
+          }
+        }
+      },
+      quotaEnabled: {
+        readOnly: true,
+        serializedName: "quotaEnabled",
+        type: {
+          name: "Boolean"
+        }
+      }
+    }
+  }
+};
+
 export const Resource: msRest.CompositeMapper = {
   serializedName: "Resource",
   type: {
