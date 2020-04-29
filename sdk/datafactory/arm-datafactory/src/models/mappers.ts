@@ -20673,7 +20673,7 @@ export const WaitActivity: msRest.CompositeMapper = {
         required: true,
         serializedName: "typeProperties.waitTimeInSeconds",
         type: {
-          name: "Number"
+          name: "Object"
         }
       }
     },

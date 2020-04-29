@@ -21681,9 +21681,9 @@ export interface WaitActivity {
    */
   userProperties?: UserProperty[];
   /**
-   * Duration in seconds.
+   * Duration in seconds. Type: integer (or Expression with resultType integer)
    */
-  waitTimeInSeconds: number;
+  waitTimeInSeconds: any;
 }
 
 /**
