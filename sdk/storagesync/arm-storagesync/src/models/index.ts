@@ -86,6 +86,60 @@ export interface SubscriptionState {
 }
 
 /**
+ * Private endpoint object properties.
+ */
+export interface PrivateEndpoint {
+  /**
+   * Full identifier of the private endpoint resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+}
+
+/**
+ * An object that represents the approval state of the private link connection.
+ */
+export interface PrivateLinkServiceConnectionState {
+  /**
+   * Indicates whether the connection has been approved, rejected or removed by the key vault
+   * owner. Possible values include: 'Pending', 'Approved', 'Rejected', 'Disconnected'
+   */
+  status?: PrivateEndpointServiceConnectionStatus;
+  /**
+   * The reason for approval or rejection.
+   */
+  description?: string;
+  /**
+   * A message indicating if changes on the service provider require any updates on the consumer.
+   */
+  actionsRequired?: string;
+}
+
+/**
+ * Private endpoint connection item.
+ */
+export interface PrivateEndpointConnectionItem {
+  /**
+   * Full identifier of the private endpoint connection.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Properties of the private endpoint object.
+   */
+  privateEndpoint?: PrivateEndpoint;
+  /**
+   * Approval state of the private link connection.
+   */
+  privateLinkServiceConnectionState?: PrivateLinkServiceConnectionState;
+  /**
+   * Provisioning state of the private endpoint connection. Possible values include: 'Succeeded',
+   * 'Creating', 'Updating', 'Deleting', 'Failed', 'Disconnected'
+   */
+  provisioningState?: PrivateEndpointConnectionProvisioningState;
+}
+
+/**
  * An interface representing Resource.
  */
 export interface Resource extends BaseResource {
@@ -127,6 +181,11 @@ export interface TrackedResource extends Resource {
  */
 export interface StorageSyncService extends TrackedResource {
   /**
+   * Incoming Traffic Policy. Possible values include: 'AllowAllTraffic',
+   * 'AllowVirtualNetworksOnly'
+   */
+  incomingTrafficPolicy?: IncomingTrafficPolicy;
+  /**
    * Storage Sync service status.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
@@ -136,6 +195,26 @@ export interface StorageSyncService extends TrackedResource {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly storageSyncServiceUid?: string;
+  /**
+   * StorageSyncService Provisioning State
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: string;
+  /**
+   * StorageSyncService lastWorkflowId
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly lastWorkflowId?: string;
+  /**
+   * Resource Last Operation Name
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly lastOperationName?: string;
+  /**
+   * List of private endpoint connections associated with the storage sync service.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly privateEndpointConnections?: PrivateEndpointConnectionItem[];
 }
 
 /**
@@ -256,7 +335,11 @@ export interface StorageSyncServiceCreateParameters {
    * and a value with a length no greater than 256 characters.
    */
   tags?: { [propertyName: string]: string };
-  properties?: any;
+  /**
+   * Incoming Traffic Policy. Possible values include: 'AllowAllTraffic',
+   * 'AllowVirtualNetworksOnly'
+   */
+  incomingTrafficPolicy?: IncomingTrafficPolicy;
 }
 
 /**
@@ -302,7 +385,7 @@ export interface ServerEndpointCreateParameters extends ProxyResource {
   /**
    * Cloud Tiering. Possible values include: 'on', 'off'
    */
-  cloudTiering?: CloudTiering;
+  cloudTiering?: FeatureStatus;
   /**
    * Level of free space to be maintained by Cloud Tiering if it is enabled.
    */
@@ -322,11 +405,22 @@ export interface ServerEndpointCreateParameters extends ProxyResource {
   /**
    * Offline data transfer. Possible values include: 'on', 'off'
    */
-  offlineDataTransfer?: OfflineDataTransfer;
+  offlineDataTransfer?: FeatureStatus;
   /**
    * Offline data transfer share name
    */
   offlineDataTransferShareName?: string;
+  /**
+   * Policy for how namespace and files are recalled during FastDr. Possible values include:
+   * 'NamespaceOnly', 'NamespaceThenModifiedFiles', 'AvoidTieredFiles'
+   */
+  initialDownloadPolicy?: InitialDownloadPolicy;
+  /**
+   * Policy for enabling follow-the-sun business models: link local cache to cloud behavior to
+   * pre-populate before local access. Possible values include: 'DownloadNewAndModifiedFiles',
+   * 'UpdateLocallyCachedFiles'
+   */
+  localCacheMode?: LocalCacheMode;
 }
 
 /**
@@ -388,7 +482,7 @@ export interface ServerEndpointUpdateParameters {
   /**
    * Cloud Tiering. Possible values include: 'on', 'off'
    */
-  cloudTiering?: CloudTiering1;
+  cloudTiering?: FeatureStatus;
   /**
    * Level of free space to be maintained by Cloud Tiering if it is enabled.
    */
@@ -400,11 +494,17 @@ export interface ServerEndpointUpdateParameters {
   /**
    * Offline data transfer. Possible values include: 'on', 'off'
    */
-  offlineDataTransfer?: OfflineDataTransfer1;
+  offlineDataTransfer?: FeatureStatus;
   /**
    * Offline data transfer share name
    */
   offlineDataTransferShareName?: string;
+  /**
+   * Policy for enabling follow-the-sun business models: link local cache to cloud behavior to
+   * pre-populate before local access. Possible values include: 'DownloadNewAndModifiedFiles',
+   * 'UpdateLocallyCachedFiles'
+   */
+  localCacheMode?: LocalCacheMode;
 }
 
 /**
@@ -514,24 +614,24 @@ export interface ServerEndpointSyncStatus {
    * 'SyncBlockedForChangeDetectionPostRestore', 'NoActivity'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly downloadHealth?: DownloadHealth;
+  readonly downloadHealth?: ServerEndpointSyncHealthState;
   /**
    * Upload Health Status. Possible values include: 'Healthy', 'Error', 'SyncBlockedForRestore',
    * 'SyncBlockedForChangeDetectionPostRestore', 'NoActivity'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly uploadHealth?: UploadHealth;
+  readonly uploadHealth?: ServerEndpointSyncHealthState;
   /**
    * Combined Health Status. Possible values include: 'Healthy', 'Error', 'SyncBlockedForRestore',
    * 'SyncBlockedForChangeDetectionPostRestore', 'NoActivity'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly combinedHealth?: CombinedHealth;
+  readonly combinedHealth?: ServerEndpointSyncHealthState;
   /**
    * Sync activity. Possible values include: 'Upload', 'Download', 'UploadAndDownload'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly syncActivity?: SyncActivity;
+  readonly syncActivity?: ServerEndpointSyncActivityState;
   /**
    * Total count of persistent files not syncing (combined upload + download).
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -567,7 +667,7 @@ export interface ServerEndpointSyncStatus {
    * 'Complete'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly offlineDataTransferStatus?: OfflineDataTransferStatus;
+  readonly offlineDataTransferStatus?: ServerEndpointOfflineDataTransferState;
 }
 
 /**
@@ -720,7 +820,7 @@ export interface ServerEndpointCloudTieringStatus {
    * Cloud tiering health state. Possible values include: 'Healthy', 'Error'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly health?: Health;
+  readonly health?: ServerEndpointCloudTieringHealthState;
   /**
    * The last updated timestamp of health state
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -811,7 +911,7 @@ export interface ServerEndpoint extends ProxyResource {
   /**
    * Cloud Tiering. Possible values include: 'on', 'off'
    */
-  cloudTiering?: CloudTiering2;
+  cloudTiering?: FeatureStatus;
   /**
    * Level of free space to be maintained by Cloud Tiering if it is enabled.
    */
@@ -851,7 +951,7 @@ export interface ServerEndpoint extends ProxyResource {
   /**
    * Offline data transfer. Possible values include: 'on', 'off'
    */
-  offlineDataTransfer?: OfflineDataTransfer2;
+  offlineDataTransfer?: FeatureStatus;
   /**
    * Offline data transfer storage account resource ID
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -876,6 +976,17 @@ export interface ServerEndpoint extends ProxyResource {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly recallStatus?: ServerEndpointRecallStatus;
+  /**
+   * Policy for how namespace and files are recalled during FastDr. Possible values include:
+   * 'NamespaceOnly', 'NamespaceThenModifiedFiles', 'AvoidTieredFiles'
+   */
+  initialDownloadPolicy?: InitialDownloadPolicy;
+  /**
+   * Policy for enabling follow-the-sun business models: link local cache to cloud behavior to
+   * pre-populate before local access. Possible values include: 'DownloadNewAndModifiedFiles',
+   * 'UpdateLocallyCachedFiles'
+   */
+  localCacheMode?: LocalCacheMode;
 }
 
 /**
@@ -955,6 +1066,10 @@ export interface RegisteredServer extends ProxyResource {
    */
   managementEndpointUri?: string;
   /**
+   * Telemetry Endpoint Uri
+   */
+  monitoringEndpointUri?: string;
+  /**
    * Monitoring Configuration
    */
   monitoringConfiguration?: string;
@@ -986,11 +1101,11 @@ export interface Workflow extends ProxyResource {
    * workflow status. Possible values include: 'active', 'expired', 'succeeded', 'aborted',
    * 'failed'
    */
-  status?: Status;
+  status?: WorkflowStatus;
   /**
    * operation direction. Possible values include: 'do', 'undo', 'cancel'
    */
-  operation?: Operation;
+  operation?: OperationDirection;
   /**
    * workflow steps
    */
@@ -1212,6 +1327,25 @@ export interface PostBackupResponse {
 }
 
 /**
+ * Private endpoint connection resource.
+ */
+export interface PrivateEndpointConnection extends BaseResource {
+  /**
+   * Properties of the private endpoint object.
+   */
+  privateEndpoint?: PrivateEndpoint;
+  /**
+   * Approval state of the private link connection.
+   */
+  privateLinkServiceConnectionState?: PrivateLinkServiceConnectionState;
+  /**
+   * Provisioning state of the private endpoint connection. Possible values include: 'Succeeded',
+   * 'Creating', 'Updating', 'Deleting', 'Failed', 'Disconnected'
+   */
+  provisioningState?: PrivateEndpointConnectionProvisioningState;
+}
+
+/**
  * Parameters for updating an Storage sync service.
  */
 export interface StorageSyncServiceUpdateParameters {
@@ -1220,9 +1354,10 @@ export interface StorageSyncServiceUpdateParameters {
    */
   tags?: { [propertyName: string]: string };
   /**
-   * The properties of the storage sync service.
+   * Incoming Traffic Policy. Possible values include: 'AllowAllTraffic',
+   * 'AllowVirtualNetworksOnly'
    */
-  properties?: any;
+  incomingTrafficPolicy?: IncomingTrafficPolicy;
 }
 
 /**
@@ -1257,6 +1392,36 @@ export interface OperationStatus {
 }
 
 /**
+ * A private link resource
+ */
+export interface PrivateLinkResource extends Resource {
+  /**
+   * Group identifier of private link resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly groupId?: string;
+  /**
+   * Required member names of private link resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly requiredMembers?: string[];
+  /**
+   * Required DNS zone names of the the private link resource.
+   */
+  requiredZoneNames?: string[];
+}
+
+/**
+ * A list of private link resources
+ */
+export interface PrivateLinkResourceListResult {
+  /**
+   * Array of private link resources
+   */
+  value?: PrivateLinkResource[];
+}
+
+/**
  * The resource model definition for a Azure Resource Manager resource with an etag.
  */
 export interface AzureEntityResource extends Resource {
@@ -1271,6 +1436,16 @@ export interface AzureEntityResource extends Resource {
  * Optional Parameters.
  */
 export interface StorageSyncServicesUpdateOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Storage Sync Service resource.
+   */
+  parameters?: StorageSyncServiceUpdateParameters;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface StorageSyncServicesBeginUpdateOptionalParams extends msRest.RequestOptionsBase {
   /**
    * Storage Sync Service resource.
    */
@@ -1319,6 +1494,32 @@ export interface OperationsListHeaders {
 }
 
 /**
+ * Defines headers for Create operation.
+ */
+export interface StorageSyncServicesCreateHeaders {
+  /**
+   * Operation Status Location URI
+   */
+  azureAsyncOperation: string;
+  /**
+   * Operation Status Location URI
+   */
+  locationHeader: string;
+  /**
+   * Retry After
+   */
+  retryAfter: string;
+  /**
+   * Request id
+   */
+  xMsRequestId: string;
+  /**
+   * correlation request id
+   */
+  xMsCorrelationRequestId: string;
+}
+
+/**
  * Defines headers for Get operation.
  */
 export interface StorageSyncServicesGetHeaders {
@@ -1337,13 +1538,25 @@ export interface StorageSyncServicesGetHeaders {
  */
 export interface StorageSyncServicesUpdateHeaders {
   /**
-   * request id.
+   * Request id
    */
   xMsRequestId: string;
   /**
-   * correlation request id.
+   * correlation request id
    */
   xMsCorrelationRequestId: string;
+  /**
+   * Operation Status Location URI
+   */
+  azureAsyncOperation: string;
+  /**
+   * Operation Status Location URI
+   */
+  locationHeader: string;
+  /**
+   * Retry After
+   */
+  retryAfter: string;
 }
 
 /**
@@ -1351,13 +1564,25 @@ export interface StorageSyncServicesUpdateHeaders {
  */
 export interface StorageSyncServicesDeleteHeaders {
   /**
-   * request id.
+   * Request id
    */
   xMsRequestId: string;
   /**
-   * correlation request id.
+   * correlation request id
    */
   xMsCorrelationRequestId: string;
+  /**
+   * Operation Status Location URI
+   */
+  azureAsyncOperation: string;
+  /**
+   * Operation Status Location URI
+   */
+  location: string;
+  /**
+   * Retry After
+   */
+  retryAfter: string;
 }
 
 /**
@@ -1378,6 +1603,72 @@ export interface StorageSyncServicesListByResourceGroupHeaders {
  * Defines headers for ListBySubscription operation.
  */
 export interface StorageSyncServicesListBySubscriptionHeaders {
+  /**
+   * request id.
+   */
+  xMsRequestId: string;
+  /**
+   * correlation request id.
+   */
+  xMsCorrelationRequestId: string;
+}
+
+/**
+ * Defines headers for Create operation.
+ */
+export interface PrivateEndpointConnectionsCreateHeaders {
+  /**
+   * Operation Status Location URI
+   */
+  azureAsyncOperation: string;
+  /**
+   * Operation Status Location URI
+   */
+  location: string;
+  /**
+   * Retry After
+   */
+  retryAfter: string;
+  /**
+   * Request id
+   */
+  xMsRequestId: string;
+  /**
+   * correlation request id
+   */
+  xMsCorrelationRequestId: string;
+}
+
+/**
+ * Defines headers for Delete operation.
+ */
+export interface PrivateEndpointConnectionsDeleteHeaders {
+  /**
+   * Operation Status Location URI
+   */
+  azureAsyncOperation: string;
+  /**
+   * Operation Status Location URI
+   */
+  location: string;
+  /**
+   * Retry After
+   */
+  retryAfter: string;
+  /**
+   * Request id
+   */
+  xMsRequestId: string;
+  /**
+   * correlation request id
+   */
+  xMsCorrelationRequestId: string;
+}
+
+/**
+ * Defines headers for ListByStorageSyncService operation.
+ */
+export interface PrivateEndpointConnectionsListByStorageSyncServiceHeaders {
   /**
    * request id.
    */
@@ -1904,6 +2195,14 @@ export interface StorageSyncServiceArray extends Array<StorageSyncService> {
 
 /**
  * @interface
+ * Array of PrivateEndpointConnection
+ * @extends Array<PrivateEndpointConnection>
+ */
+export interface PrivateEndpointConnectionArray extends Array<PrivateEndpointConnection> {
+}
+
+/**
+ * @interface
  * Array of SyncGroup
  * @extends Array<SyncGroup>
  */
@@ -1951,12 +2250,110 @@ export interface WorkflowArray extends Array<Workflow> {
 export type Reason = 'Registered' | 'Unregistered' | 'Warned' | 'Suspended' | 'Deleted';
 
 /**
+ * Defines values for IncomingTrafficPolicy.
+ * Possible values include: 'AllowAllTraffic', 'AllowVirtualNetworksOnly'
+ * @readonly
+ * @enum {string}
+ */
+export type IncomingTrafficPolicy = 'AllowAllTraffic' | 'AllowVirtualNetworksOnly';
+
+/**
+ * Defines values for PrivateEndpointServiceConnectionStatus.
+ * Possible values include: 'Pending', 'Approved', 'Rejected', 'Disconnected'
+ * @readonly
+ * @enum {string}
+ */
+export type PrivateEndpointServiceConnectionStatus = 'Pending' | 'Approved' | 'Rejected' | 'Disconnected';
+
+/**
+ * Defines values for PrivateEndpointConnectionProvisioningState.
+ * Possible values include: 'Succeeded', 'Creating', 'Updating', 'Deleting', 'Failed',
+ * 'Disconnected'
+ * @readonly
+ * @enum {string}
+ */
+export type PrivateEndpointConnectionProvisioningState = 'Succeeded' | 'Creating' | 'Updating' | 'Deleting' | 'Failed' | 'Disconnected';
+
+/**
  * Defines values for ChangeDetectionMode.
  * Possible values include: 'Default', 'Recursive'
  * @readonly
  * @enum {string}
  */
 export type ChangeDetectionMode = 'Default' | 'Recursive';
+
+/**
+ * Defines values for FeatureStatus.
+ * Possible values include: 'on', 'off'
+ * @readonly
+ * @enum {string}
+ */
+export type FeatureStatus = 'on' | 'off';
+
+/**
+ * Defines values for InitialDownloadPolicy.
+ * Possible values include: 'NamespaceOnly', 'NamespaceThenModifiedFiles', 'AvoidTieredFiles'
+ * @readonly
+ * @enum {string}
+ */
+export type InitialDownloadPolicy = 'NamespaceOnly' | 'NamespaceThenModifiedFiles' | 'AvoidTieredFiles';
+
+/**
+ * Defines values for LocalCacheMode.
+ * Possible values include: 'DownloadNewAndModifiedFiles', 'UpdateLocallyCachedFiles'
+ * @readonly
+ * @enum {string}
+ */
+export type LocalCacheMode = 'DownloadNewAndModifiedFiles' | 'UpdateLocallyCachedFiles';
+
+/**
+ * Defines values for ServerEndpointSyncHealthState.
+ * Possible values include: 'Healthy', 'Error', 'SyncBlockedForRestore',
+ * 'SyncBlockedForChangeDetectionPostRestore', 'NoActivity'
+ * @readonly
+ * @enum {string}
+ */
+export type ServerEndpointSyncHealthState = 'Healthy' | 'Error' | 'SyncBlockedForRestore' | 'SyncBlockedForChangeDetectionPostRestore' | 'NoActivity';
+
+/**
+ * Defines values for ServerEndpointSyncActivityState.
+ * Possible values include: 'Upload', 'Download', 'UploadAndDownload'
+ * @readonly
+ * @enum {string}
+ */
+export type ServerEndpointSyncActivityState = 'Upload' | 'Download' | 'UploadAndDownload';
+
+/**
+ * Defines values for ServerEndpointOfflineDataTransferState.
+ * Possible values include: 'InProgress', 'Stopping', 'NotRunning', 'Complete'
+ * @readonly
+ * @enum {string}
+ */
+export type ServerEndpointOfflineDataTransferState = 'InProgress' | 'Stopping' | 'NotRunning' | 'Complete';
+
+/**
+ * Defines values for ServerEndpointCloudTieringHealthState.
+ * Possible values include: 'Healthy', 'Error'
+ * @readonly
+ * @enum {string}
+ */
+export type ServerEndpointCloudTieringHealthState = 'Healthy' | 'Error';
+
+/**
+ * Defines values for WorkflowStatus.
+ * Possible values include: 'active', 'expired', 'succeeded', 'aborted', 'failed'
+ * @readonly
+ * @enum {string}
+ */
+export type WorkflowStatus = 'active' | 'expired' | 'succeeded' | 'aborted' | 'failed';
+
+/**
+ * Defines values for OperationDirection.
+ * Possible values include: 'do', 'undo', 'cancel'
+ * @readonly
+ * @enum {string}
+ */
+export type OperationDirection = 'do' | 'undo' | 'cancel';
 
 /**
  * Defines values for NameAvailabilityReason.
@@ -1967,119 +2364,12 @@ export type ChangeDetectionMode = 'Default' | 'Recursive';
 export type NameAvailabilityReason = 'Invalid' | 'AlreadyExists';
 
 /**
- * Defines values for CloudTiering.
- * Possible values include: 'on', 'off'
+ * Defines values for ProgressType.
+ * Possible values include: 'none', 'initialize', 'download', 'upload', 'recall'
  * @readonly
  * @enum {string}
  */
-export type CloudTiering = 'on' | 'off';
-
-/**
- * Defines values for OfflineDataTransfer.
- * Possible values include: 'on', 'off'
- * @readonly
- * @enum {string}
- */
-export type OfflineDataTransfer = 'on' | 'off';
-
-/**
- * Defines values for CloudTiering1.
- * Possible values include: 'on', 'off'
- * @readonly
- * @enum {string}
- */
-export type CloudTiering1 = 'on' | 'off';
-
-/**
- * Defines values for OfflineDataTransfer1.
- * Possible values include: 'on', 'off'
- * @readonly
- * @enum {string}
- */
-export type OfflineDataTransfer1 = 'on' | 'off';
-
-/**
- * Defines values for DownloadHealth.
- * Possible values include: 'Healthy', 'Error', 'SyncBlockedForRestore',
- * 'SyncBlockedForChangeDetectionPostRestore', 'NoActivity'
- * @readonly
- * @enum {string}
- */
-export type DownloadHealth = 'Healthy' | 'Error' | 'SyncBlockedForRestore' | 'SyncBlockedForChangeDetectionPostRestore' | 'NoActivity';
-
-/**
- * Defines values for UploadHealth.
- * Possible values include: 'Healthy', 'Error', 'SyncBlockedForRestore',
- * 'SyncBlockedForChangeDetectionPostRestore', 'NoActivity'
- * @readonly
- * @enum {string}
- */
-export type UploadHealth = 'Healthy' | 'Error' | 'SyncBlockedForRestore' | 'SyncBlockedForChangeDetectionPostRestore' | 'NoActivity';
-
-/**
- * Defines values for CombinedHealth.
- * Possible values include: 'Healthy', 'Error', 'SyncBlockedForRestore',
- * 'SyncBlockedForChangeDetectionPostRestore', 'NoActivity'
- * @readonly
- * @enum {string}
- */
-export type CombinedHealth = 'Healthy' | 'Error' | 'SyncBlockedForRestore' | 'SyncBlockedForChangeDetectionPostRestore' | 'NoActivity';
-
-/**
- * Defines values for SyncActivity.
- * Possible values include: 'Upload', 'Download', 'UploadAndDownload'
- * @readonly
- * @enum {string}
- */
-export type SyncActivity = 'Upload' | 'Download' | 'UploadAndDownload';
-
-/**
- * Defines values for OfflineDataTransferStatus.
- * Possible values include: 'InProgress', 'Stopping', 'NotRunning', 'Complete'
- * @readonly
- * @enum {string}
- */
-export type OfflineDataTransferStatus = 'InProgress' | 'Stopping' | 'NotRunning' | 'Complete';
-
-/**
- * Defines values for Health.
- * Possible values include: 'Healthy', 'Error'
- * @readonly
- * @enum {string}
- */
-export type Health = 'Healthy' | 'Error';
-
-/**
- * Defines values for CloudTiering2.
- * Possible values include: 'on', 'off'
- * @readonly
- * @enum {string}
- */
-export type CloudTiering2 = 'on' | 'off';
-
-/**
- * Defines values for OfflineDataTransfer2.
- * Possible values include: 'on', 'off'
- * @readonly
- * @enum {string}
- */
-export type OfflineDataTransfer2 = 'on' | 'off';
-
-/**
- * Defines values for Status.
- * Possible values include: 'active', 'expired', 'succeeded', 'aborted', 'failed'
- * @readonly
- * @enum {string}
- */
-export type Status = 'active' | 'expired' | 'succeeded' | 'aborted' | 'failed';
-
-/**
- * Defines values for Operation.
- * Possible values include: 'do', 'undo', 'cancel'
- * @readonly
- * @enum {string}
- */
-export type Operation = 'do' | 'undo' | 'cancel';
+export type ProgressType = 'none' | 'initialize' | 'download' | 'upload' | 'recall';
 
 /**
  * Contains response data for the list operation.
@@ -2129,11 +2419,16 @@ export type StorageSyncServicesCheckNameAvailabilityResponse = CheckNameAvailabi
 /**
  * Contains response data for the create operation.
  */
-export type StorageSyncServicesCreateResponse = StorageSyncService & {
+export type StorageSyncServicesCreateResponse = StorageSyncService & StorageSyncServicesCreateHeaders & {
   /**
    * The underlying HTTP response.
    */
   _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: StorageSyncServicesCreateHeaders;
+
       /**
        * The response body as text (string format)
        */
@@ -2258,6 +2553,111 @@ export type StorageSyncServicesListBySubscriptionResponse = StorageSyncServiceAr
        * The response body as parsed JSON or XML
        */
       parsedBody: StorageSyncServiceArray;
+    };
+};
+
+/**
+ * Contains response data for the listByStorageSyncService operation.
+ */
+export type PrivateLinkResourcesListByStorageSyncServiceResponse = PrivateLinkResourceListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateLinkResourceListResult;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type PrivateEndpointConnectionsGetResponse = PrivateEndpointConnection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateEndpointConnection;
+    };
+};
+
+/**
+ * Contains response data for the create operation.
+ */
+export type PrivateEndpointConnectionsCreateResponse = PrivateEndpointConnection & PrivateEndpointConnectionsCreateHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: PrivateEndpointConnectionsCreateHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateEndpointConnection;
+    };
+};
+
+/**
+ * Contains response data for the deleteMethod operation.
+ */
+export type PrivateEndpointConnectionsDeleteResponse = PrivateEndpointConnectionsDeleteHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: PrivateEndpointConnectionsDeleteHeaders;
+    };
+};
+
+/**
+ * Contains response data for the listByStorageSyncService operation.
+ */
+export type PrivateEndpointConnectionsListByStorageSyncServiceResponse = PrivateEndpointConnectionArray & PrivateEndpointConnectionsListByStorageSyncServiceHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: PrivateEndpointConnectionsListByStorageSyncServiceHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateEndpointConnectionArray;
     };
 };
 
