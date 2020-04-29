@@ -207,6 +207,11 @@ export interface ActiveDirectory {
    * The Active Directory site the service will limit Domain Controller discovery to
    */
   site?: string;
+  /**
+   * Users to be added to the Built-in Backup Operator active directory group. A list of unique
+   * usernames without domain specifier
+   */
+  backupOperators?: string[];
 }
 
 /**
@@ -394,11 +399,11 @@ export interface ExportPolicyRule {
    */
   cifs?: boolean;
   /**
-   * Allows NFSv3 protocol
+   * Allows NFSv3 protocol. Enable only for NFSv3 type volumes
    */
   nfsv3?: boolean;
   /**
-   * Allows NFSv4.1 protocol
+   * Allows NFSv4.1 protocol. Enable only for NFSv4.1 type volumes
    */
   nfsv41?: boolean;
   /**
@@ -420,32 +425,9 @@ export interface VolumePropertiesExportPolicy {
 }
 
 /**
- * Mount Target
+ * Mount target properties
  */
-export interface MountTarget {
-  /**
-   * Resource location
-   */
-  location: string;
-  /**
-   * Resource Id
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Resource name
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Resource type
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * Resource tags
-   */
-  tags?: { [propertyName: string]: string };
+export interface MountTargetProperties {
   /**
    * mountTargetId. UUID v4 used to identify the MountTarget
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -514,6 +496,16 @@ export interface ReplicationObject {
 }
 
 /**
+ * Volume Snapshot Properties
+ */
+export interface VolumeSnapshotProperties {
+  /**
+   * Snapshot Policy ResourceId
+   */
+  snapshotPolicyId?: string;
+}
+
+/**
  * DataProtection type volumes include an object containing details of the replication
  * @summary DataProtection
  */
@@ -522,6 +514,7 @@ export interface VolumePropertiesDataProtection {
    * Replication. Replication properties
    */
   replication?: ReplicationObject;
+  snapshot?: VolumeSnapshotProperties;
 }
 
 /**
@@ -602,7 +595,7 @@ export interface Volume extends BaseResource {
   /**
    * mountTargets. List of mount targets
    */
-  mountTargets?: MountTarget[];
+  mountTargets?: MountTargetProperties[];
   /**
    * What type of volume is this
    */
@@ -616,6 +609,11 @@ export interface Volume extends BaseResource {
    * Restoring
    */
   isRestoring?: boolean;
+  /**
+   * If enabled (true) the volume will contain a read-only .snapshot directory which provides
+   * access to each of the volume's snapshots (default to true).
+   */
+  snapshotDirectoryVisible?: boolean;
 }
 
 /**
@@ -700,6 +698,73 @@ export interface VolumePatch extends BaseResource {
 }
 
 /**
+ * Mount Target
+ */
+export interface MountTarget {
+  /**
+   * Resource location
+   */
+  location: string;
+  /**
+   * Resource Id
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Resource name
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Resource type
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * Resource tags
+   */
+  tags?: { [propertyName: string]: string };
+  /**
+   * mountTargetId. UUID v4 used to identify the MountTarget
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly mountTargetId?: string;
+  /**
+   * fileSystemId. UUID v4 used to identify the MountTarget
+   */
+  fileSystemId: string;
+  /**
+   * ipAddress. The mount target's IPv4 address
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly ipAddress?: string;
+  /**
+   * subnet. The subnet
+   */
+  subnet?: string;
+  /**
+   * startIp. The start of IPv4 address range to use when creating a new mount target
+   */
+  startIp?: string;
+  /**
+   * endIp. The end of IPv4 address range to use when creating a new mount target
+   */
+  endIp?: string;
+  /**
+   * gateway. The gateway of the IPv4 address range to use when creating a new mount target
+   */
+  gateway?: string;
+  /**
+   * netmask. The netmask of the IPv4 address range to use when creating a new mount target
+   */
+  netmask?: string;
+  /**
+   * smbServerFQDN. The SMB server's Fully Qualified Domain Name, FQDN
+   */
+  smbServerFqdn?: string;
+}
+
+/**
  * Snapshot of a Volume
  */
 export interface Snapshot extends BaseResource {
@@ -728,10 +793,6 @@ export interface Snapshot extends BaseResource {
    */
   readonly snapshotId?: string;
   /**
-   * fileSystemId. UUID v4 used to identify the FileSystem
-   */
-  fileSystemId?: string;
-  /**
    * name. The creation date of the snapshot
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
@@ -741,6 +802,161 @@ export interface Snapshot extends BaseResource {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly provisioningState?: string;
+}
+
+/**
+ * Snapshot policy information
+ */
+export interface SnapshotPolicy extends BaseResource {
+  /**
+   * hourlySchedule. Schedule for hourly snapshots
+   */
+  hourlySchedule?: any;
+  /**
+   * dailySchedule. Schedule for daily snapshots
+   */
+  dailySchedule?: any;
+  /**
+   * weeklySchedule. Schedule for weekly snapshots
+   */
+  weeklySchedule?: any;
+  /**
+   * monthlySchedule. Schedule for monthly snapshots
+   */
+  monthlySchedule?: any;
+  /**
+   * The property to decide policy is enabled or not
+   */
+  enabled?: boolean;
+}
+
+/**
+ * Snapshot policy Details for create and update
+ */
+export interface SnapshotPolicyPatch {
+  /**
+   * hourlySchedule. Schedule for hourly snapshots
+   */
+  hourlySchedule?: any;
+  /**
+   * dailySchedule. Schedule for daily snapshots
+   */
+  dailySchedule?: any;
+  /**
+   * weeklySchedule. Schedule for weekly snapshots
+   */
+  weeklySchedule?: any;
+  /**
+   * monthlySchedule. Schedule for monthly snapshots
+   */
+  monthlySchedule?: any;
+  /**
+   * The property to decide policy is enabled or not
+   */
+  enabled?: boolean;
+}
+
+/**
+ * Volumes associated with snapshot policy
+ */
+export interface SnapshotPolicyVolumeList {
+  /**
+   * List of volumes
+   */
+  value?: any[];
+}
+
+/**
+ * Hourly Schedule properties
+ */
+export interface HourlySchedule {
+  /**
+   * Hourly snapshot count to keep
+   */
+  snapshotsToKeep?: number;
+  /**
+   * Indicates which minute snapshot should be taken
+   */
+  minute?: number;
+  /**
+   * Resource size in bytes, current storage usage for the volume in bytes
+   */
+  usedBytes?: number;
+}
+
+/**
+ * Daily Schedule properties
+ */
+export interface DailySchedule {
+  /**
+   * Daily snapshot count to keep
+   */
+  snapshotsToKeep?: number;
+  /**
+   * Indicates which hour in UTC timezone a snapshot should be taken
+   */
+  hour?: number;
+  /**
+   * Indicates which minute snapshot should be taken
+   */
+  minute?: number;
+  /**
+   * Resource size in bytes, current storage usage for the volume in bytes
+   */
+  usedBytes?: number;
+}
+
+/**
+ * Weekly Schedule properties, make a snapshot every week at a specific day or days
+ */
+export interface WeeklySchedule {
+  /**
+   * Weekly snapshot count to keep
+   */
+  snapshotsToKeep?: number;
+  /**
+   * Indicates which weekdays snapshot should be taken, accepts a comma separated list of week day
+   * names in english
+   */
+  day?: string;
+  /**
+   * Indicates which hour in UTC timezone a snapshot should be taken
+   */
+  hour?: number;
+  /**
+   * Indicates which minute snapshot should be taken
+   */
+  minute?: number;
+  /**
+   * Resource size in bytes, current storage usage for the volume in bytes
+   */
+  usedBytes?: number;
+}
+
+/**
+ * Monthly Schedule properties
+ */
+export interface MonthlySchedule {
+  /**
+   * Monthly snapshot count to keep
+   */
+  snapshotsToKeep?: number;
+  /**
+   * Indicates which days of the month snapshot should be taken. A comma delimited string.
+   */
+  daysOfMonth?: string;
+  /**
+   * Indicates which hour in UTC timezone a snapshot should be taken
+   */
+  hour?: number;
+  /**
+   * Indicates which minute snapshot should be taken
+   */
+  minute?: number;
+  /**
+   * Resource size in bytes, current storage usage for the volume in bytes
+   */
+  usedBytes?: number;
 }
 
 /**
@@ -761,6 +977,61 @@ export interface AuthorizeRequest {
    * Resource id of the remote volume
    */
   remoteVolumeResourceId?: string;
+}
+
+/**
+ * An interface representing Resource.
+ */
+export interface Resource extends BaseResource {
+  /**
+   * Fully qualified resource Id for the resource. Ex -
+   * /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * The name of the resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * The type of the resource. Ex- Microsoft.Compute/virtualMachines or
+   * Microsoft.Storage/storageAccounts.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+}
+
+/**
+ * The resource model definition for a ARM tracked top level resource
+ */
+export interface TrackedResource extends Resource {
+  /**
+   * Resource tags.
+   */
+  tags?: { [propertyName: string]: string };
+  /**
+   * The geo-location where the resource lives
+   */
+  location: string;
+}
+
+/**
+ * The resource model definition for a Azure Resource Manager resource with an etag.
+ */
+export interface AzureEntityResource extends Resource {
+  /**
+   * Resource Etag.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly etag?: string;
+}
+
+/**
+ * The resource model definition for a ARM proxy resource. It will have everything other than
+ * required location and tags
+ */
+export interface ProxyResource extends Resource {
 }
 
 /**
@@ -801,26 +1072,6 @@ export interface VolumesBeginAuthorizeReplicationOptionalParams extends msRest.R
    * Resource id of the remote volume
    */
   remoteVolumeResourceId?: string;
-}
-
-/**
- * Optional Parameters.
- */
-export interface SnapshotsCreateOptionalParams extends msRest.RequestOptionsBase {
-  /**
-   * fileSystemId UUID v4 used to identify the FileSystem
-   */
-  fileSystemId?: string;
-}
-
-/**
- * Optional Parameters.
- */
-export interface SnapshotsBeginCreateOptionalParams extends msRest.RequestOptionsBase {
-  /**
-   * fileSystemId UUID v4 used to identify the FileSystem
-   */
-  fileSystemId?: string;
 }
 
 /**
@@ -869,6 +1120,14 @@ export interface VolumeList extends Array<Volume> {
  * @extends Array<Snapshot>
  */
 export interface SnapshotsList extends Array<Snapshot> {
+}
+
+/**
+ * @interface
+ * List of Snapshot Policies
+ * @extends Array<SnapshotPolicy>
+ */
+export interface SnapshotPoliciesList extends Array<SnapshotPolicy> {
 }
 
 /**
@@ -1451,9 +1710,9 @@ export type SnapshotsBeginCreateResponse = Snapshot & {
 };
 
 /**
- * Contains response data for the beginUpdate operation.
+ * Contains response data for the list operation.
  */
-export type SnapshotsBeginUpdateResponse = Snapshot & {
+export type SnapshotPoliciesListResponse = SnapshotPoliciesList & {
   /**
    * The underlying HTTP response.
    */
@@ -1466,6 +1725,86 @@ export type SnapshotsBeginUpdateResponse = Snapshot & {
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: Snapshot;
+      parsedBody: SnapshotPoliciesList;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type SnapshotPoliciesGetResponse = SnapshotPolicy & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SnapshotPolicy;
+    };
+};
+
+/**
+ * Contains response data for the create operation.
+ */
+export type SnapshotPoliciesCreateResponse = SnapshotPolicy & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SnapshotPolicy;
+    };
+};
+
+/**
+ * Contains response data for the update operation.
+ */
+export type SnapshotPoliciesUpdateResponse = SnapshotPolicy & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SnapshotPolicy;
+    };
+};
+
+/**
+ * Contains response data for the listVolumes operation.
+ */
+export type SnapshotPoliciesListVolumesResponse = SnapshotPolicyVolumeList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SnapshotPolicyVolumeList;
     };
 };

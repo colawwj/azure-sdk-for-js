@@ -125,7 +125,7 @@ export class Snapshots {
    * @param [options] The optional parameters
    * @returns Promise<Models.SnapshotsCreateResponse>
    */
-  create(resourceGroupName: string, accountName: string, poolName: string, volumeName: string, snapshotName: string, location: string, options?: Models.SnapshotsCreateOptionalParams): Promise<Models.SnapshotsCreateResponse> {
+  create(resourceGroupName: string, accountName: string, poolName: string, volumeName: string, snapshotName: string, location: string, options?: msRest.RequestOptionsBase): Promise<Models.SnapshotsCreateResponse> {
     return this.beginCreate(resourceGroupName,accountName,poolName,volumeName,snapshotName,location,options)
       .then(lroPoller => lroPoller.pollUntilFinished()) as Promise<Models.SnapshotsCreateResponse>;
   }
@@ -142,9 +142,41 @@ export class Snapshots {
    * @param [options] The optional parameters
    * @returns Promise<Models.SnapshotsUpdateResponse>
    */
-  update(body: any, resourceGroupName: string, accountName: string, poolName: string, volumeName: string, snapshotName: string, options?: msRest.RequestOptionsBase): Promise<Models.SnapshotsUpdateResponse> {
-    return this.beginUpdate(body,resourceGroupName,accountName,poolName,volumeName,snapshotName,options)
-      .then(lroPoller => lroPoller.pollUntilFinished()) as Promise<Models.SnapshotsUpdateResponse>;
+  update(body: any, resourceGroupName: string, accountName: string, poolName: string, volumeName: string, snapshotName: string, options?: msRest.RequestOptionsBase): Promise<Models.SnapshotsUpdateResponse>;
+  /**
+   * @param body Snapshot object supplied in the body of the operation.
+   * @param resourceGroupName The name of the resource group.
+   * @param accountName The name of the NetApp account
+   * @param poolName The name of the capacity pool
+   * @param volumeName The name of the volume
+   * @param snapshotName The name of the mount target
+   * @param callback The callback
+   */
+  update(body: any, resourceGroupName: string, accountName: string, poolName: string, volumeName: string, snapshotName: string, callback: msRest.ServiceCallback<Models.Snapshot>): void;
+  /**
+   * @param body Snapshot object supplied in the body of the operation.
+   * @param resourceGroupName The name of the resource group.
+   * @param accountName The name of the NetApp account
+   * @param poolName The name of the capacity pool
+   * @param volumeName The name of the volume
+   * @param snapshotName The name of the mount target
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  update(body: any, resourceGroupName: string, accountName: string, poolName: string, volumeName: string, snapshotName: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.Snapshot>): void;
+  update(body: any, resourceGroupName: string, accountName: string, poolName: string, volumeName: string, snapshotName: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.Snapshot>, callback?: msRest.ServiceCallback<Models.Snapshot>): Promise<Models.SnapshotsUpdateResponse> {
+    return this.client.sendOperationRequest(
+      {
+        body,
+        resourceGroupName,
+        accountName,
+        poolName,
+        volumeName,
+        snapshotName,
+        options
+      },
+      updateOperationSpec,
+      callback) as Promise<Models.SnapshotsUpdateResponse>;
   }
 
   /**
@@ -175,7 +207,7 @@ export class Snapshots {
    * @param [options] The optional parameters
    * @returns Promise<msRestAzure.LROPoller>
    */
-  beginCreate(resourceGroupName: string, accountName: string, poolName: string, volumeName: string, snapshotName: string, location: string, options?: Models.SnapshotsBeginCreateOptionalParams): Promise<msRestAzure.LROPoller> {
+  beginCreate(resourceGroupName: string, accountName: string, poolName: string, volumeName: string, snapshotName: string, location: string, options?: msRest.RequestOptionsBase): Promise<msRestAzure.LROPoller> {
     return this.client.sendLRORequest(
       {
         resourceGroupName,
@@ -187,33 +219,6 @@ export class Snapshots {
         options
       },
       beginCreateOperationSpec,
-      options);
-  }
-
-  /**
-   * Patch a snapshot
-   * @summary Update a snapshot
-   * @param body Snapshot object supplied in the body of the operation.
-   * @param resourceGroupName The name of the resource group.
-   * @param accountName The name of the NetApp account
-   * @param poolName The name of the capacity pool
-   * @param volumeName The name of the volume
-   * @param snapshotName The name of the mount target
-   * @param [options] The optional parameters
-   * @returns Promise<msRestAzure.LROPoller>
-   */
-  beginUpdate(body: any, resourceGroupName: string, accountName: string, poolName: string, volumeName: string, snapshotName: string, options?: msRest.RequestOptionsBase): Promise<msRestAzure.LROPoller> {
-    return this.client.sendLRORequest(
-      {
-        body,
-        resourceGroupName,
-        accountName,
-        poolName,
-        volumeName,
-        snapshotName,
-        options
-      },
-      beginUpdateOperationSpec,
       options);
   }
 
@@ -300,49 +305,7 @@ const getOperationSpec: msRest.OperationSpec = {
   serializer
 };
 
-const beginCreateOperationSpec: msRest.OperationSpec = {
-  httpMethod: "PUT",
-  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/snapshots/{snapshotName}",
-  urlParameters: [
-    Parameters.subscriptionId,
-    Parameters.resourceGroupName,
-    Parameters.accountName,
-    Parameters.poolName,
-    Parameters.volumeName,
-    Parameters.snapshotName
-  ],
-  queryParameters: [
-    Parameters.apiVersion
-  ],
-  headerParameters: [
-    Parameters.acceptLanguage
-  ],
-  requestBody: {
-    parameterPath: {
-      location: "location",
-      fileSystemId: [
-        "options",
-        "fileSystemId"
-      ]
-    },
-    mapper: {
-      ...Mappers.Snapshot,
-      required: true
-    }
-  },
-  responses: {
-    201: {
-      bodyMapper: Mappers.Snapshot
-    },
-    202: {},
-    default: {
-      bodyMapper: Mappers.CloudError
-    }
-  },
-  serializer
-};
-
-const beginUpdateOperationSpec: msRest.OperationSpec = {
+const updateOperationSpec: msRest.OperationSpec = {
   httpMethod: "PATCH",
   path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/snapshots/{snapshotName}",
   urlParameters: [
@@ -371,6 +334,44 @@ const beginUpdateOperationSpec: msRest.OperationSpec = {
   },
   responses: {
     200: {
+      bodyMapper: Mappers.Snapshot
+    },
+    202: {},
+    default: {
+      bodyMapper: Mappers.CloudError
+    }
+  },
+  serializer
+};
+
+const beginCreateOperationSpec: msRest.OperationSpec = {
+  httpMethod: "PUT",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/snapshots/{snapshotName}",
+  urlParameters: [
+    Parameters.subscriptionId,
+    Parameters.resourceGroupName,
+    Parameters.accountName,
+    Parameters.poolName,
+    Parameters.volumeName,
+    Parameters.snapshotName
+  ],
+  queryParameters: [
+    Parameters.apiVersion
+  ],
+  headerParameters: [
+    Parameters.acceptLanguage
+  ],
+  requestBody: {
+    parameterPath: {
+      location: "location"
+    },
+    mapper: {
+      ...Mappers.Snapshot,
+      required: true
+    }
+  },
+  responses: {
+    201: {
       bodyMapper: Mappers.Snapshot
     },
     202: {},

@@ -14,3 +14,4 @@ export * from "./accounts";
 export * from "./pools";
 export * from "./volumes";
 export * from "./snapshots";
+export * from "./snapshotPolicies";

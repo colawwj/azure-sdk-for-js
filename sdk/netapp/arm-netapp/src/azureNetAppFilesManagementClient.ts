@@ -23,6 +23,7 @@ class AzureNetAppFilesManagementClient extends AzureNetAppFilesManagementClientC
   pools: operations.Pools;
   volumes: operations.Volumes;
   snapshots: operations.Snapshots;
+  snapshotPolicies: operations.SnapshotPolicies;
 
   /**
    * Initializes a new instance of the AzureNetAppFilesManagementClient class.
@@ -39,6 +40,7 @@ class AzureNetAppFilesManagementClient extends AzureNetAppFilesManagementClientC
     this.pools = new operations.Pools(this);
     this.volumes = new operations.Volumes(this);
     this.snapshots = new operations.Snapshots(this);
+    this.snapshotPolicies = new operations.SnapshotPolicies(this);
   }
 }
 

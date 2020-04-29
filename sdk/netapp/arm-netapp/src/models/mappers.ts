@@ -314,6 +314,17 @@ export const ActiveDirectory: msRest.CompositeMapper = {
         type: {
           name: "String"
         }
+      },
+      backupOperators: {
+        serializedName: "backupOperators",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
       }
     }
   }
@@ -681,54 +692,15 @@ export const VolumePropertiesExportPolicy: msRest.CompositeMapper = {
   }
 };
 
-export const MountTarget: msRest.CompositeMapper = {
-  serializedName: "mountTarget",
+export const MountTargetProperties: msRest.CompositeMapper = {
+  serializedName: "mountTargetProperties",
   type: {
     name: "Composite",
-    className: "MountTarget",
+    className: "MountTargetProperties",
     modelProperties: {
-      location: {
-        required: true,
-        serializedName: "location",
-        type: {
-          name: "String"
-        }
-      },
-      id: {
-        readOnly: true,
-        serializedName: "id",
-        type: {
-          name: "String"
-        }
-      },
-      name: {
-        readOnly: true,
-        serializedName: "name",
-        type: {
-          name: "String"
-        }
-      },
-      type: {
-        readOnly: true,
-        serializedName: "type",
-        type: {
-          name: "String"
-        }
-      },
-      tags: {
-        serializedName: "tags",
-        type: {
-          name: "Dictionary",
-          value: {
-            type: {
-              name: "String"
-            }
-          }
-        }
-      },
       mountTargetId: {
         readOnly: true,
-        serializedName: "properties.mountTargetId",
+        serializedName: "mountTargetId",
         constraints: {
           MaxLength: 36,
           MinLength: 36,
@@ -740,7 +712,7 @@ export const MountTarget: msRest.CompositeMapper = {
       },
       fileSystemId: {
         required: true,
-        serializedName: "properties.fileSystemId",
+        serializedName: "fileSystemId",
         constraints: {
           MaxLength: 36,
           MinLength: 36,
@@ -752,43 +724,43 @@ export const MountTarget: msRest.CompositeMapper = {
       },
       ipAddress: {
         readOnly: true,
-        serializedName: "properties.ipAddress",
+        serializedName: "ipAddress",
         type: {
           name: "String"
         }
       },
       subnet: {
-        serializedName: "properties.subnet",
+        serializedName: "subnet",
         type: {
           name: "String"
         }
       },
       startIp: {
-        serializedName: "properties.startIp",
+        serializedName: "startIp",
         type: {
           name: "String"
         }
       },
       endIp: {
-        serializedName: "properties.endIp",
+        serializedName: "endIp",
         type: {
           name: "String"
         }
       },
       gateway: {
-        serializedName: "properties.gateway",
+        serializedName: "gateway",
         type: {
           name: "String"
         }
       },
       netmask: {
-        serializedName: "properties.netmask",
+        serializedName: "netmask",
         type: {
           name: "String"
         }
       },
       smbServerFqdn: {
-        serializedName: "properties.smbServerFqdn",
+        serializedName: "smbServerFqdn",
         type: {
           name: "String"
         }
@@ -839,6 +811,22 @@ export const ReplicationObject: msRest.CompositeMapper = {
   }
 };
 
+export const VolumeSnapshotProperties: msRest.CompositeMapper = {
+  serializedName: "volumeSnapshotProperties",
+  type: {
+    name: "Composite",
+    className: "VolumeSnapshotProperties",
+    modelProperties: {
+      snapshotPolicyId: {
+        serializedName: "snapshotPolicyId",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const VolumePropertiesDataProtection: msRest.CompositeMapper = {
   serializedName: "volumeProperties_dataProtection",
   type: {
@@ -850,6 +838,13 @@ export const VolumePropertiesDataProtection: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "ReplicationObject"
+        }
+      },
+      snapshot: {
+        serializedName: "snapshot",
+        type: {
+          name: "Composite",
+          className: "VolumeSnapshotProperties"
         }
       }
     }
@@ -983,11 +978,6 @@ export const Volume: msRest.CompositeMapper = {
       baremetalTenantId: {
         readOnly: true,
         serializedName: "properties.baremetalTenantId",
-        constraints: {
-          MaxLength: 36,
-          MinLength: 36,
-          Pattern: /^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$/
-        },
         type: {
           name: "String"
         }
@@ -1006,7 +996,7 @@ export const Volume: msRest.CompositeMapper = {
           element: {
             type: {
               name: "Composite",
-              className: "MountTarget"
+              className: "MountTargetProperties"
             }
           }
         }
@@ -1026,6 +1016,12 @@ export const Volume: msRest.CompositeMapper = {
       },
       isRestoring: {
         serializedName: "properties.isRestoring",
+        type: {
+          name: "Boolean"
+        }
+      },
+      snapshotDirectoryVisible: {
+        serializedName: "properties.snapshotDirectoryVisible",
         type: {
           name: "Boolean"
         }
@@ -1169,6 +1165,122 @@ export const VolumePatch: msRest.CompositeMapper = {
   }
 };
 
+export const MountTarget: msRest.CompositeMapper = {
+  serializedName: "mountTarget",
+  type: {
+    name: "Composite",
+    className: "MountTarget",
+    modelProperties: {
+      location: {
+        required: true,
+        serializedName: "location",
+        type: {
+          name: "String"
+        }
+      },
+      id: {
+        readOnly: true,
+        serializedName: "id",
+        type: {
+          name: "String"
+        }
+      },
+      name: {
+        readOnly: true,
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      type: {
+        readOnly: true,
+        serializedName: "type",
+        type: {
+          name: "String"
+        }
+      },
+      tags: {
+        serializedName: "tags",
+        type: {
+          name: "Dictionary",
+          value: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      mountTargetId: {
+        readOnly: true,
+        serializedName: "properties.mountTargetId",
+        constraints: {
+          MaxLength: 36,
+          MinLength: 36,
+          Pattern: /^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$/
+        },
+        type: {
+          name: "String"
+        }
+      },
+      fileSystemId: {
+        required: true,
+        serializedName: "properties.fileSystemId",
+        constraints: {
+          MaxLength: 36,
+          MinLength: 36,
+          Pattern: /^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$/
+        },
+        type: {
+          name: "String"
+        }
+      },
+      ipAddress: {
+        readOnly: true,
+        serializedName: "properties.ipAddress",
+        type: {
+          name: "String"
+        }
+      },
+      subnet: {
+        serializedName: "properties.subnet",
+        type: {
+          name: "String"
+        }
+      },
+      startIp: {
+        serializedName: "properties.startIp",
+        type: {
+          name: "String"
+        }
+      },
+      endIp: {
+        serializedName: "properties.endIp",
+        type: {
+          name: "String"
+        }
+      },
+      gateway: {
+        serializedName: "properties.gateway",
+        type: {
+          name: "String"
+        }
+      },
+      netmask: {
+        serializedName: "properties.netmask",
+        type: {
+          name: "String"
+        }
+      },
+      smbServerFqdn: {
+        serializedName: "properties.smbServerFqdn",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const Snapshot: msRest.CompositeMapper = {
   serializedName: "snapshot",
   type: {
@@ -1215,17 +1327,6 @@ export const Snapshot: msRest.CompositeMapper = {
           name: "String"
         }
       },
-      fileSystemId: {
-        serializedName: "properties.fileSystemId",
-        constraints: {
-          MaxLength: 36,
-          MinLength: 36,
-          Pattern: /^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$/
-        },
-        type: {
-          name: "String"
-        }
-      },
       created: {
         readOnly: true,
         serializedName: "properties.created",
@@ -1238,6 +1339,249 @@ export const Snapshot: msRest.CompositeMapper = {
         serializedName: "properties.provisioningState",
         type: {
           name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const SnapshotPolicy: msRest.CompositeMapper = {
+  serializedName: "snapshotPolicy",
+  type: {
+    name: "Composite",
+    className: "SnapshotPolicy",
+    modelProperties: {
+      hourlySchedule: {
+        serializedName: "properties.hourlySchedule",
+        type: {
+          name: "Object"
+        }
+      },
+      dailySchedule: {
+        serializedName: "properties.dailySchedule",
+        type: {
+          name: "Object"
+        }
+      },
+      weeklySchedule: {
+        serializedName: "properties.weeklySchedule",
+        type: {
+          name: "Object"
+        }
+      },
+      monthlySchedule: {
+        serializedName: "properties.monthlySchedule",
+        type: {
+          name: "Object"
+        }
+      },
+      enabled: {
+        serializedName: "properties.enabled",
+        type: {
+          name: "Boolean"
+        }
+      }
+    }
+  }
+};
+
+export const SnapshotPolicyPatch: msRest.CompositeMapper = {
+  serializedName: "snapshotPolicyPatch",
+  type: {
+    name: "Composite",
+    className: "SnapshotPolicyPatch",
+    modelProperties: {
+      hourlySchedule: {
+        serializedName: "properties.hourlySchedule",
+        type: {
+          name: "Object"
+        }
+      },
+      dailySchedule: {
+        serializedName: "properties.dailySchedule",
+        type: {
+          name: "Object"
+        }
+      },
+      weeklySchedule: {
+        serializedName: "properties.weeklySchedule",
+        type: {
+          name: "Object"
+        }
+      },
+      monthlySchedule: {
+        serializedName: "properties.monthlySchedule",
+        type: {
+          name: "Object"
+        }
+      },
+      enabled: {
+        serializedName: "properties.enabled",
+        type: {
+          name: "Boolean"
+        }
+      }
+    }
+  }
+};
+
+export const SnapshotPolicyVolumeList: msRest.CompositeMapper = {
+  serializedName: "snapshotPolicyVolumeList",
+  type: {
+    name: "Composite",
+    className: "SnapshotPolicyVolumeList",
+    modelProperties: {
+      value: {
+        serializedName: "value",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Object"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const HourlySchedule: msRest.CompositeMapper = {
+  serializedName: "hourlySchedule",
+  type: {
+    name: "Composite",
+    className: "HourlySchedule",
+    modelProperties: {
+      snapshotsToKeep: {
+        serializedName: "snapshotsToKeep",
+        type: {
+          name: "Number"
+        }
+      },
+      minute: {
+        serializedName: "minute",
+        type: {
+          name: "Number"
+        }
+      },
+      usedBytes: {
+        serializedName: "usedBytes",
+        type: {
+          name: "Number"
+        }
+      }
+    }
+  }
+};
+
+export const DailySchedule: msRest.CompositeMapper = {
+  serializedName: "dailySchedule",
+  type: {
+    name: "Composite",
+    className: "DailySchedule",
+    modelProperties: {
+      snapshotsToKeep: {
+        serializedName: "snapshotsToKeep",
+        type: {
+          name: "Number"
+        }
+      },
+      hour: {
+        serializedName: "hour",
+        type: {
+          name: "Number"
+        }
+      },
+      minute: {
+        serializedName: "minute",
+        type: {
+          name: "Number"
+        }
+      },
+      usedBytes: {
+        serializedName: "usedBytes",
+        type: {
+          name: "Number"
+        }
+      }
+    }
+  }
+};
+
+export const WeeklySchedule: msRest.CompositeMapper = {
+  serializedName: "weeklySchedule",
+  type: {
+    name: "Composite",
+    className: "WeeklySchedule",
+    modelProperties: {
+      snapshotsToKeep: {
+        serializedName: "snapshotsToKeep",
+        type: {
+          name: "Number"
+        }
+      },
+      day: {
+        serializedName: "day",
+        type: {
+          name: "String"
+        }
+      },
+      hour: {
+        serializedName: "hour",
+        type: {
+          name: "Number"
+        }
+      },
+      minute: {
+        serializedName: "minute",
+        type: {
+          name: "Number"
+        }
+      },
+      usedBytes: {
+        serializedName: "usedBytes",
+        type: {
+          name: "Number"
+        }
+      }
+    }
+  }
+};
+
+export const MonthlySchedule: msRest.CompositeMapper = {
+  serializedName: "monthlySchedule",
+  type: {
+    name: "Composite",
+    className: "MonthlySchedule",
+    modelProperties: {
+      snapshotsToKeep: {
+        serializedName: "snapshotsToKeep",
+        type: {
+          name: "Number"
+        }
+      },
+      daysOfMonth: {
+        serializedName: "daysOfMonth",
+        type: {
+          name: "String"
+        }
+      },
+      hour: {
+        serializedName: "hour",
+        type: {
+          name: "Number"
+        }
+      },
+      minute: {
+        serializedName: "minute",
+        type: {
+          name: "Number"
+        }
+      },
+      usedBytes: {
+        serializedName: "usedBytes",
+        type: {
+          name: "Number"
         }
       }
     }
@@ -1272,6 +1616,95 @@ export const AuthorizeRequest: msRest.CompositeMapper = {
           name: "String"
         }
       }
+    }
+  }
+};
+
+export const Resource: msRest.CompositeMapper = {
+  serializedName: "Resource",
+  type: {
+    name: "Composite",
+    className: "Resource",
+    modelProperties: {
+      id: {
+        readOnly: true,
+        serializedName: "id",
+        type: {
+          name: "String"
+        }
+      },
+      name: {
+        readOnly: true,
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      type: {
+        readOnly: true,
+        serializedName: "type",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const TrackedResource: msRest.CompositeMapper = {
+  serializedName: "TrackedResource",
+  type: {
+    name: "Composite",
+    className: "TrackedResource",
+    modelProperties: {
+      ...Resource.type.modelProperties,
+      tags: {
+        serializedName: "tags",
+        type: {
+          name: "Dictionary",
+          value: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      location: {
+        required: true,
+        serializedName: "location",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const AzureEntityResource: msRest.CompositeMapper = {
+  serializedName: "AzureEntityResource",
+  type: {
+    name: "Composite",
+    className: "AzureEntityResource",
+    modelProperties: {
+      ...Resource.type.modelProperties,
+      etag: {
+        readOnly: true,
+        serializedName: "etag",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const ProxyResource: msRest.CompositeMapper = {
+  serializedName: "ProxyResource",
+  type: {
+    name: "Composite",
+    className: "ProxyResource",
+    modelProperties: {
+      ...Resource.type.modelProperties
     }
   }
 };
@@ -1378,6 +1811,28 @@ export const SnapshotsList: msRest.CompositeMapper = {
             type: {
               name: "Composite",
               className: "Snapshot"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const SnapshotPoliciesList: msRest.CompositeMapper = {
+  serializedName: "snapshotPoliciesList",
+  type: {
+    name: "Composite",
+    className: "SnapshotPoliciesList",
+    modelProperties: {
+      value: {
+        serializedName: "",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "SnapshotPolicy"
             }
           }
         }
