@@ -21683,7 +21683,7 @@ export interface WaitActivity {
   /**
    * Duration in seconds.
    */
-  waitTimeInSeconds: number;
+  waitTimeInSeconds: any;
 }
 
 /**
