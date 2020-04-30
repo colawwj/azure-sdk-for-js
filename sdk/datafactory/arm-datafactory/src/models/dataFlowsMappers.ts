@@ -225,6 +225,7 @@ export {
   FtpServerLinkedService,
   FtpServerLocation,
   GetMetadataActivity,
+  GlobalParameterSpecification,
   GoogleAdWordsLinkedService,
   GoogleAdWordsObjectDataset,
   GoogleAdWordsSource,

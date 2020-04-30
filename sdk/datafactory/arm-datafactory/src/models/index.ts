@@ -211,6 +211,21 @@ export interface FactoryRepoConfiguration {
 }
 
 /**
+ * Definition of a single parameter for an entity.
+ */
+export interface GlobalParameterSpecification {
+  /**
+   * Global Parameter type. Possible values include: 'Object', 'String', 'Int', 'Float', 'Bool',
+   * 'Array'
+   */
+  type: GlobalParameterType;
+  /**
+   * Value of parameter.
+   */
+  value: any;
+}
+
+/**
  * Factory resource type.
  */
 export interface Factory extends Resource {
@@ -237,6 +252,10 @@ export interface Factory extends Resource {
    * Git repo information of the factory.
    */
   repoConfiguration?: FactoryRepoConfigurationUnion;
+  /**
+   * List of parameters for factory.
+   */
+  globalParameters?: { [propertyName: string]: GlobalParameterSpecification };
   /**
    * Describes unknown properties. The value of an unknown property can be of "any" type.
    */
@@ -21451,8 +21470,8 @@ export interface WebHookActivity {
    */
   authentication?: WebActivityAuthentication;
   /**
-   * When set to true, statusCode, output and error in callback request body will be consumed by
-   * activity. The activity can be marked as failed by setting statusCode >= 400 in callback
+   * When set to true, statusCode, output and error in callback request body will be consumed by
+   * activity. The activity can be marked as failed by setting statusCode >= 400 in callback
    * request. Default is false. Type: boolean (or Expression with resultType boolean).
    */
   reportStatusOnCallBack?: any;
@@ -23372,6 +23391,14 @@ export interface QueryDataFlowDebugSessionsResponse extends Array<DataFlowDebugS
    */
   nextLink?: string;
 }
+
+/**
+ * Defines values for GlobalParameterType.
+ * Possible values include: 'Object', 'String', 'Int', 'Float', 'Bool', 'Array'
+ * @readonly
+ * @enum {string}
+ */
+export type GlobalParameterType = 'Object' | 'String' | 'Int' | 'Float' | 'Bool' | 'Array';
 
 /**
  * Defines values for IntegrationRuntimeState.

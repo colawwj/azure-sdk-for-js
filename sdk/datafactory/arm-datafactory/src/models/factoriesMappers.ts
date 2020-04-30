@@ -230,6 +230,7 @@ export {
   GetMetadataActivity,
   GitHubAccessTokenRequest,
   GitHubAccessTokenResponse,
+  GlobalParameterSpecification,
   GoogleAdWordsLinkedService,
   GoogleAdWordsObjectDataset,
   GoogleAdWordsSource,

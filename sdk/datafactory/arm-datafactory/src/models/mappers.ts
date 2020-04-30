@@ -350,6 +350,30 @@ export const FactoryRepoConfiguration: msRest.CompositeMapper = {
   }
 };
 
+export const GlobalParameterSpecification: msRest.CompositeMapper = {
+  serializedName: "GlobalParameterSpecification",
+  type: {
+    name: "Composite",
+    className: "GlobalParameterSpecification",
+    modelProperties: {
+      type: {
+        required: true,
+        serializedName: "type",
+        type: {
+          name: "String"
+        }
+      },
+      value: {
+        required: true,
+        serializedName: "value",
+        type: {
+          name: "Object"
+        }
+      }
+    }
+  }
+};
+
 export const Factory: msRest.CompositeMapper = {
   serializedName: "Factory",
   type: {
@@ -390,6 +414,18 @@ export const Factory: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "FactoryRepoConfiguration"
+        }
+      },
+      globalParameters: {
+        serializedName: "properties.globalParameters",
+        type: {
+          name: "Dictionary",
+          value: {
+            type: {
+              name: "Composite",
+              className: "GlobalParameterSpecification"
+            }
+          }
         }
       }
     },
