@@ -543,46 +543,6 @@ export class IntegrationRuntimes {
   }
 
   /**
-   * Create a linked integration runtime entry in a shared integration runtime.
-   * @param resourceGroupName The resource group name.
-   * @param factoryName The factory name.
-   * @param integrationRuntimeName The integration runtime name.
-   * @param createLinkedIntegrationRuntimeRequest The linked integration runtime properties.
-   * @param [options] The optional parameters
-   * @returns Promise<Models.IntegrationRuntimesCreateLinkedIntegrationRuntimeResponse>
-   */
-  createLinkedIntegrationRuntime(resourceGroupName: string, factoryName: string, integrationRuntimeName: string, createLinkedIntegrationRuntimeRequest: Models.CreateLinkedIntegrationRuntimeRequest, options?: msRest.RequestOptionsBase): Promise<Models.IntegrationRuntimesCreateLinkedIntegrationRuntimeResponse>;
-  /**
-   * @param resourceGroupName The resource group name.
-   * @param factoryName The factory name.
-   * @param integrationRuntimeName The integration runtime name.
-   * @param createLinkedIntegrationRuntimeRequest The linked integration runtime properties.
-   * @param callback The callback
-   */
-  createLinkedIntegrationRuntime(resourceGroupName: string, factoryName: string, integrationRuntimeName: string, createLinkedIntegrationRuntimeRequest: Models.CreateLinkedIntegrationRuntimeRequest, callback: msRest.ServiceCallback<Models.IntegrationRuntimeStatusResponse>): void;
-  /**
-   * @param resourceGroupName The resource group name.
-   * @param factoryName The factory name.
-   * @param integrationRuntimeName The integration runtime name.
-   * @param createLinkedIntegrationRuntimeRequest The linked integration runtime properties.
-   * @param options The optional parameters
-   * @param callback The callback
-   */
-  createLinkedIntegrationRuntime(resourceGroupName: string, factoryName: string, integrationRuntimeName: string, createLinkedIntegrationRuntimeRequest: Models.CreateLinkedIntegrationRuntimeRequest, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.IntegrationRuntimeStatusResponse>): void;
-  createLinkedIntegrationRuntime(resourceGroupName: string, factoryName: string, integrationRuntimeName: string, createLinkedIntegrationRuntimeRequest: Models.CreateLinkedIntegrationRuntimeRequest, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.IntegrationRuntimeStatusResponse>, callback?: msRest.ServiceCallback<Models.IntegrationRuntimeStatusResponse>): Promise<Models.IntegrationRuntimesCreateLinkedIntegrationRuntimeResponse> {
-    return this.client.sendOperationRequest(
-      {
-        resourceGroupName,
-        factoryName,
-        integrationRuntimeName,
-        createLinkedIntegrationRuntimeRequest,
-        options
-      },
-      createLinkedIntegrationRuntimeOperationSpec,
-      callback) as Promise<Models.IntegrationRuntimesCreateLinkedIntegrationRuntimeResponse>;
-  }
-
-  /**
    * Starts a ManagedReserved type integration runtime.
    * @param resourceGroupName The resource group name.
    * @param factoryName The factory name.
@@ -1007,39 +967,6 @@ const removeLinksOperationSpec: msRest.OperationSpec = {
   },
   responses: {
     200: {},
-    default: {
-      bodyMapper: Mappers.CloudError
-    }
-  },
-  serializer
-};
-
-const createLinkedIntegrationRuntimeOperationSpec: msRest.OperationSpec = {
-  httpMethod: "POST",
-  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/linkedIntegrationRuntime",
-  urlParameters: [
-    Parameters.subscriptionId,
-    Parameters.resourceGroupName,
-    Parameters.factoryName,
-    Parameters.integrationRuntimeName
-  ],
-  queryParameters: [
-    Parameters.apiVersion
-  ],
-  headerParameters: [
-    Parameters.acceptLanguage
-  ],
-  requestBody: {
-    parameterPath: "createLinkedIntegrationRuntimeRequest",
-    mapper: {
-      ...Mappers.CreateLinkedIntegrationRuntimeRequest,
-      required: true
-    }
-  },
-  responses: {
-    200: {
-      bodyMapper: Mappers.IntegrationRuntimeStatusResponse
-    },
     default: {
       bodyMapper: Mappers.CloudError
     }

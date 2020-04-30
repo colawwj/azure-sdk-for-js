@@ -135,7 +135,6 @@ export {
   CouchbaseLinkedService,
   CouchbaseSource,
   CouchbaseTableDataset,
-  CreateLinkedIntegrationRuntimeRequest,
   CustomActivity,
   CustomActivityReferenceObject,
   CustomDataset,

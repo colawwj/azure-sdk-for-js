@@ -24483,26 +24483,6 @@ export type IntegrationRuntimesGetMonitoringDataResponse = IntegrationRuntimeMon
 };
 
 /**
- * Contains response data for the createLinkedIntegrationRuntime operation.
- */
-export type IntegrationRuntimesCreateLinkedIntegrationRuntimeResponse = IntegrationRuntimeStatusResponse & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: IntegrationRuntimeStatusResponse;
-    };
-};
-
-/**
  * Contains response data for the beginStart operation.
  */
 export type IntegrationRuntimesBeginStartResponse = IntegrationRuntimeStatusResponse & {
