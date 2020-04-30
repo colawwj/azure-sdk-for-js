@@ -375,6 +375,23 @@ export const IdentitySource: msRest.CompositeMapper = {
   }
 };
 
+export const Sku: msRest.CompositeMapper = {
+  serializedName: "Sku",
+  type: {
+    name: "Composite",
+    className: "Sku",
+    modelProperties: {
+      name: {
+        required: true,
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const DefaultClusterProperties: msRest.CompositeMapper = {
   serializedName: "DefaultClusterProperties",
   type: {
@@ -525,6 +542,13 @@ export const PrivateCloud: msRest.CompositeMapper = {
     className: "PrivateCloud",
     modelProperties: {
       ...TrackedResource.type.modelProperties,
+      sku: {
+        serializedName: "sku",
+        type: {
+          name: "Composite",
+          className: "Sku"
+        }
+      },
       properties: {
         serializedName: "properties",
         type: {

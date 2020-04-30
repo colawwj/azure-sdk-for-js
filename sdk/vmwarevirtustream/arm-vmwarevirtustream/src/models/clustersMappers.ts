@@ -21,5 +21,6 @@ export {
   PrivateCloud,
   PrivateCloudProperties,
   Resource,
+  Sku,
   TrackedResource
 } from "../models/mappers";

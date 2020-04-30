@@ -243,6 +243,16 @@ export interface IdentitySource {
 }
 
 /**
+ * The resource model definition representing SKU
+ */
+export interface Sku {
+  /**
+   * The name of the SKU.
+   */
+  name: string;
+}
+
+/**
  * The properties of a default cluster
  */
 export interface DefaultClusterProperties {
@@ -334,6 +344,10 @@ export interface PrivateCloudProperties {
  * A private cloud resource
  */
 export interface PrivateCloud extends TrackedResource {
+  /**
+   * The private cloud SKU
+   */
+  sku?: Sku;
   /**
    * The properties of a private cloud resource
    */
