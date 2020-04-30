@@ -3334,7 +3334,7 @@ export interface AzureFirewallSku {
    */
   name?: AzureFirewallSkuName;
   /**
-   * Tier of an Azure Firewall. Possible values include: 'Standard'
+   * Tier of an Azure Firewall. Possible values include: 'Standard', 'Premium'
    */
   tier?: AzureFirewallSkuTier;
 }
@@ -12950,11 +12950,11 @@ export type AzureFirewallSkuName = 'AZFW_VNet' | 'AZFW_Hub';
 
 /**
  * Defines values for AzureFirewallSkuTier.
- * Possible values include: 'Standard'
+ * Possible values include: 'Standard', 'Premium'
  * @readonly
  * @enum {string}
  */
-export type AzureFirewallSkuTier = 'Standard';
+export type AzureFirewallSkuTier = 'Standard' | 'Premium';
 
 /**
  * Defines values for BastionConnectProtocol.
