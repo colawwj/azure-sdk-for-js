@@ -1036,6 +1036,13 @@ export interface AmlComputeProperties {
    */
   remoteLoginPortPublicAccess?: RemoteLoginPortPublicAccess;
   /**
+   * Provision public IP. State of public IP provisioning. Possible values are: Enabled - Indicates
+   * that the compute nodes will have public IPs provisioned. Disabled - Indicates that the compute
+   * nodes will have a private endpoint and no public IPs. Possible values include: 'Enabled',
+   * 'Disabled'. Default value: 'Enabled'.
+   */
+  provisionPublicIp?: ProvisionPublicIp;
+  /**
    * Allocation state. Allocation state of the compute. Possible values are: steady - Indicates
    * that the compute is not resizing. There are no changes to the number of compute nodes in the
    * compute in progress. A compute enters this state when it is created and when no operations are
@@ -2007,6 +2014,14 @@ export type VmPriority = 'Dedicated' | 'LowPriority';
  * @enum {string}
  */
 export type RemoteLoginPortPublicAccess = 'Enabled' | 'Disabled' | 'NotSpecified';
+
+/**
+ * Defines values for ProvisionPublicIp.
+ * Possible values include: 'Enabled', 'Disabled'
+ * @readonly
+ * @enum {string}
+ */
+export type ProvisionPublicIp = 'Enabled' | 'Disabled';
 
 /**
  * Defines values for AllocationState.

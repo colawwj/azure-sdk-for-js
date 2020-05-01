@@ -1574,6 +1574,13 @@ export const AmlComputeProperties: msRest.CompositeMapper = {
           name: "String"
         }
       },
+      provisionPublicIp: {
+        serializedName: "provisionPublicIp",
+        defaultValue: 'Enabled',
+        type: {
+          name: "String"
+        }
+      },
       allocationState: {
         readOnly: true,
         serializedName: "allocationState",
