@@ -108,6 +108,7 @@ export {
   ServiceTierAdvisorListResult,
   Sku,
   SloUsageMetric,
+  SqlAgent,
   SubscriptionUsage,
   SyncAgent,
   SyncAgentLinkedDatabase,

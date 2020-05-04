@@ -38,6 +38,7 @@ class SqlManagementClient extends SqlManagementClientContext {
   transparentDataEncryptionActivities: operations.TransparentDataEncryptionActivities;
   serverUsages: operations.ServerUsages;
   databaseUsages: operations.DatabaseUsages;
+  sqlAgent: operations.SqlAgentOperations;
   databaseAutomaticTuning: operations.DatabaseAutomaticTuningOperations;
   encryptionProtectors: operations.EncryptionProtectors;
   failoverGroups: operations.FailoverGroups;
@@ -138,6 +139,7 @@ class SqlManagementClient extends SqlManagementClientContext {
     this.transparentDataEncryptionActivities = new operations.TransparentDataEncryptionActivities(this);
     this.serverUsages = new operations.ServerUsages(this);
     this.databaseUsages = new operations.DatabaseUsages(this);
+    this.sqlAgent = new operations.SqlAgentOperations(this);
     this.databaseAutomaticTuning = new operations.DatabaseAutomaticTuningOperations(this);
     this.encryptionProtectors = new operations.EncryptionProtectors(this);
     this.failoverGroups = new operations.FailoverGroups(this);

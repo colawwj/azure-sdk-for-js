@@ -1419,6 +1419,16 @@ export interface DatabaseUsage {
 }
 
 /**
+ * A management instance sql agent resource.
+ */
+export interface SqlAgent extends ProxyResource {
+  /**
+   * The state of Sql Agent. Possible values include: 'Enabled', 'Disabled'
+   */
+  state?: SqlAgentState;
+}
+
+/**
  * Automatic tuning properties for individual advisors.
  */
 export interface AutomaticTuningOptions {
@@ -7942,6 +7952,14 @@ export type TransparentDataEncryptionStatus = 'Enabled' | 'Disabled';
 export type TransparentDataEncryptionActivityStatus = 'Encrypting' | 'Decrypting';
 
 /**
+ * Defines values for SqlAgentState.
+ * Possible values include: 'Enabled', 'Disabled'
+ * @readonly
+ * @enum {string}
+ */
+export type SqlAgentState = 'Enabled' | 'Disabled';
+
+/**
  * Defines values for AutomaticTuningMode.
  * Possible values include: 'Inherit', 'Custom', 'Auto', 'Unspecified'
  * @readonly
@@ -9900,6 +9918,46 @@ export type DatabaseUsagesListByDatabaseResponse = DatabaseUsageListResult & {
        * The response body as parsed JSON or XML
        */
       parsedBody: DatabaseUsageListResult;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type SqlAgentGetResponse = SqlAgent & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SqlAgent;
+    };
+};
+
+/**
+ * Contains response data for the put operation.
+ */
+export type SqlAgentPutResponse = SqlAgent & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SqlAgent;
     };
 };
 

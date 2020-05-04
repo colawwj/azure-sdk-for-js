@@ -2188,6 +2188,23 @@ export const DatabaseUsage: msRest.CompositeMapper = {
   }
 };
 
+export const SqlAgent: msRest.CompositeMapper = {
+  serializedName: "SqlAgent",
+  type: {
+    name: "Composite",
+    className: "SqlAgent",
+    modelProperties: {
+      ...ProxyResource.type.modelProperties,
+      state: {
+        serializedName: "properties.state",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const AutomaticTuningOptions: msRest.CompositeMapper = {
   serializedName: "AutomaticTuningOptions",
   type: {

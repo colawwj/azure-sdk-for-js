@@ -29,6 +29,7 @@ export * from "./transparentDataEncryptions";
 export * from "./transparentDataEncryptionActivities";
 export * from "./serverUsages";
 export * from "./databaseUsages";
+export * from "./sqlAgentOperations";
 export * from "./databaseAutomaticTuningOperations";
 export * from "./encryptionProtectors";
 export * from "./failoverGroups";

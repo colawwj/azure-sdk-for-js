@@ -120,6 +120,7 @@ export {
   ServiceTierAdvisor,
   Sku,
   SloUsageMetric,
+  SqlAgent,
   SubscriptionUsage,
   SyncAgent,
   SyncAgentLinkedDatabase,
