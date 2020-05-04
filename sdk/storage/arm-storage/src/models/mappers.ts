@@ -2135,6 +2135,51 @@ export const ManagementPolicySnapShot: msRest.CompositeMapper = {
     name: "Composite",
     className: "ManagementPolicySnapShot",
     modelProperties: {
+      tierToCool: {
+        serializedName: "tierToCool",
+        type: {
+          name: "Composite",
+          className: "DateAfterCreation"
+        }
+      },
+      tierToArchive: {
+        serializedName: "tierToArchive",
+        type: {
+          name: "Composite",
+          className: "DateAfterCreation"
+        }
+      },
+      deleteProperty: {
+        serializedName: "delete",
+        type: {
+          name: "Composite",
+          className: "DateAfterCreation"
+        }
+      }
+    }
+  }
+};
+
+export const ManagementPolicyVersion: msRest.CompositeMapper = {
+  serializedName: "ManagementPolicyVersion",
+  type: {
+    name: "Composite",
+    className: "ManagementPolicyVersion",
+    modelProperties: {
+      tierToCool: {
+        serializedName: "tierToCool",
+        type: {
+          name: "Composite",
+          className: "DateAfterCreation"
+        }
+      },
+      tierToArchive: {
+        serializedName: "tierToArchive",
+        type: {
+          name: "Composite",
+          className: "DateAfterCreation"
+        }
+      },
       deleteProperty: {
         serializedName: "delete",
         type: {
@@ -2164,6 +2209,13 @@ export const ManagementPolicyAction: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "ManagementPolicySnapShot"
+        }
+      },
+      version: {
+        serializedName: "version",
+        type: {
+          name: "Composite",
+          className: "ManagementPolicyVersion"
         }
       }
     }

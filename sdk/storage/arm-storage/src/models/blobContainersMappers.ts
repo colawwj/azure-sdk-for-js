@@ -58,6 +58,7 @@ export {
   ManagementPolicyRule,
   ManagementPolicySchema,
   ManagementPolicySnapShot,
+  ManagementPolicyVersion,
   NetworkRuleSet,
   ObjectReplicationPolicy,
   ObjectReplicationPolicyFilter,

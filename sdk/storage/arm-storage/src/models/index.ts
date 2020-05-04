@@ -1342,7 +1342,36 @@ export interface DateAfterCreation {
  */
 export interface ManagementPolicySnapShot {
   /**
+   * The function to tier blob snapshot to cool storage. Support blob snapshot currently at Hot
+   * tier
+   */
+  tierToCool?: DateAfterCreation;
+  /**
+   * The function to tier blob snapshot to archive storage. Support blob snapshot currently at Hot
+   * or Cool tier
+   */
+  tierToArchive?: DateAfterCreation;
+  /**
    * The function to delete the blob snapshot
+   */
+  deleteProperty?: DateAfterCreation;
+}
+
+/**
+ * Management policy action for blob version.
+ */
+export interface ManagementPolicyVersion {
+  /**
+   * The function to tier blob version to cool storage. Support blob version currently at Hot tier
+   */
+  tierToCool?: DateAfterCreation;
+  /**
+   * The function to tier blob version to archive storage. Support blob version currently at Hot or
+   * Cool tier
+   */
+  tierToArchive?: DateAfterCreation;
+  /**
+   * The function to delete the blob version
    */
   deleteProperty?: DateAfterCreation;
 }
@@ -1359,6 +1388,10 @@ export interface ManagementPolicyAction {
    * The management policy action for snapshot
    */
   snapshot?: ManagementPolicySnapShot;
+  /**
+   * The management policy action for version
+   */
+  version?: ManagementPolicyVersion;
 }
 
 /**
