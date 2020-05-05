@@ -48,6 +48,16 @@ export interface ComputeOperationValue {
 }
 
 /**
+ * Specifies the disallowed configuration for a virtual machine image.
+ */
+export interface DisallowedConfiguration {
+  /**
+   * VM disk types which are disallowed. Possible values include: 'None', 'Unmanaged'
+   */
+  vmDiskType?: VmDiskTypes;
+}
+
+/**
  * Instance view status.
  */
 export interface InstanceViewStatus {
@@ -2309,6 +2319,10 @@ export interface Image extends Resource {
    * include: 'V1', 'V2'
    */
   hyperVGeneration?: HyperVGenerationTypes;
+  /**
+   * Specifies disallowed configuration for the VirtualMachine created from the image
+   */
+  disallowed?: DisallowedConfiguration;
 }
 
 /**
@@ -2333,6 +2347,10 @@ export interface ImageUpdate extends UpdateResource {
    * include: 'V1', 'V2'
    */
   hyperVGeneration?: HyperVGenerationTypes;
+  /**
+   * Specifies disallowed configuration for the VirtualMachine created from the image
+   */
+  disallowed?: DisallowedConfiguration;
 }
 
 /**
@@ -6618,6 +6636,14 @@ export interface ContainerServiceListResult extends Array<ContainerService> {
    */
   nextLink?: string;
 }
+
+/**
+ * Defines values for VmDiskTypes.
+ * Possible values include: 'None', 'Unmanaged'
+ * @readonly
+ * @enum {string}
+ */
+export type VmDiskTypes = 'None' | 'Unmanaged';
 
 /**
  * Defines values for HyperVGenerationTypes.

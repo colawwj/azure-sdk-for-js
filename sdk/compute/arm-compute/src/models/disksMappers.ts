@@ -46,6 +46,7 @@ export {
   DiagnosticsProfile,
   DiffDiskSettings,
   Disallowed,
+  DisallowedConfiguration,
   Disk,
   DiskEncryptionSet,
   DiskEncryptionSetParameters,

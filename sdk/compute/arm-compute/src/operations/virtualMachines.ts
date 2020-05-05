@@ -407,8 +407,7 @@ export class VirtualMachines {
   }
 
   /**
-   * The operation to simulate the eviction of spot virtual machine. The eviction will occur within
-   * 30 minutes of calling the API
+   * The operation to simulate the eviction of spot virtual machine
    * @param resourceGroupName The name of the resource group.
    * @param vmName The name of the virtual machine.
    * @param [options] The optional parameters
@@ -979,7 +978,7 @@ const listAvailableSizesOperationSpec: msRest.OperationSpec = {
 
 const simulateEvictionOperationSpec: msRest.OperationSpec = {
   httpMethod: "POST",
-  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/simulateEviction",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/SimulateEviction",
   urlParameters: [
     Parameters.resourceGroupName,
     Parameters.vmName,
