@@ -5011,10 +5011,10 @@ export interface FirewallPolicyTransportSecurity {
  */
 export interface FirewallPolicy extends Resource {
   /**
-   * List of references to FirewallPolicyRuleGroups.
+   * List of references to FirewallPolicyRuleCollectionGroups.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly ruleGroups?: SubResource[];
+  readonly ruleCollectionGroups?: SubResource[];
   /**
    * The provisioning state of the firewall policy resource. Possible values include: 'Succeeded',
    * 'Updating', 'Deleting', 'Failed'
@@ -5063,43 +5063,43 @@ export interface FirewallPolicy extends Resource {
 }
 
 /**
- * Contains the possible cases for FirewallPolicyRule.
+ * Contains the possible cases for FirewallPolicyRuleCollection.
  */
-export type FirewallPolicyRuleUnion = FirewallPolicyRule | FirewallPolicyNatRule | FirewallPolicyFilterRule;
+export type FirewallPolicyRuleCollectionUnion = FirewallPolicyRuleCollection | FirewallPolicyNatRuleCollection | FirewallPolicyFilterRuleCollection;
 
 /**
- * Properties of the rule.
+ * Properties of the rule collection.
  */
-export interface FirewallPolicyRule {
+export interface FirewallPolicyRuleCollection {
   /**
    * Polymorphic Discriminator
    */
-  ruleType: "FirewallPolicyRule";
+  ruleCollectionType: "FirewallPolicyRuleCollection";
   /**
-   * The name of the rule.
+   * The name of the rule collection.
    */
   name?: string;
   /**
-   * Priority of the Firewall Policy Rule resource.
+   * Priority of the Firewall Policy Rule Collection resource.
    */
   priority?: number;
 }
 
 /**
- * Rule Group resource.
+ * Rule Collection Group resource.
  */
-export interface FirewallPolicyRuleGroup extends SubResource {
+export interface FirewallPolicyRuleCollectionGroup extends SubResource {
   /**
-   * Priority of the Firewall Policy Rule Group resource.
+   * Priority of the Firewall Policy Rule Collection Group resource.
    */
   priority?: number;
   /**
-   * Group of Firewall Policy rules.
+   * Group of Firewall Policy rule collections.
    */
-  rules?: FirewallPolicyRuleUnion[];
+  ruleCollections?: FirewallPolicyRuleCollectionUnion[];
   /**
-   * The provisioning state of the firewall policy rule group resource. Possible values include:
-   * 'Succeeded', 'Updating', 'Deleting', 'Failed'
+   * The provisioning state of the firewall policy rule collection group resource. Possible values
+   * include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly provisioningState?: ProvisioningState;
@@ -5121,116 +5121,108 @@ export interface FirewallPolicyRuleGroup extends SubResource {
 }
 
 /**
- * Properties of the FirewallPolicyNatRuleAction.
+ * Properties of the FirewallPolicyNatRuleCollectionAction.
  */
-export interface FirewallPolicyNatRuleAction {
+export interface FirewallPolicyNatRuleCollectionAction {
   /**
    * The type of action. Possible values include: 'DNAT'
    */
-  type?: FirewallPolicyNatRuleActionType;
+  type?: FirewallPolicyNatRuleCollectionActionType;
 }
 
 /**
- * Contains the possible cases for FirewallPolicyRuleCondition.
+ * Contains the possible cases for FirewallPolicyRule.
  */
-export type FirewallPolicyRuleConditionUnion = FirewallPolicyRuleCondition | ApplicationRuleCondition | NatRuleCondition | NetworkRuleCondition;
+export type FirewallPolicyRuleUnion = FirewallPolicyRule | ApplicationRule | NatRule | NetworkRule;
 
 /**
  * Properties of a rule.
  */
-export interface FirewallPolicyRuleCondition {
+export interface FirewallPolicyRule {
   /**
    * Polymorphic Discriminator
    */
-  ruleConditionType: "FirewallPolicyRuleCondition";
+  ruleType: "FirewallPolicyRule";
   /**
-   * Name of the rule condition.
+   * Name of the rule.
    */
   name?: string;
   /**
-   * Description of the rule condition.
+   * Description of the rule.
    */
   description?: string;
 }
 
 /**
- * Firewall Policy NAT Rule.
+ * Firewall Policy NAT Rule Collection.
  */
-export interface FirewallPolicyNatRule {
+export interface FirewallPolicyNatRuleCollection {
   /**
    * Polymorphic Discriminator
    */
-  ruleType: "FirewallPolicyNatRule";
+  ruleCollectionType: "FirewallPolicyNatRuleCollection";
   /**
-   * The name of the rule.
+   * The name of the rule collection.
    */
   name?: string;
   /**
-   * Priority of the Firewall Policy Rule resource.
+   * Priority of the Firewall Policy Rule Collection resource.
    */
   priority?: number;
   /**
-   * The action type of a Nat rule.
+   * The action type of a Nat rule collection.
    */
-  action?: FirewallPolicyNatRuleAction;
+  action?: FirewallPolicyNatRuleCollectionAction;
   /**
-   * The translated address for this NAT rule.
+   * List of rules included in a rule collection.
    */
-  translatedAddress?: string;
-  /**
-   * The translated port for this NAT rule.
-   */
-  translatedPort?: string;
-  /**
-   * The match conditions for incoming traffic.
-   */
-  ruleCondition?: FirewallPolicyRuleConditionUnion;
+  rules?: FirewallPolicyRuleUnion[];
 }
 
 /**
- * Properties of the FirewallPolicyFilterRuleAction.
+ * Properties of the FirewallPolicyFilterRuleCollectionAction.
  */
-export interface FirewallPolicyFilterRuleAction {
+export interface FirewallPolicyFilterRuleCollectionAction {
   /**
    * The type of action. Possible values include: 'Allow', 'Deny'
    */
-  type?: FirewallPolicyFilterRuleActionType;
+  type?: FirewallPolicyFilterRuleCollectionActionType;
 }
 
 /**
- * Firewall Policy Filter Rule.
+ * Firewall Policy Filter Rule Collection.
  */
-export interface FirewallPolicyFilterRule {
+export interface FirewallPolicyFilterRuleCollection {
   /**
    * Polymorphic Discriminator
    */
-  ruleType: "FirewallPolicyFilterRule";
+  ruleCollectionType: "FirewallPolicyFilterRuleCollection";
   /**
-   * The name of the rule.
+   * The name of the rule collection.
    */
   name?: string;
   /**
-   * Priority of the Firewall Policy Rule resource.
+   * Priority of the Firewall Policy Rule Collection resource.
    */
   priority?: number;
   /**
-   * The action type of a Filter rule.
+   * The action type of a Filter rule collection.
    */
-  action?: FirewallPolicyFilterRuleAction;
+  action?: FirewallPolicyFilterRuleCollectionAction;
   /**
-   * Collection of rule conditions used by a rule.
+   * List of rules included in a rule collection.
    */
-  ruleConditions?: FirewallPolicyRuleConditionUnion[];
+  rules?: FirewallPolicyRuleUnion[];
 }
 
 /**
  * Properties of the application rule protocol.
  */
-export interface FirewallPolicyRuleConditionApplicationProtocol {
+export interface FirewallPolicyRuleApplicationProtocol {
   /**
    * Protocol type. Possible values include: 'Http', 'Https'
    */
-  protocolType?: FirewallPolicyRuleConditionApplicationProtocolType;
+  protocolType?: FirewallPolicyRuleApplicationProtocolType;
   /**
    * Port number for the protocol, cannot be greater than 64000.
    */
@@ -5238,19 +5230,19 @@ export interface FirewallPolicyRuleConditionApplicationProtocol {
 }
 
 /**
- * Rule condition of type application.
+ * Rule of type application.
  */
-export interface ApplicationRuleCondition {
+export interface ApplicationRule {
   /**
    * Polymorphic Discriminator
    */
-  ruleConditionType: "ApplicationRuleCondition";
+  ruleType: "ApplicationRule";
   /**
-   * Name of the rule condition.
+   * Name of the rule.
    */
   name?: string;
   /**
-   * Description of the rule condition.
+   * Description of the rule.
    */
   description?: string;
   /**
@@ -5264,17 +5256,17 @@ export interface ApplicationRuleCondition {
   /**
    * Array of Application Protocols.
    */
-  protocols?: FirewallPolicyRuleConditionApplicationProtocol[];
+  protocols?: FirewallPolicyRuleApplicationProtocol[];
   /**
    * List of Urls for this rule condition.
    */
   targetUrls?: string[];
   /**
-   * List of FQDNs for this rule condition.
+   * List of FQDNs for this rule.
    */
   targetFqdns?: string[];
   /**
-   * List of FQDN Tags for this rule condition.
+   * List of FQDN Tags for this rule.
    */
   fqdnTags?: string[];
   /**
@@ -5284,25 +5276,25 @@ export interface ApplicationRuleCondition {
 }
 
 /**
- * Rule condition of type nat.
+ * Rule of type nat.
  */
-export interface NatRuleCondition {
+export interface NatRule {
   /**
    * Polymorphic Discriminator
    */
-  ruleConditionType: "NatRuleCondition";
+  ruleType: "NatRule";
   /**
-   * Name of the rule condition.
+   * Name of the rule.
    */
   name?: string;
   /**
-   * Description of the rule condition.
+   * Description of the rule.
    */
   description?: string;
   /**
-   * Array of FirewallPolicyRuleConditionNetworkProtocols.
+   * Array of FirewallPolicyRuleNetworkProtocols.
    */
-  ipProtocols?: FirewallPolicyRuleConditionNetworkProtocol[];
+  ipProtocols?: FirewallPolicyRuleNetworkProtocol[];
   /**
    * List of source IP addresses for this rule.
    */
@@ -5316,6 +5308,14 @@ export interface NatRuleCondition {
    */
   destinationPorts?: string[];
   /**
+   * The translated address for this NAT rule.
+   */
+  translatedAddress?: string;
+  /**
+   * The translated port for this NAT rule.
+   */
+  translatedPort?: string;
+  /**
    * List of source IpGroups for this rule.
    */
   sourceIpGroups?: string[];
@@ -5326,25 +5326,25 @@ export interface NatRuleCondition {
 }
 
 /**
- * Rule condition of type network.
+ * Rule of type network.
  */
-export interface NetworkRuleCondition {
+export interface NetworkRule {
   /**
    * Polymorphic Discriminator
    */
-  ruleConditionType: "NetworkRuleCondition";
+  ruleType: "NetworkRule";
   /**
-   * Name of the rule condition.
+   * Name of the rule.
    */
   name?: string;
   /**
-   * Description of the rule condition.
+   * Description of the rule.
    */
   description?: string;
   /**
-   * Array of FirewallPolicyRuleConditionNetworkProtocols.
+   * Array of FirewallPolicyRuleNetworkProtocols.
    */
-  ipProtocols?: FirewallPolicyRuleConditionNetworkProtocol[];
+  ipProtocols?: FirewallPolicyRuleNetworkProtocol[];
   /**
    * List of source IP addresses for this rule.
    */
@@ -10922,6 +10922,10 @@ export interface P2SVpnGateway extends Resource {
    */
   readonly vpnClientConnectionHealth?: VpnClientConnectionHealth;
   /**
+   * List of all customer specified DNS servers IP addresses.
+   */
+  customDnsServers?: string[];
+  /**
    * A unique read-only string that changes whenever the resource is updated.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
@@ -12140,10 +12144,10 @@ export interface FirewallPolicyListResult extends Array<FirewallPolicy> {
 
 /**
  * @interface
- * Response for ListFirewallPolicyRuleGroups API service call.
- * @extends Array<FirewallPolicyRuleGroup>
+ * Response for ListFirewallPolicyRuleCollectionGroups API service call.
+ * @extends Array<FirewallPolicyRuleCollectionGroup>
  */
-export interface FirewallPolicyRuleGroupListResult extends Array<FirewallPolicyRuleGroup> {
+export interface FirewallPolicyRuleCollectionGroupListResult extends Array<FirewallPolicyRuleCollectionGroup> {
   /**
    * URL to get the next set of results.
    */
@@ -13372,36 +13376,36 @@ export type ExpressRoutePortsEncapsulation = 'Dot1Q' | 'QinQ';
 export type FirewallPolicyIntrusionSystemMode = 'Enabled' | 'Disabled';
 
 /**
- * Defines values for FirewallPolicyNatRuleActionType.
+ * Defines values for FirewallPolicyNatRuleCollectionActionType.
  * Possible values include: 'DNAT'
  * @readonly
  * @enum {string}
  */
-export type FirewallPolicyNatRuleActionType = 'DNAT';
+export type FirewallPolicyNatRuleCollectionActionType = 'DNAT';
 
 /**
- * Defines values for FirewallPolicyFilterRuleActionType.
+ * Defines values for FirewallPolicyFilterRuleCollectionActionType.
  * Possible values include: 'Allow', 'Deny'
  * @readonly
  * @enum {string}
  */
-export type FirewallPolicyFilterRuleActionType = 'Allow' | 'Deny';
+export type FirewallPolicyFilterRuleCollectionActionType = 'Allow' | 'Deny';
 
 /**
- * Defines values for FirewallPolicyRuleConditionApplicationProtocolType.
+ * Defines values for FirewallPolicyRuleApplicationProtocolType.
  * Possible values include: 'Http', 'Https'
  * @readonly
  * @enum {string}
  */
-export type FirewallPolicyRuleConditionApplicationProtocolType = 'Http' | 'Https';
+export type FirewallPolicyRuleApplicationProtocolType = 'Http' | 'Https';
 
 /**
- * Defines values for FirewallPolicyRuleConditionNetworkProtocol.
+ * Defines values for FirewallPolicyRuleNetworkProtocol.
  * Possible values include: 'TCP', 'UDP', 'Any', 'ICMP'
  * @readonly
  * @enum {string}
  */
-export type FirewallPolicyRuleConditionNetworkProtocol = 'TCP' | 'UDP' | 'Any' | 'ICMP';
+export type FirewallPolicyRuleNetworkProtocol = 'TCP' | 'UDP' | 'Any' | 'ICMP';
 
 /**
  * Defines values for IpAllocationType.
@@ -17212,7 +17216,7 @@ export type FirewallPoliciesListAllNextResponse = FirewallPolicyListResult & {
 /**
  * Contains response data for the get operation.
  */
-export type FirewallPolicyRuleGroupsGetResponse = FirewallPolicyRuleGroup & {
+export type FirewallPolicyRuleCollectionGroupsGetResponse = FirewallPolicyRuleCollectionGroup & {
   /**
    * The underlying HTTP response.
    */
@@ -17225,14 +17229,14 @@ export type FirewallPolicyRuleGroupsGetResponse = FirewallPolicyRuleGroup & {
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: FirewallPolicyRuleGroup;
+      parsedBody: FirewallPolicyRuleCollectionGroup;
     };
 };
 
 /**
  * Contains response data for the createOrUpdate operation.
  */
-export type FirewallPolicyRuleGroupsCreateOrUpdateResponse = FirewallPolicyRuleGroup & {
+export type FirewallPolicyRuleCollectionGroupsCreateOrUpdateResponse = FirewallPolicyRuleCollectionGroup & {
   /**
    * The underlying HTTP response.
    */
@@ -17245,14 +17249,14 @@ export type FirewallPolicyRuleGroupsCreateOrUpdateResponse = FirewallPolicyRuleG
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: FirewallPolicyRuleGroup;
+      parsedBody: FirewallPolicyRuleCollectionGroup;
     };
 };
 
 /**
  * Contains response data for the list operation.
  */
-export type FirewallPolicyRuleGroupsListResponse = FirewallPolicyRuleGroupListResult & {
+export type FirewallPolicyRuleCollectionGroupsListResponse = FirewallPolicyRuleCollectionGroupListResult & {
   /**
    * The underlying HTTP response.
    */
@@ -17265,14 +17269,14 @@ export type FirewallPolicyRuleGroupsListResponse = FirewallPolicyRuleGroupListRe
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: FirewallPolicyRuleGroupListResult;
+      parsedBody: FirewallPolicyRuleCollectionGroupListResult;
     };
 };
 
 /**
  * Contains response data for the beginCreateOrUpdate operation.
  */
-export type FirewallPolicyRuleGroupsBeginCreateOrUpdateResponse = FirewallPolicyRuleGroup & {
+export type FirewallPolicyRuleCollectionGroupsBeginCreateOrUpdateResponse = FirewallPolicyRuleCollectionGroup & {
   /**
    * The underlying HTTP response.
    */
@@ -17285,14 +17289,14 @@ export type FirewallPolicyRuleGroupsBeginCreateOrUpdateResponse = FirewallPolicy
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: FirewallPolicyRuleGroup;
+      parsedBody: FirewallPolicyRuleCollectionGroup;
     };
 };
 
 /**
  * Contains response data for the listNext operation.
  */
-export type FirewallPolicyRuleGroupsListNextResponse = FirewallPolicyRuleGroupListResult & {
+export type FirewallPolicyRuleCollectionGroupsListNextResponse = FirewallPolicyRuleCollectionGroupListResult & {
   /**
    * The underlying HTTP response.
    */
@@ -17305,7 +17309,7 @@ export type FirewallPolicyRuleGroupsListNextResponse = FirewallPolicyRuleGroupLi
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: FirewallPolicyRuleGroupListResult;
+      parsedBody: FirewallPolicyRuleCollectionGroupListResult;
     };
 };
 

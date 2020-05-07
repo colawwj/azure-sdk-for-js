@@ -8394,9 +8394,9 @@ export const FirewallPolicy: msRest.CompositeMapper = {
     className: "FirewallPolicy",
     modelProperties: {
       ...Resource.type.modelProperties,
-      ruleGroups: {
+      ruleCollectionGroups: {
         readOnly: true,
-        serializedName: "properties.ruleGroups",
+        serializedName: "properties.ruleCollectionGroups",
         type: {
           name: "Sequence",
           element: {
@@ -8491,16 +8491,16 @@ export const FirewallPolicy: msRest.CompositeMapper = {
   }
 };
 
-export const FirewallPolicyRule: msRest.CompositeMapper = {
-  serializedName: "FirewallPolicyRule",
+export const FirewallPolicyRuleCollection: msRest.CompositeMapper = {
+  serializedName: "FirewallPolicyRuleCollection",
   type: {
     name: "Composite",
     polymorphicDiscriminator: {
-      serializedName: "ruleType",
-      clientName: "ruleType"
+      serializedName: "ruleCollectionType",
+      clientName: "ruleCollectionType"
     },
-    uberParent: "FirewallPolicyRule",
-    className: "FirewallPolicyRule",
+    uberParent: "FirewallPolicyRuleCollection",
+    className: "FirewallPolicyRuleCollection",
     modelProperties: {
       name: {
         serializedName: "name",
@@ -8518,9 +8518,9 @@ export const FirewallPolicyRule: msRest.CompositeMapper = {
           name: "Number"
         }
       },
-      ruleType: {
+      ruleCollectionType: {
         required: true,
-        serializedName: "ruleType",
+        serializedName: "ruleCollectionType",
         type: {
           name: "String"
         }
@@ -8529,11 +8529,11 @@ export const FirewallPolicyRule: msRest.CompositeMapper = {
   }
 };
 
-export const FirewallPolicyRuleGroup: msRest.CompositeMapper = {
-  serializedName: "FirewallPolicyRuleGroup",
+export const FirewallPolicyRuleCollectionGroup: msRest.CompositeMapper = {
+  serializedName: "FirewallPolicyRuleCollectionGroup",
   type: {
     name: "Composite",
-    className: "FirewallPolicyRuleGroup",
+    className: "FirewallPolicyRuleCollectionGroup",
     modelProperties: {
       ...SubResource.type.modelProperties,
       priority: {
@@ -8546,14 +8546,14 @@ export const FirewallPolicyRuleGroup: msRest.CompositeMapper = {
           name: "Number"
         }
       },
-      rules: {
-        serializedName: "properties.rules",
+      ruleCollections: {
+        serializedName: "properties.ruleCollections",
         type: {
           name: "Sequence",
           element: {
             type: {
               name: "Composite",
-              className: "FirewallPolicyRule"
+              className: "FirewallPolicyRuleCollection"
             }
           }
         }
@@ -8589,11 +8589,11 @@ export const FirewallPolicyRuleGroup: msRest.CompositeMapper = {
   }
 };
 
-export const FirewallPolicyNatRuleAction: msRest.CompositeMapper = {
-  serializedName: "FirewallPolicyNatRuleAction",
+export const FirewallPolicyNatRuleCollectionAction: msRest.CompositeMapper = {
+  serializedName: "FirewallPolicyNatRuleCollectionAction",
   type: {
     name: "Composite",
-    className: "FirewallPolicyNatRuleAction",
+    className: "FirewallPolicyNatRuleCollectionAction",
     modelProperties: {
       type: {
         serializedName: "type",
@@ -8605,16 +8605,16 @@ export const FirewallPolicyNatRuleAction: msRest.CompositeMapper = {
   }
 };
 
-export const FirewallPolicyRuleCondition: msRest.CompositeMapper = {
-  serializedName: "FirewallPolicyRuleCondition",
+export const FirewallPolicyRule: msRest.CompositeMapper = {
+  serializedName: "FirewallPolicyRule",
   type: {
     name: "Composite",
     polymorphicDiscriminator: {
-      serializedName: "ruleConditionType",
-      clientName: "ruleConditionType"
+      serializedName: "ruleType",
+      clientName: "ruleType"
     },
-    uberParent: "FirewallPolicyRuleCondition",
-    className: "FirewallPolicyRuleCondition",
+    uberParent: "FirewallPolicyRule",
+    className: "FirewallPolicyRule",
     modelProperties: {
       name: {
         serializedName: "name",
@@ -8628,9 +8628,9 @@ export const FirewallPolicyRuleCondition: msRest.CompositeMapper = {
           name: "String"
         }
       },
-      ruleConditionType: {
+      ruleType: {
         required: true,
-        serializedName: "ruleConditionType",
+        serializedName: "ruleType",
         type: {
           name: "String"
         }
@@ -8639,50 +8639,43 @@ export const FirewallPolicyRuleCondition: msRest.CompositeMapper = {
   }
 };
 
-export const FirewallPolicyNatRule: msRest.CompositeMapper = {
-  serializedName: "FirewallPolicyNatRule",
+export const FirewallPolicyNatRuleCollection: msRest.CompositeMapper = {
+  serializedName: "FirewallPolicyNatRuleCollection",
   type: {
     name: "Composite",
-    polymorphicDiscriminator: FirewallPolicyRule.type.polymorphicDiscriminator,
-    uberParent: "FirewallPolicyRule",
-    className: "FirewallPolicyNatRule",
+    polymorphicDiscriminator: FirewallPolicyRuleCollection.type.polymorphicDiscriminator,
+    uberParent: "FirewallPolicyRuleCollection",
+    className: "FirewallPolicyNatRuleCollection",
     modelProperties: {
-      ...FirewallPolicyRule.type.modelProperties,
+      ...FirewallPolicyRuleCollection.type.modelProperties,
       action: {
         serializedName: "action",
         type: {
           name: "Composite",
-          className: "FirewallPolicyNatRuleAction"
+          className: "FirewallPolicyNatRuleCollectionAction"
         }
       },
-      translatedAddress: {
-        serializedName: "translatedAddress",
+      rules: {
+        serializedName: "rules",
         type: {
-          name: "String"
-        }
-      },
-      translatedPort: {
-        serializedName: "translatedPort",
-        type: {
-          name: "String"
-        }
-      },
-      ruleCondition: {
-        serializedName: "ruleCondition",
-        type: {
-          name: "Composite",
-          className: "FirewallPolicyRuleCondition"
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "FirewallPolicyRule"
+            }
+          }
         }
       }
     }
   }
 };
 
-export const FirewallPolicyFilterRuleAction: msRest.CompositeMapper = {
-  serializedName: "FirewallPolicyFilterRuleAction",
+export const FirewallPolicyFilterRuleCollectionAction: msRest.CompositeMapper = {
+  serializedName: "FirewallPolicyFilterRuleCollectionAction",
   type: {
     name: "Composite",
-    className: "FirewallPolicyFilterRuleAction",
+    className: "FirewallPolicyFilterRuleCollectionAction",
     modelProperties: {
       type: {
         serializedName: "type",
@@ -8694,30 +8687,30 @@ export const FirewallPolicyFilterRuleAction: msRest.CompositeMapper = {
   }
 };
 
-export const FirewallPolicyFilterRule: msRest.CompositeMapper = {
-  serializedName: "FirewallPolicyFilterRule",
+export const FirewallPolicyFilterRuleCollection: msRest.CompositeMapper = {
+  serializedName: "FirewallPolicyFilterRuleCollection",
   type: {
     name: "Composite",
-    polymorphicDiscriminator: FirewallPolicyRule.type.polymorphicDiscriminator,
-    uberParent: "FirewallPolicyRule",
-    className: "FirewallPolicyFilterRule",
+    polymorphicDiscriminator: FirewallPolicyRuleCollection.type.polymorphicDiscriminator,
+    uberParent: "FirewallPolicyRuleCollection",
+    className: "FirewallPolicyFilterRuleCollection",
     modelProperties: {
-      ...FirewallPolicyRule.type.modelProperties,
+      ...FirewallPolicyRuleCollection.type.modelProperties,
       action: {
         serializedName: "action",
         type: {
           name: "Composite",
-          className: "FirewallPolicyFilterRuleAction"
+          className: "FirewallPolicyFilterRuleCollectionAction"
         }
       },
-      ruleConditions: {
-        serializedName: "ruleConditions",
+      rules: {
+        serializedName: "rules",
         type: {
           name: "Sequence",
           element: {
             type: {
               name: "Composite",
-              className: "FirewallPolicyRuleCondition"
+              className: "FirewallPolicyRule"
             }
           }
         }
@@ -8726,11 +8719,11 @@ export const FirewallPolicyFilterRule: msRest.CompositeMapper = {
   }
 };
 
-export const FirewallPolicyRuleConditionApplicationProtocol: msRest.CompositeMapper = {
-  serializedName: "FirewallPolicyRuleConditionApplicationProtocol",
+export const FirewallPolicyRuleApplicationProtocol: msRest.CompositeMapper = {
+  serializedName: "FirewallPolicyRuleApplicationProtocol",
   type: {
     name: "Composite",
-    className: "FirewallPolicyRuleConditionApplicationProtocol",
+    className: "FirewallPolicyRuleApplicationProtocol",
     modelProperties: {
       protocolType: {
         serializedName: "protocolType",
@@ -8752,15 +8745,15 @@ export const FirewallPolicyRuleConditionApplicationProtocol: msRest.CompositeMap
   }
 };
 
-export const ApplicationRuleCondition: msRest.CompositeMapper = {
-  serializedName: "ApplicationRuleCondition",
+export const ApplicationRule: msRest.CompositeMapper = {
+  serializedName: "ApplicationRule",
   type: {
     name: "Composite",
-    polymorphicDiscriminator: FirewallPolicyRuleCondition.type.polymorphicDiscriminator,
-    uberParent: "FirewallPolicyRuleCondition",
-    className: "ApplicationRuleCondition",
+    polymorphicDiscriminator: FirewallPolicyRule.type.polymorphicDiscriminator,
+    uberParent: "FirewallPolicyRule",
+    className: "ApplicationRule",
     modelProperties: {
-      ...FirewallPolicyRuleCondition.type.modelProperties,
+      ...FirewallPolicyRule.type.modelProperties,
       sourceAddresses: {
         serializedName: "sourceAddresses",
         type: {
@@ -8790,7 +8783,7 @@ export const ApplicationRuleCondition: msRest.CompositeMapper = {
           element: {
             type: {
               name: "Composite",
-              className: "FirewallPolicyRuleConditionApplicationProtocol"
+              className: "FirewallPolicyRuleApplicationProtocol"
             }
           }
         }
@@ -8843,15 +8836,15 @@ export const ApplicationRuleCondition: msRest.CompositeMapper = {
   }
 };
 
-export const NatRuleCondition: msRest.CompositeMapper = {
-  serializedName: "NatRuleCondition",
+export const NatRule: msRest.CompositeMapper = {
+  serializedName: "NatRule",
   type: {
     name: "Composite",
-    polymorphicDiscriminator: FirewallPolicyRuleCondition.type.polymorphicDiscriminator,
-    uberParent: "FirewallPolicyRuleCondition",
-    className: "NatRuleCondition",
+    polymorphicDiscriminator: FirewallPolicyRule.type.polymorphicDiscriminator,
+    uberParent: "FirewallPolicyRule",
+    className: "NatRule",
     modelProperties: {
-      ...FirewallPolicyRuleCondition.type.modelProperties,
+      ...FirewallPolicyRule.type.modelProperties,
       ipProtocols: {
         serializedName: "ipProtocols",
         type: {
@@ -8896,6 +8889,18 @@ export const NatRuleCondition: msRest.CompositeMapper = {
           }
         }
       },
+      translatedAddress: {
+        serializedName: "translatedAddress",
+        type: {
+          name: "String"
+        }
+      },
+      translatedPort: {
+        serializedName: "translatedPort",
+        type: {
+          name: "String"
+        }
+      },
       sourceIpGroups: {
         serializedName: "sourceIpGroups",
         type: {
@@ -8917,15 +8922,15 @@ export const NatRuleCondition: msRest.CompositeMapper = {
   }
 };
 
-export const NetworkRuleCondition: msRest.CompositeMapper = {
-  serializedName: "NetworkRuleCondition",
+export const NetworkRule: msRest.CompositeMapper = {
+  serializedName: "NetworkRule",
   type: {
     name: "Composite",
-    polymorphicDiscriminator: FirewallPolicyRuleCondition.type.polymorphicDiscriminator,
-    uberParent: "FirewallPolicyRuleCondition",
-    className: "NetworkRuleCondition",
+    polymorphicDiscriminator: FirewallPolicyRule.type.polymorphicDiscriminator,
+    uberParent: "FirewallPolicyRule",
+    className: "NetworkRule",
     modelProperties: {
-      ...FirewallPolicyRuleCondition.type.modelProperties,
+      ...FirewallPolicyRule.type.modelProperties,
       ipProtocols: {
         serializedName: "ipProtocols",
         type: {
@@ -18445,6 +18450,17 @@ export const P2SVpnGateway: msRest.CompositeMapper = {
           className: "VpnClientConnectionHealth"
         }
       },
+      customDnsServers: {
+        serializedName: "properties.customDnsServers",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
       etag: {
         readOnly: true,
         serializedName: "etag",
@@ -20111,11 +20127,11 @@ export const FirewallPolicyListResult: msRest.CompositeMapper = {
   }
 };
 
-export const FirewallPolicyRuleGroupListResult: msRest.CompositeMapper = {
-  serializedName: "FirewallPolicyRuleGroupListResult",
+export const FirewallPolicyRuleCollectionGroupListResult: msRest.CompositeMapper = {
+  serializedName: "FirewallPolicyRuleCollectionGroupListResult",
   type: {
     name: "Composite",
-    className: "FirewallPolicyRuleGroupListResult",
+    className: "FirewallPolicyRuleCollectionGroupListResult",
     modelProperties: {
       value: {
         serializedName: "",
@@ -20124,7 +20140,7 @@ export const FirewallPolicyRuleGroupListResult: msRest.CompositeMapper = {
           element: {
             type: {
               name: "Composite",
-              className: "FirewallPolicyRuleGroup"
+              className: "FirewallPolicyRuleCollectionGroup"
             }
           }
         }
@@ -21940,12 +21956,12 @@ export const WebApplicationFirewallPolicyListResult: msRest.CompositeMapper = {
 };
 
 export const discriminators = {
+  'FirewallPolicyRuleCollection' : FirewallPolicyRuleCollection,
   'FirewallPolicyRule' : FirewallPolicyRule,
-  'FirewallPolicyRuleCondition' : FirewallPolicyRuleCondition,
-  'FirewallPolicyRule.FirewallPolicyNatRule' : FirewallPolicyNatRule,
-  'FirewallPolicyRule.FirewallPolicyFilterRule' : FirewallPolicyFilterRule,
-  'FirewallPolicyRuleCondition.ApplicationRuleCondition' : ApplicationRuleCondition,
-  'FirewallPolicyRuleCondition.NatRuleCondition' : NatRuleCondition,
-  'FirewallPolicyRuleCondition.NetworkRuleCondition' : NetworkRuleCondition
+  'FirewallPolicyRuleCollection.FirewallPolicyNatRuleCollection' : FirewallPolicyNatRuleCollection,
+  'FirewallPolicyRuleCollection.FirewallPolicyFilterRuleCollection' : FirewallPolicyFilterRuleCollection,
+  'FirewallPolicyRule.ApplicationRule' : ApplicationRule,
+  'FirewallPolicyRule.NatRule' : NatRule,
+  'FirewallPolicyRule.NetworkRule' : NetworkRule
 
 };
