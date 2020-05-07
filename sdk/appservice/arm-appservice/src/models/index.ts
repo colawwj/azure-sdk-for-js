@@ -760,7 +760,7 @@ export interface ManagedServiceIdentityUserAssignedIdentitiesValue {
 export interface ManagedServiceIdentity {
   /**
    * Type of managed service identity. Possible values include: 'None', 'SystemAssigned',
-   * 'UserAssigned'
+   * 'UserAssigned', 'SystemAssigned, UserAssigned'
    */
   type?: ManagedServiceIdentityType;
   /**
@@ -4292,7 +4292,7 @@ export interface ApiKVReference {
   /**
    * Possible values include: 'None', 'SystemAssigned', 'UserAssigned'
    */
-  identityType?: ManagedServiceIdentityType;
+  identityType?: KeyVaultReferenceIdentityType;
   details?: string;
   /**
    * Possible values include: 'KeyVault'
@@ -5131,7 +5131,7 @@ export interface KeyVaultReferenceResource extends ProxyOnlyResource {
   /**
    * Possible values include: 'None', 'SystemAssigned', 'UserAssigned'
    */
-  identityType?: ManagedServiceIdentityType;
+  identityType?: KeyVaultReferenceIdentityType;
   details?: string;
   /**
    * Possible values include: 'KeyVault'
@@ -9656,11 +9656,12 @@ export type RouteType = 'DEFAULT' | 'INHERITED' | 'STATIC';
 
 /**
  * Defines values for ManagedServiceIdentityType.
- * Possible values include: 'None', 'SystemAssigned', 'UserAssigned'
+ * Possible values include: 'None', 'SystemAssigned', 'UserAssigned', 'SystemAssigned,
+ * UserAssigned'
  * @readonly
  * @enum {string}
  */
-export type ManagedServiceIdentityType = 'None' | 'SystemAssigned' | 'UserAssigned';
+export type ManagedServiceIdentityType = 'None' | 'SystemAssigned' | 'UserAssigned' | 'SystemAssigned, UserAssigned';
 
 /**
  * Defines values for IpFilterTag.
@@ -9968,6 +9969,14 @@ export type ValidateResourceTypes = 'ServerFarm' | 'Site';
  * @enum {string}
  */
 export type ResolveStatus = 'Initialized' | 'Resolved' | 'InvalidSyntax' | 'MSINotEnabled' | 'VaultNotFound' | 'SecretNotFound' | 'SecretVersionNotFound' | 'AccessToKeyVaultDenied' | 'OtherReasons';
+
+/**
+ * Defines values for KeyVaultReferenceIdentityType.
+ * Possible values include: 'None', 'SystemAssigned', 'UserAssigned'
+ * @readonly
+ * @enum {string}
+ */
+export type KeyVaultReferenceIdentityType = 'None' | 'SystemAssigned' | 'UserAssigned';
 
 /**
  * Defines values for ConfigReferenceSource.

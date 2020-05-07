@@ -1249,7 +1249,8 @@ export const ManagedServiceIdentity: msRest.CompositeMapper = {
           allowedValues: [
             "None",
             "SystemAssigned",
-            "UserAssigned"
+            "UserAssigned",
+            "SystemAssigned, UserAssigned"
           ]
         }
       },
