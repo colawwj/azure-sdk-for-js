@@ -27,8 +27,6 @@ class SecurityCenter extends SecurityCenterContext {
   iotSecuritySolutionAnalytics: operations.IotSecuritySolutionAnalytics;
   iotSecuritySolutionsAnalyticsAggregatedAlert: operations.IotSecuritySolutionsAnalyticsAggregatedAlert;
   iotSecuritySolutionsAnalyticsRecommendation: operations.IotSecuritySolutionsAnalyticsRecommendation;
-  discoveredSecuritySolutions: operations.DiscoveredSecuritySolutions;
-  externalSecuritySolutions: operations.ExternalSecuritySolutions;
   locations: operations.Locations;
   operations: operations.Operations;
   tasks: operations.Tasks;
@@ -50,6 +48,8 @@ class SecurityCenter extends SecurityCenterContext {
   allowedConnections: operations.AllowedConnections;
   topology: operations.Topology;
   jitNetworkAccessPolicies: operations.JitNetworkAccessPolicies;
+  discoveredSecuritySolutions: operations.DiscoveredSecuritySolutions;
+  externalSecuritySolutions: operations.ExternalSecuritySolutions;
 
   /**
    * Initializes a new instance of the SecurityCenter class.
@@ -71,8 +71,6 @@ class SecurityCenter extends SecurityCenterContext {
     this.iotSecuritySolutionAnalytics = new operations.IotSecuritySolutionAnalytics(this);
     this.iotSecuritySolutionsAnalyticsAggregatedAlert = new operations.IotSecuritySolutionsAnalyticsAggregatedAlert(this);
     this.iotSecuritySolutionsAnalyticsRecommendation = new operations.IotSecuritySolutionsAnalyticsRecommendation(this);
-    this.discoveredSecuritySolutions = new operations.DiscoveredSecuritySolutions(this);
-    this.externalSecuritySolutions = new operations.ExternalSecuritySolutions(this);
     this.locations = new operations.Locations(this);
     this.operations = new operations.Operations(this);
     this.tasks = new operations.Tasks(this);
@@ -94,6 +92,8 @@ class SecurityCenter extends SecurityCenterContext {
     this.allowedConnections = new operations.AllowedConnections(this);
     this.topology = new operations.Topology(this);
     this.jitNetworkAccessPolicies = new operations.JitNetworkAccessPolicies(this);
+    this.discoveredSecuritySolutions = new operations.DiscoveredSecuritySolutions(this);
+    this.externalSecuritySolutions = new operations.ExternalSecuritySolutions(this);
   }
 }
 
