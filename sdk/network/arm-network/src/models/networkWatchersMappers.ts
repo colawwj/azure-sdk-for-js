@@ -159,6 +159,7 @@ export {
   FlowLogInformation,
   FlowLogStatusParameters,
   FrontendIPConfiguration,
+  HopLink,
   HTTPConfiguration,
   HTTPHeader,
   HubIPAddresses,

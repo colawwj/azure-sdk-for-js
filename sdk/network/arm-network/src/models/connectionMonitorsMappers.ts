@@ -145,6 +145,7 @@ export {
   FlowLog,
   FlowLogFormatParameters,
   FrontendIPConfiguration,
+  HopLink,
   HTTPHeader,
   HubIPAddresses,
   HubRoute,

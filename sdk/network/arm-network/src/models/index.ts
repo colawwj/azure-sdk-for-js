@@ -7014,6 +7014,52 @@ export interface ConnectivityIssue {
 }
 
 /**
+ * Hop link.
+ */
+export interface HopLink {
+  /**
+   * The ID of the next hop.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly nextHopId?: string;
+  /**
+   * Link type.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly linkType?: string;
+  /**
+   * Minimum roundtrip time in milliseconds.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly roundTripTimeMin?: number;
+  /**
+   * Average roundtrip time in milliseconds.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly roundTripTimeAvg?: number;
+  /**
+   * Maximum roundtrip time in milliseconds.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly roundTripTimeMax?: number;
+  /**
+   * List of issues.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly issues?: ConnectivityIssue[];
+  /**
+   * Provides additional context on the issue.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly context?: { [propertyName: string]: string }[];
+  /**
+   * Resource ID.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly resourceId?: string;
+}
+
+/**
  * Information about a hop between the source and the destination.
  */
 export interface ConnectivityHop {
@@ -7042,6 +7088,21 @@ export interface ConnectivityHop {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly nextHopIds?: string[];
+  /**
+   * List of previous hop identifiers.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly previousHopIds?: string[];
+  /**
+   * List of hop links.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly links?: HopLink[];
+  /**
+   * List of previous hop links.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly previousLinks?: HopLink[];
   /**
    * List of issues.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -10921,6 +10982,10 @@ export interface P2SVpnGateway extends Resource {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly vpnClientConnectionHealth?: VpnClientConnectionHealth;
+  /**
+   * List of all customer specified DNS servers IP addresses.
+   */
+  customDnsServers?: string[];
   /**
    * A unique read-only string that changes whenever the resource is updated.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**

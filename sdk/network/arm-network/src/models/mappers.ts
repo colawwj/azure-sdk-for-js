@@ -11753,6 +11753,88 @@ export const ConnectivityIssue: msRest.CompositeMapper = {
   }
 };
 
+export const HopLink: msRest.CompositeMapper = {
+  serializedName: "HopLink",
+  type: {
+    name: "Composite",
+    className: "HopLink",
+    modelProperties: {
+      nextHopId: {
+        readOnly: true,
+        serializedName: "nextHopId",
+        type: {
+          name: "String"
+        }
+      },
+      linkType: {
+        readOnly: true,
+        serializedName: "linkType",
+        type: {
+          name: "String"
+        }
+      },
+      roundTripTimeMin: {
+        readOnly: true,
+        serializedName: "properties.roundTripTimeMin",
+        type: {
+          name: "Number"
+        }
+      },
+      roundTripTimeAvg: {
+        readOnly: true,
+        serializedName: "properties.roundTripTimeAvg",
+        type: {
+          name: "Number"
+        }
+      },
+      roundTripTimeMax: {
+        readOnly: true,
+        serializedName: "properties.roundTripTimeMax",
+        type: {
+          name: "Number"
+        }
+      },
+      issues: {
+        readOnly: true,
+        serializedName: "issues",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "ConnectivityIssue"
+            }
+          }
+        }
+      },
+      context: {
+        readOnly: true,
+        serializedName: "context",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Dictionary",
+              value: {
+                type: {
+                  name: "String"
+                }
+              }
+            }
+          }
+        }
+      },
+      resourceId: {
+        readOnly: true,
+        serializedName: "resourceId",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const ConnectivityHop: msRest.CompositeMapper = {
   serializedName: "ConnectivityHop",
   type: {
@@ -11795,6 +11877,44 @@ export const ConnectivityHop: msRest.CompositeMapper = {
           element: {
             type: {
               name: "String"
+            }
+          }
+        }
+      },
+      previousHopIds: {
+        readOnly: true,
+        serializedName: "previousHopIds",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      links: {
+        readOnly: true,
+        serializedName: "links",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "HopLink"
+            }
+          }
+        }
+      },
+      previousLinks: {
+        readOnly: true,
+        serializedName: "previousLinks",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "HopLink"
             }
           }
         }
@@ -18443,6 +18563,17 @@ export const P2SVpnGateway: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "VpnClientConnectionHealth"
+        }
+      },
+      customDnsServers: {
+        serializedName: "properties.customDnsServers",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
         }
       },
       etag: {
