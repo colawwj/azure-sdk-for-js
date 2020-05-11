@@ -1184,14 +1184,14 @@ export const Tag: msRest.CompositeMapper = {
     modelProperties: {
       name: {
         required: true,
-        serializedName: "name",
+        serializedName: "Name",
         type: {
           name: "String"
         }
       },
       value: {
         required: true,
-        serializedName: "value",
+        serializedName: "Value",
         type: {
           name: "String"
         }
@@ -1215,33 +1215,33 @@ export const SavedSearch: msRest.CompositeMapper = {
       },
       category: {
         required: true,
-        serializedName: "properties.category",
+        serializedName: "properties.Category",
         type: {
           name: "String"
         }
       },
       displayName: {
         required: true,
-        serializedName: "properties.displayName",
+        serializedName: "properties.DisplayName",
         type: {
           name: "String"
         }
       },
       query: {
         required: true,
-        serializedName: "properties.query",
+        serializedName: "properties.Query",
         type: {
           name: "String"
         }
       },
       version: {
-        serializedName: "properties.version",
+        serializedName: "properties.Version",
         type: {
           name: "Number"
         }
       },
       tags: {
-        serializedName: "properties.tags",
+        serializedName: "properties.Tags",
         type: {
           name: "Sequence",
           element: {
