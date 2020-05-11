@@ -7,7 +7,6 @@
  */
 
 export {
-  AvailableServiceTier,
   AzureEntityResource,
   BaseResource,
   CloudError,

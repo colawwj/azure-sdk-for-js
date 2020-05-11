@@ -22,6 +22,7 @@ export * from "./workspaces";
 export * from "./clusters";
 export * from "./storageInsightConfigs";
 export * from "./savedSearches";
+export * from "./availableServiceTiers";
 export * from "./gateways";
 export * from "./schema";
 export * from "./workspacePurge";

@@ -173,38 +173,6 @@ export class Workspaces {
   }
 
   /**
-   * Gets the available service tiers for the workspace.
-   * @param resourceGroupName The name of the resource group. The name is case insensitive.
-   * @param workspaceName The name of the workspace.
-   * @param [options] The optional parameters
-   * @returns Promise<Models.WorkspacesAvailableServiceTiersResponse>
-   */
-  availableServiceTiers(resourceGroupName: string, workspaceName: string, options?: msRest.RequestOptionsBase): Promise<Models.WorkspacesAvailableServiceTiersResponse>;
-  /**
-   * @param resourceGroupName The name of the resource group. The name is case insensitive.
-   * @param workspaceName The name of the workspace.
-   * @param callback The callback
-   */
-  availableServiceTiers(resourceGroupName: string, workspaceName: string, callback: msRest.ServiceCallback<Models.AvailableServiceTier[]>): void;
-  /**
-   * @param resourceGroupName The name of the resource group. The name is case insensitive.
-   * @param workspaceName The name of the workspace.
-   * @param options The optional parameters
-   * @param callback The callback
-   */
-  availableServiceTiers(resourceGroupName: string, workspaceName: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.AvailableServiceTier[]>): void;
-  availableServiceTiers(resourceGroupName: string, workspaceName: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.AvailableServiceTier[]>, callback?: msRest.ServiceCallback<Models.AvailableServiceTier[]>): Promise<Models.WorkspacesAvailableServiceTiersResponse> {
-    return this.client.sendOperationRequest(
-      {
-        resourceGroupName,
-        workspaceName,
-        options
-      },
-      availableServiceTiersOperationSpec,
-      callback) as Promise<Models.WorkspacesAvailableServiceTiersResponse>;
-  }
-
-  /**
    * Create or update a workspace.
    * @param resourceGroupName The name of the resource group. The name is case insensitive.
    * @param workspaceName The name of the workspace.
@@ -341,42 +309,6 @@ const updateOperationSpec: msRest.OperationSpec = {
   responses: {
     200: {
       bodyMapper: Mappers.Workspace
-    },
-    default: {
-      bodyMapper: Mappers.CloudError
-    }
-  },
-  serializer
-};
-
-const availableServiceTiersOperationSpec: msRest.OperationSpec = {
-  httpMethod: "GET",
-  path: "subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/availableServiceTiers",
-  urlParameters: [
-    Parameters.subscriptionId,
-    Parameters.resourceGroupName,
-    Parameters.workspaceName
-  ],
-  queryParameters: [
-    Parameters.apiVersion
-  ],
-  headerParameters: [
-    Parameters.acceptLanguage
-  ],
-  responses: {
-    200: {
-      bodyMapper: {
-        serializedName: "parsedResponse",
-        type: {
-          name: "Sequence",
-          element: {
-            type: {
-              name: "Composite",
-              className: "AvailableServiceTier"
-            }
-          }
-        }
-      }
     },
     default: {
       bodyMapper: Mappers.CloudError

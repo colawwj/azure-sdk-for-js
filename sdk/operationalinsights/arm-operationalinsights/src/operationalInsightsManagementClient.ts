@@ -31,6 +31,7 @@ class OperationalInsightsManagementClient extends OperationalInsightsManagementC
   clusters: operations.Clusters;
   storageInsightConfigs: operations.StorageInsightConfigs;
   savedSearches: operations.SavedSearches;
+  availableServiceTiers: operations.AvailableServiceTiers;
   gateways: operations.Gateways;
   schema: operations.Schema;
   workspacePurge: operations.WorkspacePurge;
@@ -57,6 +58,7 @@ class OperationalInsightsManagementClient extends OperationalInsightsManagementC
     this.clusters = new operations.Clusters(this);
     this.storageInsightConfigs = new operations.StorageInsightConfigs(this);
     this.savedSearches = new operations.SavedSearches(this);
+    this.availableServiceTiers = new operations.AvailableServiceTiers(this);
     this.gateways = new operations.Gateways(this);
     this.schema = new operations.Schema(this);
     this.workspacePurge = new operations.WorkspacePurge(this);

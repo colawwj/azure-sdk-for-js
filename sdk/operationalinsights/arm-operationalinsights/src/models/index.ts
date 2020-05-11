@@ -1904,26 +1904,6 @@ export type WorkspacesUpdateResponse = Workspace & {
 };
 
 /**
- * Contains response data for the availableServiceTiers operation.
- */
-export type WorkspacesAvailableServiceTiersResponse = Array<AvailableServiceTier> & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: AvailableServiceTier[];
-    };
-};
-
-/**
  * Contains response data for the beginCreateOrUpdate operation.
  */
 export type WorkspacesBeginCreateOrUpdateResponse = Workspace & {
@@ -2240,6 +2220,26 @@ export type SavedSearchesListByWorkspaceResponse = SavedSearchesListResult & {
        * The response body as parsed JSON or XML
        */
       parsedBody: SavedSearchesListResult;
+    };
+};
+
+/**
+ * Contains response data for the listByWorkspace operation.
+ */
+export type AvailableServiceTiersListByWorkspaceResponse = Array<AvailableServiceTier> & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: AvailableServiceTier[];
     };
 };
 
