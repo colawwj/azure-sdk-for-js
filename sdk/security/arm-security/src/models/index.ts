@@ -1770,256 +1770,6 @@ export interface IoTSecurityAggregatedRecommendation {
 }
 
 /**
- * An interface representing DiscoveredSecuritySolution.
- */
-export interface DiscoveredSecuritySolution {
-  /**
-   * Resource Id
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Resource name
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Resource type
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * Location where the resource is stored
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly location?: string;
-  /**
-   * The security family of the discovered solution. Possible values include: 'Waf', 'Ngfw',
-   * 'SaasWaf', 'Va'
-   */
-  securityFamily: SecurityFamily;
-  /**
-   * The security solutions' image offer
-   */
-  offer: string;
-  /**
-   * The security solutions' image publisher
-   */
-  publisher: string;
-  /**
-   * The security solutions' image sku
-   */
-  sku: string;
-}
-
-/**
- * Contains the possible cases for ExternalSecuritySolution.
- */
-export type ExternalSecuritySolutionUnion = ExternalSecuritySolution | CefExternalSecuritySolution | AtaExternalSecuritySolution | AadExternalSecuritySolution;
-
-/**
- * Represents a security solution external to Azure Security Center which sends information to an
- * OMS workspace and whose data is displayed by Azure Security Center.
- */
-export interface ExternalSecuritySolution {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "ExternalSecuritySolution";
-  /**
-   * Resource Id
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Resource name
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Resource type
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * Location where the resource is stored
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly location?: string;
-}
-
-/**
- * The solution properties (correspond to the solution kind)
- */
-export interface ExternalSecuritySolutionProperties {
-  deviceVendor?: string;
-  deviceType?: string;
-  workspace?: ConnectedWorkspace;
-  /**
-   * Describes unknown properties. The value of an unknown property can be of "any" type.
-   */
-  [property: string]: any;
-}
-
-/**
- * An interface representing CefSolutionProperties.
- * @summary The external security solution properties for CEF solutions
- */
-export interface CefSolutionProperties extends ExternalSecuritySolutionProperties {
-  hostname?: string;
-  agent?: string;
-  lastEventReceived?: string;
-}
-
-/**
- * Represents a security solution which sends CEF logs to an OMS workspace
- */
-export interface CefExternalSecuritySolution {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "CEF";
-  /**
-   * Resource Id
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Resource name
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Resource type
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * Location where the resource is stored
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly location?: string;
-  properties?: CefSolutionProperties;
-}
-
-/**
- * An interface representing AtaSolutionProperties.
- * @summary The external security solution properties for ATA solutions
- */
-export interface AtaSolutionProperties extends ExternalSecuritySolutionProperties {
-  lastEventReceived?: string;
-}
-
-/**
- * Represents an ATA security solution which sends logs to an OMS workspace
- */
-export interface AtaExternalSecuritySolution {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "ATA";
-  /**
-   * Resource Id
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Resource name
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Resource type
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * Location where the resource is stored
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly location?: string;
-  properties?: AtaSolutionProperties;
-}
-
-/**
- * An interface representing ConnectedWorkspace.
- * @summary Represents an OMS workspace to which the solution is connected
- */
-export interface ConnectedWorkspace {
-  /**
-   * Azure resource ID of the connected OMS workspace
-   */
-  id?: string;
-}
-
-/**
- * An interface representing AadSolutionProperties.
- * @summary The external security solution properties for AAD solutions
- */
-export interface AadSolutionProperties {
-  deviceVendor?: string;
-  deviceType?: string;
-  workspace?: ConnectedWorkspace;
-  /**
-   * The connectivity state of the external AAD solution . Possible values include: 'Discovered',
-   * 'NotLicensed', 'Connected'
-   */
-  connectivityState?: AadConnectivityState;
-}
-
-/**
- * Represents an AAD identity protection solution which sends logs to an OMS workspace.
- */
-export interface AadExternalSecuritySolution {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "AAD";
-  /**
-   * Resource Id
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Resource name
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Resource type
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * Location where the resource is stored
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly location?: string;
-  properties?: AadSolutionProperties;
-}
-
-/**
- * Describes an Azure resource with kind
- */
-export interface ExternalSecuritySolutionKind1 {
-  /**
-   * The kind of the external solution. Possible values include: 'CEF', 'ATA', 'AAD'
-   */
-  kind?: ExternalSecuritySolutionKind;
-}
-
-/**
- * Describes an Azure resource with kind
- */
-export interface AadConnectivityState1 {
-  /**
-   * The connectivity state of the external AAD solution . Possible values include: 'Discovered',
-   * 'NotLicensed', 'Connected'
-   */
-  connectivityState?: AadConnectivityState;
-}
-
-/**
  * Security operation display
  */
 export interface OperationDisplay {
@@ -3743,6 +3493,256 @@ export interface JitNetworkAccessPolicyInitiateRequest {
 }
 
 /**
+ * An interface representing DiscoveredSecuritySolution.
+ */
+export interface DiscoveredSecuritySolution {
+  /**
+   * Resource Id
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Resource name
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Resource type
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * Location where the resource is stored
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly location?: string;
+  /**
+   * The security family of the discovered solution. Possible values include: 'Waf', 'Ngfw',
+   * 'SaasWaf', 'Va'
+   */
+  securityFamily: SecurityFamily;
+  /**
+   * The security solutions' image offer
+   */
+  offer: string;
+  /**
+   * The security solutions' image publisher
+   */
+  publisher: string;
+  /**
+   * The security solutions' image sku
+   */
+  sku: string;
+}
+
+/**
+ * Contains the possible cases for ExternalSecuritySolution.
+ */
+export type ExternalSecuritySolutionUnion = ExternalSecuritySolution | CefExternalSecuritySolution | AtaExternalSecuritySolution | AadExternalSecuritySolution;
+
+/**
+ * Represents a security solution external to Azure Security Center which sends information to an
+ * OMS workspace and whose data is displayed by Azure Security Center.
+ */
+export interface ExternalSecuritySolution {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "ExternalSecuritySolution";
+  /**
+   * Resource Id
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Resource name
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Resource type
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * Location where the resource is stored
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly location?: string;
+}
+
+/**
+ * The solution properties (correspond to the solution kind)
+ */
+export interface ExternalSecuritySolutionProperties {
+  deviceVendor?: string;
+  deviceType?: string;
+  workspace?: ConnectedWorkspace;
+  /**
+   * Describes unknown properties. The value of an unknown property can be of "any" type.
+   */
+  [property: string]: any;
+}
+
+/**
+ * An interface representing CefSolutionProperties.
+ * @summary The external security solution properties for CEF solutions
+ */
+export interface CefSolutionProperties extends ExternalSecuritySolutionProperties {
+  hostname?: string;
+  agent?: string;
+  lastEventReceived?: string;
+}
+
+/**
+ * Represents a security solution which sends CEF logs to an OMS workspace
+ */
+export interface CefExternalSecuritySolution {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "CEF";
+  /**
+   * Resource Id
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Resource name
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Resource type
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * Location where the resource is stored
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly location?: string;
+  properties?: CefSolutionProperties;
+}
+
+/**
+ * An interface representing AtaSolutionProperties.
+ * @summary The external security solution properties for ATA solutions
+ */
+export interface AtaSolutionProperties extends ExternalSecuritySolutionProperties {
+  lastEventReceived?: string;
+}
+
+/**
+ * Represents an ATA security solution which sends logs to an OMS workspace
+ */
+export interface AtaExternalSecuritySolution {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "ATA";
+  /**
+   * Resource Id
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Resource name
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Resource type
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * Location where the resource is stored
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly location?: string;
+  properties?: AtaSolutionProperties;
+}
+
+/**
+ * An interface representing ConnectedWorkspace.
+ * @summary Represents an OMS workspace to which the solution is connected
+ */
+export interface ConnectedWorkspace {
+  /**
+   * Azure resource ID of the connected OMS workspace
+   */
+  id?: string;
+}
+
+/**
+ * An interface representing AadSolutionProperties.
+ * @summary The external security solution properties for AAD solutions
+ */
+export interface AadSolutionProperties {
+  deviceVendor?: string;
+  deviceType?: string;
+  workspace?: ConnectedWorkspace;
+  /**
+   * The connectivity state of the external AAD solution . Possible values include: 'Discovered',
+   * 'NotLicensed', 'Connected'
+   */
+  connectivityState?: AadConnectivityState;
+}
+
+/**
+ * Represents an AAD identity protection solution which sends logs to an OMS workspace.
+ */
+export interface AadExternalSecuritySolution {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "AAD";
+  /**
+   * Resource Id
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Resource name
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Resource type
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * Location where the resource is stored
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly location?: string;
+  properties?: AadSolutionProperties;
+}
+
+/**
+ * Describes an Azure resource with kind
+ */
+export interface ExternalSecuritySolutionKind1 {
+  /**
+   * The kind of the external solution. Possible values include: 'CEF', 'ATA', 'AAD'
+   */
+  kind?: ExternalSecuritySolutionKind;
+}
+
+/**
+ * Describes an Azure resource with kind
+ */
+export interface AadConnectivityState1 {
+  /**
+   * The connectivity state of the external AAD solution . Possible values include: 'Discovered',
+   * 'NotLicensed', 'Connected'
+   */
+  connectivityState?: AadConnectivityState;
+}
+
+/**
  * Optional Parameters.
  */
 export interface AlertsListOptionalParams extends msRest.RequestOptionsBase {
@@ -4038,32 +4038,6 @@ export interface IoTSecurityAggregatedRecommendationList extends Array<IoTSecuri
 
 /**
  * @interface
- * An interface representing the DiscoveredSecuritySolutionList.
- * @extends Array<DiscoveredSecuritySolution>
- */
-export interface DiscoveredSecuritySolutionList extends Array<DiscoveredSecuritySolution> {
-  /**
-   * The URI to fetch the next page.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly nextLink?: string;
-}
-
-/**
- * @interface
- * An interface representing the ExternalSecuritySolutionList.
- * @extends Array<ExternalSecuritySolutionUnion>
- */
-export interface ExternalSecuritySolutionList extends Array<ExternalSecuritySolutionUnion> {
-  /**
-   * The URI to fetch the next page.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly nextLink?: string;
-}
-
-/**
- * @interface
  * List of locations where ASC saves your data
  * @extends Array<AscLocation>
  */
@@ -4309,6 +4283,32 @@ export interface JitNetworkAccessPoliciesList extends Array<JitNetworkAccessPoli
 }
 
 /**
+ * @interface
+ * An interface representing the DiscoveredSecuritySolutionList.
+ * @extends Array<DiscoveredSecuritySolution>
+ */
+export interface DiscoveredSecuritySolutionList extends Array<DiscoveredSecuritySolution> {
+  /**
+   * The URI to fetch the next page.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly nextLink?: string;
+}
+
+/**
+ * @interface
+ * An interface representing the ExternalSecuritySolutionList.
+ * @extends Array<ExternalSecuritySolutionUnion>
+ */
+export interface ExternalSecuritySolutionList extends Array<ExternalSecuritySolutionUnion> {
+  /**
+   * The URI to fetch the next page.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly nextLink?: string;
+}
+
+/**
  * Defines values for ResourceStatus.
  * Possible values include: 'Healthy', 'NotApplicable', 'OffByPolicy', 'NotHealthy'
  * @readonly
@@ -4392,30 +4392,6 @@ export type RecommendationConfigStatus = 'Disabled' | 'Enabled';
  * @enum {string}
  */
 export type UnmaskedIpLoggingStatus = 'Disabled' | 'Enabled';
-
-/**
- * Defines values for SecurityFamily.
- * Possible values include: 'Waf', 'Ngfw', 'SaasWaf', 'Va'
- * @readonly
- * @enum {string}
- */
-export type SecurityFamily = 'Waf' | 'Ngfw' | 'SaasWaf' | 'Va';
-
-/**
- * Defines values for AadConnectivityState.
- * Possible values include: 'Discovered', 'NotLicensed', 'Connected'
- * @readonly
- * @enum {string}
- */
-export type AadConnectivityState = 'Discovered' | 'NotLicensed' | 'Connected';
-
-/**
- * Defines values for ExternalSecuritySolutionKind.
- * Possible values include: 'CEF', 'ATA', 'AAD'
- * @readonly
- * @enum {string}
- */
-export type ExternalSecuritySolutionKind = 'CEF' | 'ATA' | 'AAD';
 
 /**
  * Defines values for AutoProvision.
@@ -4587,6 +4563,30 @@ export type Status = 'Revoked' | 'Initiated';
  * @enum {string}
  */
 export type StatusReason = 'Expired' | 'UserRequested' | 'NewerRequestInitiated';
+
+/**
+ * Defines values for SecurityFamily.
+ * Possible values include: 'Waf', 'Ngfw', 'SaasWaf', 'Va'
+ * @readonly
+ * @enum {string}
+ */
+export type SecurityFamily = 'Waf' | 'Ngfw' | 'SaasWaf' | 'Va';
+
+/**
+ * Defines values for AadConnectivityState.
+ * Possible values include: 'Discovered', 'NotLicensed', 'Connected'
+ * @readonly
+ * @enum {string}
+ */
+export type AadConnectivityState = 'Discovered' | 'NotLicensed' | 'Connected';
+
+/**
+ * Defines values for ExternalSecuritySolutionKind.
+ * Possible values include: 'CEF', 'ATA', 'AAD'
+ * @readonly
+ * @enum {string}
+ */
+export type ExternalSecuritySolutionKind = 'CEF' | 'ATA' | 'AAD';
 
 /**
  * Defines values for ExpandEnum.
@@ -5617,206 +5617,6 @@ export type IotSecuritySolutionsAnalyticsRecommendationListNextResponse = IoTSec
        * The response body as parsed JSON or XML
        */
       parsedBody: IoTSecurityAggregatedRecommendationList;
-    };
-};
-
-/**
- * Contains response data for the list operation.
- */
-export type DiscoveredSecuritySolutionsListResponse = DiscoveredSecuritySolutionList & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: DiscoveredSecuritySolutionList;
-    };
-};
-
-/**
- * Contains response data for the listByHomeRegion operation.
- */
-export type DiscoveredSecuritySolutionsListByHomeRegionResponse = DiscoveredSecuritySolutionList & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: DiscoveredSecuritySolutionList;
-    };
-};
-
-/**
- * Contains response data for the get operation.
- */
-export type DiscoveredSecuritySolutionsGetResponse = DiscoveredSecuritySolution & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: DiscoveredSecuritySolution;
-    };
-};
-
-/**
- * Contains response data for the listNext operation.
- */
-export type DiscoveredSecuritySolutionsListNextResponse = DiscoveredSecuritySolutionList & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: DiscoveredSecuritySolutionList;
-    };
-};
-
-/**
- * Contains response data for the listByHomeRegionNext operation.
- */
-export type DiscoveredSecuritySolutionsListByHomeRegionNextResponse = DiscoveredSecuritySolutionList & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: DiscoveredSecuritySolutionList;
-    };
-};
-
-/**
- * Contains response data for the list operation.
- */
-export type ExternalSecuritySolutionsListResponse = ExternalSecuritySolutionList & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ExternalSecuritySolutionList;
-    };
-};
-
-/**
- * Contains response data for the listByHomeRegion operation.
- */
-export type ExternalSecuritySolutionsListByHomeRegionResponse = ExternalSecuritySolutionList & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ExternalSecuritySolutionList;
-    };
-};
-
-/**
- * Contains response data for the get operation.
- */
-export type ExternalSecuritySolutionsGetResponse = ExternalSecuritySolutionUnion & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ExternalSecuritySolutionUnion;
-    };
-};
-
-/**
- * Contains response data for the listNext operation.
- */
-export type ExternalSecuritySolutionsListNextResponse = ExternalSecuritySolutionList & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ExternalSecuritySolutionList;
-    };
-};
-
-/**
- * Contains response data for the listByHomeRegionNext operation.
- */
-export type ExternalSecuritySolutionsListByHomeRegionNextResponse = ExternalSecuritySolutionList & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ExternalSecuritySolutionList;
     };
 };
 
@@ -7737,5 +7537,205 @@ export type JitNetworkAccessPoliciesListByResourceGroupAndRegionNextResponse = J
        * The response body as parsed JSON or XML
        */
       parsedBody: JitNetworkAccessPoliciesList;
+    };
+};
+
+/**
+ * Contains response data for the list operation.
+ */
+export type DiscoveredSecuritySolutionsListResponse = DiscoveredSecuritySolutionList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: DiscoveredSecuritySolutionList;
+    };
+};
+
+/**
+ * Contains response data for the listByHomeRegion operation.
+ */
+export type DiscoveredSecuritySolutionsListByHomeRegionResponse = DiscoveredSecuritySolutionList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: DiscoveredSecuritySolutionList;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type DiscoveredSecuritySolutionsGetResponse = DiscoveredSecuritySolution & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: DiscoveredSecuritySolution;
+    };
+};
+
+/**
+ * Contains response data for the listNext operation.
+ */
+export type DiscoveredSecuritySolutionsListNextResponse = DiscoveredSecuritySolutionList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: DiscoveredSecuritySolutionList;
+    };
+};
+
+/**
+ * Contains response data for the listByHomeRegionNext operation.
+ */
+export type DiscoveredSecuritySolutionsListByHomeRegionNextResponse = DiscoveredSecuritySolutionList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: DiscoveredSecuritySolutionList;
+    };
+};
+
+/**
+ * Contains response data for the list operation.
+ */
+export type ExternalSecuritySolutionsListResponse = ExternalSecuritySolutionList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ExternalSecuritySolutionList;
+    };
+};
+
+/**
+ * Contains response data for the listByHomeRegion operation.
+ */
+export type ExternalSecuritySolutionsListByHomeRegionResponse = ExternalSecuritySolutionList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ExternalSecuritySolutionList;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type ExternalSecuritySolutionsGetResponse = ExternalSecuritySolutionUnion & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ExternalSecuritySolutionUnion;
+    };
+};
+
+/**
+ * Contains response data for the listNext operation.
+ */
+export type ExternalSecuritySolutionsListNextResponse = ExternalSecuritySolutionList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ExternalSecuritySolutionList;
+    };
+};
+
+/**
+ * Contains response data for the listByHomeRegionNext operation.
+ */
+export type ExternalSecuritySolutionsListByHomeRegionNextResponse = ExternalSecuritySolutionList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ExternalSecuritySolutionList;
     };
 };
