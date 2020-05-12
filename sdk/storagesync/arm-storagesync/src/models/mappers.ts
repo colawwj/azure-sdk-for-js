@@ -128,6 +128,88 @@ export const SubscriptionState: msRest.CompositeMapper = {
   }
 };
 
+export const PrivateEndpoint: msRest.CompositeMapper = {
+  serializedName: "PrivateEndpoint",
+  type: {
+    name: "Composite",
+    className: "PrivateEndpoint",
+    modelProperties: {
+      id: {
+        readOnly: true,
+        serializedName: "id",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const PrivateLinkServiceConnectionState: msRest.CompositeMapper = {
+  serializedName: "PrivateLinkServiceConnectionState",
+  type: {
+    name: "Composite",
+    className: "PrivateLinkServiceConnectionState",
+    modelProperties: {
+      status: {
+        serializedName: "status",
+        type: {
+          name: "String"
+        }
+      },
+      description: {
+        serializedName: "description",
+        type: {
+          name: "String"
+        }
+      },
+      actionsRequired: {
+        serializedName: "actionsRequired",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const PrivateEndpointConnectionItem: msRest.CompositeMapper = {
+  serializedName: "PrivateEndpointConnectionItem",
+  type: {
+    name: "Composite",
+    className: "PrivateEndpointConnectionItem",
+    modelProperties: {
+      id: {
+        readOnly: true,
+        serializedName: "id",
+        type: {
+          name: "String"
+        }
+      },
+      privateEndpoint: {
+        serializedName: "properties.privateEndpoint",
+        type: {
+          name: "Composite",
+          className: "PrivateEndpoint"
+        }
+      },
+      privateLinkServiceConnectionState: {
+        serializedName: "properties.privateLinkServiceConnectionState",
+        type: {
+          name: "Composite",
+          className: "PrivateLinkServiceConnectionState"
+        }
+      },
+      provisioningState: {
+        serializedName: "properties.provisioningState",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const Resource: msRest.CompositeMapper = {
   serializedName: "Resource",
   type: {
@@ -195,6 +277,12 @@ export const StorageSyncService: msRest.CompositeMapper = {
     className: "StorageSyncService",
     modelProperties: {
       ...TrackedResource.type.modelProperties,
+      incomingTrafficPolicy: {
+        serializedName: "properties.incomingTrafficPolicy",
+        type: {
+          name: "String"
+        }
+      },
       storageSyncServiceStatus: {
         readOnly: true,
         serializedName: "properties.storageSyncServiceStatus",
@@ -207,6 +295,40 @@ export const StorageSyncService: msRest.CompositeMapper = {
         serializedName: "properties.storageSyncServiceUid",
         type: {
           name: "String"
+        }
+      },
+      provisioningState: {
+        readOnly: true,
+        serializedName: "properties.provisioningState",
+        type: {
+          name: "String"
+        }
+      },
+      lastWorkflowId: {
+        readOnly: true,
+        serializedName: "properties.lastWorkflowId",
+        type: {
+          name: "String"
+        }
+      },
+      lastOperationName: {
+        readOnly: true,
+        serializedName: "properties.lastOperationName",
+        type: {
+          name: "String"
+        }
+      },
+      privateEndpointConnections: {
+        readOnly: true,
+        serializedName: "properties.privateEndpointConnections",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "PrivateEndpointConnectionItem"
+            }
+          }
         }
       }
     }
@@ -394,10 +516,10 @@ export const StorageSyncServiceCreateParameters: msRest.CompositeMapper = {
           }
         }
       },
-      properties: {
-        serializedName: "properties",
+      incomingTrafficPolicy: {
+        serializedName: "properties.incomingTrafficPolicy",
         type: {
-          name: "Object"
+          name: "String"
         }
       }
     }
@@ -517,6 +639,27 @@ export const ServerEndpointCreateParameters: msRest.CompositeMapper = {
         serializedName: "properties.offlineDataTransferShareName",
         type: {
           name: "String"
+        }
+      },
+      initialDownloadPolicy: {
+        serializedName: "properties.initialDownloadPolicy",
+        type: {
+          name: "Enum",
+          allowedValues: [
+            "NamespaceOnly",
+            "NamespaceThenModifiedFiles",
+            "AvoidTieredFiles"
+          ]
+        }
+      },
+      localCacheMode: {
+        serializedName: "properties.localCacheMode",
+        type: {
+          name: "Enum",
+          allowedValues: [
+            "DownloadNewAndModifiedFiles",
+            "UpdateLocallyCachedFiles"
+          ]
         }
       }
     }
@@ -646,6 +789,16 @@ export const ServerEndpointUpdateParameters: msRest.CompositeMapper = {
         serializedName: "properties.offlineDataTransferShareName",
         type: {
           name: "String"
+        }
+      },
+      localCacheMode: {
+        serializedName: "properties.localCacheMode",
+        type: {
+          name: "Enum",
+          allowedValues: [
+            "DownloadNewAndModifiedFiles",
+            "UpdateLocallyCachedFiles"
+          ]
         }
       }
     }
@@ -1443,6 +1596,27 @@ export const ServerEndpoint: msRest.CompositeMapper = {
           name: "Composite",
           className: "ServerEndpointRecallStatus"
         }
+      },
+      initialDownloadPolicy: {
+        serializedName: "properties.initialDownloadPolicy",
+        type: {
+          name: "Enum",
+          allowedValues: [
+            "NamespaceOnly",
+            "NamespaceThenModifiedFiles",
+            "AvoidTieredFiles"
+          ]
+        }
+      },
+      localCacheMode: {
+        serializedName: "properties.localCacheMode",
+        type: {
+          name: "Enum",
+          allowedValues: [
+            "DownloadNewAndModifiedFiles",
+            "UpdateLocallyCachedFiles"
+          ]
+        }
       }
     }
   }
@@ -1559,6 +1733,12 @@ export const RegisteredServer: msRest.CompositeMapper = {
       },
       managementEndpointUri: {
         serializedName: "properties.managementEndpointUri",
+        type: {
+          name: "String"
+        }
+      },
+      monitoringEndpointUri: {
+        serializedName: "properties.monitoringEndpointUri",
         type: {
           name: "String"
         }
@@ -1988,6 +2168,36 @@ export const PostBackupResponse: msRest.CompositeMapper = {
   }
 };
 
+export const PrivateEndpointConnection: msRest.CompositeMapper = {
+  serializedName: "PrivateEndpointConnection",
+  type: {
+    name: "Composite",
+    className: "PrivateEndpointConnection",
+    modelProperties: {
+      privateEndpoint: {
+        serializedName: "properties.privateEndpoint",
+        type: {
+          name: "Composite",
+          className: "PrivateEndpoint"
+        }
+      },
+      privateLinkServiceConnectionState: {
+        serializedName: "properties.privateLinkServiceConnectionState",
+        type: {
+          name: "Composite",
+          className: "PrivateLinkServiceConnectionState"
+        }
+      },
+      provisioningState: {
+        serializedName: "properties.provisioningState",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const StorageSyncServiceUpdateParameters: msRest.CompositeMapper = {
   serializedName: "StorageSyncServiceUpdateParameters",
   type: {
@@ -2005,10 +2215,10 @@ export const StorageSyncServiceUpdateParameters: msRest.CompositeMapper = {
           }
         }
       },
-      properties: {
-        serializedName: "properties",
+      incomingTrafficPolicy: {
+        serializedName: "properties.incomingTrafficPolicy",
         type: {
-          name: "Object"
+          name: "String"
         }
       }
     }
@@ -2061,6 +2271,69 @@ export const OperationStatus: msRest.CompositeMapper = {
   }
 };
 
+export const PrivateLinkResource: msRest.CompositeMapper = {
+  serializedName: "PrivateLinkResource",
+  type: {
+    name: "Composite",
+    className: "PrivateLinkResource",
+    modelProperties: {
+      ...Resource.type.modelProperties,
+      groupId: {
+        readOnly: true,
+        serializedName: "properties.groupId",
+        type: {
+          name: "String"
+        }
+      },
+      requiredMembers: {
+        readOnly: true,
+        serializedName: "properties.requiredMembers",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      requiredZoneNames: {
+        serializedName: "properties.requiredZoneNames",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const PrivateLinkResourceListResult: msRest.CompositeMapper = {
+  serializedName: "PrivateLinkResourceListResult",
+  type: {
+    name: "Composite",
+    className: "PrivateLinkResourceListResult",
+    modelProperties: {
+      value: {
+        serializedName: "value",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "PrivateLinkResource"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
 export const AzureEntityResource: msRest.CompositeMapper = {
   serializedName: "AzureEntityResource",
   type: {
@@ -2085,6 +2358,46 @@ export const OperationsListHeaders: msRest.CompositeMapper = {
     name: "Composite",
     className: "OperationsListHeaders",
     modelProperties: {
+      xMsRequestId: {
+        serializedName: "x-ms-request-id",
+        type: {
+          name: "String"
+        }
+      },
+      xMsCorrelationRequestId: {
+        serializedName: "x-ms-correlation-request-id",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const StorageSyncServicesCreateHeaders: msRest.CompositeMapper = {
+  serializedName: "storagesyncservices-create-headers",
+  type: {
+    name: "Composite",
+    className: "StorageSyncServicesCreateHeaders",
+    modelProperties: {
+      azureAsyncOperation: {
+        serializedName: "azure-asyncoperation",
+        type: {
+          name: "String"
+        }
+      },
+      locationHeader: {
+        serializedName: "location",
+        type: {
+          name: "String"
+        }
+      },
+      retryAfter: {
+        serializedName: "retry-after",
+        type: {
+          name: "String"
+        }
+      },
       xMsRequestId: {
         serializedName: "x-ms-request-id",
         type: {
@@ -2140,6 +2453,24 @@ export const StorageSyncServicesUpdateHeaders: msRest.CompositeMapper = {
         type: {
           name: "String"
         }
+      },
+      azureAsyncOperation: {
+        serializedName: "azure-asyncoperation",
+        type: {
+          name: "String"
+        }
+      },
+      locationHeader: {
+        serializedName: "location",
+        type: {
+          name: "String"
+        }
+      },
+      retryAfter: {
+        serializedName: "retry-after",
+        type: {
+          name: "String"
+        }
       }
     }
   }
@@ -2159,6 +2490,24 @@ export const StorageSyncServicesDeleteHeaders: msRest.CompositeMapper = {
       },
       xMsCorrelationRequestId: {
         serializedName: "x-ms-correlation-request-id",
+        type: {
+          name: "String"
+        }
+      },
+      azureAsyncOperation: {
+        serializedName: "azure-asyncoperation",
+        type: {
+          name: "String"
+        }
+      },
+      location: {
+        serializedName: "location",
+        type: {
+          name: "String"
+        }
+      },
+      retryAfter: {
+        serializedName: "retry-after",
         type: {
           name: "String"
         }
@@ -2194,6 +2543,108 @@ export const StorageSyncServicesListBySubscriptionHeaders: msRest.CompositeMappe
   type: {
     name: "Composite",
     className: "StorageSyncServicesListBySubscriptionHeaders",
+    modelProperties: {
+      xMsRequestId: {
+        serializedName: "x-ms-request-id",
+        type: {
+          name: "String"
+        }
+      },
+      xMsCorrelationRequestId: {
+        serializedName: "x-ms-correlation-request-id",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const PrivateEndpointConnectionsCreateHeaders: msRest.CompositeMapper = {
+  serializedName: "privateendpointconnections-create-headers",
+  type: {
+    name: "Composite",
+    className: "PrivateEndpointConnectionsCreateHeaders",
+    modelProperties: {
+      azureAsyncOperation: {
+        serializedName: "azure-asyncoperation",
+        type: {
+          name: "String"
+        }
+      },
+      location: {
+        serializedName: "location",
+        type: {
+          name: "String"
+        }
+      },
+      retryAfter: {
+        serializedName: "retry-after",
+        type: {
+          name: "String"
+        }
+      },
+      xMsRequestId: {
+        serializedName: "x-ms-request-id",
+        type: {
+          name: "String"
+        }
+      },
+      xMsCorrelationRequestId: {
+        serializedName: "x-ms-correlation-request-id",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const PrivateEndpointConnectionsDeleteHeaders: msRest.CompositeMapper = {
+  serializedName: "privateendpointconnections-delete-headers",
+  type: {
+    name: "Composite",
+    className: "PrivateEndpointConnectionsDeleteHeaders",
+    modelProperties: {
+      azureAsyncOperation: {
+        serializedName: "azure-asyncoperation",
+        type: {
+          name: "String"
+        }
+      },
+      location: {
+        serializedName: "location",
+        type: {
+          name: "String"
+        }
+      },
+      retryAfter: {
+        serializedName: "retry-after",
+        type: {
+          name: "String"
+        }
+      },
+      xMsRequestId: {
+        serializedName: "x-ms-request-id",
+        type: {
+          name: "String"
+        }
+      },
+      xMsCorrelationRequestId: {
+        serializedName: "x-ms-correlation-request-id",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const PrivateEndpointConnectionsListByStorageSyncServiceHeaders: msRest.CompositeMapper = {
+  serializedName: "privateendpointconnections-listbystoragesyncservice-headers",
+  type: {
+    name: "Composite",
+    className: "PrivateEndpointConnectionsListByStorageSyncServiceHeaders",
     modelProperties: {
       xMsRequestId: {
         serializedName: "x-ms-request-id",
@@ -3023,6 +3474,28 @@ export const StorageSyncServiceArray: msRest.CompositeMapper = {
             type: {
               name: "Composite",
               className: "StorageSyncService"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const PrivateEndpointConnectionArray: msRest.CompositeMapper = {
+  serializedName: "PrivateEndpointConnectionArray",
+  type: {
+    name: "Composite",
+    className: "PrivateEndpointConnectionArray",
+    modelProperties: {
+      value: {
+        serializedName: "",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "PrivateEndpointConnection"
             }
           }
         }
