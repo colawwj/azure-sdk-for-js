@@ -29,11 +29,11 @@ class ResourceManagementClient extends ResourceManagementClientContext {
    * Initializes a new instance of the ResourceManagementClient class.
    * @param credentials Credentials needed for the client to connect to Azure.
    * @param subscriptionId The ID of the target subscription.
-   * @param subscriptionId1 The ID of the source subscription.
+   * @param sourceSubscriptionId The ID of the source subscription.
    * @param [options] The parameter options
    */
-  constructor(credentials: msRest.ServiceClientCredentials, subscriptionId: string, subscriptionId1: string, options?: Models.ResourceManagementClientOptions) {
-    super(credentials, subscriptionId, subscriptionId1, options);
+  constructor(credentials: msRest.ServiceClientCredentials, subscriptionId: string, sourceSubscriptionId: string, options?: Models.ResourceManagementClientOptions) {
+    super(credentials, subscriptionId, sourceSubscriptionId, options);
     this.operations = new operations.Operations(this);
     this.deployments = new operations.Deployments(this);
     this.providers = new operations.Providers(this);

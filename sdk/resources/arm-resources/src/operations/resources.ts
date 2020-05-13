@@ -829,10 +829,10 @@ const beginMoveResourcesOperationSpec: msRest.OperationSpec = {
 
 const beginValidateMoveResourcesOperationSpec: msRest.OperationSpec = {
   httpMethod: "POST",
-  path: "subscriptions/{subscriptionId}/resourceGroups/{sourceResourceGroupName}/validateMoveResources",
+  path: "subscriptions/{sourceSubscriptionId}/resourceGroups/{sourceResourceGroupName}/validateMoveResources",
   urlParameters: [
     Parameters.sourceResourceGroupName,
-    Parameters.subscriptionId
+    Parameters.sourceSubscriptionId
   ],
   queryParameters: [
     Parameters.apiVersion

@@ -198,6 +198,16 @@ export const sourceResourceGroupName: msRest.OperationURLParameter = {
     }
   }
 };
+export const sourceSubscriptionId: msRest.OperationURLParameter = {
+  parameterPath: "sourceSubscriptionId",
+  mapper: {
+    required: true,
+    serializedName: "sourceSubscriptionId",
+    type: {
+      name: "String"
+    }
+  }
+};
 export const subscriptionId: msRest.OperationURLParameter = {
   parameterPath: "subscriptionId",
   mapper: {
