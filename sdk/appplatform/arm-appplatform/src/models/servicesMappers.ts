@@ -29,6 +29,7 @@ export {
   GitPatternRepository,
   NameAvailability,
   NameAvailabilityParameters,
+  NetworkProfile,
   PersistentDisk,
   ProxyResource,
   RegenerateTestKeyRequestPayload,

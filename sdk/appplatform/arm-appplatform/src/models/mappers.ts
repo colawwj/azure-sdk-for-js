@@ -288,6 +288,34 @@ export const TraceProperties: msRest.CompositeMapper = {
   }
 };
 
+export const NetworkProfile: msRest.CompositeMapper = {
+  serializedName: "NetworkProfile",
+  type: {
+    name: "Composite",
+    className: "NetworkProfile",
+    modelProperties: {
+      serviceRuntimeSubnetId: {
+        serializedName: "serviceRuntimeSubnetId",
+        type: {
+          name: "String"
+        }
+      },
+      appSubnetId: {
+        serializedName: "appSubnetId",
+        type: {
+          name: "String"
+        }
+      },
+      serviceCidr: {
+        serializedName: "serviceCidr",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const ClusterResourceProperties: msRest.CompositeMapper = {
   serializedName: "ClusterResourceProperties",
   type: {
@@ -327,6 +355,13 @@ export const ClusterResourceProperties: msRest.CompositeMapper = {
         serializedName: "serviceId",
         type: {
           name: "String"
+        }
+      },
+      networkProfile: {
+        serializedName: "networkProfile",
+        type: {
+          name: "Composite",
+          className: "NetworkProfile"
         }
       }
     }

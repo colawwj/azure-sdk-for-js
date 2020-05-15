@@ -29,6 +29,7 @@ export {
   ErrorModel,
   GitPatternRepository,
   LogFileUrlResponse,
+  NetworkProfile,
   PersistentDisk,
   ProxyResource,
   Resource,
