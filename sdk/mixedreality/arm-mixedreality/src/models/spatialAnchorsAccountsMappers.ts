@@ -13,7 +13,6 @@ export {
   BaseResource,
   CloudError,
   ProxyResource,
-  RemoteRenderingAccount,
   Resource,
   SpatialAnchorsAccount,
   SpatialAnchorsAccountPage,

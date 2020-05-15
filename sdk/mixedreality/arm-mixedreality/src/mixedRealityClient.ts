@@ -20,7 +20,6 @@ class MixedRealityClient extends MixedRealityClientContext {
   // Operation groups
   operations: operations.Operations;
   spatialAnchorsAccounts: operations.SpatialAnchorsAccounts;
-  remoteRenderingAccounts: operations.RemoteRenderingAccounts;
 
   /**
    * Initializes a new instance of the MixedRealityClient class.
@@ -33,7 +32,6 @@ class MixedRealityClient extends MixedRealityClientContext {
     super(credentials, subscriptionId, options);
     this.operations = new operations.Operations(this);
     this.spatialAnchorsAccounts = new operations.SpatialAnchorsAccounts(this);
-    this.remoteRenderingAccounts = new operations.RemoteRenderingAccounts(this);
   }
 
   /**
@@ -79,7 +77,7 @@ const checkNameAvailabilityLocalOperationSpec: msRest.OperationSpec = {
     Parameters.location
   ],
   queryParameters: [
-    Parameters.apiVersion0
+    Parameters.apiVersion
   ],
   headerParameters: [
     Parameters.acceptLanguage

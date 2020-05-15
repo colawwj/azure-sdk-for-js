@@ -17,6 +17,7 @@ const packageVersion = "1.0.0";
 
 export class MixedRealityClientContext extends msRestAzure.AzureServiceClient {
   credentials: msRest.ServiceClientCredentials;
+  apiVersion?: string;
   subscriptionId: string;
 
   /**
@@ -44,6 +45,7 @@ export class MixedRealityClientContext extends msRestAzure.AzureServiceClient {
 
     super(credentials, options);
 
+    this.apiVersion = '2020-05-01';
     this.acceptLanguage = 'en-US';
     this.longRunningOperationRetryTimeout = 30;
     this.baseUri = options.baseUri || this.baseUri || "https://management.azure.com";

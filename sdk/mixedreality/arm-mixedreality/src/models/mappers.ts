@@ -281,31 +281,6 @@ export const AccountKeyRegenerateRequest: msRest.CompositeMapper = {
   }
 };
 
-export const RemoteRenderingAccount: msRest.CompositeMapper = {
-  serializedName: "RemoteRenderingAccount",
-  type: {
-    name: "Composite",
-    className: "RemoteRenderingAccount",
-    modelProperties: {
-      ...TrackedResource.type.modelProperties,
-      accountId: {
-        readOnly: true,
-        serializedName: "properties.accountId",
-        type: {
-          name: "String"
-        }
-      },
-      accountDomain: {
-        readOnly: true,
-        serializedName: "properties.accountDomain",
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
 export const OperationPage: msRest.CompositeMapper = {
   serializedName: "OperationPage",
   type: {
@@ -348,34 +323,6 @@ export const SpatialAnchorsAccountPage: msRest.CompositeMapper = {
             type: {
               name: "Composite",
               className: "SpatialAnchorsAccount"
-            }
-          }
-        }
-      },
-      nextLink: {
-        serializedName: "nextLink",
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const RemoteRenderingAccountPage: msRest.CompositeMapper = {
-  serializedName: "RemoteRenderingAccountPage",
-  type: {
-    name: "Composite",
-    className: "RemoteRenderingAccountPage",
-    modelProperties: {
-      value: {
-        serializedName: "",
-        type: {
-          name: "Sequence",
-          element: {
-            type: {
-              name: "Composite",
-              className: "RemoteRenderingAccount"
             }
           }
         }
