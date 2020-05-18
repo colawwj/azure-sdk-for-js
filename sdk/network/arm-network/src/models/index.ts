@@ -6208,9 +6208,9 @@ export interface VirtualApplianceSkuProperties {
  */
 export interface NetworkVirtualAppliance extends Resource {
   /**
-   * BootStrapConfigurationBlob storage URLs.
+   * BootStrapConfigurationBlobs storage URLs.
    */
-  bootStrapConfigurationBlob?: string[];
+  bootStrapConfigurationBlobs?: string[];
   /**
    * The Virtual Hub where Network Virtual Appliance is being deployed.
    */
@@ -6218,7 +6218,11 @@ export interface NetworkVirtualAppliance extends Resource {
   /**
    * CloudInitConfigurationBlob storage URLs.
    */
-  cloudInitConfigurationBlob?: string[];
+  cloudInitConfigurationBlobs?: string[];
+  /**
+   * CloudInitConfiguration string in plain text.
+   */
+  cloudInitConfiguration?: string;
   /**
    * VirtualAppliance ASN.
    */
@@ -6228,6 +6232,11 @@ export interface NetworkVirtualAppliance extends Resource {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly virtualApplianceNics?: VirtualApplianceNicProperties[];
+  /**
+   * List of references to VirtualApplianceSite.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly virtualApplianceSites?: SubResource[];
   /**
    * The provisioning state of the resource. Possible values include: 'Succeeded', 'Updating',
    * 'Deleting', 'Failed'
@@ -6242,6 +6251,111 @@ export interface NetworkVirtualAppliance extends Resource {
    * Network Virtual Appliance SKU.
    */
   sku?: VirtualApplianceSkuProperties;
+  /**
+   * A unique read-only string that changes whenever the resource is updated.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly etag?: string;
+}
+
+/**
+ * Network Virtual Appliance Sku Properties.
+ */
+export interface BreakOutCategoryPolicies {
+  /**
+   * Flag to control breakout of o365 allow category.
+   */
+  allow?: boolean;
+  /**
+   * Flag to control breakout of o365 optimize category.
+   */
+  optimize?: boolean;
+  /**
+   * Flag to control breakout of o365 default category.
+   */
+  default?: boolean;
+}
+
+/**
+ * Network Virtual Appliance Sku Properties.
+ */
+export interface Office365PolicyProperties {
+  /**
+   * Office 365 breakout categories.
+   */
+  breakOutCategories?: BreakOutCategoryPolicies;
+}
+
+/**
+ * Virtual Appliance Site resource.
+ */
+export interface VirtualApplianceSite extends SubResource {
+  /**
+   * Address Prefix.
+   */
+  addressPrefix?: string;
+  /**
+   * Office 365 Policy.
+   */
+  o365Policy?: Office365PolicyProperties;
+  /**
+   * The provisioning state of the resource. Possible values include: 'Succeeded', 'Updating',
+   * 'Deleting', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState;
+  /**
+   * Name of the virtual appliance site.
+   */
+  name?: string;
+  /**
+   * A unique read-only string that changes whenever the resource is updated.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly etag?: string;
+  /**
+   * Site type.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+}
+
+/**
+ * List of available Sku and instances.
+ * @summary Network Virtual Appliance Sku Instances
+ */
+export interface NetworkVirtualApplianceSkuInstances {
+  /**
+   * Scale Unit.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly scaleUnit?: string;
+  /**
+   * Instance Count.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly instanceCount?: number;
+}
+
+/**
+ * Definition of the NetworkVirtualApplianceSkus resource.
+ * @summary Available NetworkVirtualApplianceSkus
+ */
+export interface NetworkVirtualApplianceSku extends Resource {
+  /**
+   * Network Virtual Appliance Sku vendor.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly vendor?: string;
+  /**
+   * Available Network Virtual Appliance versions.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly availableVersions?: string[];
+  /**
+   * The list of scale units available.
+   */
+  availableScaleUnits?: NetworkVirtualApplianceSkuInstances[];
   /**
    * A unique read-only string that changes whenever the resource is updated.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -10377,6 +10491,88 @@ export interface VirtualHubRouteTableV2 extends SubResource {
 }
 
 /**
+ * Virtual Appliance Site resource.
+ */
+export interface BgpConnection extends SubResource {
+  /**
+   * Peer ASN.
+   */
+  peerAsn?: number;
+  /**
+   * Peer IP.
+   */
+  peerIp?: string;
+  /**
+   * The provisioning state of the resource. Possible values include: 'Succeeded', 'Updating',
+   * 'Deleting', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState;
+  /**
+   * The current state of the VirtualHub to Peer. Possible values include: 'Unknown', 'Connecting',
+   * 'Connected', 'NotConnected'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly connectionState?: HubBgpConnectionStatus;
+  /**
+   * Name of the connection.
+   */
+  name?: string;
+  /**
+   * A unique read-only string that changes whenever the resource is updated.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly etag?: string;
+  /**
+   * Connection type.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+}
+
+/**
+ * IpConfigurations.
+ */
+export interface HubIpConfiguration extends SubResource {
+  /**
+   * The private IP address of the IP configuration.
+   */
+  privateIPAddress?: string;
+  /**
+   * The private IP address allocation method. Possible values include: 'Static', 'Dynamic'
+   */
+  privateIPAllocationMethod?: IPAllocationMethod;
+  /**
+   * The reference to the subnet resource.
+   */
+  subnet?: Subnet;
+  /**
+   * The reference to the public IP resource.
+   */
+  publicIPAddress?: PublicIPAddress;
+  /**
+   * The provisioning state of the IP configuration resource. Possible values include: 'Succeeded',
+   * 'Updating', 'Deleting', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState;
+  /**
+   * Name of the Ip Configuration.
+   */
+  name?: string;
+  /**
+   * A unique read-only string that changes whenever the resource is updated.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly etag?: string;
+  /**
+   * Ipconfiguration type.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+}
+
+/**
  * VirtualHub Resource.
  */
 export interface VirtualHub extends Resource {
@@ -10434,6 +10630,28 @@ export interface VirtualHub extends Resource {
    * The sku of this VirtualHub.
    */
   sku?: string;
+  /**
+   * The routing state. Possible values include: 'None', 'Provisioned', 'Provisioning', 'Failed'
+   */
+  routingState?: RoutingState;
+  /**
+   * List of references to Bgp Connections.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly bgpConnections?: SubResource[];
+  /**
+   * List of references to IpConfigurations.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly ipConfigurations?: SubResource[];
+  /**
+   * VirtualRouter ASN.
+   */
+  virtualRouterAsn?: number;
+  /**
+   * VirtualRouter IPs.
+   */
+  virtualRouterIps?: string[];
   /**
    * A unique read-only string that changes whenever the resource is updated.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -10922,6 +11140,10 @@ export interface P2SVpnGateway extends Resource {
    */
   readonly vpnClientConnectionHealth?: VpnClientConnectionHealth;
   /**
+   * List of all customer specified DNS servers IP addresses.
+   */
+  customDnsServers?: string[];
+  /**
    * A unique read-only string that changes whenever the resource is updated.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
@@ -11204,6 +11426,57 @@ export interface ExpressRouteConnectionList {
    * The list of ExpressRoute connections.
    */
   value?: ExpressRouteConnection[];
+}
+
+/**
+ * The effective route configured on the virtual hub or specified resource.
+ */
+export interface VirtualHubEffectiveRoute {
+  /**
+   * The list of address prefixes.
+   */
+  addressPrefixes?: string[];
+  /**
+   * The list of next hops.
+   */
+  nextHops?: string[];
+  /**
+   * The type of the next hop.
+   */
+  nextHopType?: string;
+  /**
+   * The ASPath of this route.
+   */
+  asPath?: string;
+  /**
+   * The origin of this route.
+   */
+  routeOrigin?: string;
+}
+
+/**
+ * EffectiveRoutes List.
+ */
+export interface VirtualHubEffectiveRouteEffectiveRouteList {
+  /**
+   * The list of effective routes configured on the virtual hub or the specified resource.
+   */
+  value?: VirtualHubEffectiveRoute[];
+}
+
+/**
+ * The parameters specifying the resource whose effective routes are being requested.
+ */
+export interface EffectiveRoutesParameters {
+  /**
+   * The resource whose effective routes are being requested.
+   */
+  resourceId?: Resource;
+  /**
+   * The type of the specified resource like RouteTable, ExpressRouteConnection,
+   * HubVirtualNetworkConnection, VpnConnection and P2SConnection.
+   */
+  virtualWanResourceType?: string;
 }
 
 /**
@@ -11818,6 +12091,26 @@ export interface VirtualRoutersGetOptionalParams extends msRest.RequestOptionsBa
 }
 
 /**
+ * Optional Parameters.
+ */
+export interface VirtualHubsGetEffectiveVirtualHubRoutesOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Parameters supplied to get the effective routes for a specific resource.
+   */
+  effectiveRoutesParameters?: EffectiveRoutesParameters;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface VirtualHubsBeginGetEffectiveVirtualHubRoutesOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Parameters supplied to get the effective routes for a specific resource.
+   */
+  effectiveRoutesParameters?: EffectiveRoutesParameters;
+}
+
+/**
  * An interface representing NetworkManagementClientOptions.
  */
 export interface NetworkManagementClientOptions extends AzureServiceClientOptions {
@@ -12380,6 +12673,30 @@ export interface NetworkVirtualApplianceListResult extends Array<NetworkVirtualA
 
 /**
  * @interface
+ * Response for ListNetworkVirtualApplianceSites API service call.
+ * @extends Array<VirtualApplianceSite>
+ */
+export interface NetworkVirtualApplianceSiteListResult extends Array<VirtualApplianceSite> {
+  /**
+   * URL to get the next set of results.
+   */
+  nextLink?: string;
+}
+
+/**
+ * @interface
+ * Response for ListNetworkVirtualApplianceSkus API service call.
+ * @extends Array<NetworkVirtualApplianceSku>
+ */
+export interface NetworkVirtualApplianceSkuListResult extends Array<NetworkVirtualApplianceSku> {
+  /**
+   * URL to get the next set of results.
+   */
+  nextLink?: string;
+}
+
+/**
+ * @interface
  * Response for ListNetworkWatchers API service call.
  * @extends Array<NetworkWatcher>
  */
@@ -12915,6 +13232,30 @@ export interface ListP2SVpnGatewaysResult extends Array<P2SVpnGateway> {
 export interface ListVirtualHubRouteTableV2sResult extends Array<VirtualHubRouteTableV2> {
   /**
    * URL to get the next set of operation list results if there are any.
+   */
+  nextLink?: string;
+}
+
+/**
+ * @interface
+ * VirtualHubBgpConnections list.
+ * @extends Array<BgpConnection>
+ */
+export interface ListVirtualHubBgpConnectionResults extends Array<BgpConnection> {
+  /**
+   * URL to get the next set of results.
+   */
+  nextLink?: string;
+}
+
+/**
+ * @interface
+ * VirtualHubIpConfigurations list.
+ * @extends Array<HubIpConfiguration>
+ */
+export interface ListVirtualHubIpConfigurationResults extends Array<HubIpConfiguration> {
+  /**
+   * URL to get the next set of results.
    */
   nextLink?: string;
 }
@@ -13868,6 +14209,22 @@ export type VirtualNetworkGatewayConnectionProtocol = 'IKEv2' | 'IKEv1';
  * @enum {string}
  */
 export type OfficeTrafficCategory = 'Optimize' | 'OptimizeAndAllow' | 'All' | 'None';
+
+/**
+ * Defines values for RoutingState.
+ * Possible values include: 'None', 'Provisioned', 'Provisioning', 'Failed'
+ * @readonly
+ * @enum {string}
+ */
+export type RoutingState = 'None' | 'Provisioned' | 'Provisioning' | 'Failed';
+
+/**
+ * Defines values for HubBgpConnectionStatus.
+ * Possible values include: 'Unknown', 'Connecting', 'Connected', 'NotConnected'
+ * @readonly
+ * @enum {string}
+ */
+export type HubBgpConnectionStatus = 'Unknown' | 'Connecting' | 'Connected' | 'NotConnected';
 
 /**
  * Defines values for VpnConnectionStatus.
@@ -19646,6 +20003,166 @@ export type NetworkVirtualAppliancesListNextResponse = NetworkVirtualApplianceLi
        * The response body as parsed JSON or XML
        */
       parsedBody: NetworkVirtualApplianceListResult;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type VirtualApplianceSitesGetResponse = VirtualApplianceSite & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: VirtualApplianceSite;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdate operation.
+ */
+export type VirtualApplianceSitesCreateOrUpdateResponse = VirtualApplianceSite & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: VirtualApplianceSite;
+    };
+};
+
+/**
+ * Contains response data for the list operation.
+ */
+export type VirtualApplianceSitesListResponse = NetworkVirtualApplianceSiteListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: NetworkVirtualApplianceSiteListResult;
+    };
+};
+
+/**
+ * Contains response data for the beginCreateOrUpdate operation.
+ */
+export type VirtualApplianceSitesBeginCreateOrUpdateResponse = VirtualApplianceSite & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: VirtualApplianceSite;
+    };
+};
+
+/**
+ * Contains response data for the listNext operation.
+ */
+export type VirtualApplianceSitesListNextResponse = NetworkVirtualApplianceSiteListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: NetworkVirtualApplianceSiteListResult;
+    };
+};
+
+/**
+ * Contains response data for the list operation.
+ */
+export type VirtualApplianceSkusListResponse = NetworkVirtualApplianceSkuListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: NetworkVirtualApplianceSkuListResult;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type VirtualApplianceSkusGetResponse = NetworkVirtualApplianceSku & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: NetworkVirtualApplianceSku;
+    };
+};
+
+/**
+ * Contains response data for the listNext operation.
+ */
+export type VirtualApplianceSkusListNextResponse = NetworkVirtualApplianceSkuListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: NetworkVirtualApplianceSkuListResult;
     };
 };
 
@@ -26526,6 +27043,206 @@ export type ExpressRouteConnectionsBeginCreateOrUpdateResponse = ExpressRouteCon
        * The response body as parsed JSON or XML
        */
       parsedBody: ExpressRouteConnection;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type VirtualHubBgpConnectionGetResponse = BgpConnection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: BgpConnection;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdate operation.
+ */
+export type VirtualHubBgpConnectionCreateOrUpdateResponse = BgpConnection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: BgpConnection;
+    };
+};
+
+/**
+ * Contains response data for the beginCreateOrUpdate operation.
+ */
+export type VirtualHubBgpConnectionBeginCreateOrUpdateResponse = BgpConnection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: BgpConnection;
+    };
+};
+
+/**
+ * Contains response data for the list operation.
+ */
+export type VirtualHubBgpConnectionsListResponse = ListVirtualHubBgpConnectionResults & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ListVirtualHubBgpConnectionResults;
+    };
+};
+
+/**
+ * Contains response data for the listNext operation.
+ */
+export type VirtualHubBgpConnectionsListNextResponse = ListVirtualHubBgpConnectionResults & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ListVirtualHubBgpConnectionResults;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type VirtualHubIpConfigurationGetResponse = HubIpConfiguration & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: HubIpConfiguration;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdate operation.
+ */
+export type VirtualHubIpConfigurationCreateOrUpdateResponse = HubIpConfiguration & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: HubIpConfiguration;
+    };
+};
+
+/**
+ * Contains response data for the list operation.
+ */
+export type VirtualHubIpConfigurationListResponse = ListVirtualHubIpConfigurationResults & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ListVirtualHubIpConfigurationResults;
+    };
+};
+
+/**
+ * Contains response data for the beginCreateOrUpdate operation.
+ */
+export type VirtualHubIpConfigurationBeginCreateOrUpdateResponse = HubIpConfiguration & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: HubIpConfiguration;
+    };
+};
+
+/**
+ * Contains response data for the listNext operation.
+ */
+export type VirtualHubIpConfigurationListNextResponse = ListVirtualHubIpConfigurationResults & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ListVirtualHubIpConfigurationResults;
     };
 };
 
