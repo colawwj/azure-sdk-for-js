@@ -20,11 +20,12 @@ export {
   BillingRoleAssignment,
   BillingRoleDefinition,
   BillingSubscription,
+  BillingSubscriptionsListResult,
+  BillingSubscriptionsMoveHeaders,
   Customer,
   CustomerPolicy,
   Department,
   Document,
-  DownloadUrl,
   Enrollment,
   EnrollmentAccount,
   EnrollmentPolicies,
@@ -32,9 +33,6 @@ export {
   ErrorResponse,
   Instruction,
   Invoice,
-  InvoiceListResult,
-  InvoicesDownloadBillingSubscriptionInvoiceHeaders,
-  InvoicesDownloadInvoiceHeaders,
   InvoiceSection,
   Participants,
   PaymentProperties,
@@ -42,5 +40,8 @@ export {
   Product,
   Reseller,
   Resource,
-  Transaction
+  Transaction,
+  TransferBillingSubscriptionRequestProperties,
+  ValidateSubscriptionTransferEligibilityError,
+  ValidateSubscriptionTransferEligibilityResult
 } from "../models/mappers";
