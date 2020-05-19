@@ -44,6 +44,7 @@ export {
   SystemService,
   UserAccountCredentials,
   VirtualMachine,
+  VirtualMachineImage,
   VirtualMachineProperties,
   VirtualMachineSshCredentials,
   Workspace

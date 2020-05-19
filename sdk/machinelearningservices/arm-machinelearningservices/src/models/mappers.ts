@@ -1457,6 +1457,23 @@ export const AKS: msRest.CompositeMapper = {
   }
 };
 
+export const VirtualMachineImage: msRest.CompositeMapper = {
+  serializedName: "VirtualMachineImage",
+  type: {
+    name: "Composite",
+    className: "VirtualMachineImage",
+    modelProperties: {
+      id: {
+        required: true,
+        serializedName: "id",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const ScaleSettings: msRest.CompositeMapper = {
   serializedName: "ScaleSettings",
   type: {
@@ -1574,6 +1591,12 @@ export const AmlComputeProperties: msRest.CompositeMapper = {
     name: "Composite",
     className: "AmlComputeProperties",
     modelProperties: {
+      osType: {
+        serializedName: "osType",
+        type: {
+          name: "String"
+        }
+      },
       vmSize: {
         serializedName: "vmSize",
         type: {
@@ -1584,6 +1607,13 @@ export const AmlComputeProperties: msRest.CompositeMapper = {
         serializedName: "vmPriority",
         type: {
           name: "String"
+        }
+      },
+      virtualMachineImage: {
+        serializedName: "virtualMachineImage",
+        type: {
+          name: "Composite",
+          className: "VirtualMachineImage"
         }
       },
       scaleSettings: {
