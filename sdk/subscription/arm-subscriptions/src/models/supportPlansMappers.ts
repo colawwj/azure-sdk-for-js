@@ -7,7 +7,9 @@
  */
 
 export {
-  CloudError,
-  SubscriptionCreationResult,
-  SubscriptionOperationGetHeaders
+  BaseResource,
+  DefaultSupportPlanResponseResult,
+  ErrorResponseBody,
+  ProxyResource,
+  SupportPlanResponseListResult
 } from "../models/mappers";

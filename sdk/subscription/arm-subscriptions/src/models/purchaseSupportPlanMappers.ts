@@ -7,7 +7,10 @@
  */
 
 export {
-  CloudError,
-  TenantIdDescription,
-  TenantListResult
+  BaseResource,
+  DefaultSupportPlanResponseResult,
+  ErrorResponseBody,
+  ProxyResource,
+  PurchaseSupportPlanCreateOrUpdateHeaders,
+  SupportPlanName
 } from "../models/mappers";

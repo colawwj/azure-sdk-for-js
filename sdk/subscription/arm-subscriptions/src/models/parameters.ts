@@ -20,75 +20,11 @@ export const acceptLanguage: msRest.OperationParameter = {
     }
   }
 };
-export const apiVersion0: msRest.OperationQueryParameter = {
+export const apiVersion: msRest.OperationQueryParameter = {
   parameterPath: "apiVersion",
   mapper: {
     required: true,
-    isConstant: true,
     serializedName: "api-version",
-    defaultValue: '2016-06-01',
-    type: {
-      name: "String"
-    }
-  }
-};
-export const apiVersion1: msRest.OperationQueryParameter = {
-  parameterPath: "apiVersion",
-  mapper: {
-    required: true,
-    isConstant: true,
-    serializedName: "api-version",
-    defaultValue: '2019-10-01-preview',
-    type: {
-      name: "String"
-    }
-  }
-};
-export const billingAccountName: msRest.OperationURLParameter = {
-  parameterPath: "billingAccountName",
-  mapper: {
-    required: true,
-    serializedName: "billingAccountName",
-    type: {
-      name: "String"
-    }
-  }
-};
-export const billingProfileName: msRest.OperationURLParameter = {
-  parameterPath: "billingProfileName",
-  mapper: {
-    required: true,
-    serializedName: "billingProfileName",
-    type: {
-      name: "String"
-    }
-  }
-};
-export const customerName: msRest.OperationURLParameter = {
-  parameterPath: "customerName",
-  mapper: {
-    required: true,
-    serializedName: "customerName",
-    type: {
-      name: "String"
-    }
-  }
-};
-export const enrollmentAccountName: msRest.OperationURLParameter = {
-  parameterPath: "enrollmentAccountName",
-  mapper: {
-    required: true,
-    serializedName: "enrollmentAccountName",
-    type: {
-      name: "String"
-    }
-  }
-};
-export const invoiceSectionName: msRest.OperationURLParameter = {
-  parameterPath: "invoiceSectionName",
-  mapper: {
-    required: true,
-    serializedName: "invoiceSectionName",
     type: {
       name: "String"
     }

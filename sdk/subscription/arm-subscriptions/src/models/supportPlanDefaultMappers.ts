@@ -7,8 +7,8 @@
  */
 
 export {
-  ErrorResponse,
-  Operation,
-  OperationDisplay,
-  OperationListResult
+  BaseResource,
+  DefaultSupportPlanResponseResult,
+  ErrorResponseBody,
+  ProxyResource
 } from "../models/mappers";
