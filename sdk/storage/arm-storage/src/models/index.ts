@@ -565,7 +565,7 @@ export interface StorageAccountCreateParameters {
   azureFilesIdentityBasedAuthentication?: AzureFilesIdentityBasedAuthentication;
   /**
    * Allows https traffic only to storage service if sets to true. The default value is true since
-   * API version 2019-04-01.
+   * API version 2019-04-01. Default value: true.
    */
   enableHttpsTrafficOnly?: boolean;
   /**

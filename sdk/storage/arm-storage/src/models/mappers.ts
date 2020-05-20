@@ -934,6 +934,7 @@ export const StorageAccountCreateParameters: msRest.CompositeMapper = {
       },
       enableHttpsTrafficOnly: {
         serializedName: "properties.supportsHttpsTrafficOnly",
+        defaultValue: true,
         type: {
           name: "Boolean"
         }
