@@ -1043,6 +1043,9 @@ const convertToSinglePlacementGroupOperationSpec: msRest.OperationSpec = {
     Parameters.vmScaleSetName,
     Parameters.subscriptionId
   ],
+  queryParameters: [
+    Parameters.apiVersion0
+  ],
   headerParameters: [
     Parameters.acceptLanguage
   ],
