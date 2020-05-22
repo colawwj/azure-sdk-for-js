@@ -2877,10 +2877,16 @@ export const PrivateEndpointConnectionUpdateHeaders: msRest.CompositeMapper = {
     name: "Composite",
     className: "PrivateEndpointConnectionUpdateHeaders",
     modelProperties: {
-      eTag: {
-        serializedName: "etag",
+      location: {
+        serializedName: "location",
         type: {
           name: "String"
+        }
+      },
+      retryAfter: {
+        serializedName: "retry-after",
+        type: {
+          name: "Number"
         }
       }
     }

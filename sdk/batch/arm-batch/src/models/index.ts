@@ -2019,6 +2019,17 @@ export interface PrivateEndpointConnectionUpdateOptionalParams extends msRest.Re
 /**
  * Optional Parameters.
  */
+export interface PrivateEndpointConnectionBeginUpdateOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * The state (ETag) version of the private endpoint connection to update. This value can be
+   * omitted or set to "*" to apply the operation unconditionally.
+   */
+  ifMatch?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
 export interface PoolListByBatchAccountOptionalParams extends msRest.RequestOptionsBase {
   /**
    * The maximum number of items to return in the response.
@@ -2196,11 +2207,14 @@ export interface CertificateCancelDeletionHeaders {
  */
 export interface PrivateEndpointConnectionUpdateHeaders {
   /**
-   * The ETag HTTP response header. This is an opaque string. You can use it to detect whether the
-   * resource has changed between requests. In particular, you can pass the ETag to one of the
-   * If-Match or If-None-Match headers.
+   * The URL of the resource used to check the status of the asynchronous operation.
    */
-  eTag: string;
+  location: string;
+  /**
+   * Suggested delay to check the status of the asynchronous operation. The value is an integer
+   * that represents the seconds.
+   */
+  retryAfter: number;
 }
 
 /**

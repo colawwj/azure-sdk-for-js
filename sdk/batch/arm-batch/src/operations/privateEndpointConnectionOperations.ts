@@ -9,6 +9,7 @@
  */
 
 import * as msRest from "@azure/ms-rest-js";
+import * as msRestAzure from "@azure/ms-rest-azure-js";
 import * as Models from "../models";
 import * as Mappers from "../models/privateEndpointConnectionOperationsMappers";
 import * as Parameters from "../models/parameters";
@@ -108,30 +109,24 @@ export class PrivateEndpointConnectionOperations {
    * @param [options] The optional parameters
    * @returns Promise<Models.PrivateEndpointConnectionUpdateResponse>
    */
-  update(resourceGroupName: string, accountName: string, privateEndpointConnectionName: string, parameters: Models.PrivateEndpointConnection, options?: Models.PrivateEndpointConnectionUpdateOptionalParams): Promise<Models.PrivateEndpointConnectionUpdateResponse>;
+  update(resourceGroupName: string, accountName: string, privateEndpointConnectionName: string, parameters: Models.PrivateEndpointConnection, options?: Models.PrivateEndpointConnectionUpdateOptionalParams): Promise<Models.PrivateEndpointConnectionUpdateResponse> {
+    return this.beginUpdate(resourceGroupName,accountName,privateEndpointConnectionName,parameters,options)
+      .then(lroPoller => lroPoller.pollUntilFinished()) as Promise<Models.PrivateEndpointConnectionUpdateResponse>;
+  }
+
   /**
+   * Updates the properties of an existing private endpoint connection.
    * @param resourceGroupName The name of the resource group that contains the Batch account.
    * @param accountName The name of the Batch account.
    * @param privateEndpointConnectionName The private endpoint connection name. This must be unique
    * within the account.
    * @param parameters PrivateEndpointConnection properties that should be updated. Properties that
    * are supplied will be updated, any property not supplied will be unchanged.
-   * @param callback The callback
+   * @param [options] The optional parameters
+   * @returns Promise<msRestAzure.LROPoller>
    */
-  update(resourceGroupName: string, accountName: string, privateEndpointConnectionName: string, parameters: Models.PrivateEndpointConnection, callback: msRest.ServiceCallback<Models.PrivateEndpointConnection>): void;
-  /**
-   * @param resourceGroupName The name of the resource group that contains the Batch account.
-   * @param accountName The name of the Batch account.
-   * @param privateEndpointConnectionName The private endpoint connection name. This must be unique
-   * within the account.
-   * @param parameters PrivateEndpointConnection properties that should be updated. Properties that
-   * are supplied will be updated, any property not supplied will be unchanged.
-   * @param options The optional parameters
-   * @param callback The callback
-   */
-  update(resourceGroupName: string, accountName: string, privateEndpointConnectionName: string, parameters: Models.PrivateEndpointConnection, options: Models.PrivateEndpointConnectionUpdateOptionalParams, callback: msRest.ServiceCallback<Models.PrivateEndpointConnection>): void;
-  update(resourceGroupName: string, accountName: string, privateEndpointConnectionName: string, parameters: Models.PrivateEndpointConnection, options?: Models.PrivateEndpointConnectionUpdateOptionalParams | msRest.ServiceCallback<Models.PrivateEndpointConnection>, callback?: msRest.ServiceCallback<Models.PrivateEndpointConnection>): Promise<Models.PrivateEndpointConnectionUpdateResponse> {
-    return this.client.sendOperationRequest(
+  beginUpdate(resourceGroupName: string, accountName: string, privateEndpointConnectionName: string, parameters: Models.PrivateEndpointConnection, options?: Models.PrivateEndpointConnectionBeginUpdateOptionalParams): Promise<msRestAzure.LROPoller> {
+    return this.client.sendLRORequest(
       {
         resourceGroupName,
         accountName,
@@ -139,8 +134,8 @@ export class PrivateEndpointConnectionOperations {
         parameters,
         options
       },
-      updateOperationSpec,
-      callback) as Promise<Models.PrivateEndpointConnectionUpdateResponse>;
+      beginUpdateOperationSpec,
+      options);
   }
 
   /**
@@ -226,7 +221,7 @@ const getOperationSpec: msRest.OperationSpec = {
   serializer
 };
 
-const updateOperationSpec: msRest.OperationSpec = {
+const beginUpdateOperationSpec: msRest.OperationSpec = {
   httpMethod: "PATCH",
   path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/privateEndpointConnections/{privateEndpointConnectionName}",
   urlParameters: [
@@ -252,6 +247,12 @@ const updateOperationSpec: msRest.OperationSpec = {
   responses: {
     200: {
       bodyMapper: Mappers.PrivateEndpointConnection,
+      headersMapper: Mappers.PrivateEndpointConnectionUpdateHeaders
+    },
+    202: {
+      headersMapper: Mappers.PrivateEndpointConnectionUpdateHeaders
+    },
+    204: {
       headersMapper: Mappers.PrivateEndpointConnectionUpdateHeaders
     },
     default: {

@@ -180,9 +180,9 @@ export const privateEndpointConnectionName: msRest.OperationURLParameter = {
     required: true,
     serializedName: "privateEndpointConnectionName",
     constraints: {
-      MaxLength: 64,
+      MaxLength: 101,
       MinLength: 1,
-      Pattern: /^[a-zA-Z0-9_-]+$/
+      Pattern: /^[a-zA-Z0-9_-]+\.?[a-fA-F0-9-]*$/
     },
     type: {
       name: "String"
@@ -195,9 +195,9 @@ export const privateLinkResourceName: msRest.OperationURLParameter = {
     required: true,
     serializedName: "privateLinkResourceName",
     constraints: {
-      MaxLength: 64,
+      MaxLength: 101,
       MinLength: 1,
-      Pattern: /^[a-zA-Z0-9_-]+$/
+      Pattern: /^[a-zA-Z0-9_-]+\.?[a-fA-F0-9-]*$/
     },
     type: {
       name: "String"
