@@ -7,8 +7,10 @@
  */
 
 export {
-  ErrorResponse,
-  Operation,
-  OperationDisplay,
-  OperationListResult
+  CloudError,
+  InnerError,
+  WorkItemConfiguration,
+  WorkItemConfigurationError,
+  WorkItemConfigurationsListResult,
+  WorkItemCreateConfiguration
 } from "../models/mappers";

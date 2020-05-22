@@ -20,6 +20,16 @@ export const acceptLanguage: msRest.OperationParameter = {
     }
   }
 };
+export const annotationId: msRest.OperationURLParameter = {
+  parameterPath: "annotationId",
+  mapper: {
+    required: true,
+    serializedName: "annotationId",
+    type: {
+      name: "String"
+    }
+  }
+};
 export const apiVersion: msRest.OperationQueryParameter = {
   parameterPath: "apiVersion",
   mapper: {
@@ -33,33 +43,136 @@ export const apiVersion: msRest.OperationQueryParameter = {
     }
   }
 };
-export const continuationToken: msRest.OperationQueryParameter = {
+export const canFetchContent: msRest.OperationQueryParameter = {
   parameterPath: [
     "options",
-    "continuationToken"
+    "canFetchContent"
   ],
   mapper: {
-    serializedName: "continuationToken",
+    serializedName: "canFetchContent",
+    type: {
+      name: "Boolean"
+    }
+  }
+};
+export const category: msRest.OperationQueryParameter = {
+  parameterPath: "category",
+  mapper: {
+    required: true,
+    serializedName: "category",
     type: {
       name: "String"
     }
   }
 };
-export const downloadAs: msRest.OperationQueryParameter = {
-  parameterPath: "downloadAs",
+export const componentName: msRest.OperationURLParameter = {
+  parameterPath: "componentName",
   mapper: {
     required: true,
-    serializedName: "downloadAs",
+    serializedName: "componentName",
     type: {
       name: "String"
     }
   }
 };
-export const geoLocationId: msRest.OperationQueryParameter = {
-  parameterPath: "geoLocationId",
+export const configurationId: msRest.OperationURLParameter = {
+  parameterPath: "configurationId",
   mapper: {
     required: true,
-    serializedName: "geoLocationId",
+    serializedName: "ConfigurationId",
+    type: {
+      name: "String"
+    }
+  }
+};
+export const end: msRest.OperationQueryParameter = {
+  parameterPath: "end",
+  mapper: {
+    required: true,
+    serializedName: "end",
+    type: {
+      name: "String"
+    }
+  }
+};
+export const exportId: msRest.OperationURLParameter = {
+  parameterPath: "exportId",
+  mapper: {
+    required: true,
+    serializedName: "exportId",
+    type: {
+      name: "String"
+    }
+  }
+};
+export const favoriteId: msRest.OperationURLParameter = {
+  parameterPath: "favoriteId",
+  mapper: {
+    required: true,
+    serializedName: "favoriteId",
+    type: {
+      name: "String"
+    }
+  }
+};
+export const favoriteType: msRest.OperationQueryParameter = {
+  parameterPath: [
+    "options",
+    "favoriteType"
+  ],
+  mapper: {
+    serializedName: "favoriteType",
+    defaultValue: 'shared',
+    type: {
+      name: "Enum",
+      allowedValues: [
+        "shared",
+        "user"
+      ]
+    }
+  }
+};
+export const id: msRest.OperationQueryParameter = {
+  parameterPath: [
+    "options",
+    "id"
+  ],
+  mapper: {
+    serializedName: "id",
+    type: {
+      name: "String"
+    }
+  }
+};
+export const includeContent: msRest.OperationQueryParameter = {
+  parameterPath: [
+    "options",
+    "includeContent"
+  ],
+  mapper: {
+    serializedName: "includeContent",
+    type: {
+      name: "Boolean"
+    }
+  }
+};
+export const keyId: msRest.OperationURLParameter = {
+  parameterPath: "keyId",
+  mapper: {
+    required: true,
+    serializedName: "keyId",
+    type: {
+      name: "String"
+    }
+  }
+};
+export const name: msRest.OperationQueryParameter = {
+  parameterPath: [
+    "options",
+    "name"
+  ],
+  mapper: {
+    serializedName: "name",
     type: {
       name: "String"
     }
@@ -76,6 +189,28 @@ export const nextPageLink: msRest.OperationURLParameter = {
   },
   skipEncoding: true
 };
+export const overrideItem: msRest.OperationQueryParameter = {
+  parameterPath: [
+    "options",
+    "overrideItem"
+  ],
+  mapper: {
+    serializedName: "overrideItem",
+    type: {
+      name: "Boolean"
+    }
+  }
+};
+export const purgeId: msRest.OperationURLParameter = {
+  parameterPath: "purgeId",
+  mapper: {
+    required: true,
+    serializedName: "purgeId",
+    type: {
+      name: "String"
+    }
+  }
+};
 export const resourceGroupName: msRest.OperationURLParameter = {
   parameterPath: "resourceGroupName",
   mapper: {
@@ -86,6 +221,61 @@ export const resourceGroupName: msRest.OperationURLParameter = {
       MinLength: 1,
       Pattern: /^[-\w\._\(\)]+$/
     },
+    type: {
+      name: "String"
+    }
+  }
+};
+export const resourceName: msRest.OperationURLParameter = {
+  parameterPath: "resourceName",
+  mapper: {
+    required: true,
+    serializedName: "resourceName",
+    type: {
+      name: "String"
+    }
+  }
+};
+export const scope: msRest.OperationQueryParameter = {
+  parameterPath: [
+    "options",
+    "scope"
+  ],
+  mapper: {
+    serializedName: "scope",
+    defaultValue: 'shared',
+    type: {
+      name: "String"
+    }
+  }
+};
+export const scopePath: msRest.OperationURLParameter = {
+  parameterPath: "scopePath",
+  mapper: {
+    required: true,
+    serializedName: "scopePath",
+    type: {
+      name: "String"
+    }
+  }
+};
+export const sourceType: msRest.OperationQueryParameter = {
+  parameterPath: [
+    "options",
+    "sourceType"
+  ],
+  mapper: {
+    serializedName: "sourceType",
+    type: {
+      name: "String"
+    }
+  }
+};
+export const start: msRest.OperationQueryParameter = {
+  parameterPath: "start",
+  mapper: {
+    required: true,
+    serializedName: "start",
     type: {
       name: "String"
     }
@@ -104,25 +294,34 @@ export const subscriptionId: msRest.OperationURLParameter = {
     }
   }
 };
-export const testSuccessfulCriteria: msRest.OperationQueryParameter = {
+export const tags: msRest.OperationQueryParameter = {
   parameterPath: [
     "options",
-    "testSuccessfulCriteria"
+    "tags"
   ],
   mapper: {
-    serializedName: "testSuccessfulCriteria",
+    serializedName: "tags",
     type: {
-      name: "Boolean"
+      name: "Sequence",
+      element: {
+        type: {
+          name: "String"
+        }
+      }
     }
-  }
+  },
+  collectionFormat: msRest.QueryCollectionFormat.Csv
 };
-export const timeStamp: msRest.OperationQueryParameter = {
-  parameterPath: "timeStamp",
+export const type: msRest.OperationQueryParameter = {
+  parameterPath: [
+    "options",
+    "type"
+  ],
   mapper: {
-    required: true,
-    serializedName: "timeStamp",
+    serializedName: "type",
+    defaultValue: 'none',
     type: {
-      name: "Number"
+      name: "String"
     }
   }
 };
@@ -131,6 +330,16 @@ export const webTestName: msRest.OperationURLParameter = {
   mapper: {
     required: true,
     serializedName: "webTestName",
+    type: {
+      name: "String"
+    }
+  }
+};
+export const workItemConfigId: msRest.OperationURLParameter = {
+  parameterPath: "workItemConfigId",
+  mapper: {
+    required: true,
+    serializedName: "workItemConfigId",
     type: {
       name: "String"
     }

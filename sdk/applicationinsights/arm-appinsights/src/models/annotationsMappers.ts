@@ -7,8 +7,9 @@
  */
 
 export {
-  ErrorResponse,
-  Operation,
-  OperationDisplay,
-  OperationListResult
+  Annotation,
+  AnnotationError,
+  AnnotationsListResult,
+  CloudError,
+  InnerError
 } from "../models/mappers";
