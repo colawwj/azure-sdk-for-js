@@ -7,9 +7,8 @@
  */
 
 export {
+  DissociatePaymentInstrumentEligibilityResult,
+  DissociatePaymentInstrumentErrorDetails,
   ErrorDetails,
-  ErrorResponse,
-  Operation,
-  OperationDisplay,
-  OperationListResult
+  ErrorResponse
 } from "../models/mappers";
