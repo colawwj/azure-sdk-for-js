@@ -39,7 +39,7 @@ describe("Import Tests", () => {
         if (err) {
           throw err;
         }     
-        let importLuApplication = await client.apps.importLuFormat(app);
+        let importLuApplication = await client.apps.importLuFromat(app);
         var testApp = await client.apps.get(importLuApplication.body);     
         
         chai.expect(testApp).to.exist;
