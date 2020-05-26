@@ -17,8 +17,7 @@ import { LogAnalyticsClientContext } from "./logAnalyticsClientContext";
 class LogAnalyticsClient extends LogAnalyticsClientContext {
   // Operation groups
   query: operations.Query;
-  get: operations.Get;
-  post: operations.Post;
+  metadata: operations.Metadata;
 
   /**
    * Initializes a new instance of the LogAnalyticsClient class.
@@ -28,8 +27,7 @@ class LogAnalyticsClient extends LogAnalyticsClientContext {
   constructor(credentials: msRest.ServiceClientCredentials, options?: Models.LogAnalyticsClientOptions) {
     super(credentials, options);
     this.query = new operations.Query(this);
-    this.get = new operations.Get(this);
-    this.post = new operations.Post(this);
+    this.metadata = new operations.Metadata(this);
   }
 }
 
