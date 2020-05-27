@@ -11,5 +11,4 @@
 export * from "./metrics";
 export * from "./events";
 export * from "./query";
-export * from "./post";
-export * from "./get";
+export * from "./metadata";
