@@ -446,34 +446,6 @@ export const ServiceResource: msRest.CompositeMapper = {
   }
 };
 
-export const ManagedIdentityProperties: msRest.CompositeMapper = {
-  serializedName: "ManagedIdentityProperties",
-  type: {
-    name: "Composite",
-    className: "ManagedIdentityProperties",
-    modelProperties: {
-      type: {
-        serializedName: "type",
-        type: {
-          name: "String"
-        }
-      },
-      principalId: {
-        serializedName: "principalId",
-        type: {
-          name: "String"
-        }
-      },
-      tenantId: {
-        serializedName: "tenantId",
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
 export const TestKeys: msRest.CompositeMapper = {
   serializedName: "TestKeys",
   type: {
@@ -686,13 +658,6 @@ export const AppResource: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "AppResourceProperties"
-        }
-      },
-      identity: {
-        serializedName: "identity",
-        type: {
-          name: "Composite",
-          className: "ManagedIdentityProperties"
         }
       },
       location: {

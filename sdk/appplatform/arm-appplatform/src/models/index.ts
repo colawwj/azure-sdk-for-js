@@ -273,19 +273,6 @@ export interface ServiceResource extends TrackedResource {
 }
 
 /**
- * Managed identity properties retrieved from ARM request headers.
- */
-export interface ManagedIdentityProperties {
-  /**
-   * Possible values include: 'None', 'SystemAssigned', 'UserAssigned',
-   * 'SystemAssigned,UserAssigned'
-   */
-  type?: ManagedIdentityType;
-  principalId?: string;
-  tenantId?: string;
-}
-
-/**
  * Test keys payload
  */
 export interface TestKeys {
@@ -415,10 +402,6 @@ export interface AppResource extends ProxyResource {
    * Properties of the App resource
    */
   properties?: AppResourceProperties;
-  /**
-   * The Managed Identity type of the app resource
-   */
-  identity?: ManagedIdentityProperties;
   /**
    * The GEO location of the application, always the same with its parent resource
    */
@@ -1241,14 +1224,6 @@ export type ConfigServerState = 'NotAvailable' | 'Deleted' | 'Failed' | 'Succeed
  * @enum {string}
  */
 export type TraceProxyState = 'NotAvailable' | 'Failed' | 'Succeeded' | 'Updating';
-
-/**
- * Defines values for ManagedIdentityType.
- * Possible values include: 'None', 'SystemAssigned', 'UserAssigned', 'SystemAssigned,UserAssigned'
- * @readonly
- * @enum {string}
- */
-export type ManagedIdentityType = 'None' | 'SystemAssigned' | 'UserAssigned' | 'SystemAssigned,UserAssigned';
 
 /**
  * Defines values for TestKeyType.

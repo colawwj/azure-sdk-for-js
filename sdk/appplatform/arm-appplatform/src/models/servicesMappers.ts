@@ -27,7 +27,6 @@ export {
   DeploymentSettings,
   ErrorModel,
   GitPatternRepository,
-  ManagedIdentityProperties,
   NameAvailability,
   NameAvailabilityParameters,
   PersistentDisk,

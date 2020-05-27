@@ -28,7 +28,6 @@ export {
   DeploymentSettings,
   ErrorModel,
   GitPatternRepository,
-  ManagedIdentityProperties,
   PersistentDisk,
   ProxyResource,
   Resource,
