@@ -107,6 +107,7 @@ export {
   OSDiskImage,
   OSDiskImageEncryption,
   OSProfile,
+  PatchSettings,
   Plan,
   ProximityPlacementGroup,
   ProximityPlacementGroupUpdate,

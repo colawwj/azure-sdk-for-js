@@ -2045,6 +2045,22 @@ export const WinRMConfiguration: msRest.CompositeMapper = {
   }
 };
 
+export const PatchSettings: msRest.CompositeMapper = {
+  serializedName: "PatchSettings",
+  type: {
+    name: "Composite",
+    className: "PatchSettings",
+    modelProperties: {
+      patchMode: {
+        serializedName: "patchMode",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const WindowsConfiguration: msRest.CompositeMapper = {
   serializedName: "WindowsConfiguration",
   type: {
@@ -2079,6 +2095,13 @@ export const WindowsConfiguration: msRest.CompositeMapper = {
               className: "AdditionalUnattendContent"
             }
           }
+        }
+      },
+      patchSettings: {
+        serializedName: "patchSettings",
+        type: {
+          name: "Composite",
+          className: "PatchSettings"
         }
       },
       winRM: {

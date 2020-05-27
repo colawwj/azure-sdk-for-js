@@ -1325,6 +1325,24 @@ export interface WinRMConfiguration {
 }
 
 /**
+ * An interface representing PatchSettings.
+ */
+export interface PatchSettings {
+  /**
+   * Specifies the mode of in-guest patching to IaaS virtual machine.<br /><br /> Possible values
+   * are:<br /><br /> **Manual** - You  control the application of patches to a virtual machine.
+   * You do this by applying patches manually inside the VM. In this mode, automatic updates are
+   * disabled; the property WindowsConfiguration.enableAutomaticUpdates must be false<br /><br />
+   * **AutomaticByOS** - The virtual machine will automatically be updated by the OS. The property
+   * WindowsConfiguration.enableAutomaticUpdates must be true. <br /><br /> **
+   * AutomaticByPlatform** - the virtual machine will automatically updated by the OS. The
+   * properties provisionVMAgent and WindowsConfiguration.enableAutomaticUpdates must be true.
+   * Possible values include: 'Manual', 'AutomaticByOS', 'AutomaticByPlatform'
+   */
+  patchMode?: InGuestPatchMode;
+}
+
+/**
  * Specifies Windows operating system settings on the virtual machine.
  */
 export interface WindowsConfiguration {
@@ -1354,6 +1372,10 @@ export interface WindowsConfiguration {
    * Unattend.xml file, which is used by Windows Setup.
    */
   additionalUnattendContent?: AdditionalUnattendContent[];
+  /**
+   * Specifies settings related to in-guest patching (KBs).
+   */
+  patchSettings?: PatchSettings;
   /**
    * Specifies the Windows Remote Management listeners. This enables remote Windows PowerShell.
    */
@@ -6779,6 +6801,14 @@ export type SettingNames = 'AutoLogon' | 'FirstLogonCommands';
  * @enum {string}
  */
 export type ProtocolTypes = 'Http' | 'Https';
+
+/**
+ * Defines values for InGuestPatchMode.
+ * Possible values include: 'Manual', 'AutomaticByOS', 'AutomaticByPlatform'
+ * @readonly
+ * @enum {string}
+ */
+export type InGuestPatchMode = 'Manual' | 'AutomaticByOS' | 'AutomaticByPlatform';
 
 /**
  * Defines values for VirtualMachinePriorityTypes.
