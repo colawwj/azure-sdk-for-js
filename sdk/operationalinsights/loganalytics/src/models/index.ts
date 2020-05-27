@@ -793,9 +793,9 @@ export type QueryExecuteResponse = QueryResults & {
 };
 
 /**
- * Contains response data for the metadata operation.
+ * Contains response data for the get operation.
  */
-export type GetMetadataResponse = MetadataResults & {
+export type MetadataGetResponse = MetadataResults & {
   /**
    * The underlying HTTP response.
    */
@@ -813,9 +813,9 @@ export type GetMetadataResponse = MetadataResults & {
 };
 
 /**
- * Contains response data for the metadata operation.
+ * Contains response data for the post operation.
  */
-export type PostMetadataResponse = MetadataResults & {
+export type MetadataPostResponse = MetadataResults & {
   /**
    * The underlying HTTP response.
    */
