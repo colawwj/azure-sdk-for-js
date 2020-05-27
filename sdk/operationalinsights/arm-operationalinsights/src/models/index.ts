@@ -464,7 +464,7 @@ export interface WorkspaceSku {
    * The last time when the sku was updated.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly lastSkuUpdate?: string;
+  readonly lastSkuUpdate?: Date;
 }
 
 /**
@@ -479,7 +479,7 @@ export interface WorkspaceCapping {
    * The time when the quota will be rest.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly quotaNextResetTime?: string;
+  readonly quotaNextResetTime?: Date;
   /**
    * The status of data ingestion for this workspace. Possible values include: 'RespectQuota',
    * 'ForceOn', 'ForceOff', 'OverQuota', 'SubscriptionSuspended', 'ApproachingQuota'
@@ -878,7 +878,7 @@ export interface AvailableServiceTier {
    * Service Tier.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly lastSkuUpdate?: string;
+  readonly lastSkuUpdate?: Date;
 }
 
 /**

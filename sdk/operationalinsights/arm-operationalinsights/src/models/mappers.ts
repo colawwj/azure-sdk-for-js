@@ -712,7 +712,7 @@ export const WorkspaceSku: msRest.CompositeMapper = {
         readOnly: true,
         serializedName: "lastSkuUpdate",
         type: {
-          name: "String"
+          name: "DateTime"
         }
       }
     }
@@ -735,7 +735,7 @@ export const WorkspaceCapping: msRest.CompositeMapper = {
         readOnly: true,
         serializedName: "quotaNextResetTime",
         type: {
-          name: "String"
+          name: "DateTime"
         }
       },
       dataIngestionStatus: {
@@ -1406,7 +1406,7 @@ export const AvailableServiceTier: msRest.CompositeMapper = {
         readOnly: true,
         serializedName: "lastSkuUpdate",
         type: {
-          name: "String"
+          name: "DateTime"
         }
       }
     }
