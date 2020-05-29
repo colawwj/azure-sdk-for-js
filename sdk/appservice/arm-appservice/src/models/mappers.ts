@@ -7454,6 +7454,28 @@ export const VnetValidationFailureDetails: msRest.CompositeMapper = {
   }
 };
 
+export const AllowedAudiencesValidation: msRest.CompositeMapper = {
+  serializedName: "AllowedAudiencesValidation",
+  type: {
+    name: "Composite",
+    className: "AllowedAudiencesValidation",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      allowedAudiences: {
+        serializedName: "properties.allowedAudiences",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
 export const ApiKVReference: msRest.CompositeMapper = {
   serializedName: "ApiKVReference",
   type: {
@@ -7661,6 +7683,29 @@ export const ApplicationLogsConfig: msRest.CompositeMapper = {
   }
 };
 
+export const AppRegistration: msRest.CompositeMapper = {
+  serializedName: "AppRegistration",
+  type: {
+    name: "Composite",
+    className: "AppRegistration",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      appId: {
+        serializedName: "properties.appId",
+        type: {
+          name: "String"
+        }
+      },
+      appSecretSettingName: {
+        serializedName: "properties.appSecretSettingName",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const ArmIdWrapper: msRest.CompositeMapper = {
   serializedName: "ArmIdWrapper",
   type: {
@@ -7672,6 +7717,204 @@ export const ArmIdWrapper: msRest.CompositeMapper = {
         serializedName: "id",
         type: {
           name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const AuthPlatform: msRest.CompositeMapper = {
+  serializedName: "AuthPlatform",
+  type: {
+    name: "Composite",
+    className: "AuthPlatform",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      enabled: {
+        serializedName: "properties.enabled",
+        type: {
+          name: "Boolean"
+        }
+      },
+      runtimeVersion: {
+        serializedName: "properties.runtimeVersion",
+        type: {
+          name: "String"
+        }
+      },
+      configFilePath: {
+        serializedName: "properties.configFilePath",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const AzureActiveDirectoryRegistration: msRest.CompositeMapper = {
+  serializedName: "AzureActiveDirectoryRegistration",
+  type: {
+    name: "Composite",
+    className: "AzureActiveDirectoryRegistration",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      openIdIssuer: {
+        serializedName: "properties.openIdIssuer",
+        type: {
+          name: "String"
+        }
+      },
+      clientId: {
+        serializedName: "properties.clientId",
+        type: {
+          name: "String"
+        }
+      },
+      clientSecretSettingName: {
+        serializedName: "properties.clientSecretSettingName",
+        type: {
+          name: "String"
+        }
+      },
+      clientSecretCertificateThumbprint: {
+        serializedName: "properties.clientSecretCertificateThumbprint",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const AzureActiveDirectoryLogin: msRest.CompositeMapper = {
+  serializedName: "AzureActiveDirectoryLogin",
+  type: {
+    name: "Composite",
+    className: "AzureActiveDirectoryLogin",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      disableWWWAuthenticate: {
+        serializedName: "properties.disableWWWAuthenticate",
+        type: {
+          name: "Boolean"
+        }
+      },
+      loginParameters: {
+        serializedName: "properties.loginParameters",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const JwtClaimChecks: msRest.CompositeMapper = {
+  serializedName: "JwtClaimChecks",
+  type: {
+    name: "Composite",
+    className: "JwtClaimChecks",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      allowedGroups: {
+        serializedName: "properties.allowedGroups",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      allowedClientApplications: {
+        serializedName: "properties.allowedClientApplications",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const AzureActiveDirectoryValidation: msRest.CompositeMapper = {
+  serializedName: "AzureActiveDirectoryValidation",
+  type: {
+    name: "Composite",
+    className: "AzureActiveDirectoryValidation",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      jwtClaimChecks: {
+        serializedName: "properties.jwtClaimChecks",
+        type: {
+          name: "Composite",
+          className: "JwtClaimChecks"
+        }
+      },
+      allowedAudiences: {
+        serializedName: "properties.allowedAudiences",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const AzureActiveDirectory: msRest.CompositeMapper = {
+  serializedName: "AzureActiveDirectory",
+  type: {
+    name: "Composite",
+    className: "AzureActiveDirectory",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      enabled: {
+        serializedName: "properties.enabled",
+        type: {
+          name: "Boolean"
+        }
+      },
+      registration: {
+        serializedName: "properties.registration",
+        type: {
+          name: "Composite",
+          className: "AzureActiveDirectoryRegistration"
+        }
+      },
+      login: {
+        serializedName: "properties.login",
+        type: {
+          name: "Composite",
+          className: "AzureActiveDirectoryLogin"
+        }
+      },
+      validation: {
+        serializedName: "properties.validation",
+        type: {
+          name: "Composite",
+          className: "AzureActiveDirectoryValidation"
+        }
+      },
+      isAutoProvisioned: {
+        serializedName: "properties.isAutoProvisioned",
+        type: {
+          name: "Boolean"
         }
       }
     }
@@ -8049,6 +8292,46 @@ export const BackupRequest: msRest.CompositeMapper = {
               className: "DatabaseBackupSetting"
             }
           }
+        }
+      }
+    }
+  }
+};
+
+export const BlobStorageTokenStore: msRest.CompositeMapper = {
+  serializedName: "BlobStorageTokenStore",
+  type: {
+    name: "Composite",
+    className: "BlobStorageTokenStore",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      sasUrlSettingName: {
+        serializedName: "properties.sasUrlSettingName",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const ClientRegistration: msRest.CompositeMapper = {
+  serializedName: "ClientRegistration",
+  type: {
+    name: "Composite",
+    className: "ClientRegistration",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      clientId: {
+        serializedName: "properties.clientId",
+        type: {
+          name: "String"
+        }
+      },
+      clientSecretSettingName: {
+        serializedName: "properties.clientSecretSettingName",
+        type: {
+          name: "String"
         }
       }
     }
@@ -8453,6 +8736,33 @@ export const ContinuousWebJob: msRest.CompositeMapper = {
   }
 };
 
+export const CookieExpiration: msRest.CompositeMapper = {
+  serializedName: "CookieExpiration",
+  type: {
+    name: "Composite",
+    className: "CookieExpiration",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      convention: {
+        serializedName: "properties.convention",
+        type: {
+          name: "Enum",
+          allowedValues: [
+            "FixedTime",
+            "IdentityProviderDerived"
+          ]
+        }
+      },
+      timeToExpiration: {
+        serializedName: "properties.timeToExpiration",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const CsmCopySlotEntity: msRest.CompositeMapper = {
   serializedName: "CsmCopySlotEntity",
   type: {
@@ -8683,6 +8993,163 @@ export const CustomHostnameAnalysisResult: msRest.CompositeMapper = {
   }
 };
 
+export const OpenIdConnectClientCredential: msRest.CompositeMapper = {
+  serializedName: "OpenIdConnectClientCredential",
+  type: {
+    name: "Composite",
+    className: "OpenIdConnectClientCredential",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      method: {
+        serializedName: "properties.method",
+        type: {
+          name: "Enum",
+          allowedValues: [
+            "ClientSecretPost"
+          ]
+        }
+      },
+      clientSecretSettingName: {
+        serializedName: "properties.clientSecretSettingName",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const OpenIdConnectConfig: msRest.CompositeMapper = {
+  serializedName: "OpenIdConnectConfig",
+  type: {
+    name: "Composite",
+    className: "OpenIdConnectConfig",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      authorizationEndpoint: {
+        serializedName: "properties.authorizationEndpoint",
+        type: {
+          name: "String"
+        }
+      },
+      tokenEndpoint: {
+        serializedName: "properties.tokenEndpoint",
+        type: {
+          name: "String"
+        }
+      },
+      issuer: {
+        serializedName: "properties.issuer",
+        type: {
+          name: "String"
+        }
+      },
+      certificationUri: {
+        serializedName: "properties.certificationUri",
+        type: {
+          name: "String"
+        }
+      },
+      wellKnownOpenIdConfiguration: {
+        serializedName: "properties.wellKnownOpenIdConfiguration",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const OpenIdConnectRegistration: msRest.CompositeMapper = {
+  serializedName: "OpenIdConnectRegistration",
+  type: {
+    name: "Composite",
+    className: "OpenIdConnectRegistration",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      clientId: {
+        serializedName: "properties.clientId",
+        type: {
+          name: "String"
+        }
+      },
+      clientCredential: {
+        serializedName: "properties.clientCredential",
+        type: {
+          name: "Composite",
+          className: "OpenIdConnectClientCredential"
+        }
+      },
+      openIdConnectConfiguration: {
+        serializedName: "properties.openIdConnectConfiguration",
+        type: {
+          name: "Composite",
+          className: "OpenIdConnectConfig"
+        }
+      }
+    }
+  }
+};
+
+export const OpenIdConnectLogin: msRest.CompositeMapper = {
+  serializedName: "OpenIdConnectLogin",
+  type: {
+    name: "Composite",
+    className: "OpenIdConnectLogin",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      nameClaimType: {
+        serializedName: "properties.nameClaimType",
+        type: {
+          name: "String"
+        }
+      },
+      scopes: {
+        serializedName: "properties.scopes",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const CustomOpenIdConnectProvider: msRest.CompositeMapper = {
+  serializedName: "CustomOpenIdConnectProvider",
+  type: {
+    name: "Composite",
+    className: "CustomOpenIdConnectProvider",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      enabled: {
+        serializedName: "properties.enabled",
+        type: {
+          name: "Boolean"
+        }
+      },
+      registration: {
+        serializedName: "properties.registration",
+        type: {
+          name: "Composite",
+          className: "OpenIdConnectRegistration"
+        }
+      },
+      login: {
+        serializedName: "properties.login",
+        type: {
+          name: "Composite",
+          className: "OpenIdConnectLogin"
+        }
+      }
+    }
+  }
+};
+
 export const DeletedAppRestoreRequest: msRest.CompositeMapper = {
   serializedName: "DeletedAppRestoreRequest",
   type: {
@@ -8799,6 +9266,65 @@ export const EnabledConfig: msRest.CompositeMapper = {
   }
 };
 
+export const LoginScopes: msRest.CompositeMapper = {
+  serializedName: "LoginScopes",
+  type: {
+    name: "Composite",
+    className: "LoginScopes",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      scopes: {
+        serializedName: "properties.scopes",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const Facebook: msRest.CompositeMapper = {
+  serializedName: "Facebook",
+  type: {
+    name: "Composite",
+    className: "Facebook",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      enabled: {
+        serializedName: "properties.enabled",
+        type: {
+          name: "Boolean"
+        }
+      },
+      registration: {
+        serializedName: "properties.registration",
+        type: {
+          name: "Composite",
+          className: "AppRegistration"
+        }
+      },
+      graphApiVersion: {
+        serializedName: "properties.graphApiVersion",
+        type: {
+          name: "String"
+        }
+      },
+      login: {
+        serializedName: "properties.login",
+        type: {
+          name: "Composite",
+          className: "LoginScopes"
+        }
+      }
+    }
+  }
+};
+
 export const FileSystemHttpLogsConfig: msRest.CompositeMapper = {
   serializedName: "FileSystemHttpLogsConfig",
   type: {
@@ -8825,6 +9351,57 @@ export const FileSystemHttpLogsConfig: msRest.CompositeMapper = {
         serializedName: "enabled",
         type: {
           name: "Boolean"
+        }
+      }
+    }
+  }
+};
+
+export const FileSystemTokenStore: msRest.CompositeMapper = {
+  serializedName: "FileSystemTokenStore",
+  type: {
+    name: "Composite",
+    className: "FileSystemTokenStore",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      directory: {
+        serializedName: "properties.directory",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const ForwardProxy: msRest.CompositeMapper = {
+  serializedName: "ForwardProxy",
+  type: {
+    name: "Composite",
+    className: "ForwardProxy",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      convention: {
+        serializedName: "properties.convention",
+        type: {
+          name: "Enum",
+          allowedValues: [
+            "NoProxy",
+            "Standard",
+            "Custom"
+          ]
+        }
+      },
+      customHostHeaderName: {
+        serializedName: "properties.customHostHeaderName",
+        type: {
+          name: "String"
+        }
+      },
+      customProtoHeaderName: {
+        serializedName: "properties.customProtoHeaderName",
+        type: {
+          name: "String"
         }
       }
     }
@@ -8942,6 +9519,121 @@ export const FunctionSecrets: msRest.CompositeMapper = {
         serializedName: "properties.trigger_url",
         type: {
           name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const GitHub: msRest.CompositeMapper = {
+  serializedName: "GitHub",
+  type: {
+    name: "Composite",
+    className: "GitHub",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      enabled: {
+        serializedName: "properties.enabled",
+        type: {
+          name: "Boolean"
+        }
+      },
+      registration: {
+        serializedName: "properties.registration",
+        type: {
+          name: "Composite",
+          className: "ClientRegistration"
+        }
+      },
+      login: {
+        serializedName: "properties.login",
+        type: {
+          name: "Composite",
+          className: "LoginScopes"
+        }
+      }
+    }
+  }
+};
+
+export const GlobalValidation: msRest.CompositeMapper = {
+  serializedName: "GlobalValidation",
+  type: {
+    name: "Composite",
+    className: "GlobalValidation",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      requireAuthentication: {
+        serializedName: "properties.requireAuthentication",
+        type: {
+          name: "Boolean"
+        }
+      },
+      unauthenticatedClientAction: {
+        serializedName: "properties.unauthenticatedClientAction",
+        type: {
+          name: "Enum",
+          allowedValues: [
+            "RedirectToLoginPage",
+            "AllowAnonymous",
+            "Return401",
+            "Return403"
+          ]
+        }
+      },
+      redirectToProvider: {
+        serializedName: "properties.redirectToProvider",
+        type: {
+          name: "String"
+        }
+      },
+      excludedPaths: {
+        serializedName: "properties.excludedPaths",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const Google: msRest.CompositeMapper = {
+  serializedName: "Google",
+  type: {
+    name: "Composite",
+    className: "Google",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      enabled: {
+        serializedName: "properties.enabled",
+        type: {
+          name: "Boolean"
+        }
+      },
+      registration: {
+        serializedName: "properties.registration",
+        type: {
+          name: "Composite",
+          className: "ClientRegistration"
+        }
+      },
+      login: {
+        serializedName: "properties.login",
+        type: {
+          name: "Composite",
+          className: "LoginScopes"
+        }
+      },
+      validation: {
+        serializedName: "properties.validation",
+        type: {
+          name: "Composite",
+          className: "AllowedAudiencesValidation"
         }
       }
     }
@@ -9093,6 +9785,159 @@ export const HttpLogsConfig: msRest.CompositeMapper = {
   }
 };
 
+export const HttpSettingsRoutes: msRest.CompositeMapper = {
+  serializedName: "HttpSettingsRoutes",
+  type: {
+    name: "Composite",
+    className: "HttpSettingsRoutes",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      apiPrefix: {
+        serializedName: "properties.apiPrefix",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const HttpSettings: msRest.CompositeMapper = {
+  serializedName: "HttpSettings",
+  type: {
+    name: "Composite",
+    className: "HttpSettings",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      requireHttps: {
+        serializedName: "properties.requireHttps",
+        type: {
+          name: "Boolean"
+        }
+      },
+      routes: {
+        serializedName: "properties.routes",
+        type: {
+          name: "Composite",
+          className: "HttpSettingsRoutes"
+        }
+      },
+      forwardProxy: {
+        serializedName: "properties.forwardProxy",
+        type: {
+          name: "Composite",
+          className: "ForwardProxy"
+        }
+      }
+    }
+  }
+};
+
+export const TwitterRegistration: msRest.CompositeMapper = {
+  serializedName: "TwitterRegistration",
+  type: {
+    name: "Composite",
+    className: "TwitterRegistration",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      consumerKey: {
+        serializedName: "properties.consumerKey",
+        type: {
+          name: "String"
+        }
+      },
+      consumerSecretSettingName: {
+        serializedName: "properties.consumerSecretSettingName",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const Twitter: msRest.CompositeMapper = {
+  serializedName: "Twitter",
+  type: {
+    name: "Composite",
+    className: "Twitter",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      enabled: {
+        serializedName: "properties.enabled",
+        type: {
+          name: "Boolean"
+        }
+      },
+      registration: {
+        serializedName: "properties.registration",
+        type: {
+          name: "Composite",
+          className: "TwitterRegistration"
+        }
+      }
+    }
+  }
+};
+
+export const IdentityProviders: msRest.CompositeMapper = {
+  serializedName: "IdentityProviders",
+  type: {
+    name: "Composite",
+    className: "IdentityProviders",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      azureActiveDirectory: {
+        serializedName: "properties.azureActiveDirectory",
+        type: {
+          name: "Composite",
+          className: "AzureActiveDirectory"
+        }
+      },
+      facebook: {
+        serializedName: "properties.facebook",
+        type: {
+          name: "Composite",
+          className: "Facebook"
+        }
+      },
+      gitHub: {
+        serializedName: "properties.gitHub",
+        type: {
+          name: "Composite",
+          className: "GitHub"
+        }
+      },
+      google: {
+        serializedName: "properties.google",
+        type: {
+          name: "Composite",
+          className: "Google"
+        }
+      },
+      twitter: {
+        serializedName: "properties.twitter",
+        type: {
+          name: "Composite",
+          className: "Twitter"
+        }
+      },
+      customOpenIdConnectProviders: {
+        serializedName: "properties.customOpenIdConnectProviders",
+        type: {
+          name: "Dictionary",
+          value: {
+            type: {
+              name: "Composite",
+              className: "CustomOpenIdConnectProvider"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
 export const KeyInfo: msRest.CompositeMapper = {
   serializedName: "KeyInfo",
   type: {
@@ -9220,6 +10065,139 @@ export const KeyVaultReferenceResource: msRest.CompositeMapper = {
           allowedValues: [
             "ApplicationSetting"
           ]
+        }
+      }
+    }
+  }
+};
+
+export const LoginRoutes: msRest.CompositeMapper = {
+  serializedName: "LoginRoutes",
+  type: {
+    name: "Composite",
+    className: "LoginRoutes",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      logoutEndpoint: {
+        serializedName: "properties.logoutEndpoint",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const TokenStore: msRest.CompositeMapper = {
+  serializedName: "TokenStore",
+  type: {
+    name: "Composite",
+    className: "TokenStore",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      enabled: {
+        serializedName: "properties.enabled",
+        type: {
+          name: "Boolean"
+        }
+      },
+      tokenRefreshExtensionHours: {
+        serializedName: "properties.tokenRefreshExtensionHours",
+        type: {
+          name: "Number"
+        }
+      },
+      fileSystem: {
+        serializedName: "properties.fileSystem",
+        type: {
+          name: "Composite",
+          className: "FileSystemTokenStore"
+        }
+      },
+      azureBlobStorage: {
+        serializedName: "properties.azureBlobStorage",
+        type: {
+          name: "Composite",
+          className: "BlobStorageTokenStore"
+        }
+      }
+    }
+  }
+};
+
+export const Nonce: msRest.CompositeMapper = {
+  serializedName: "Nonce",
+  type: {
+    name: "Composite",
+    className: "Nonce",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      validateNonce: {
+        serializedName: "properties.validateNonce",
+        type: {
+          name: "Boolean"
+        }
+      },
+      nonceExpirationInterval: {
+        serializedName: "properties.nonceExpirationInterval",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const Login: msRest.CompositeMapper = {
+  serializedName: "Login",
+  type: {
+    name: "Composite",
+    className: "Login",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      routes: {
+        serializedName: "properties.routes",
+        type: {
+          name: "Composite",
+          className: "LoginRoutes"
+        }
+      },
+      tokenStore: {
+        serializedName: "properties.tokenStore",
+        type: {
+          name: "Composite",
+          className: "TokenStore"
+        }
+      },
+      preserveUrlFragmentsForLogins: {
+        serializedName: "properties.preserveUrlFragmentsForLogins",
+        type: {
+          name: "Boolean"
+        }
+      },
+      allowedExternalRedirectUrls: {
+        serializedName: "properties.allowedExternalRedirectUrls",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      cookieExpiration: {
+        serializedName: "properties.cookieExpiration",
+        type: {
+          name: "Composite",
+          className: "CookieExpiration"
+        }
+      },
+      nonce: {
+        serializedName: "properties.nonce",
+        type: {
+          name: "Composite",
+          className: "Nonce"
         }
       }
     }
@@ -10797,6 +11775,52 @@ export const SiteAuthSettings: msRest.CompositeMapper = {
               name: "String"
             }
           }
+        }
+      }
+    }
+  }
+};
+
+export const SiteAuthSettingsV2: msRest.CompositeMapper = {
+  serializedName: "SiteAuthSettingsV2",
+  type: {
+    name: "Composite",
+    className: "SiteAuthSettingsV2",
+    modelProperties: {
+      ...ProxyOnlyResource.type.modelProperties,
+      platform: {
+        serializedName: "properties.platform",
+        type: {
+          name: "Composite",
+          className: "AuthPlatform"
+        }
+      },
+      globalValidation: {
+        serializedName: "properties.globalValidation",
+        type: {
+          name: "Composite",
+          className: "GlobalValidation"
+        }
+      },
+      identityProviders: {
+        serializedName: "properties.identityProviders",
+        type: {
+          name: "Composite",
+          className: "IdentityProviders"
+        }
+      },
+      login: {
+        serializedName: "properties.login",
+        type: {
+          name: "Composite",
+          className: "Login"
+        }
+      },
+      httpSettings: {
+        serializedName: "properties.httpSettings",
+        type: {
+          name: "Composite",
+          className: "HttpSettings"
         }
       }
     }

@@ -831,6 +831,77 @@ export class WebApps {
   }
 
   /**
+   * Description for Updates site's Authentication / Authorization settings for apps via the V2
+   * format
+   * @summary Updates site's Authentication / Authorization settings for apps via the V2 format
+   * @param resourceGroupName Name of the resource group to which the resource belongs.
+   * @param name Name of web app.
+   * @param siteAuthSettingsV2 Auth settings associated with web app.
+   * @param [options] The optional parameters
+   * @returns Promise<Models.WebAppsUpdateAuthSettingsV2Response>
+   */
+  updateAuthSettingsV2(resourceGroupName: string, name: string, siteAuthSettingsV2: Models.SiteAuthSettingsV2, options?: msRest.RequestOptionsBase): Promise<Models.WebAppsUpdateAuthSettingsV2Response>;
+  /**
+   * @param resourceGroupName Name of the resource group to which the resource belongs.
+   * @param name Name of web app.
+   * @param siteAuthSettingsV2 Auth settings associated with web app.
+   * @param callback The callback
+   */
+  updateAuthSettingsV2(resourceGroupName: string, name: string, siteAuthSettingsV2: Models.SiteAuthSettingsV2, callback: msRest.ServiceCallback<Models.SiteAuthSettingsV2>): void;
+  /**
+   * @param resourceGroupName Name of the resource group to which the resource belongs.
+   * @param name Name of web app.
+   * @param siteAuthSettingsV2 Auth settings associated with web app.
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  updateAuthSettingsV2(resourceGroupName: string, name: string, siteAuthSettingsV2: Models.SiteAuthSettingsV2, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.SiteAuthSettingsV2>): void;
+  updateAuthSettingsV2(resourceGroupName: string, name: string, siteAuthSettingsV2: Models.SiteAuthSettingsV2, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.SiteAuthSettingsV2>, callback?: msRest.ServiceCallback<Models.SiteAuthSettingsV2>): Promise<Models.WebAppsUpdateAuthSettingsV2Response> {
+    return this.client.sendOperationRequest(
+      {
+        resourceGroupName,
+        name,
+        siteAuthSettingsV2,
+        options
+      },
+      updateAuthSettingsV2OperationSpec,
+      callback) as Promise<Models.WebAppsUpdateAuthSettingsV2Response>;
+  }
+
+  /**
+   * Description for Gets site's Authentication / Authorization settings for apps via the V2 format
+   * @summary Gets site's Authentication / Authorization settings for apps via the V2 format
+   * @param resourceGroupName Name of the resource group to which the resource belongs.
+   * @param name Name of the app.
+   * @param [options] The optional parameters
+   * @returns Promise<Models.WebAppsGetAuthSettingsV2Response>
+   */
+  getAuthSettingsV2(resourceGroupName: string, name: string, options?: msRest.RequestOptionsBase): Promise<Models.WebAppsGetAuthSettingsV2Response>;
+  /**
+   * @param resourceGroupName Name of the resource group to which the resource belongs.
+   * @param name Name of the app.
+   * @param callback The callback
+   */
+  getAuthSettingsV2(resourceGroupName: string, name: string, callback: msRest.ServiceCallback<Models.SiteAuthSettingsV2>): void;
+  /**
+   * @param resourceGroupName Name of the resource group to which the resource belongs.
+   * @param name Name of the app.
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getAuthSettingsV2(resourceGroupName: string, name: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.SiteAuthSettingsV2>): void;
+  getAuthSettingsV2(resourceGroupName: string, name: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.SiteAuthSettingsV2>, callback?: msRest.ServiceCallback<Models.SiteAuthSettingsV2>): Promise<Models.WebAppsGetAuthSettingsV2Response> {
+    return this.client.sendOperationRequest(
+      {
+        resourceGroupName,
+        name,
+        options
+      },
+      getAuthSettingsV2OperationSpec,
+      callback) as Promise<Models.WebAppsGetAuthSettingsV2Response>;
+  }
+
+  /**
    * Description for Updates the Azure storage account configurations of an app.
    * @summary Updates the Azure storage account configurations of an app.
    * @param resourceGroupName Name of the resource group to which the resource belongs.
@@ -17047,6 +17118,63 @@ const getAuthSettingsOperationSpec: msRest.OperationSpec = {
   responses: {
     200: {
       bodyMapper: Mappers.SiteAuthSettings
+    },
+    default: {
+      bodyMapper: Mappers.DefaultErrorResponse
+    }
+  },
+  serializer
+};
+
+const updateAuthSettingsV2OperationSpec: msRest.OperationSpec = {
+  httpMethod: "PUT",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/authsettingsV2",
+  urlParameters: [
+    Parameters.resourceGroupName,
+    Parameters.name,
+    Parameters.subscriptionId
+  ],
+  queryParameters: [
+    Parameters.apiVersion
+  ],
+  headerParameters: [
+    Parameters.acceptLanguage
+  ],
+  requestBody: {
+    parameterPath: "siteAuthSettingsV2",
+    mapper: {
+      ...Mappers.SiteAuthSettingsV2,
+      required: true
+    }
+  },
+  responses: {
+    200: {
+      bodyMapper: Mappers.SiteAuthSettingsV2
+    },
+    default: {
+      bodyMapper: Mappers.DefaultErrorResponse
+    }
+  },
+  serializer
+};
+
+const getAuthSettingsV2OperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/authsettingsV2/list",
+  urlParameters: [
+    Parameters.resourceGroupName,
+    Parameters.name,
+    Parameters.subscriptionId
+  ],
+  queryParameters: [
+    Parameters.apiVersion
+  ],
+  headerParameters: [
+    Parameters.acceptLanguage
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.SiteAuthSettingsV2
     },
     default: {
       bodyMapper: Mappers.DefaultErrorResponse

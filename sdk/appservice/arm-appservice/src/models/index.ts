@@ -4276,6 +4276,13 @@ export interface VnetValidationFailureDetails extends ProxyOnlyResource {
 }
 
 /**
+ * An interface representing AllowedAudiencesValidation.
+ */
+export interface AllowedAudiencesValidation extends ProxyOnlyResource {
+  allowedAudiences?: string[];
+}
+
+/**
  * Description of site key vault references.
  */
 export interface ApiKVReference {
@@ -4369,6 +4376,14 @@ export interface ApplicationLogsConfig {
 }
 
 /**
+ * An interface representing AppRegistration.
+ */
+export interface AppRegistration extends ProxyOnlyResource {
+  appId?: string;
+  appSecretSettingName?: string;
+}
+
+/**
  * A wrapper for an ARM resource id
  */
 export interface ArmIdWrapper {
@@ -4376,6 +4391,60 @@ export interface ArmIdWrapper {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly id?: string;
+}
+
+/**
+ * An interface representing AuthPlatform.
+ */
+export interface AuthPlatform extends ProxyOnlyResource {
+  enabled?: boolean;
+  runtimeVersion?: string;
+  configFilePath?: string;
+}
+
+/**
+ * An interface representing AzureActiveDirectoryRegistration.
+ */
+export interface AzureActiveDirectoryRegistration extends ProxyOnlyResource {
+  openIdIssuer?: string;
+  clientId?: string;
+  clientSecretSettingName?: string;
+  clientSecretCertificateThumbprint?: string;
+}
+
+/**
+ * An interface representing AzureActiveDirectoryLogin.
+ */
+export interface AzureActiveDirectoryLogin extends ProxyOnlyResource {
+  disableWWWAuthenticate?: boolean;
+  loginParameters?: string[];
+}
+
+/**
+ * An interface representing JwtClaimChecks.
+ */
+export interface JwtClaimChecks extends ProxyOnlyResource {
+  allowedGroups?: string[];
+  allowedClientApplications?: string[];
+}
+
+/**
+ * An interface representing AzureActiveDirectoryValidation.
+ */
+export interface AzureActiveDirectoryValidation extends ProxyOnlyResource {
+  jwtClaimChecks?: JwtClaimChecks;
+  allowedAudiences?: string[];
+}
+
+/**
+ * An interface representing AzureActiveDirectory.
+ */
+export interface AzureActiveDirectory extends ProxyOnlyResource {
+  enabled?: boolean;
+  registration?: AzureActiveDirectoryRegistration;
+  login?: AzureActiveDirectoryLogin;
+  validation?: AzureActiveDirectoryValidation;
+  isAutoProvisioned?: boolean;
 }
 
 /**
@@ -4605,6 +4674,21 @@ export interface BackupRequest extends ProxyOnlyResource {
 }
 
 /**
+ * An interface representing BlobStorageTokenStore.
+ */
+export interface BlobStorageTokenStore extends ProxyOnlyResource {
+  sasUrlSettingName?: string;
+}
+
+/**
+ * An interface representing ClientRegistration.
+ */
+export interface ClientRegistration extends ProxyOnlyResource {
+  clientId?: string;
+  clientSecretSettingName?: string;
+}
+
+/**
  * Database connection string value to type pair.
  */
 export interface ConnStringValueTypePair {
@@ -4743,6 +4827,17 @@ export interface ContinuousWebJob extends ProxyOnlyResource {
 }
 
 /**
+ * An interface representing CookieExpiration.
+ */
+export interface CookieExpiration extends ProxyOnlyResource {
+  /**
+   * Possible values include: 'FixedTime', 'IdentityProviderDerived'
+   */
+  convention?: CookieExpirationConvention;
+  timeToExpiration?: string;
+}
+
+/**
  * Copy deployment slot parameters.
  */
 export interface CsmCopySlotEntity {
@@ -4872,6 +4967,54 @@ export interface CustomHostnameAnalysisResult extends ProxyOnlyResource {
 }
 
 /**
+ * An interface representing OpenIdConnectClientCredential.
+ */
+export interface OpenIdConnectClientCredential extends ProxyOnlyResource {
+  /**
+   * Possible values include: 'ClientSecretPost'
+   */
+  method?: ClientCredentialMethod;
+  clientSecretSettingName?: string;
+}
+
+/**
+ * An interface representing OpenIdConnectConfig.
+ */
+export interface OpenIdConnectConfig extends ProxyOnlyResource {
+  authorizationEndpoint?: string;
+  tokenEndpoint?: string;
+  issuer?: string;
+  certificationUri?: string;
+  wellKnownOpenIdConfiguration?: string;
+}
+
+/**
+ * An interface representing OpenIdConnectRegistration.
+ */
+export interface OpenIdConnectRegistration extends ProxyOnlyResource {
+  clientId?: string;
+  clientCredential?: OpenIdConnectClientCredential;
+  openIdConnectConfiguration?: OpenIdConnectConfig;
+}
+
+/**
+ * An interface representing OpenIdConnectLogin.
+ */
+export interface OpenIdConnectLogin extends ProxyOnlyResource {
+  nameClaimType?: string;
+  scopes?: string[];
+}
+
+/**
+ * An interface representing CustomOpenIdConnectProvider.
+ */
+export interface CustomOpenIdConnectProvider extends ProxyOnlyResource {
+  enabled?: boolean;
+  registration?: OpenIdConnectRegistration;
+  login?: OpenIdConnectLogin;
+}
+
+/**
  * Details about restoring a deleted app.
  */
 export interface DeletedAppRestoreRequest extends ProxyOnlyResource {
@@ -4949,6 +5092,23 @@ export interface EnabledConfig {
 }
 
 /**
+ * An interface representing LoginScopes.
+ */
+export interface LoginScopes extends ProxyOnlyResource {
+  scopes?: string[];
+}
+
+/**
+ * An interface representing Facebook.
+ */
+export interface Facebook extends ProxyOnlyResource {
+  enabled?: boolean;
+  registration?: AppRegistration;
+  graphApiVersion?: string;
+  login?: LoginScopes;
+}
+
+/**
  * Http logs to file system configuration.
  */
 export interface FileSystemHttpLogsConfig {
@@ -4969,6 +5129,25 @@ export interface FileSystemHttpLogsConfig {
    * set.
    */
   enabled?: boolean;
+}
+
+/**
+ * An interface representing FileSystemTokenStore.
+ */
+export interface FileSystemTokenStore extends ProxyOnlyResource {
+  directory?: string;
+}
+
+/**
+ * An interface representing ForwardProxy.
+ */
+export interface ForwardProxy extends ProxyOnlyResource {
+  /**
+   * Possible values include: 'NoProxy', 'Standard', 'Custom'
+   */
+  convention?: ForwardProxyConvention;
+  customHostHeaderName?: string;
+  customProtoHeaderName?: string;
 }
 
 /**
@@ -5041,6 +5220,38 @@ export interface FunctionSecrets extends ProxyOnlyResource {
    * Trigger URL.
    */
   triggerUrl?: string;
+}
+
+/**
+ * An interface representing GitHub.
+ */
+export interface GitHub extends ProxyOnlyResource {
+  enabled?: boolean;
+  registration?: ClientRegistration;
+  login?: LoginScopes;
+}
+
+/**
+ * An interface representing GlobalValidation.
+ */
+export interface GlobalValidation extends ProxyOnlyResource {
+  requireAuthentication?: boolean;
+  /**
+   * Possible values include: 'RedirectToLoginPage', 'AllowAnonymous', 'Return401', 'Return403'
+   */
+  unauthenticatedClientAction?: UnauthenticatedClientActionV2;
+  redirectToProvider?: string;
+  excludedPaths?: string[];
+}
+
+/**
+ * An interface representing Google.
+ */
+export interface Google extends ProxyOnlyResource {
+  enabled?: boolean;
+  registration?: ClientRegistration;
+  login?: LoginScopes;
+  validation?: AllowedAudiencesValidation;
 }
 
 /**
@@ -5119,6 +5330,50 @@ export interface HttpLogsConfig {
 }
 
 /**
+ * An interface representing HttpSettingsRoutes.
+ */
+export interface HttpSettingsRoutes extends ProxyOnlyResource {
+  apiPrefix?: string;
+}
+
+/**
+ * An interface representing HttpSettings.
+ */
+export interface HttpSettings extends ProxyOnlyResource {
+  requireHttps?: boolean;
+  routes?: HttpSettingsRoutes;
+  forwardProxy?: ForwardProxy;
+}
+
+/**
+ * An interface representing TwitterRegistration.
+ */
+export interface TwitterRegistration extends ProxyOnlyResource {
+  consumerKey?: string;
+  consumerSecretSettingName?: string;
+}
+
+/**
+ * An interface representing Twitter.
+ */
+export interface Twitter extends ProxyOnlyResource {
+  enabled?: boolean;
+  registration?: TwitterRegistration;
+}
+
+/**
+ * An interface representing IdentityProviders.
+ */
+export interface IdentityProviders extends ProxyOnlyResource {
+  azureActiveDirectory?: AzureActiveDirectory;
+  facebook?: Facebook;
+  gitHub?: GitHub;
+  google?: Google;
+  twitter?: Twitter;
+  customOpenIdConnectProviders?: { [propertyName: string]: CustomOpenIdConnectProvider };
+}
+
+/**
  * Function key info.
  */
 export interface KeyInfo {
@@ -5167,6 +5422,43 @@ export interface KeyVaultReferenceResource extends ProxyOnlyResource {
    * Possible values include: 'ApplicationSetting'
    */
   location?: ConfigReferenceLocation;
+}
+
+/**
+ * An interface representing LoginRoutes.
+ */
+export interface LoginRoutes extends ProxyOnlyResource {
+  logoutEndpoint?: string;
+}
+
+/**
+ * An interface representing TokenStore.
+ */
+export interface TokenStore extends ProxyOnlyResource {
+  enabled?: boolean;
+  tokenRefreshExtensionHours?: number;
+  fileSystem?: FileSystemTokenStore;
+  azureBlobStorage?: BlobStorageTokenStore;
+}
+
+/**
+ * An interface representing Nonce.
+ */
+export interface Nonce extends ProxyOnlyResource {
+  validateNonce?: boolean;
+  nonceExpirationInterval?: string;
+}
+
+/**
+ * An interface representing Login.
+ */
+export interface Login extends ProxyOnlyResource {
+  routes?: LoginRoutes;
+  tokenStore?: TokenStore;
+  preserveUrlFragmentsForLogins?: boolean;
+  allowedExternalRedirectUrls?: string[];
+  cookieExpiration?: CookieExpiration;
+  nonce?: Nonce;
 }
 
 /**
@@ -6112,6 +6404,17 @@ export interface SiteAuthSettings extends ProxyOnlyResource {
    * https://msdn.microsoft.com/en-us/library/dn631845.aspx
    */
   microsoftAccountOAuthScopes?: string[];
+}
+
+/**
+ * An interface representing SiteAuthSettingsV2.
+ */
+export interface SiteAuthSettingsV2 extends ProxyOnlyResource {
+  platform?: AuthPlatform;
+  globalValidation?: GlobalValidation;
+  identityProviders?: IdentityProviders;
+  login?: Login;
+  httpSettings?: HttpSettings;
 }
 
 /**
@@ -10078,6 +10381,14 @@ export type ContinuousWebJobStatus = 'Initializing' | 'Starting' | 'Running' | '
 export type WebJobType = 'Continuous' | 'Triggered';
 
 /**
+ * Defines values for CookieExpirationConvention.
+ * Possible values include: 'FixedTime', 'IdentityProviderDerived'
+ * @readonly
+ * @enum {string}
+ */
+export type CookieExpirationConvention = 'FixedTime' | 'IdentityProviderDerived';
+
+/**
  * Defines values for PublishingProfileFormat.
  * Possible values include: 'FileZilla3', 'WebDeploy', 'Ftp'
  * @readonly
@@ -10092,6 +10403,30 @@ export type PublishingProfileFormat = 'FileZilla3' | 'WebDeploy' | 'Ftp';
  * @enum {string}
  */
 export type DnsVerificationTestResult = 'Passed' | 'Failed' | 'Skipped';
+
+/**
+ * Defines values for ClientCredentialMethod.
+ * Possible values include: 'ClientSecretPost'
+ * @readonly
+ * @enum {string}
+ */
+export type ClientCredentialMethod = 'ClientSecretPost';
+
+/**
+ * Defines values for ForwardProxyConvention.
+ * Possible values include: 'NoProxy', 'Standard', 'Custom'
+ * @readonly
+ * @enum {string}
+ */
+export type ForwardProxyConvention = 'NoProxy' | 'Standard' | 'Custom';
+
+/**
+ * Defines values for UnauthenticatedClientActionV2.
+ * Possible values include: 'RedirectToLoginPage', 'AllowAnonymous', 'Return401', 'Return403'
+ * @readonly
+ * @enum {string}
+ */
+export type UnauthenticatedClientActionV2 = 'RedirectToLoginPage' | 'AllowAnonymous' | 'Return401' | 'Return403';
 
 /**
  * Defines values for MSDeployLogEntryType.
@@ -13081,6 +13416,46 @@ export type WebAppsGetAuthSettingsResponse = SiteAuthSettings & {
        * The response body as parsed JSON or XML
        */
       parsedBody: SiteAuthSettings;
+    };
+};
+
+/**
+ * Contains response data for the updateAuthSettingsV2 operation.
+ */
+export type WebAppsUpdateAuthSettingsV2Response = SiteAuthSettingsV2 & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SiteAuthSettingsV2;
+    };
+};
+
+/**
+ * Contains response data for the getAuthSettingsV2 operation.
+ */
+export type WebAppsGetAuthSettingsV2Response = SiteAuthSettingsV2 & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SiteAuthSettingsV2;
     };
 };
 
