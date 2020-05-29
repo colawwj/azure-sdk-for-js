@@ -64,6 +64,22 @@ export const ComputeOperationValue: msRest.CompositeMapper = {
   }
 };
 
+export const DisallowedConfiguration: msRest.CompositeMapper = {
+  serializedName: "DisallowedConfiguration",
+  type: {
+    name: "Composite",
+    className: "DisallowedConfiguration",
+    modelProperties: {
+      vmDiskType: {
+        serializedName: "vmDiskType",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const InstanceViewStatus: msRest.CompositeMapper = {
   serializedName: "InstanceViewStatus",
   type: {
@@ -1312,6 +1328,13 @@ export const VirtualMachineImage: msRest.CompositeMapper = {
         type: {
           name: "String"
         }
+      },
+      disallowed: {
+        serializedName: "properties.disallowed",
+        type: {
+          name: "Composite",
+          className: "DisallowedConfiguration"
+        }
       }
     }
   }
@@ -2045,6 +2068,22 @@ export const WinRMConfiguration: msRest.CompositeMapper = {
   }
 };
 
+export const PatchSettings: msRest.CompositeMapper = {
+  serializedName: "PatchSettings",
+  type: {
+    name: "Composite",
+    className: "PatchSettings",
+    modelProperties: {
+      patchMode: {
+        serializedName: "patchMode",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const WindowsConfiguration: msRest.CompositeMapper = {
   serializedName: "WindowsConfiguration",
   type: {
@@ -2079,6 +2118,13 @@ export const WindowsConfiguration: msRest.CompositeMapper = {
               className: "AdditionalUnattendContent"
             }
           }
+        }
+      },
+      patchSettings: {
+        serializedName: "patchSettings",
+        type: {
+          name: "Composite",
+          className: "PatchSettings"
         }
       },
       winRM: {
