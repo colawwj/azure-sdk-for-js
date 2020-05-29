@@ -48,6 +48,16 @@ export interface ComputeOperationValue {
 }
 
 /**
+ * Specifies the disallowed configuration for a virtual machine image.
+ */
+export interface DisallowedConfiguration {
+  /**
+   * VM disk types which are disallowed. Possible values include: 'None', 'Unmanaged'
+   */
+  vmDiskType?: VmDiskTypes;
+}
+
+/**
  * Instance view status.
  */
 export interface InstanceViewStatus {
@@ -778,6 +788,10 @@ export interface VirtualMachineImage extends VirtualMachineImageResource {
    * Possible values include: 'V1', 'V2'
    */
   hyperVGeneration?: HyperVGenerationTypes;
+  /**
+   * Specifies disallowed configuration for the VirtualMachine created from the image
+   */
+  disallowed?: DisallowedConfiguration;
 }
 
 /**
@@ -1253,6 +1267,19 @@ export interface StorageProfile {
 }
 
 /**
+ * Specifies the Security profile settings for the virtual machine or virtual machine scale set.
+ */
+export interface SecurityProfile {
+  /**
+   * This property can be used by user in the request to enable or disable the Host Encryption for
+   * the virtual machine or virtual machine scale set. This will enable the encryption for all the
+   * disks including Resource/Temp disk at host itself. <br><br> Default: The Encryption at host
+   * will be disabled unless this property is set to true for the resource.
+   */
+  encryptionAtHost?: boolean;
+}
+
+/**
  * Enables or disables a capability on the virtual machine or virtual machine scale set.
  */
 export interface AdditionalCapabilities {
@@ -1325,6 +1352,24 @@ export interface WinRMConfiguration {
 }
 
 /**
+ * An interface representing PatchSettings.
+ */
+export interface PatchSettings {
+  /**
+   * Specifies the mode of in-guest patching to IaaS virtual machine.<br /><br /> Possible values
+   * are:<br /><br /> **Manual** - You  control the application of patches to a virtual machine.
+   * You do this by applying patches manually inside the VM. In this mode, automatic updates are
+   * disabled; the property WindowsConfiguration.enableAutomaticUpdates must be false<br /><br />
+   * **AutomaticByOS** - The virtual machine will automatically be updated by the OS. The property
+   * WindowsConfiguration.enableAutomaticUpdates must be true. <br /><br /> **
+   * AutomaticByPlatform** - the virtual machine will automatically updated by the OS. The
+   * properties provisionVMAgent and WindowsConfiguration.enableAutomaticUpdates must be true.
+   * Possible values include: 'Manual', 'AutomaticByOS', 'AutomaticByPlatform'
+   */
+  patchMode?: InGuestPatchMode;
+}
+
+/**
  * Specifies Windows operating system settings on the virtual machine.
  */
 export interface WindowsConfiguration {
@@ -1354,6 +1399,10 @@ export interface WindowsConfiguration {
    * Unattend.xml file, which is used by Windows Setup.
    */
   additionalUnattendContent?: AdditionalUnattendContent[];
+  /**
+   * Specifies settings related to in-guest patching (KBs).
+   */
+  patchSettings?: PatchSettings;
   /**
    * Specifies the Windows Remote Management listeners. This enables remote Windows PowerShell.
    */
@@ -1880,6 +1929,10 @@ export interface VirtualMachine extends Resource {
    */
   networkProfile?: NetworkProfile;
   /**
+   * Specifies the Security related profile settings for the virtual machine.
+   */
+  securityProfile?: SecurityProfile;
+  /**
    * Specifies the boot diagnostic settings state. <br><br>Minimum api-version: 2015-06-15.
    */
   diagnosticsProfile?: DiagnosticsProfile;
@@ -2009,6 +2062,10 @@ export interface VirtualMachineUpdate extends UpdateResource {
    * Specifies the network interfaces of the virtual machine.
    */
   networkProfile?: NetworkProfile;
+  /**
+   * Specifies the Security related profile settings for the virtual machine.
+   */
+  securityProfile?: SecurityProfile;
   /**
    * Specifies the boot diagnostic settings state. <br><br>Minimum api-version: 2015-06-15.
    */
@@ -3136,6 +3193,10 @@ export interface VirtualMachineScaleSetVMProfile {
    */
   networkProfile?: VirtualMachineScaleSetNetworkProfile;
   /**
+   * Specifies the Security related profile settings for the virtual machines in the scale set.
+   */
+  securityProfile?: SecurityProfile;
+  /**
    * Specifies the boot diagnostic settings state. <br><br>Minimum api-version: 2015-06-15.
    */
   diagnosticsProfile?: DiagnosticsProfile;
@@ -3194,6 +3255,10 @@ export interface VirtualMachineScaleSetUpdateVMProfile {
    * The virtual machine scale set network profile.
    */
   networkProfile?: VirtualMachineScaleSetUpdateNetworkProfile;
+  /**
+   * The virtual machine scale set Security profile
+   */
+  securityProfile?: SecurityProfile;
   /**
    * The virtual machine scale set diagnostics profile.
    */
@@ -3864,6 +3929,10 @@ export interface VirtualMachineScaleSetVM extends Resource {
    * Specifies the operating system settings for the virtual machine.
    */
   osProfile?: OSProfile;
+  /**
+   * Specifies the Security related profile settings for the virtual machine.
+   */
+  securityProfile?: SecurityProfile;
   /**
    * Specifies the network interfaces of the virtual machine.
    */
@@ -6620,6 +6689,14 @@ export interface ContainerServiceListResult extends Array<ContainerService> {
 }
 
 /**
+ * Defines values for VmDiskTypes.
+ * Possible values include: 'None', 'Unmanaged'
+ * @readonly
+ * @enum {string}
+ */
+export type VmDiskTypes = 'None' | 'Unmanaged';
+
+/**
  * Defines values for HyperVGenerationTypes.
  * Possible values include: 'V1', 'V2'
  * @readonly
@@ -6779,6 +6856,14 @@ export type SettingNames = 'AutoLogon' | 'FirstLogonCommands';
  * @enum {string}
  */
 export type ProtocolTypes = 'Http' | 'Https';
+
+/**
+ * Defines values for InGuestPatchMode.
+ * Possible values include: 'Manual', 'AutomaticByOS', 'AutomaticByPlatform'
+ * @readonly
+ * @enum {string}
+ */
+export type InGuestPatchMode = 'Manual' | 'AutomaticByOS' | 'AutomaticByPlatform';
 
 /**
  * Defines values for VirtualMachinePriorityTypes.
