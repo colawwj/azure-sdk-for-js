@@ -86,6 +86,12 @@ export const OperationDisplay: msRest.CompositeMapper = {
         type: {
           name: "String"
         }
+      },
+      description: {
+        serializedName: "description",
+        type: {
+          name: "String"
+        }
       }
     }
   }
