@@ -59,6 +59,10 @@ export interface OperationDisplay {
    * Operation type: Read, write, delete, etc.
    */
   operation?: string;
+  /**
+   * Description of the operation.
+   */
+  description?: string;
 }
 
 /**
