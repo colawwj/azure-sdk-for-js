@@ -64,6 +64,46 @@ export const ComputeOperationValue: msRest.CompositeMapper = {
   }
 };
 
+export const DisallowedConfiguration: msRest.CompositeMapper = {
+  serializedName: "DisallowedConfiguration",
+  type: {
+    name: "Composite",
+    className: "DisallowedConfiguration",
+    modelProperties: {
+      vmDiskType: {
+        serializedName: "vmDiskType",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const RetrieveBootDiagnosticsDataResult: msRest.CompositeMapper = {
+  serializedName: "RetrieveBootDiagnosticsDataResult",
+  type: {
+    name: "Composite",
+    className: "RetrieveBootDiagnosticsDataResult",
+    modelProperties: {
+      consoleScreenshotBlobUri: {
+        readOnly: true,
+        serializedName: "consoleScreenshotBlobUri",
+        type: {
+          name: "String"
+        }
+      },
+      serialConsoleLogBlobUri: {
+        readOnly: true,
+        serializedName: "serialConsoleLogBlobUri",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const InstanceViewStatus: msRest.CompositeMapper = {
   serializedName: "InstanceViewStatus",
   type: {
@@ -1312,6 +1352,13 @@ export const VirtualMachineImage: msRest.CompositeMapper = {
         type: {
           name: "String"
         }
+      },
+      disallowed: {
+        serializedName: "properties.disallowed",
+        type: {
+          name: "Composite",
+          className: "DisallowedConfiguration"
+        }
       }
     }
   }
@@ -1937,6 +1984,22 @@ export const StorageProfile: msRest.CompositeMapper = {
   }
 };
 
+export const SecurityProfile: msRest.CompositeMapper = {
+  serializedName: "SecurityProfile",
+  type: {
+    name: "Composite",
+    className: "SecurityProfile",
+    modelProperties: {
+      encryptionAtHost: {
+        serializedName: "encryptionAtHost",
+        type: {
+          name: "Boolean"
+        }
+      }
+    }
+  }
+};
+
 export const AdditionalCapabilities: msRest.CompositeMapper = {
   serializedName: "AdditionalCapabilities",
   type: {
@@ -2045,6 +2108,22 @@ export const WinRMConfiguration: msRest.CompositeMapper = {
   }
 };
 
+export const PatchSettings: msRest.CompositeMapper = {
+  serializedName: "PatchSettings",
+  type: {
+    name: "Composite",
+    className: "PatchSettings",
+    modelProperties: {
+      patchMode: {
+        serializedName: "patchMode",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const WindowsConfiguration: msRest.CompositeMapper = {
   serializedName: "WindowsConfiguration",
   type: {
@@ -2079,6 +2158,13 @@ export const WindowsConfiguration: msRest.CompositeMapper = {
               className: "AdditionalUnattendContent"
             }
           }
+        }
+      },
+      patchSettings: {
+        serializedName: "patchSettings",
+        type: {
+          name: "Composite",
+          className: "PatchSettings"
         }
       },
       winRM: {
@@ -2833,6 +2919,13 @@ export const VirtualMachine: msRest.CompositeMapper = {
           className: "NetworkProfile"
         }
       },
+      securityProfile: {
+        serializedName: "properties.securityProfile",
+        type: {
+          name: "Composite",
+          className: "SecurityProfile"
+        }
+      },
       diagnosticsProfile: {
         serializedName: "properties.diagnosticsProfile",
         type: {
@@ -2997,6 +3090,13 @@ export const VirtualMachineUpdate: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "NetworkProfile"
+        }
+      },
+      securityProfile: {
+        serializedName: "properties.securityProfile",
+        type: {
+          name: "Composite",
+          className: "SecurityProfile"
         }
       },
       diagnosticsProfile: {
@@ -4718,6 +4818,13 @@ export const VirtualMachineScaleSetVMProfile: msRest.CompositeMapper = {
           className: "VirtualMachineScaleSetNetworkProfile"
         }
       },
+      securityProfile: {
+        serializedName: "securityProfile",
+        type: {
+          name: "Composite",
+          className: "SecurityProfile"
+        }
+      },
       diagnosticsProfile: {
         serializedName: "diagnosticsProfile",
         type: {
@@ -4793,6 +4900,13 @@ export const VirtualMachineScaleSetUpdateVMProfile: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "VirtualMachineScaleSetUpdateNetworkProfile"
+        }
+      },
+      securityProfile: {
+        serializedName: "securityProfile",
+        type: {
+          name: "Composite",
+          className: "SecurityProfile"
         }
       },
       diagnosticsProfile: {
@@ -5891,6 +6005,13 @@ export const VirtualMachineScaleSetVM: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "OSProfile"
+        }
+      },
+      securityProfile: {
+        serializedName: "properties.securityProfile",
+        type: {
+          name: "Composite",
+          className: "SecurityProfile"
         }
       },
       networkProfile: {
