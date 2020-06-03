@@ -5145,6 +5145,18 @@ export const HyperVReplicaAzureEnableProtectionInput: msRest.CompositeMapper = {
         type: {
           name: "String"
         }
+      },
+      targetAvailabilityZone: {
+        serializedName: "targetAvailabilityZone",
+        type: {
+          name: "String"
+        }
+      },
+      targetProximityPlacementGroupId: {
+        serializedName: "targetProximityPlacementGroupId",
+        type: {
+          name: "String"
+        }
       }
     }
   }
@@ -5569,6 +5581,18 @@ export const HyperVReplicaAzureReplicationDetails: msRest.CompositeMapper = {
           name: "String"
         }
       },
+      targetAvailabilityZone: {
+        serializedName: "targetAvailabilityZone",
+        type: {
+          name: "String"
+        }
+      },
+      targetProximityPlacementGroupId: {
+        serializedName: "targetProximityPlacementGroupId",
+        type: {
+          name: "String"
+        }
+      },
       useManagedDisks: {
         serializedName: "useManagedDisks",
         type: {
@@ -5670,6 +5694,18 @@ export const HyperVReplicaAzureUpdateReplicationProtectedItemInput: msRest.Compo
               name: "String"
             }
           }
+        }
+      },
+      targetProximityPlacementGroupId: {
+        serializedName: "targetProximityPlacementGroupId",
+        type: {
+          name: "String"
+        }
+      },
+      targetAvailabilityZone: {
+        serializedName: "targetAvailabilityZone",
+        type: {
+          name: "String"
         }
       }
     }
@@ -6664,6 +6700,18 @@ export const InMageAzureV2EnableProtectionInput: msRest.CompositeMapper = {
         type: {
           name: "String"
         }
+      },
+      targetAvailabilityZone: {
+        serializedName: "targetAvailabilityZone",
+        type: {
+          name: "String"
+        }
+      },
+      targetProximityPlacementGroupId: {
+        serializedName: "targetProximityPlacementGroupId",
+        type: {
+          name: "String"
+        }
       }
     }
   }
@@ -7227,6 +7275,12 @@ export const InMageAzureV2ReplicationDetails: msRest.CompositeMapper = {
           name: "String"
         }
       },
+      selectedTfoAzureNetworkId: {
+        serializedName: "selectedTfoAzureNetworkId",
+        type: {
+          name: "String"
+        }
+      },
       selectedSourceNicId: {
         serializedName: "selectedSourceNicId",
         type: {
@@ -7270,6 +7324,18 @@ export const InMageAzureV2ReplicationDetails: msRest.CompositeMapper = {
       },
       recoveryAvailabilitySetId: {
         serializedName: "recoveryAvailabilitySetId",
+        type: {
+          name: "String"
+        }
+      },
+      targetAvailabilityZone: {
+        serializedName: "targetAvailabilityZone",
+        type: {
+          name: "String"
+        }
+      },
+      targetProximityPlacementGroupId: {
+        serializedName: "targetProximityPlacementGroupId",
         type: {
           name: "String"
         }
@@ -7421,6 +7487,18 @@ export const InMageAzureV2UpdateReplicationProtectedItemInput: msRest.CompositeM
       },
       useManagedDisks: {
         serializedName: "useManagedDisks",
+        type: {
+          name: "String"
+        }
+      },
+      targetProximityPlacementGroupId: {
+        serializedName: "targetProximityPlacementGroupId",
+        type: {
+          name: "String"
+        }
+      },
+      targetAvailabilityZone: {
+        serializedName: "targetAvailabilityZone",
         type: {
           name: "String"
         }

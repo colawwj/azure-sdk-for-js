@@ -3300,6 +3300,14 @@ export interface HyperVReplicaAzureEnableProtectionInput {
    * A value indicating whether managed disks should be used during failover.
    */
   useManagedDisks?: string;
+  /**
+   * The target availability zone.
+   */
+  targetAvailabilityZone?: string;
+  /**
+   * The proximity placement group ARM Id.
+   */
+  targetProximityPlacementGroupId?: string;
 }
 
 /**
@@ -3584,6 +3592,14 @@ export interface HyperVReplicaAzureReplicationDetails {
    */
   recoveryAvailabilitySetId?: string;
   /**
+   * The target availability zone.
+   */
+  targetAvailabilityZone?: string;
+  /**
+   * The target proximity placement group Id.
+   */
+  targetProximityPlacementGroupId?: string;
+  /**
    * A value indicating whether managed disks should be used during failover.
    */
   useManagedDisks?: string;
@@ -3651,6 +3667,14 @@ export interface HyperVReplicaAzureUpdateReplicationProtectedItemInput {
    * The dictionary of disk resource Id to disk encryption set ARM Id.
    */
   diskIdToDiskEncryptionMap?: { [propertyName: string]: string };
+  /**
+   * The target proximity placement group Id.
+   */
+  targetProximityPlacementGroupId?: string;
+  /**
+   * The target availability zone.
+   */
+  targetAvailabilityZone?: string;
 }
 
 /**
@@ -4312,6 +4336,14 @@ export interface InMageAzureV2EnableProtectionInput {
    * The DiskEncryptionSet ARM ID.
    */
   diskEncryptionSetId?: string;
+  /**
+   * The target availability zone.
+   */
+  targetAvailabilityZone?: string;
+  /**
+   * The proximity placement group ARM Id.
+   */
+  targetProximityPlacementGroupId?: string;
 }
 
 /**
@@ -4685,6 +4717,10 @@ export interface InMageAzureV2ReplicationDetails {
    */
   selectedRecoveryAzureNetworkId?: string;
   /**
+   * The test failover virtual network.
+   */
+  selectedTfoAzureNetworkId?: string;
+  /**
    * The selected source nic Id which will be used as the primary nic during failover.
    */
   selectedSourceNicId?: string;
@@ -4715,6 +4751,14 @@ export interface InMageAzureV2ReplicationDetails {
    * The recovery availability set Id.
    */
   recoveryAvailabilitySetId?: string;
+  /**
+   * The target availability zone.
+   */
+  targetAvailabilityZone?: string;
+  /**
+   * The target proximity placement group Id.
+   */
+  targetProximityPlacementGroupId?: string;
   /**
    * A value indicating whether managed disks should be used during failover.
    */
@@ -4807,6 +4851,14 @@ export interface InMageAzureV2UpdateReplicationProtectedItemInput {
    * A value indicating whether managed disks should be used during failover.
    */
   useManagedDisks?: string;
+  /**
+   * The target proximity placement group Id.
+   */
+  targetProximityPlacementGroupId?: string;
+  /**
+   * The target availability zone.
+   */
+  targetAvailabilityZone?: string;
 }
 
 /**
