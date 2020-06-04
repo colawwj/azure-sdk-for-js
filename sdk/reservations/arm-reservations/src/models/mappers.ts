@@ -569,12 +569,6 @@ export const SupportRequestAction: msRest.CompositeMapper = {
     name: "Composite",
     className: "SupportRequestAction",
     modelProperties: {
-      autoQuotaIncreaseState: {
-        serializedName: "autoQuotaIncreaseState",
-        type: {
-          name: "Object"
-        }
-      },
       severity: {
         serializedName: "severity",
         type: {

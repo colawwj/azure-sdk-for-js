@@ -367,10 +367,6 @@ export interface Actions {
  */
 export interface SupportRequestAction {
   /**
-   * Is support request action enabled.
-   */
-  autoQuotaIncreaseState?: any;
-  /**
    * The support request severity.
    */
   severity?: any;
