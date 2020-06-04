@@ -172,6 +172,7 @@ export {
   MatchVariable,
   NatGateway,
   NatGatewaySku,
+  NatRule,
   NatRuleCondition,
   NetworkIntentPolicy,
   NetworkInterface,

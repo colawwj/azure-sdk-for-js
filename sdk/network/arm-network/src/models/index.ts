@@ -10377,6 +10377,20 @@ export interface VirtualHubRouteTableV2 extends SubResource {
 }
 
 /**
+ * VirtualHub route table.
+ */
+export interface NatRule {
+  /**
+   * The type of NAT rule. Possible values include: 'Static', 'Dynamic'
+   */
+  type?: NatRuleType;
+  /**
+   * The source NAT direction of a NAT rule. Possible values include: 'EgressSnat', 'IngressSnat'
+   */
+  mode?: NatRuleMode;
+}
+
+/**
  * VirtualHub Resource.
  */
 export interface VirtualHub extends Resource {
@@ -10430,6 +10444,10 @@ export interface VirtualHub extends Resource {
    * List of all virtual hub route table v2s associated with this VirtualHub.
    */
   virtualHubRouteTableV2s?: VirtualHubRouteTableV2[];
+  /**
+   * List of all NAT rules defined for use on this VirtualHub.
+   */
+  natRules?: NatRule[];
   /**
    * The sku of this VirtualHub.
    */
@@ -13868,6 +13886,22 @@ export type VirtualNetworkGatewayConnectionProtocol = 'IKEv2' | 'IKEv1';
  * @enum {string}
  */
 export type OfficeTrafficCategory = 'Optimize' | 'OptimizeAndAllow' | 'All' | 'None';
+
+/**
+ * Defines values for NatRuleType.
+ * Possible values include: 'Static', 'Dynamic'
+ * @readonly
+ * @enum {string}
+ */
+export type NatRuleType = 'Static' | 'Dynamic';
+
+/**
+ * Defines values for NatRuleMode.
+ * Possible values include: 'EgressSnat', 'IngressSnat'
+ * @readonly
+ * @enum {string}
+ */
+export type NatRuleMode = 'EgressSnat' | 'IngressSnat';
 
 /**
  * Defines values for VpnConnectionStatus.

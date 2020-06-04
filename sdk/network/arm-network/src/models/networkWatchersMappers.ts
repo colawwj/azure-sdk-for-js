@@ -192,6 +192,7 @@ export {
   MatchVariable,
   NatGateway,
   NatGatewaySku,
+  NatRule,
   NatRuleCondition,
   NetworkConfigurationDiagnosticParameters,
   NetworkConfigurationDiagnosticProfile,

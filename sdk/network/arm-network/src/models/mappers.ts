@@ -17538,6 +17538,28 @@ export const VirtualHubRouteTableV2: msRest.CompositeMapper = {
   }
 };
 
+export const NatRule: msRest.CompositeMapper = {
+  serializedName: "NatRule",
+  type: {
+    name: "Composite",
+    className: "NatRule",
+    modelProperties: {
+      type: {
+        serializedName: "type",
+        type: {
+          name: "String"
+        }
+      },
+      mode: {
+        serializedName: "mode",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const VirtualHub: msRest.CompositeMapper = {
   serializedName: "VirtualHub",
   type: {
@@ -17633,6 +17655,18 @@ export const VirtualHub: msRest.CompositeMapper = {
             type: {
               name: "Composite",
               className: "VirtualHubRouteTableV2"
+            }
+          }
+        }
+      },
+      natRules: {
+        serializedName: "properties.natRules",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "NatRule"
             }
           }
         }

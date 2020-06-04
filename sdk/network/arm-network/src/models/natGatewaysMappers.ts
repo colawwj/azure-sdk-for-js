@@ -170,6 +170,7 @@ export {
   NatGateway,
   NatGatewayListResult,
   NatGatewaySku,
+  NatRule,
   NatRuleCondition,
   NetworkIntentPolicy,
   NetworkInterface,
