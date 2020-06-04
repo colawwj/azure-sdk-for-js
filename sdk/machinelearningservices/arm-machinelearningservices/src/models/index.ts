@@ -952,6 +952,16 @@ export interface AKS {
 }
 
 /**
+ * Virtual Machine image for Windows AML Compute
+ */
+export interface VirtualMachineImage {
+  /**
+   * Virtual Machine image path
+   */
+  id: string;
+}
+
+/**
  * scale settings for AML Compute
  */
 export interface ScaleSettings {
@@ -1028,6 +1038,10 @@ export interface NodeStateCounts {
  */
 export interface AmlComputeProperties {
   /**
+   * Compute OS Type. Possible values include: 'Linux', 'Windows'
+   */
+  osType?: OsType;
+  /**
    * Virtual Machine Size
    */
   vmSize?: string;
@@ -1035,6 +1049,10 @@ export interface AmlComputeProperties {
    * Virtual Machine priority. Possible values include: 'Dedicated', 'LowPriority'
    */
   vmPriority?: VmPriority;
+  /**
+   * Virtual Machine image for AML Compute - windows only
+   */
+  virtualMachineImage?: VirtualMachineImage;
   /**
    * Scale settings for AML Compute
    */
@@ -1511,6 +1529,10 @@ export interface ClusterUpdateParameters {
    * Scale settings. Desired scale settings for the amlCompute.
    */
   scaleSettings?: ScaleSettings;
+  /**
+   * identity. Identity of the compute
+   */
+  identity?: Identity;
 }
 
 /**
@@ -2015,6 +2037,14 @@ export type Status = 'Undefined' | 'Success' | 'Failure' | 'InvalidQuotaBelowClu
  * @enum {string}
  */
 export type ResourceIdentityType = 'SystemAssigned' | 'UserAssigned' | 'SystemAssigned, UserAssigned' | 'None';
+
+/**
+ * Defines values for OsType.
+ * Possible values include: 'Linux', 'Windows'
+ * @readonly
+ * @enum {string}
+ */
+export type OsType = 'Linux' | 'Windows';
 
 /**
  * Defines values for VmPriority.
