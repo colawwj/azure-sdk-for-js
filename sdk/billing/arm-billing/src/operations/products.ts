@@ -625,6 +625,9 @@ const validateMoveOperationSpec: msRest.OperationSpec = {
     Parameters.billingAccountName,
     Parameters.productName
   ],
+  queryParameters: [
+    Parameters.apiVersion
+  ],
   headerParameters: [
     Parameters.acceptLanguage
   ],

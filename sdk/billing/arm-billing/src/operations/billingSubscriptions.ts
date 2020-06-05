@@ -571,6 +571,9 @@ const validateMoveOperationSpec: msRest.OperationSpec = {
     Parameters.billingAccountName,
     Parameters.subscriptionId
   ],
+  queryParameters: [
+    Parameters.apiVersion
+  ],
   headerParameters: [
     Parameters.acceptLanguage
   ],
@@ -600,6 +603,9 @@ const beginMoveOperationSpec: msRest.OperationSpec = {
   urlParameters: [
     Parameters.billingAccountName,
     Parameters.subscriptionId
+  ],
+  queryParameters: [
+    Parameters.apiVersion
   ],
   headerParameters: [
     Parameters.acceptLanguage
