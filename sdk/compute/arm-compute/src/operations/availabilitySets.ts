@@ -28,7 +28,7 @@ export class AvailabilitySets {
 
   /**
    * Create or update an availability set.
-   * @param resourceGroupName The name of the resource group.
+   * @param resourceGroupName The name of the target resource group.
    * @param availabilitySetName The name of the availability set.
    * @param parameters Parameters supplied to the Create Availability Set operation.
    * @param [options] The optional parameters
@@ -36,14 +36,14 @@ export class AvailabilitySets {
    */
   createOrUpdate(resourceGroupName: string, availabilitySetName: string, parameters: Models.AvailabilitySet, options?: msRest.RequestOptionsBase): Promise<Models.AvailabilitySetsCreateOrUpdateResponse>;
   /**
-   * @param resourceGroupName The name of the resource group.
+   * @param resourceGroupName The name of the target resource group.
    * @param availabilitySetName The name of the availability set.
    * @param parameters Parameters supplied to the Create Availability Set operation.
    * @param callback The callback
    */
   createOrUpdate(resourceGroupName: string, availabilitySetName: string, parameters: Models.AvailabilitySet, callback: msRest.ServiceCallback<Models.AvailabilitySet>): void;
   /**
-   * @param resourceGroupName The name of the resource group.
+   * @param resourceGroupName The name of the target resource group.
    * @param availabilitySetName The name of the availability set.
    * @param parameters Parameters supplied to the Create Availability Set operation.
    * @param options The optional parameters
