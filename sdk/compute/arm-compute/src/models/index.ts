@@ -5825,7 +5825,7 @@ export interface ContainerService extends Resource {
  */
 export interface AvailabilitySetsListBySubscriptionOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * The expand expression to apply to the operation.
+   * The expand expression to apply to the operation. Allowed values are 'instanceView'.
    */
   expand?: string;
 }
@@ -6196,15 +6196,17 @@ export interface VirtualMachineScaleSetVMsGetOptionalParams extends msRest.Reque
  */
 export interface VirtualMachineScaleSetVMsListOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * The filter to apply to the operation.
+   * The filter to apply to the operation. Allowed values are
+   * 'startswith(instanceView/statuses/code, 'PowerState') eq true', 'properties/latestModelApplied
+   * eq true', 'properties/latestModelApplied eq false'.
    */
   filter?: string;
   /**
-   * The list parameters.
+   * The list parameters. Allowed values are 'instanceView', 'instanceView/statuses'.
    */
   select?: string;
   /**
-   * The expand expression to apply to the operation.
+   * The expand expression to apply to the operation. Allowed values are 'instanceView'.
    */
   expand?: string;
 }
