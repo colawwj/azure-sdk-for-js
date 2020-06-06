@@ -48,6 +48,32 @@ export interface ComputeOperationValue {
 }
 
 /**
+ * Specifies the disallowed configuration for a virtual machine image.
+ */
+export interface DisallowedConfiguration {
+  /**
+   * VM disk types which are disallowed. Possible values include: 'None', 'Unmanaged'
+   */
+  vmDiskType?: VmDiskTypes;
+}
+
+/**
+ * The SAS URIs of the console screenshot and serial log blobs.
+ */
+export interface RetrieveBootDiagnosticsDataResult {
+  /**
+   * The console screenshot blob URI
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly consoleScreenshotBlobUri?: string;
+  /**
+   * The serial console log blob URI.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly serialConsoleLogBlobUri?: string;
+}
+
+/**
  * Instance view status.
  */
 export interface InstanceViewStatus {
@@ -716,6 +742,176 @@ export interface VirtualMachineExtensionsListResult {
 }
 
 /**
+ * Describes the properties of a Virtual Machine software patch.
+ */
+export interface VirtualMachineSoftwarePatchProperties {
+  /**
+   * A unique identifier for the patch.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly patchId?: string;
+  /**
+   * The friendly name of the patch.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * The version number of the patch. This property applies only to Linux patches.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly version?: string;
+  /**
+   * The KBID of the patch. Only applies to Windows patches.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly kbid?: string;
+  /**
+   * The classification(s) of the patch as provided by the patch publisher.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly classifications?: string[];
+  /**
+   * Describes the reboot requirements of the patch. Possible values include: 'NeverReboots',
+   * 'AlwaysRequiresReboot', 'CanRequestReboot'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly rebootBehavior?: SoftwareUpdateRebootBehavior;
+  /**
+   * The activity ID of the operation that produced this result. It is used to correlate across CRP
+   * and extension logs.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly activityId?: string;
+  /**
+   * The UTC timestamp when the repository published this patch.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly publishedDate?: Date;
+  /**
+   * The UTC timestamp of the last update to this patch record.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly lastModifiedDateTime?: Date;
+  /**
+   * Describes the outcome of an install operation for a given patch. Possible values include:
+   * 'Installed', 'Failed', 'Excluded', 'NotSelected', 'Pending', 'Available'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly assessmentState?: PatchAssessmentState;
+}
+
+/**
+ * Api error base.
+ */
+export interface ApiErrorBase {
+  /**
+   * The error code.
+   */
+  code?: string;
+  /**
+   * The target of the particular error.
+   */
+  target?: string;
+  /**
+   * The error message.
+   */
+  message?: string;
+}
+
+/**
+ * Inner error details.
+ */
+export interface InnerError {
+  /**
+   * The exception type.
+   */
+  exceptiontype?: string;
+  /**
+   * The internal error message or exception dump.
+   */
+  errordetail?: string;
+}
+
+/**
+ * Api error.
+ */
+export interface ApiError {
+  /**
+   * The Api error details
+   */
+  details?: ApiErrorBase[];
+  /**
+   * The Api inner error
+   */
+  innererror?: InnerError;
+  /**
+   * The error code.
+   */
+  code?: string;
+  /**
+   * The target of the particular error.
+   */
+  target?: string;
+  /**
+   * The error message.
+   */
+  message?: string;
+}
+
+/**
+ * Describes the properties of an AssessPatches result.
+ */
+export interface VirtualMachineAssessPatchesResult {
+  /**
+   * The overall success or failure status of the operation. It remains "InProgress" until the
+   * operation completes. At that point it will become "Failed", "Succeeded", or
+   * "CompletedWithWarnings.". Possible values include: 'InProgress', 'Failed', 'Succeeded',
+   * 'CompletedWithWarnings'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly status?: PatchOperationStatus;
+  /**
+   * The activity ID of the operation that produced this result. It is used to correlate across CRP
+   * and extension logs.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly assessmentActivityId?: string;
+  /**
+   * The overall reboot status of the VM. It will be true when partially installed patches require
+   * a reboot to complete installation but the reboot has not yet occurred.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly rebootPending?: boolean;
+  /**
+   * The number of critical or security patches that have been detected as available and not yet
+   * installed.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly criticalAndSecurityPatchCount?: number;
+  /**
+   * The number of all available patches excluding critical and security.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly otherPatchCount?: number;
+  /**
+   * The UTC timestamp when the operation began.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly startDateTime?: Date;
+  /**
+   * The list of patches that have been detected as available for installation.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly patches?: VirtualMachineSoftwarePatchProperties[];
+  /**
+   * The errors that were encountered during execution of the operation. The details array contains
+   * the list of them.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly error?: ApiError;
+}
+
+/**
  * Used for establishing the purchase context of any 3rd Party artifact through MarketPlace.
  */
 export interface PurchasePlan {
@@ -778,6 +974,10 @@ export interface VirtualMachineImage extends VirtualMachineImageResource {
    * Possible values include: 'V1', 'V2'
    */
   hyperVGeneration?: HyperVGenerationTypes;
+  /**
+   * Specifies disallowed configuration for the VirtualMachine created from the image
+   */
+  disallowed?: DisallowedConfiguration;
 }
 
 /**
@@ -1253,6 +1453,19 @@ export interface StorageProfile {
 }
 
 /**
+ * Specifies the Security profile settings for the virtual machine or virtual machine scale set.
+ */
+export interface SecurityProfile {
+  /**
+   * This property can be used by user in the request to enable or disable the Host Encryption for
+   * the virtual machine or virtual machine scale set. This will enable the encryption for all the
+   * disks including Resource/Temp disk at host itself. <br><br> Default: The Encryption at host
+   * will be disabled unless this property is set to true for the resource.
+   */
+  encryptionAtHost?: boolean;
+}
+
+/**
  * Enables or disables a capability on the virtual machine or virtual machine scale set.
  */
 export interface AdditionalCapabilities {
@@ -1325,6 +1538,24 @@ export interface WinRMConfiguration {
 }
 
 /**
+ * An interface representing PatchSettings.
+ */
+export interface PatchSettings {
+  /**
+   * Specifies the mode of in-guest patching to IaaS virtual machine.<br /><br /> Possible values
+   * are:<br /><br /> **Manual** - You  control the application of patches to a virtual machine.
+   * You do this by applying patches manually inside the VM. In this mode, automatic updates are
+   * disabled; the property WindowsConfiguration.enableAutomaticUpdates must be false<br /><br />
+   * **AutomaticByOS** - The virtual machine will automatically be updated by the OS. The property
+   * WindowsConfiguration.enableAutomaticUpdates must be true. <br /><br /> **
+   * AutomaticByPlatform** - the virtual machine will automatically updated by the OS. The
+   * properties provisionVMAgent and WindowsConfiguration.enableAutomaticUpdates must be true.
+   * Possible values include: 'Manual', 'AutomaticByOS', 'AutomaticByPlatform'
+   */
+  patchMode?: InGuestPatchMode;
+}
+
+/**
  * Specifies Windows operating system settings on the virtual machine.
  */
 export interface WindowsConfiguration {
@@ -1354,6 +1585,10 @@ export interface WindowsConfiguration {
    * Unattend.xml file, which is used by Windows Setup.
    */
   additionalUnattendContent?: AdditionalUnattendContent[];
+  /**
+   * Specifies settings related to in-guest patching (KBs).
+   */
+  patchSettings?: PatchSettings;
   /**
    * Specifies the Windows Remote Management listeners. This enables remote Windows PowerShell.
    */
@@ -1590,7 +1825,8 @@ export interface BootDiagnostics {
    */
   enabled?: boolean;
   /**
-   * Uri of the storage account to use for placing the console output and screenshot.
+   * Uri of the storage account to use for placing the console output and screenshot. <br><br>If
+   * storageUri is not specified while enabling boot diagnostics, managed storage will be used.
    */
   storageUri?: string;
 }
@@ -1686,12 +1922,14 @@ export interface DiskInstanceView {
  */
 export interface BootDiagnosticsInstanceView {
   /**
-   * The console screenshot blob URI.
+   * The console screenshot blob URI. <br><br>NOTE: This will **not** be set if boot diagnostics is
+   * currently enabled with managed storage.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly consoleScreenshotBlobUri?: string;
   /**
-   * The Linux serial console log blob Uri.
+   * The serial console log blob Uri. <br><br>NOTE: This will **not** be set if boot diagnostics is
+   * currently enabled with managed storage.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly serialConsoleLogBlobUri?: string;
@@ -1880,6 +2118,10 @@ export interface VirtualMachine extends Resource {
    */
   networkProfile?: NetworkProfile;
   /**
+   * Specifies the Security related profile settings for the virtual machine.
+   */
+  securityProfile?: SecurityProfile;
+  /**
    * Specifies the boot diagnostic settings state. <br><br>Minimum api-version: 2015-06-15.
    */
   diagnosticsProfile?: DiagnosticsProfile;
@@ -2009,6 +2251,10 @@ export interface VirtualMachineUpdate extends UpdateResource {
    * Specifies the network interfaces of the virtual machine.
    */
   networkProfile?: NetworkProfile;
+  /**
+   * Specifies the Security related profile settings for the virtual machine.
+   */
+  securityProfile?: SecurityProfile;
   /**
    * Specifies the boot diagnostic settings state. <br><br>Minimum api-version: 2015-06-15.
    */
@@ -2801,13 +3047,13 @@ export interface VirtualMachineScaleSetIPConfiguration extends SubResource {
   /**
    * Specifies an array of references to backend address pools of load balancers. A scale set can
    * reference backend address pools of one public and one internal load balancer. Multiple scale
-   * sets cannot use the same basic sku load balancer.
+   * sets cannot use the same load balancer.
    */
   loadBalancerBackendAddressPools?: SubResource[];
   /**
    * Specifies an array of references to inbound Nat pools of the load balancers. A scale set can
    * reference inbound nat pools of one public and one internal load balancer. Multiple scale sets
-   * cannot use the same basic sku load balancer.
+   * cannot use the same load balancer
    */
   loadBalancerInboundNatPools?: SubResource[];
 }
@@ -3136,6 +3382,10 @@ export interface VirtualMachineScaleSetVMProfile {
    */
   networkProfile?: VirtualMachineScaleSetNetworkProfile;
   /**
+   * Specifies the Security related profile settings for the virtual machines in the scale set.
+   */
+  securityProfile?: SecurityProfile;
+  /**
    * Specifies the boot diagnostic settings state. <br><br>Minimum api-version: 2015-06-15.
    */
   diagnosticsProfile?: DiagnosticsProfile;
@@ -3194,6 +3444,10 @@ export interface VirtualMachineScaleSetUpdateVMProfile {
    * The virtual machine scale set network profile.
    */
   networkProfile?: VirtualMachineScaleSetUpdateNetworkProfile;
+  /**
+   * The virtual machine scale set Security profile
+   */
+  securityProfile?: SecurityProfile;
   /**
    * The virtual machine scale set diagnostics profile.
    */
@@ -3543,64 +3797,6 @@ export interface VirtualMachineScaleSetSku {
 }
 
 /**
- * Api error base.
- */
-export interface ApiErrorBase {
-  /**
-   * The error code.
-   */
-  code?: string;
-  /**
-   * The target of the particular error.
-   */
-  target?: string;
-  /**
-   * The error message.
-   */
-  message?: string;
-}
-
-/**
- * Inner error details.
- */
-export interface InnerError {
-  /**
-   * The exception type.
-   */
-  exceptiontype?: string;
-  /**
-   * The internal error message or exception dump.
-   */
-  errordetail?: string;
-}
-
-/**
- * Api error.
- */
-export interface ApiError {
-  /**
-   * The Api error details
-   */
-  details?: ApiErrorBase[];
-  /**
-   * The Api inner error
-   */
-  innererror?: InnerError;
-  /**
-   * The error code.
-   */
-  code?: string;
-  /**
-   * The target of the particular error.
-   */
-  target?: string;
-  /**
-   * The error message.
-   */
-  message?: string;
-}
-
-/**
  * Information about rollback on failed VM instances after a OS Upgrade operation.
  */
 export interface RollbackStatusInfo {
@@ -3864,6 +4060,10 @@ export interface VirtualMachineScaleSetVM extends Resource {
    * Specifies the operating system settings for the virtual machine.
    */
   osProfile?: OSProfile;
+  /**
+   * Specifies the Security related profile settings for the virtual machine.
+   */
+  securityProfile?: SecurityProfile;
   /**
    * Specifies the network interfaces of the virtual machine.
    */
@@ -5940,6 +6140,18 @@ export interface VirtualMachinesReimageOptionalParams extends msRest.RequestOpti
 /**
  * Optional Parameters.
  */
+export interface VirtualMachinesRetrieveBootDiagnosticsDataOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Expiration duration in minutes for the SAS URIs with a value between 1 to 1440 minutes.
+   * <br><br>NOTE: If not specified, SAS URIs will be generated with a default expiration duration
+   * of 120 minutes.
+   */
+  sasUriExpirationTimeInMinutes?: number;
+}
+
+/**
+ * Optional Parameters.
+ */
 export interface VirtualMachinesBeginPowerOffOptionalParams extends msRest.RequestOptionsBase {
   /**
    * The parameter to request non-graceful VM shutdown. True value for this flag indicates
@@ -6219,6 +6431,18 @@ export interface VirtualMachineScaleSetVMsPowerOffOptionalParams extends msRest.
    * if not specified. Default value: false.
    */
   skipShutdown?: boolean;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface VirtualMachineScaleSetVMsRetrieveBootDiagnosticsDataOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Expiration duration in minutes for the SAS URIs with a value between 1 to 1440 minutes.
+   * <br><br>NOTE: If not specified, SAS URIs will be generated with a default expiration duration
+   * of 120 minutes.
+   */
+  sasUriExpirationTimeInMinutes?: number;
 }
 
 /**
@@ -6620,6 +6844,14 @@ export interface ContainerServiceListResult extends Array<ContainerService> {
 }
 
 /**
+ * Defines values for VmDiskTypes.
+ * Possible values include: 'None', 'Unmanaged'
+ * @readonly
+ * @enum {string}
+ */
+export type VmDiskTypes = 'None' | 'Unmanaged';
+
+/**
  * Defines values for HyperVGenerationTypes.
  * Possible values include: 'V1', 'V2'
  * @readonly
@@ -6658,6 +6890,31 @@ export type ProximityPlacementGroupType = 'Standard' | 'Ultra';
  * @enum {string}
  */
 export type DedicatedHostLicenseTypes = 'None' | 'Windows_Server_Hybrid' | 'Windows_Server_Perpetual';
+
+/**
+ * Defines values for SoftwareUpdateRebootBehavior.
+ * Possible values include: 'NeverReboots', 'AlwaysRequiresReboot', 'CanRequestReboot'
+ * @readonly
+ * @enum {string}
+ */
+export type SoftwareUpdateRebootBehavior = 'NeverReboots' | 'AlwaysRequiresReboot' | 'CanRequestReboot';
+
+/**
+ * Defines values for PatchAssessmentState.
+ * Possible values include: 'Installed', 'Failed', 'Excluded', 'NotSelected', 'Pending',
+ * 'Available'
+ * @readonly
+ * @enum {string}
+ */
+export type PatchAssessmentState = 'Installed' | 'Failed' | 'Excluded' | 'NotSelected' | 'Pending' | 'Available';
+
+/**
+ * Defines values for PatchOperationStatus.
+ * Possible values include: 'InProgress', 'Failed', 'Succeeded', 'CompletedWithWarnings'
+ * @readonly
+ * @enum {string}
+ */
+export type PatchOperationStatus = 'InProgress' | 'Failed' | 'Succeeded' | 'CompletedWithWarnings';
 
 /**
  * Defines values for OperatingSystemTypes.
@@ -6779,6 +7036,14 @@ export type SettingNames = 'AutoLogon' | 'FirstLogonCommands';
  * @enum {string}
  */
 export type ProtocolTypes = 'Http' | 'Https';
+
+/**
+ * Defines values for InGuestPatchMode.
+ * Possible values include: 'Manual', 'AutomaticByOS', 'AutomaticByPlatform'
+ * @readonly
+ * @enum {string}
+ */
+export type InGuestPatchMode = 'Manual' | 'AutomaticByOS' | 'AutomaticByPlatform';
 
 /**
  * Defines values for VirtualMachinePriorityTypes.
@@ -8379,6 +8644,46 @@ export type VirtualMachinesListAvailableSizesResponse = VirtualMachineSizeListRe
 };
 
 /**
+ * Contains response data for the retrieveBootDiagnosticsData operation.
+ */
+export type VirtualMachinesRetrieveBootDiagnosticsDataResponse = RetrieveBootDiagnosticsDataResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: RetrieveBootDiagnosticsDataResult;
+    };
+};
+
+/**
+ * Contains response data for the assessPatches operation.
+ */
+export type VirtualMachinesAssessPatchesResponse = VirtualMachineAssessPatchesResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: VirtualMachineAssessPatchesResult;
+    };
+};
+
+/**
  * Contains response data for the runCommand operation.
  */
 export type VirtualMachinesRunCommandResponse = RunCommandResult & {
@@ -8455,6 +8760,26 @@ export type VirtualMachinesBeginUpdateResponse = VirtualMachine & {
        * The response body as parsed JSON or XML
        */
       parsedBody: VirtualMachine;
+    };
+};
+
+/**
+ * Contains response data for the beginAssessPatches operation.
+ */
+export type VirtualMachinesBeginAssessPatchesResponse = VirtualMachineAssessPatchesResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: VirtualMachineAssessPatchesResult;
     };
 };
 
@@ -9395,6 +9720,26 @@ export type VirtualMachineScaleSetVMsListResponse = VirtualMachineScaleSetVMList
        * The response body as parsed JSON or XML
        */
       parsedBody: VirtualMachineScaleSetVMListResult;
+    };
+};
+
+/**
+ * Contains response data for the retrieveBootDiagnosticsData operation.
+ */
+export type VirtualMachineScaleSetVMsRetrieveBootDiagnosticsDataResponse = RetrieveBootDiagnosticsDataResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: RetrieveBootDiagnosticsDataResult;
     };
 };
 

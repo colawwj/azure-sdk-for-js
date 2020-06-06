@@ -64,6 +64,46 @@ export const ComputeOperationValue: msRest.CompositeMapper = {
   }
 };
 
+export const DisallowedConfiguration: msRest.CompositeMapper = {
+  serializedName: "DisallowedConfiguration",
+  type: {
+    name: "Composite",
+    className: "DisallowedConfiguration",
+    modelProperties: {
+      vmDiskType: {
+        serializedName: "vmDiskType",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const RetrieveBootDiagnosticsDataResult: msRest.CompositeMapper = {
+  serializedName: "RetrieveBootDiagnosticsDataResult",
+  type: {
+    name: "Composite",
+    className: "RetrieveBootDiagnosticsDataResult",
+    modelProperties: {
+      consoleScreenshotBlobUri: {
+        readOnly: true,
+        serializedName: "consoleScreenshotBlobUri",
+        type: {
+          name: "String"
+        }
+      },
+      serialConsoleLogBlobUri: {
+        readOnly: true,
+        serializedName: "serialConsoleLogBlobUri",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const InstanceViewStatus: msRest.CompositeMapper = {
   serializedName: "InstanceViewStatus",
   type: {
@@ -1181,6 +1221,261 @@ export const VirtualMachineExtensionsListResult: msRest.CompositeMapper = {
   }
 };
 
+export const VirtualMachineSoftwarePatchProperties: msRest.CompositeMapper = {
+  serializedName: "VirtualMachineSoftwarePatchProperties",
+  type: {
+    name: "Composite",
+    className: "VirtualMachineSoftwarePatchProperties",
+    modelProperties: {
+      patchId: {
+        readOnly: true,
+        serializedName: "patchId",
+        type: {
+          name: "String"
+        }
+      },
+      name: {
+        readOnly: true,
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      version: {
+        readOnly: true,
+        serializedName: "version",
+        type: {
+          name: "String"
+        }
+      },
+      kbid: {
+        readOnly: true,
+        serializedName: "kbid",
+        type: {
+          name: "String"
+        }
+      },
+      classifications: {
+        readOnly: true,
+        serializedName: "classifications",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      rebootBehavior: {
+        readOnly: true,
+        serializedName: "rebootBehavior",
+        type: {
+          name: "String"
+        }
+      },
+      activityId: {
+        readOnly: true,
+        serializedName: "activityId",
+        type: {
+          name: "String"
+        }
+      },
+      publishedDate: {
+        readOnly: true,
+        serializedName: "publishedDate",
+        type: {
+          name: "DateTime"
+        }
+      },
+      lastModifiedDateTime: {
+        readOnly: true,
+        serializedName: "lastModifiedDateTime",
+        type: {
+          name: "DateTime"
+        }
+      },
+      assessmentState: {
+        readOnly: true,
+        serializedName: "assessmentState",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const ApiErrorBase: msRest.CompositeMapper = {
+  serializedName: "ApiErrorBase",
+  type: {
+    name: "Composite",
+    className: "ApiErrorBase",
+    modelProperties: {
+      code: {
+        serializedName: "code",
+        type: {
+          name: "String"
+        }
+      },
+      target: {
+        serializedName: "target",
+        type: {
+          name: "String"
+        }
+      },
+      message: {
+        serializedName: "message",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const InnerError: msRest.CompositeMapper = {
+  serializedName: "InnerError",
+  type: {
+    name: "Composite",
+    className: "InnerError",
+    modelProperties: {
+      exceptiontype: {
+        serializedName: "exceptiontype",
+        type: {
+          name: "String"
+        }
+      },
+      errordetail: {
+        serializedName: "errordetail",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const ApiError: msRest.CompositeMapper = {
+  serializedName: "ApiError",
+  type: {
+    name: "Composite",
+    className: "ApiError",
+    modelProperties: {
+      details: {
+        serializedName: "details",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "ApiErrorBase"
+            }
+          }
+        }
+      },
+      innererror: {
+        serializedName: "innererror",
+        type: {
+          name: "Composite",
+          className: "InnerError"
+        }
+      },
+      code: {
+        serializedName: "code",
+        type: {
+          name: "String"
+        }
+      },
+      target: {
+        serializedName: "target",
+        type: {
+          name: "String"
+        }
+      },
+      message: {
+        serializedName: "message",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const VirtualMachineAssessPatchesResult: msRest.CompositeMapper = {
+  serializedName: "VirtualMachineAssessPatchesResult",
+  type: {
+    name: "Composite",
+    className: "VirtualMachineAssessPatchesResult",
+    modelProperties: {
+      status: {
+        readOnly: true,
+        serializedName: "status",
+        type: {
+          name: "String"
+        }
+      },
+      assessmentActivityId: {
+        readOnly: true,
+        serializedName: "assessmentActivityId",
+        type: {
+          name: "String"
+        }
+      },
+      rebootPending: {
+        readOnly: true,
+        serializedName: "rebootPending",
+        type: {
+          name: "Boolean"
+        }
+      },
+      criticalAndSecurityPatchCount: {
+        readOnly: true,
+        serializedName: "criticalAndSecurityPatchCount",
+        type: {
+          name: "Number"
+        }
+      },
+      otherPatchCount: {
+        readOnly: true,
+        serializedName: "otherPatchCount",
+        type: {
+          name: "Number"
+        }
+      },
+      startDateTime: {
+        readOnly: true,
+        serializedName: "startDateTime",
+        type: {
+          name: "DateTime"
+        }
+      },
+      patches: {
+        readOnly: true,
+        serializedName: "patches",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "VirtualMachineSoftwarePatchProperties"
+            }
+          }
+        }
+      },
+      error: {
+        readOnly: true,
+        serializedName: "error",
+        type: {
+          name: "Composite",
+          className: "ApiError"
+        }
+      }
+    }
+  }
+};
+
 export const PurchasePlan: msRest.CompositeMapper = {
   serializedName: "PurchasePlan",
   type: {
@@ -1311,6 +1606,13 @@ export const VirtualMachineImage: msRest.CompositeMapper = {
         serializedName: "properties.hyperVGeneration",
         type: {
           name: "String"
+        }
+      },
+      disallowed: {
+        serializedName: "properties.disallowed",
+        type: {
+          name: "Composite",
+          className: "DisallowedConfiguration"
         }
       }
     }
@@ -1937,6 +2239,22 @@ export const StorageProfile: msRest.CompositeMapper = {
   }
 };
 
+export const SecurityProfile: msRest.CompositeMapper = {
+  serializedName: "SecurityProfile",
+  type: {
+    name: "Composite",
+    className: "SecurityProfile",
+    modelProperties: {
+      encryptionAtHost: {
+        serializedName: "encryptionAtHost",
+        type: {
+          name: "Boolean"
+        }
+      }
+    }
+  }
+};
+
 export const AdditionalCapabilities: msRest.CompositeMapper = {
   serializedName: "AdditionalCapabilities",
   type: {
@@ -2045,6 +2363,22 @@ export const WinRMConfiguration: msRest.CompositeMapper = {
   }
 };
 
+export const PatchSettings: msRest.CompositeMapper = {
+  serializedName: "PatchSettings",
+  type: {
+    name: "Composite",
+    className: "PatchSettings",
+    modelProperties: {
+      patchMode: {
+        serializedName: "patchMode",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const WindowsConfiguration: msRest.CompositeMapper = {
   serializedName: "WindowsConfiguration",
   type: {
@@ -2079,6 +2413,13 @@ export const WindowsConfiguration: msRest.CompositeMapper = {
               className: "AdditionalUnattendContent"
             }
           }
+        }
+      },
+      patchSettings: {
+        serializedName: "patchSettings",
+        type: {
+          name: "Composite",
+          className: "PatchSettings"
         }
       },
       winRM: {
@@ -2833,6 +3174,13 @@ export const VirtualMachine: msRest.CompositeMapper = {
           className: "NetworkProfile"
         }
       },
+      securityProfile: {
+        serializedName: "properties.securityProfile",
+        type: {
+          name: "Composite",
+          className: "SecurityProfile"
+        }
+      },
       diagnosticsProfile: {
         serializedName: "properties.diagnosticsProfile",
         type: {
@@ -2997,6 +3345,13 @@ export const VirtualMachineUpdate: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "NetworkProfile"
+        }
+      },
+      securityProfile: {
+        serializedName: "properties.securityProfile",
+        type: {
+          name: "Composite",
+          className: "SecurityProfile"
         }
       },
       diagnosticsProfile: {
@@ -4718,6 +5073,13 @@ export const VirtualMachineScaleSetVMProfile: msRest.CompositeMapper = {
           className: "VirtualMachineScaleSetNetworkProfile"
         }
       },
+      securityProfile: {
+        serializedName: "securityProfile",
+        type: {
+          name: "Composite",
+          className: "SecurityProfile"
+        }
+      },
       diagnosticsProfile: {
         serializedName: "diagnosticsProfile",
         type: {
@@ -4793,6 +5155,13 @@ export const VirtualMachineScaleSetUpdateVMProfile: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "VirtualMachineScaleSetUpdateNetworkProfile"
+        }
+      },
+      securityProfile: {
+        serializedName: "securityProfile",
+        type: {
+          name: "Composite",
+          className: "SecurityProfile"
         }
       },
       diagnosticsProfile: {
@@ -5362,103 +5731,6 @@ export const VirtualMachineScaleSetSku: msRest.CompositeMapper = {
   }
 };
 
-export const ApiErrorBase: msRest.CompositeMapper = {
-  serializedName: "ApiErrorBase",
-  type: {
-    name: "Composite",
-    className: "ApiErrorBase",
-    modelProperties: {
-      code: {
-        serializedName: "code",
-        type: {
-          name: "String"
-        }
-      },
-      target: {
-        serializedName: "target",
-        type: {
-          name: "String"
-        }
-      },
-      message: {
-        serializedName: "message",
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const InnerError: msRest.CompositeMapper = {
-  serializedName: "InnerError",
-  type: {
-    name: "Composite",
-    className: "InnerError",
-    modelProperties: {
-      exceptiontype: {
-        serializedName: "exceptiontype",
-        type: {
-          name: "String"
-        }
-      },
-      errordetail: {
-        serializedName: "errordetail",
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const ApiError: msRest.CompositeMapper = {
-  serializedName: "ApiError",
-  type: {
-    name: "Composite",
-    className: "ApiError",
-    modelProperties: {
-      details: {
-        serializedName: "details",
-        type: {
-          name: "Sequence",
-          element: {
-            type: {
-              name: "Composite",
-              className: "ApiErrorBase"
-            }
-          }
-        }
-      },
-      innererror: {
-        serializedName: "innererror",
-        type: {
-          name: "Composite",
-          className: "InnerError"
-        }
-      },
-      code: {
-        serializedName: "code",
-        type: {
-          name: "String"
-        }
-      },
-      target: {
-        serializedName: "target",
-        type: {
-          name: "String"
-        }
-      },
-      message: {
-        serializedName: "message",
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
 export const RollbackStatusInfo: msRest.CompositeMapper = {
   serializedName: "RollbackStatusInfo",
   type: {
@@ -5891,6 +6163,13 @@ export const VirtualMachineScaleSetVM: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "OSProfile"
+        }
+      },
+      securityProfile: {
+        serializedName: "properties.securityProfile",
+        type: {
+          name: "Composite",
+          className: "SecurityProfile"
         }
       },
       networkProfile: {
