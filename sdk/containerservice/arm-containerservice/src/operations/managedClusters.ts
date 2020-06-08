@@ -573,7 +573,7 @@ const listOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion3
+    Parameters.apiVersion
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -594,10 +594,10 @@ const listByResourceGroupOperationSpec: msRest.OperationSpec = {
   path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters",
   urlParameters: [
     Parameters.subscriptionId,
-    Parameters.resourceGroupName0
+    Parameters.resourceGroupName
   ],
   queryParameters: [
-    Parameters.apiVersion3
+    Parameters.apiVersion
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -618,11 +618,11 @@ const getUpgradeProfileOperationSpec: msRest.OperationSpec = {
   path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/upgradeProfiles/default",
   urlParameters: [
     Parameters.subscriptionId,
-    Parameters.resourceGroupName0,
-    Parameters.resourceName1
+    Parameters.resourceGroupName,
+    Parameters.resourceName
   ],
   queryParameters: [
-    Parameters.apiVersion3
+    Parameters.apiVersion
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -643,12 +643,12 @@ const getAccessProfileOperationSpec: msRest.OperationSpec = {
   path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/accessProfiles/{roleName}/listCredential",
   urlParameters: [
     Parameters.subscriptionId,
-    Parameters.resourceGroupName0,
-    Parameters.resourceName1,
+    Parameters.resourceGroupName,
+    Parameters.resourceName,
     Parameters.roleName
   ],
   queryParameters: [
-    Parameters.apiVersion3
+    Parameters.apiVersion
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -669,11 +669,11 @@ const listClusterAdminCredentialsOperationSpec: msRest.OperationSpec = {
   path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/listClusterAdminCredential",
   urlParameters: [
     Parameters.subscriptionId,
-    Parameters.resourceGroupName0,
-    Parameters.resourceName1
+    Parameters.resourceGroupName,
+    Parameters.resourceName
   ],
   queryParameters: [
-    Parameters.apiVersion3
+    Parameters.apiVersion
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -694,11 +694,11 @@ const listClusterUserCredentialsOperationSpec: msRest.OperationSpec = {
   path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/listClusterUserCredential",
   urlParameters: [
     Parameters.subscriptionId,
-    Parameters.resourceGroupName0,
-    Parameters.resourceName1
+    Parameters.resourceGroupName,
+    Parameters.resourceName
   ],
   queryParameters: [
-    Parameters.apiVersion3
+    Parameters.apiVersion
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -719,11 +719,11 @@ const listClusterMonitoringUserCredentialsOperationSpec: msRest.OperationSpec = 
   path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/listClusterMonitoringUserCredential",
   urlParameters: [
     Parameters.subscriptionId,
-    Parameters.resourceGroupName0,
-    Parameters.resourceName1
+    Parameters.resourceGroupName,
+    Parameters.resourceName
   ],
   queryParameters: [
-    Parameters.apiVersion3
+    Parameters.apiVersion
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -744,11 +744,11 @@ const getOperationSpec: msRest.OperationSpec = {
   path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}",
   urlParameters: [
     Parameters.subscriptionId,
-    Parameters.resourceGroupName0,
-    Parameters.resourceName1
+    Parameters.resourceGroupName,
+    Parameters.resourceName
   ],
   queryParameters: [
-    Parameters.apiVersion3
+    Parameters.apiVersion
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -769,11 +769,11 @@ const beginCreateOrUpdateOperationSpec: msRest.OperationSpec = {
   path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}",
   urlParameters: [
     Parameters.subscriptionId,
-    Parameters.resourceGroupName0,
-    Parameters.resourceName1
+    Parameters.resourceGroupName,
+    Parameters.resourceName
   ],
   queryParameters: [
-    Parameters.apiVersion3
+    Parameters.apiVersion
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -804,11 +804,11 @@ const beginUpdateTagsOperationSpec: msRest.OperationSpec = {
   path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}",
   urlParameters: [
     Parameters.subscriptionId,
-    Parameters.resourceGroupName0,
-    Parameters.resourceName1
+    Parameters.resourceGroupName,
+    Parameters.resourceName
   ],
   queryParameters: [
-    Parameters.apiVersion3
+    Parameters.apiVersion
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -836,11 +836,11 @@ const beginDeleteMethodOperationSpec: msRest.OperationSpec = {
   path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}",
   urlParameters: [
     Parameters.subscriptionId,
-    Parameters.resourceGroupName0,
-    Parameters.resourceName1
+    Parameters.resourceGroupName,
+    Parameters.resourceName
   ],
   queryParameters: [
-    Parameters.apiVersion3
+    Parameters.apiVersion
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -860,11 +860,11 @@ const beginResetServicePrincipalProfileOperationSpec: msRest.OperationSpec = {
   path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/resetServicePrincipalProfile",
   urlParameters: [
     Parameters.subscriptionId,
-    Parameters.resourceGroupName0,
-    Parameters.resourceName1
+    Parameters.resourceGroupName,
+    Parameters.resourceName
   ],
   queryParameters: [
-    Parameters.apiVersion3
+    Parameters.apiVersion
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -891,11 +891,11 @@ const beginResetAADProfileOperationSpec: msRest.OperationSpec = {
   path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/resetAADProfile",
   urlParameters: [
     Parameters.subscriptionId,
-    Parameters.resourceGroupName0,
-    Parameters.resourceName1
+    Parameters.resourceGroupName,
+    Parameters.resourceName
   ],
   queryParameters: [
-    Parameters.apiVersion3
+    Parameters.apiVersion
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -922,11 +922,11 @@ const beginRotateClusterCertificatesOperationSpec: msRest.OperationSpec = {
   path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/rotateClusterCertificates",
   urlParameters: [
     Parameters.subscriptionId,
-    Parameters.resourceGroupName0,
-    Parameters.resourceName1
+    Parameters.resourceGroupName,
+    Parameters.resourceName
   ],
   queryParameters: [
-    Parameters.apiVersion3
+    Parameters.apiVersion
   ],
   headerParameters: [
     Parameters.acceptLanguage
