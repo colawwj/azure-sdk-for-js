@@ -1351,6 +1351,12 @@ export const ManagedClusterAgentPoolProfileProperties: msRest.CompositeMapper = 
             }
           }
         }
+      },
+      proximityPlacementGroupID: {
+        serializedName: "proximityPlacementGroupID",
+        type: {
+          name: "String"
+        }
       }
     }
   }
@@ -1545,6 +1551,12 @@ export const AgentPool: msRest.CompositeMapper = {
               name: "String"
             }
           }
+        }
+      },
+      proximityPlacementGroupID: {
+        serializedName: "properties.proximityPlacementGroupID",
+        type: {
+          name: "String"
         }
       }
     }

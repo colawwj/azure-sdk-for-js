@@ -956,6 +956,10 @@ export interface ManagedClusterAgentPoolProfileProperties {
    * key=value:NoSchedule.
    */
   nodeTaints?: string[];
+  /**
+   * The ID for Proximity Placement Group.
+   */
+  proximityPlacementGroupID?: string;
 }
 
 /**
@@ -1114,6 +1118,10 @@ export interface AgentPool extends SubResource {
    * key=value:NoSchedule.
    */
   nodeTaints?: string[];
+  /**
+   * The ID for Proximity Placement Group.
+   */
+  proximityPlacementGroupID?: string;
 }
 
 /**
