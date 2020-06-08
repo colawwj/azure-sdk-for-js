@@ -31,6 +31,7 @@ export {
   ErrorModel,
   GitPatternRepository,
   ManagedIdentityProperties,
+  NetworkProfile,
   PersistentDisk,
   ProxyResource,
   Resource,

@@ -176,6 +176,32 @@ export interface TraceProperties {
 }
 
 /**
+ * Service network profile payload
+ */
+export interface NetworkProfile {
+  /**
+   * Fully qualified resource Id of the subnet to host Azure Spring Cloud Service Runtime
+   */
+  serviceRuntimeSubnetId?: string;
+  /**
+   * Fully qualified resource Id of the subnet to host Azure Spring Cloud Apps
+   */
+  appSubnetId?: string;
+  /**
+   * Azure Spring Cloud service reserved CIDR
+   */
+  serviceCidr?: string;
+  /**
+   * Name of the resource group containing network resources of Azure Spring Cloud Service Runtime
+   */
+  serviceRuntimeNetworkResourceGroup?: string;
+  /**
+   * Name of the resource group containing network resources of Azure Spring Cloud Apps
+   */
+  appNetworkResourceGroup?: string;
+}
+
+/**
  * Service properties payload
  */
 export interface ClusterResourceProperties {
@@ -203,6 +229,10 @@ export interface ClusterResourceProperties {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly serviceId?: string;
+  /**
+   * Network profile of the Service
+   */
+  networkProfile?: NetworkProfile;
 }
 
 /**

@@ -30,6 +30,7 @@ export {
   GitPatternRepository,
   LogFileUrlResponse,
   ManagedIdentityProperties,
+  NetworkProfile,
   PersistentDisk,
   ProxyResource,
   Resource,
