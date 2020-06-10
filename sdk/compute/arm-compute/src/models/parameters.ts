@@ -26,7 +26,7 @@ export const apiVersion0: msRest.OperationQueryParameter = {
     required: true,
     isConstant: true,
     serializedName: "api-version",
-    defaultValue: '2019-12-01',
+    defaultValue: '2020-06-01',
     type: {
       name: "String"
     }
@@ -50,13 +50,25 @@ export const apiVersion2: msRest.OperationQueryParameter = {
     required: true,
     isConstant: true,
     serializedName: "api-version",
-    defaultValue: '2020-05-01',
+    defaultValue: '2019-11-01',
     type: {
       name: "String"
     }
   }
 };
 export const apiVersion3: msRest.OperationQueryParameter = {
+  parameterPath: "apiVersion",
+  mapper: {
+    required: true,
+    isConstant: true,
+    serializedName: "api-version",
+    defaultValue: '2019-12-01',
+    type: {
+      name: "String"
+    }
+  }
+};
+export const apiVersion4: msRest.OperationQueryParameter = {
   parameterPath: "apiVersion",
   mapper: {
     required: true,
@@ -93,16 +105,6 @@ export const containerServiceName: msRest.OperationURLParameter = {
   mapper: {
     required: true,
     serializedName: "containerServiceName",
-    type: {
-      name: "String"
-    }
-  }
-};
-export const diskAccessName: msRest.OperationURLParameter = {
-  parameterPath: "diskAccessName",
-  mapper: {
-    required: true,
-    serializedName: "diskAccessName",
     type: {
       name: "String"
     }
@@ -362,6 +364,18 @@ export const resourceGroupName: msRest.OperationURLParameter = {
     serializedName: "resourceGroupName",
     type: {
       name: "String"
+    }
+  }
+};
+export const sasUriExpirationTimeInMinutes: msRest.OperationQueryParameter = {
+  parameterPath: [
+    "options",
+    "sasUriExpirationTimeInMinutes"
+  ],
+  mapper: {
+    serializedName: "sasUriExpirationTimeInMinutes",
+    type: {
+      name: "Number"
     }
   }
 };

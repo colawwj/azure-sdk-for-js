@@ -32,7 +32,6 @@ export * from "./resourceSkus";
 export * from "./disks";
 export * from "./snapshots";
 export * from "./diskEncryptionSets";
-export * from "./diskAccesses";
 export * from "./galleries";
 export * from "./galleryImages";
 export * from "./galleryImageVersions";

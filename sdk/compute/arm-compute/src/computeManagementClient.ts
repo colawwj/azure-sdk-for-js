@@ -41,7 +41,6 @@ class ComputeManagementClient extends ComputeManagementClientContext {
   disks: operations.Disks;
   snapshots: operations.Snapshots;
   diskEncryptionSets: operations.DiskEncryptionSets;
-  diskAccesses: operations.DiskAccesses;
   galleries: operations.Galleries;
   galleryImages: operations.GalleryImages;
   galleryImageVersions: operations.GalleryImageVersions;
@@ -82,7 +81,6 @@ class ComputeManagementClient extends ComputeManagementClientContext {
     this.disks = new operations.Disks(this);
     this.snapshots = new operations.Snapshots(this);
     this.diskEncryptionSets = new operations.DiskEncryptionSets(this);
-    this.diskAccesses = new operations.DiskAccesses(this);
     this.galleries = new operations.Galleries(this);
     this.galleryImages = new operations.GalleryImages(this);
     this.galleryImageVersions = new operations.GalleryImageVersions(this);
