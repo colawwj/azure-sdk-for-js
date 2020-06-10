@@ -956,6 +956,10 @@ export interface ManagedClusterAgentPoolProfileProperties {
    * key=value:NoSchedule.
    */
   nodeTaints?: string[];
+  /**
+   * The ID for Proximity Placement Group.
+   */
+  proximityPlacementGroupID?: string;
 }
 
 /**
@@ -1114,6 +1118,10 @@ export interface AgentPool extends SubResource {
    * key=value:NoSchedule.
    */
   nodeTaints?: string[];
+  /**
+   * The ID for Proximity Placement Group.
+   */
+  proximityPlacementGroupID?: string;
 }
 
 /**
@@ -1702,6 +1710,77 @@ export interface CredentialResults {
 }
 
 /**
+ * Private endpoint which a connection belongs to.
+ */
+export interface PrivateEndpoint {
+  /**
+   * The resource Id for private endpoint
+   */
+  id?: string;
+}
+
+/**
+ * The state of a private link service connection.
+ */
+export interface PrivateLinkServiceConnectionState {
+  /**
+   * The private link service connection status. Possible values include: 'Pending', 'Approved',
+   * 'Rejected', 'Disconnected'
+   */
+  status?: ConnectionStatus;
+  /**
+   * The private link service connection description.
+   */
+  description?: string;
+}
+
+/**
+ * A private endpoint connection
+ */
+export interface PrivateEndpointConnection extends BaseResource {
+  /**
+   * The ID of the private endpoint connection.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * The name of the private endpoint connection.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * The resource type.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * The current provisioning state. Possible values include: 'Succeeded', 'Creating', 'Deleting',
+   * 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: PrivateEndpointConnectionProvisioningState;
+  /**
+   * The resource of private endpoint.
+   */
+  privateEndpoint?: PrivateEndpoint;
+  /**
+   * A collection of information about the state of the connection between service consumer and
+   * provider.
+   */
+  privateLinkServiceConnectionState: PrivateLinkServiceConnectionState;
+}
+
+/**
+ * A list of private endpoint connections
+ */
+export interface PrivateEndpointConnectionListResult {
+  /**
+   * The collection value.
+   */
+  value?: PrivateEndpointConnection[];
+}
+
+/**
  * Optional Parameters.
  */
 export interface ContainerServicesListOrchestratorsOptionalParams extends msRest.RequestOptionsBase {
@@ -1965,6 +2044,22 @@ export type ManagedClusterSKUName = 'Basic';
  * @enum {string}
  */
 export type ManagedClusterSKUTier = 'Paid' | 'Free';
+
+/**
+ * Defines values for PrivateEndpointConnectionProvisioningState.
+ * Possible values include: 'Succeeded', 'Creating', 'Deleting', 'Failed'
+ * @readonly
+ * @enum {string}
+ */
+export type PrivateEndpointConnectionProvisioningState = 'Succeeded' | 'Creating' | 'Deleting' | 'Failed';
+
+/**
+ * Defines values for ConnectionStatus.
+ * Possible values include: 'Pending', 'Approved', 'Rejected', 'Disconnected'
+ * @readonly
+ * @enum {string}
+ */
+export type ConnectionStatus = 'Pending' | 'Approved' | 'Rejected' | 'Disconnected';
 
 /**
  * Contains response data for the list operation.
@@ -2743,5 +2838,65 @@ export type AgentPoolsListNextResponse = AgentPoolListResult & {
        * The response body as parsed JSON or XML
        */
       parsedBody: AgentPoolListResult;
+    };
+};
+
+/**
+ * Contains response data for the list operation.
+ */
+export type PrivateEndpointConnectionsListResponse = PrivateEndpointConnectionListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateEndpointConnectionListResult;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type PrivateEndpointConnectionsGetResponse = PrivateEndpointConnection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateEndpointConnection;
+    };
+};
+
+/**
+ * Contains response data for the update operation.
+ */
+export type PrivateEndpointConnectionsUpdateResponse = PrivateEndpointConnection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateEndpointConnection;
     };
 };
