@@ -28,7 +28,7 @@ export class DatabaseAccounts {
   }
 
   /**
-   * Retrieves the properties of an existing Azure Cosmos DB database account.
+   * Retrieves the properties of a existing Azure Cosmos DB database account.
    * @param resourceGroupName The name of the resource group. The name is case insensitive.
    * @param accountName Cosmos DB database account name.
    * @param [options] The optional parameters
