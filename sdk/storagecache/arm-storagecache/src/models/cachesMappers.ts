@@ -20,6 +20,7 @@ export {
   CacheUpgradeStatus,
   ClfsTarget,
   CloudError,
+  ForceGsiProperties,
   KeyVaultKeyReference,
   KeyVaultKeyReferenceSourceVault,
   NamespaceJunction,

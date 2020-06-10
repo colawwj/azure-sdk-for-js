@@ -519,6 +519,22 @@ export const Cache: msRest.CompositeMapper = {
   }
 };
 
+export const ForceGsiProperties: msRest.CompositeMapper = {
+  serializedName: "ForceGsiProperties",
+  type: {
+    name: "Composite",
+    className: "ForceGsiProperties",
+    modelProperties: {
+      comment: {
+        serializedName: "comment",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const NamespaceJunction: msRest.CompositeMapper = {
   serializedName: "NamespaceJunction",
   type: {

@@ -85,11 +85,11 @@ export class Caches {
    * @param cacheName Name of Cache. Length of name must be not greater than 80 and chars must be in
    * list of [-0-9a-zA-Z_] char class.
    * @param [options] The optional parameters
-   * @returns Promise<Models.CachesDeleteMethodResponse>
+   * @returns Promise<msRest.RestResponse>
    */
-  deleteMethod(resourceGroupName: string, cacheName: string, options?: msRest.RequestOptionsBase): Promise<Models.CachesDeleteMethodResponse> {
+  deleteMethod(resourceGroupName: string, cacheName: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse> {
     return this.beginDeleteMethod(resourceGroupName,cacheName,options)
-      .then(lroPoller => lroPoller.pollUntilFinished()) as Promise<Models.CachesDeleteMethodResponse>;
+      .then(lroPoller => lroPoller.pollUntilFinished());
   }
 
   /**
@@ -182,11 +182,11 @@ export class Caches {
    * @param cacheName Name of Cache. Length of name must be not greater than 80 and chars must be in
    * list of [-0-9a-zA-Z_] char class.
    * @param [options] The optional parameters
-   * @returns Promise<Models.CachesFlushResponse>
+   * @returns Promise<msRest.RestResponse>
    */
-  flush(resourceGroupName: string, cacheName: string, options?: msRest.RequestOptionsBase): Promise<Models.CachesFlushResponse> {
+  flush(resourceGroupName: string, cacheName: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse> {
     return this.beginFlush(resourceGroupName,cacheName,options)
-      .then(lroPoller => lroPoller.pollUntilFinished()) as Promise<Models.CachesFlushResponse>;
+      .then(lroPoller => lroPoller.pollUntilFinished());
   }
 
   /**
@@ -195,11 +195,11 @@ export class Caches {
    * @param cacheName Name of Cache. Length of name must be not greater than 80 and chars must be in
    * list of [-0-9a-zA-Z_] char class.
    * @param [options] The optional parameters
-   * @returns Promise<Models.CachesStartResponse>
+   * @returns Promise<msRest.RestResponse>
    */
-  start(resourceGroupName: string, cacheName: string, options?: msRest.RequestOptionsBase): Promise<Models.CachesStartResponse> {
+  start(resourceGroupName: string, cacheName: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse> {
     return this.beginStart(resourceGroupName,cacheName,options)
-      .then(lroPoller => lroPoller.pollUntilFinished()) as Promise<Models.CachesStartResponse>;
+      .then(lroPoller => lroPoller.pollUntilFinished());
   }
 
   /**
@@ -208,11 +208,46 @@ export class Caches {
    * @param cacheName Name of Cache. Length of name must be not greater than 80 and chars must be in
    * list of [-0-9a-zA-Z_] char class.
    * @param [options] The optional parameters
-   * @returns Promise<Models.CachesStopResponse>
+   * @returns Promise<msRest.RestResponse>
    */
-  stop(resourceGroupName: string, cacheName: string, options?: msRest.RequestOptionsBase): Promise<Models.CachesStopResponse> {
+  stop(resourceGroupName: string, cacheName: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse> {
     return this.beginStop(resourceGroupName,cacheName,options)
-      .then(lroPoller => lroPoller.pollUntilFinished()) as Promise<Models.CachesStopResponse>;
+      .then(lroPoller => lroPoller.pollUntilFinished());
+  }
+
+  /**
+   * Forces a GSI to complete on the specified cache.
+   * @param resourceGroupName Target resource group.
+   * @param cacheName Name of Cache. Length of name must be not greater than 80 and chars must be in
+   * list of [-0-9a-zA-Z_] char class.
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
+   */
+  forceGsi(resourceGroupName: string, cacheName: string, options?: Models.CachesForceGsiOptionalParams): Promise<msRest.RestResponse>;
+  /**
+   * @param resourceGroupName Target resource group.
+   * @param cacheName Name of Cache. Length of name must be not greater than 80 and chars must be in
+   * list of [-0-9a-zA-Z_] char class.
+   * @param callback The callback
+   */
+  forceGsi(resourceGroupName: string, cacheName: string, callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param resourceGroupName Target resource group.
+   * @param cacheName Name of Cache. Length of name must be not greater than 80 and chars must be in
+   * list of [-0-9a-zA-Z_] char class.
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  forceGsi(resourceGroupName: string, cacheName: string, options: Models.CachesForceGsiOptionalParams, callback: msRest.ServiceCallback<void>): void;
+  forceGsi(resourceGroupName: string, cacheName: string, options?: Models.CachesForceGsiOptionalParams | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.client.sendOperationRequest(
+      {
+        resourceGroupName,
+        cacheName,
+        options
+      },
+      forceGsiOperationSpec,
+      callback);
   }
 
   /**
@@ -222,11 +257,11 @@ export class Caches {
    * @param cacheName Name of Cache. Length of name must be not greater than 80 and chars must be in
    * list of [-0-9a-zA-Z_] char class.
    * @param [options] The optional parameters
-   * @returns Promise<Models.CachesUpgradeFirmwareResponse>
+   * @returns Promise<msRest.RestResponse>
    */
-  upgradeFirmware(resourceGroupName: string, cacheName: string, options?: msRest.RequestOptionsBase): Promise<Models.CachesUpgradeFirmwareResponse> {
+  upgradeFirmware(resourceGroupName: string, cacheName: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse> {
     return this.beginUpgradeFirmware(resourceGroupName,cacheName,options)
-      .then(lroPoller => lroPoller.pollUntilFinished()) as Promise<Models.CachesUpgradeFirmwareResponse>;
+      .then(lroPoller => lroPoller.pollUntilFinished());
   }
 
   /**
@@ -508,6 +543,38 @@ const updateOperationSpec: msRest.OperationSpec = {
   serializer
 };
 
+const forceGsiOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StorageCache/caches/{cacheName}/forceGsi",
+  urlParameters: [
+    Parameters.resourceGroupName,
+    Parameters.subscriptionId,
+    Parameters.cacheName
+  ],
+  queryParameters: [
+    Parameters.apiVersion
+  ],
+  headerParameters: [
+    Parameters.acceptLanguage
+  ],
+  requestBody: {
+    parameterPath: {
+      comment: [
+        "options",
+        "comment"
+      ]
+    },
+    mapper: Mappers.ForceGsiProperties
+  },
+  responses: {
+    204: {},
+    default: {
+      bodyMapper: Mappers.CloudError
+    }
+  },
+  serializer
+};
+
 const beginDeleteMethodOperationSpec: msRest.OperationSpec = {
   httpMethod: "DELETE",
   path: "subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StorageCache/caches/{cacheName}",
@@ -523,30 +590,9 @@ const beginDeleteMethodOperationSpec: msRest.OperationSpec = {
     Parameters.acceptLanguage
   ],
   responses: {
-    200: {
-      bodyMapper: {
-        serializedName: "parsedResponse",
-        type: {
-          name: "Object"
-        }
-      }
-    },
-    202: {
-      bodyMapper: {
-        serializedName: "parsedResponse",
-        type: {
-          name: "Object"
-        }
-      }
-    },
-    204: {
-      bodyMapper: {
-        serializedName: "parsedResponse",
-        type: {
-          name: "Object"
-        }
-      }
-    },
+    200: {},
+    202: {},
+    204: {},
     default: {
       bodyMapper: Mappers.CloudError
     }
@@ -604,30 +650,9 @@ const beginFlushOperationSpec: msRest.OperationSpec = {
     Parameters.acceptLanguage
   ],
   responses: {
-    200: {
-      bodyMapper: {
-        serializedName: "parsedResponse",
-        type: {
-          name: "Object"
-        }
-      }
-    },
-    202: {
-      bodyMapper: {
-        serializedName: "parsedResponse",
-        type: {
-          name: "Object"
-        }
-      }
-    },
-    204: {
-      bodyMapper: {
-        serializedName: "parsedResponse",
-        type: {
-          name: "Object"
-        }
-      }
-    },
+    200: {},
+    202: {},
+    204: {},
     default: {
       bodyMapper: Mappers.CloudError
     }
@@ -650,30 +675,9 @@ const beginStartOperationSpec: msRest.OperationSpec = {
     Parameters.acceptLanguage
   ],
   responses: {
-    200: {
-      bodyMapper: {
-        serializedName: "parsedResponse",
-        type: {
-          name: "Object"
-        }
-      }
-    },
-    202: {
-      bodyMapper: {
-        serializedName: "parsedResponse",
-        type: {
-          name: "Object"
-        }
-      }
-    },
-    204: {
-      bodyMapper: {
-        serializedName: "parsedResponse",
-        type: {
-          name: "Object"
-        }
-      }
-    },
+    200: {},
+    202: {},
+    204: {},
     default: {
       bodyMapper: Mappers.CloudError
     }
@@ -696,30 +700,9 @@ const beginStopOperationSpec: msRest.OperationSpec = {
     Parameters.acceptLanguage
   ],
   responses: {
-    200: {
-      bodyMapper: {
-        serializedName: "parsedResponse",
-        type: {
-          name: "Object"
-        }
-      }
-    },
-    202: {
-      bodyMapper: {
-        serializedName: "parsedResponse",
-        type: {
-          name: "Object"
-        }
-      }
-    },
-    204: {
-      bodyMapper: {
-        serializedName: "parsedResponse",
-        type: {
-          name: "Object"
-        }
-      }
-    },
+    200: {},
+    202: {},
+    204: {},
     default: {
       bodyMapper: Mappers.CloudError
     }
@@ -742,30 +725,9 @@ const beginUpgradeFirmwareOperationSpec: msRest.OperationSpec = {
     Parameters.acceptLanguage
   ],
   responses: {
-    201: {
-      bodyMapper: {
-        serializedName: "parsedResponse",
-        type: {
-          name: "Object"
-        }
-      }
-    },
-    202: {
-      bodyMapper: {
-        serializedName: "parsedResponse",
-        type: {
-          name: "Object"
-        }
-      }
-    },
-    204: {
-      bodyMapper: {
-        serializedName: "parsedResponse",
-        type: {
-          name: "Object"
-        }
-      }
-    },
+    201: {},
+    202: {},
+    204: {},
     default: {
       bodyMapper: Mappers.CloudError
     }
