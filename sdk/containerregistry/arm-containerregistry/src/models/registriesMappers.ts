@@ -90,6 +90,7 @@ export {
   SourceUploadDefinition,
   Status,
   StorageAccountProperties,
+  SystemData,
   Task,
   TaskRun,
   TaskRunRequest,

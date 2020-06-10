@@ -70,6 +70,7 @@ export {
   SourceTriggerDescriptor,
   Status,
   StorageAccountProperties,
+  SystemData,
   Task,
   TaskRun,
   TaskRunRequest,

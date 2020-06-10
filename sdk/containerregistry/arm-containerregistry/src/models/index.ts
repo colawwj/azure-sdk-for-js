@@ -800,6 +800,11 @@ export interface Resource extends BaseResource {
    * The tags of the resource.
    */
   tags?: { [propertyName: string]: string };
+  /**
+   * Metadata pertaining to creation and last modification of the resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly systemData?: SystemData;
 }
 
 /**
@@ -1379,6 +1384,38 @@ export interface Event extends EventInfo {
    * The event response message received from the service URI.
    */
   eventResponseMessage?: EventResponseMessage;
+}
+
+/**
+ * Metadata pertaining to creation and last modification of the resource.
+ */
+export interface SystemData {
+  /**
+   * The identity that created the resource.
+   */
+  createdBy?: string;
+  /**
+   * The type of identity that created the resource. Possible values include: 'User',
+   * 'Application', 'ManagedIdentity', 'Key'
+   */
+  createdByType?: CreatedByType;
+  /**
+   * The timestamp of resource creation (UTC).
+   */
+  createdAt?: Date;
+  /**
+   * The identity that last modified the resource.
+   */
+  lastModifiedBy?: string;
+  /**
+   * The type of identity that last modified the resource. Possible values include: 'User',
+   * 'Application', 'ManagedIdentity', 'Key'
+   */
+  lastModifiedByType?: CreatedByType;
+  /**
+   * The type of identity that last modified the resource.
+   */
+  lastModifiedAt?: Date;
 }
 
 /**
@@ -3489,6 +3526,14 @@ export type WebhookStatus = 'enabled' | 'disabled';
  * @enum {string}
  */
 export type WebhookAction = 'push' | 'delete' | 'quarantine' | 'chart_push' | 'chart_delete';
+
+/**
+ * Defines values for CreatedByType.
+ * Possible values include: 'User', 'Application', 'ManagedIdentity', 'Key'
+ * @readonly
+ * @enum {string}
+ */
+export type CreatedByType = 'User' | 'Application' | 'ManagedIdentity' | 'Key';
 
 /**
  * Defines values for OS.

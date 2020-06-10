@@ -80,6 +80,7 @@ export {
   SourceUpdateParameters,
   Status,
   StorageAccountProperties,
+  SystemData,
   Task,
   TaskListResult,
   TaskRun,
