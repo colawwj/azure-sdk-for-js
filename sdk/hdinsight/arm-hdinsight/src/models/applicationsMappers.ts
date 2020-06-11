@@ -28,6 +28,7 @@ export {
   ConnectivityEndpoint,
   DataDisksGroups,
   DiskEncryptionProperties,
+  EncryptionInTransitProperties,
   ErrorResponse,
   Errors,
   HardwareProfile,

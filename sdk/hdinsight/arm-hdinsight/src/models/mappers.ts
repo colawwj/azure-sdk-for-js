@@ -700,6 +700,30 @@ export const DiskEncryptionProperties: msRest.CompositeMapper = {
         type: {
           name: "String"
         }
+      },
+      encryptionAtHost: {
+        serializedName: "encryptionAtHost",
+        defaultValue: false,
+        type: {
+          name: "Boolean"
+        }
+      }
+    }
+  }
+};
+
+export const EncryptionInTransitProperties: msRest.CompositeMapper = {
+  serializedName: "EncryptionInTransitProperties",
+  type: {
+    name: "Composite",
+    className: "EncryptionInTransitProperties",
+    modelProperties: {
+      isEncryptionInTransitEnabled: {
+        serializedName: "isEncryptionInTransitEnabled",
+        defaultValue: false,
+        type: {
+          name: "Boolean"
+        }
       }
     }
   }
@@ -777,6 +801,13 @@ export const ClusterCreateProperties: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "DiskEncryptionProperties"
+        }
+      },
+      encryptionInTransitProperties: {
+        serializedName: "encryptionInTransitProperties",
+        type: {
+          name: "Composite",
+          className: "EncryptionInTransitProperties"
         }
       },
       minSupportedTlsVersion: {
@@ -1118,6 +1149,13 @@ export const ClusterGetProperties: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "DiskEncryptionProperties"
+        }
+      },
+      encryptionInTransitProperties: {
+        serializedName: "encryptionInTransitProperties",
+        type: {
+          name: "Composite",
+          className: "EncryptionInTransitProperties"
         }
       },
       minSupportedTlsVersion: {

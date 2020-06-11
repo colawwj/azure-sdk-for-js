@@ -407,6 +407,21 @@ export interface DiskEncryptionProperties {
    * Resource ID of Managed Identity that is used to access the key vault.
    */
   msiResourceId?: string;
+  /**
+   * Indicates whether or not resource disk encryption is enabled. Default value: false.
+   */
+  encryptionAtHost?: boolean;
+}
+
+/**
+ * The encryption-in-transit properties.
+ */
+export interface EncryptionInTransitProperties {
+  /**
+   * Indicates whether or not inter cluster node communication is encrypted in transit. Default
+   * value: false.
+   */
+  isEncryptionInTransitEnabled?: boolean;
 }
 
 /**
@@ -449,6 +464,10 @@ export interface ClusterCreateProperties {
    * The disk encryption properties.
    */
   diskEncryptionProperties?: DiskEncryptionProperties;
+  /**
+   * The encryption-in-transit properties.
+   */
+  encryptionInTransitProperties?: EncryptionInTransitProperties;
   /**
    * The minimal supported tls version.
    */
@@ -640,6 +659,10 @@ export interface ClusterGetProperties {
    * The disk encryption properties.
    */
   diskEncryptionProperties?: DiskEncryptionProperties;
+  /**
+   * The encryption-in-transit properties.
+   */
+  encryptionInTransitProperties?: EncryptionInTransitProperties;
   /**
    * The minimal supported tls version.
    */
