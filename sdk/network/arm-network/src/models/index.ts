@@ -26690,6 +26690,26 @@ export type VpnGatewaysBeginCreateOrUpdateResponse = VpnGateway & {
 };
 
 /**
+ * Contains response data for the beginUpdateTags operation.
+ */
+export type VpnGatewaysBeginUpdateTagsResponse = VpnGateway & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: VpnGateway;
+    };
+};
+
+/**
  * Contains response data for the beginReset operation.
  */
 export type VpnGatewaysBeginResetResponse = VpnGateway & {
@@ -27073,6 +27093,26 @@ export type P2sVpnGatewaysGetP2sVpnConnectionHealthDetailedResponse = P2SVpnConn
  * Contains response data for the beginCreateOrUpdate operation.
  */
 export type P2sVpnGatewaysBeginCreateOrUpdateResponse = P2SVpnGateway & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: P2SVpnGateway;
+    };
+};
+
+/**
+ * Contains response data for the beginUpdateTags operation.
+ */
+export type P2sVpnGatewaysBeginUpdateTagsResponse = P2SVpnGateway & {
   /**
    * The underlying HTTP response.
    */
