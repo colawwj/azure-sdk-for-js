@@ -146,6 +146,8 @@ export {
   FlowLog,
   FlowLogFormatParameters,
   FrontendIPConfiguration,
+  GenerateExpressRoutePortsLOARequest,
+  GenerateExpressRoutePortsLOAResult,
   HTTPHeader,
   HubIPAddresses,
   HubIpConfiguration,
