@@ -5128,6 +5128,12 @@ export const Database: msRest.CompositeMapper = {
         type: {
           name: "DateTime"
         }
+      },
+      maintenanceConfigurationId: {
+        serializedName: "properties.maintenanceConfigurationId",
+        type: {
+          name: "String"
+        }
       }
     }
   }
@@ -5345,6 +5351,12 @@ export const DatabaseUpdate: msRest.CompositeMapper = {
           name: "DateTime"
         }
       },
+      maintenanceConfigurationId: {
+        serializedName: "properties.maintenanceConfigurationId",
+        type: {
+          name: "String"
+        }
+      },
       tags: {
         serializedName: "tags",
         type: {
@@ -5458,6 +5470,12 @@ export const ElasticPool: msRest.CompositeMapper = {
         type: {
           name: "String"
         }
+      },
+      maintenanceConfigurationId: {
+        serializedName: "properties.maintenanceConfigurationId",
+        type: {
+          name: "String"
+        }
       }
     }
   }
@@ -5497,6 +5515,12 @@ export const ElasticPoolUpdate: msRest.CompositeMapper = {
       },
       licenseType: {
         serializedName: "properties.licenseType",
+        type: {
+          name: "String"
+        }
+      },
+      maintenanceConfigurationId: {
+        serializedName: "properties.maintenanceConfigurationId",
         type: {
           name: "String"
         }

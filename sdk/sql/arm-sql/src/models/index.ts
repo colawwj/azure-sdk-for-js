@@ -3648,6 +3648,10 @@ export interface Database extends TrackedResource {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly resumedDate?: Date;
+  /**
+   * Maintenance configuration id assigned to the database
+   */
+  maintenanceConfigurationId?: string;
 }
 
 /**
@@ -3847,6 +3851,10 @@ export interface DatabaseUpdate {
    */
   readonly resumedDate?: Date;
   /**
+   * Maintenance configuration id assigned to the database
+   */
+  maintenanceConfigurationId?: string;
+  /**
    * Resource tags.
    */
   tags?: { [propertyName: string]: string };
@@ -3925,6 +3933,10 @@ export interface ElasticPool extends TrackedResource {
    * 'BasePrice'
    */
   licenseType?: ElasticPoolLicenseType;
+  /**
+   * Maintenance configuration id assigned to the elastic pool.
+   */
+  maintenanceConfigurationId?: string;
 }
 
 /**
@@ -3950,6 +3962,10 @@ export interface ElasticPoolUpdate {
    * 'BasePrice'
    */
   licenseType?: ElasticPoolLicenseType;
+  /**
+   * Maintenance configuration id assigned to the elastic pool.
+   */
+  maintenanceConfigurationId?: string;
   /**
    * Resource tags.
    */
