@@ -15336,6 +15336,30 @@ export const AddressSpace: msRest.CompositeMapper = {
   }
 };
 
+export const VirtualNetworkBgpCommunities: msRest.CompositeMapper = {
+  serializedName: "VirtualNetworkBgpCommunities",
+  type: {
+    name: "Composite",
+    className: "VirtualNetworkBgpCommunities",
+    modelProperties: {
+      virtualNetworkCommunity: {
+        required: true,
+        serializedName: "virtualNetworkCommunity",
+        type: {
+          name: "String"
+        }
+      },
+      regionalCommunity: {
+        readOnly: true,
+        serializedName: "regionalCommunity",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const VirtualNetworkPeering: msRest.CompositeMapper = {
   serializedName: "VirtualNetworkPeering",
   type: {
@@ -15379,6 +15403,13 @@ export const VirtualNetworkPeering: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "AddressSpace"
+        }
+      },
+      remoteBgpCommunities: {
+        serializedName: "properties.remoteBgpCommunities",
+        type: {
+          name: "Composite",
+          className: "VirtualNetworkBgpCommunities"
         }
       },
       peeringState: {
@@ -15484,30 +15515,6 @@ export const DhcpOptions: msRest.CompositeMapper = {
               name: "String"
             }
           }
-        }
-      }
-    }
-  }
-};
-
-export const VirtualNetworkBgpCommunities: msRest.CompositeMapper = {
-  serializedName: "VirtualNetworkBgpCommunities",
-  type: {
-    name: "Composite",
-    className: "VirtualNetworkBgpCommunities",
-    modelProperties: {
-      virtualNetworkCommunity: {
-        required: true,
-        serializedName: "virtualNetworkCommunity",
-        type: {
-          name: "String"
-        }
-      },
-      regionalCommunity: {
-        readOnly: true,
-        serializedName: "regionalCommunity",
-        type: {
-          name: "String"
         }
       }
     }

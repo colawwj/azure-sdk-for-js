@@ -9028,6 +9028,21 @@ export interface AddressSpace {
 }
 
 /**
+ * Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET.
+ */
+export interface VirtualNetworkBgpCommunities {
+  /**
+   * The BGP community associated with the virtual network.
+   */
+  virtualNetworkCommunity: string;
+  /**
+   * The BGP community associated with the region of the virtual network.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly regionalCommunity?: string;
+}
+
+/**
  * Peerings in a virtual network resource.
  */
 export interface VirtualNetworkPeering extends SubResource {
@@ -9062,6 +9077,10 @@ export interface VirtualNetworkPeering extends SubResource {
    * The reference to the remote virtual network address space.
    */
   remoteAddressSpace?: AddressSpace;
+  /**
+   * The reference to the remote virtual network's Bgp Communities.
+   */
+  remoteBgpCommunities?: VirtualNetworkBgpCommunities;
   /**
    * The status of the virtual network peering. Possible values include: 'Initiated', 'Connected',
    * 'Disconnected'
@@ -9124,21 +9143,6 @@ export interface DhcpOptions {
    * The list of DNS servers IP addresses.
    */
   dnsServers?: string[];
-}
-
-/**
- * Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET.
- */
-export interface VirtualNetworkBgpCommunities {
-  /**
-   * The BGP community associated with the virtual network.
-   */
-  virtualNetworkCommunity: string;
-  /**
-   * The BGP community associated with the region of the virtual network.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly regionalCommunity?: string;
 }
 
 /**
