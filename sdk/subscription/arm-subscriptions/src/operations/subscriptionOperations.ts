@@ -234,7 +234,8 @@ const cancelOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion1
+    Parameters.apiVersion1,
+    Parameters.ignoreResourceCheck
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -331,7 +332,8 @@ const beginCreateSubscriptionInEnrollmentAccountOperationSpec: msRest.OperationS
       headersMapper: Mappers.SubscriptionCreateSubscriptionInEnrollmentAccountHeaders
     },
     default: {
-      bodyMapper: Mappers.ErrorResponse
+      bodyMapper: Mappers.ErrorResponse,
+      headersMapper: Mappers.SubscriptionCreateSubscriptionInEnrollmentAccountHeaders
     }
   },
   serializer
@@ -367,7 +369,8 @@ const beginCreateSubscriptionOperationSpec: msRest.OperationSpec = {
       headersMapper: Mappers.SubscriptionCreateSubscriptionHeaders
     },
     default: {
-      bodyMapper: Mappers.ErrorResponse
+      bodyMapper: Mappers.ErrorResponse,
+      headersMapper: Mappers.SubscriptionCreateSubscriptionHeaders
     }
   },
   serializer
@@ -402,7 +405,8 @@ const beginCreateCspSubscriptionOperationSpec: msRest.OperationSpec = {
       headersMapper: Mappers.SubscriptionCreateCspSubscriptionHeaders
     },
     default: {
-      bodyMapper: Mappers.ErrorResponse
+      bodyMapper: Mappers.ErrorResponse,
+      headersMapper: Mappers.SubscriptionCreateCspSubscriptionHeaders
     }
   },
   serializer

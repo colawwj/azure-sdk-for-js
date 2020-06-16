@@ -337,6 +337,10 @@ export interface ModernCspSubscriptionCreationParameters {
  * An interface representing SubscriptionClientOptions.
  */
 export interface SubscriptionClientOptions extends AzureServiceClientOptions {
+  /**
+   * Ignore existing resources in the subscription to be cancelled.
+   */
+  ignoreResourceCheck?: boolean;
   baseUri?: string;
 }
 

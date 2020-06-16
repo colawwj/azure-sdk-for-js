@@ -17,6 +17,7 @@ const packageVersion = "2.0.0";
 
 export class SubscriptionClientContext extends msRestAzure.AzureServiceClient {
   credentials: msRest.ServiceClientCredentials;
+  ignoreResourceCheck?: boolean;
 
   /**
    * Initializes a new instance of the SubscriptionClient class.
@@ -44,6 +45,9 @@ export class SubscriptionClientContext extends msRestAzure.AzureServiceClient {
     this.requestContentType = "application/json; charset=utf-8";
     this.credentials = credentials;
 
+    if(options.ignoreResourceCheck !== null && options.ignoreResourceCheck !== undefined) {
+      this.ignoreResourceCheck = options.ignoreResourceCheck;
+    }
     if(options.acceptLanguage !== null && options.acceptLanguage !== undefined) {
       this.acceptLanguage = options.acceptLanguage;
     }

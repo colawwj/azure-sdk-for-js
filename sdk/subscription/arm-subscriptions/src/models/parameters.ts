@@ -84,6 +84,15 @@ export const enrollmentAccountName: msRest.OperationURLParameter = {
     }
   }
 };
+export const ignoreResourceCheck: msRest.OperationQueryParameter = {
+  parameterPath: "ignoreResourceCheck",
+  mapper: {
+    serializedName: "IgnoreResourceCheck",
+    type: {
+      name: "Boolean"
+    }
+  }
+};
 export const invoiceSectionName: msRest.OperationURLParameter = {
   parameterPath: "invoiceSectionName",
   mapper: {
