@@ -1047,6 +1047,161 @@ export interface SlimPolicyMetadata {
 }
 
 /**
+ * A piece of evidence supporting the compliance state set in the attestation.
+ */
+export interface AttestationEvidence {
+  /**
+   * The description for this piece of evidence.
+   */
+  description?: string;
+  /**
+   * The URI location of the evidence.
+   */
+  sourceUri?: string;
+}
+
+/**
+ * Metadata pertaining to creation and last modification of the resource.
+ */
+export interface SystemData {
+  /**
+   * The identity that created the resource.
+   */
+  createdBy?: string;
+  /**
+   * The type of identity that created the resource. Possible values include: 'User',
+   * 'Application', 'ManagedIdentity', 'Key'
+   */
+  createdByType?: CreatedByType;
+  /**
+   * The timestamp of resource creation (UTC).
+   */
+  createdAt?: Date;
+  /**
+   * The identity that last modified the resource.
+   */
+  lastModifiedBy?: string;
+  /**
+   * The type of identity that last modified the resource. Possible values include: 'User',
+   * 'Application', 'ManagedIdentity', 'Key'
+   */
+  lastModifiedByType?: CreatedByType;
+  /**
+   * The type of identity that last modified the resource.
+   */
+  lastModifiedAt?: Date;
+}
+
+/**
+ * An interface representing Resource.
+ */
+export interface Resource extends BaseResource {
+  /**
+   * Fully qualified resource Id for the resource. Ex -
+   * /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * The name of the resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * The type of the resource. Ex- Microsoft.Compute/virtualMachines or
+   * Microsoft.Storage/storageAccounts.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+}
+
+/**
+ * An attestation resource.
+ */
+export interface Attestation extends Resource {
+  /**
+   * The resource ID of the policy assignment that the attestation is setting the state for.
+   */
+  policyAssignmentId: string;
+  /**
+   * The policy definition reference ID from a policy set definition that the attestation is
+   * setting the state for. If the policy assignment assigns a policy set definition the
+   * attestation can choose a definition within the set definition with this property or omit this
+   * and set the state for the entire set definition.
+   */
+  policyDefinitionReferenceId?: string;
+  /**
+   * The compliance state that should be set on the resource. Possible values include: 'Compliant',
+   * 'NonCompliant', 'Unknown'
+   */
+  complianceState?: ComplianceState;
+  /**
+   * The time the compliance state should expire.
+   */
+  expiresOn?: Date;
+  /**
+   * The person responsible for setting the state of the resource. This value is typically an Azure
+   * Active Directory object ID.
+   */
+  owner?: string;
+  /**
+   * Comments describing why this attestation was created.
+   */
+  comments?: string;
+  /**
+   * The evidence supporting the compliance state set in this attestation.
+   */
+  evidence?: AttestationEvidence[];
+  /**
+   * The status of the attestation.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: string;
+  /**
+   * The time the compliance state was last changed in this attestation.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly lastComplianceStateChangeAt?: Date;
+  /**
+   * Azure Resource Manager metadata containing createdBy and modifiedBy information.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly systemData?: SystemData;
+}
+
+/**
+ * The resource model definition for a ARM proxy resource. It will have everything other than
+ * required location and tags
+ */
+export interface ProxyResource extends Resource {
+}
+
+/**
+ * The resource model definition for a ARM tracked top level resource
+ */
+export interface TrackedResource extends Resource {
+  /**
+   * Resource tags.
+   */
+  tags?: { [propertyName: string]: string };
+  /**
+   * The geo-location where the resource lives
+   */
+  location: string;
+}
+
+/**
+ * The resource model definition for a Azure Resource Manager resource with an etag.
+ */
+export interface AzureEntityResource extends Resource {
+  /**
+   * Resource Etag.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly etag?: string;
+}
+
+/**
  * Additional parameters for a set of operations.
  */
 export interface QueryOptions {
@@ -1464,6 +1619,36 @@ export interface PolicyMetadataListOptionalParams extends msRest.RequestOptionsB
 }
 
 /**
+ * Optional Parameters.
+ */
+export interface AttestationsListForSubscriptionOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Additional parameters for the operation
+   */
+  queryOptions?: QueryOptions;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface AttestationsListForResourceGroupOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Additional parameters for the operation
+   */
+  queryOptions?: QueryOptions;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface AttestationsListForResourceOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Additional parameters for the operation
+   */
+  queryOptions?: QueryOptions;
+}
+
+/**
  * An interface representing PolicyInsightsClientOptions.
  */
 export interface PolicyInsightsClientOptions extends AzureServiceClientOptions {
@@ -1563,12 +1748,41 @@ export interface PolicyMetadataCollection extends Array<SlimPolicyMetadata> {
 }
 
 /**
+ * @interface
+ * List of attestations.
+ * @extends Array<Attestation>
+ */
+export interface AttestationListResult extends Array<Attestation> {
+  /**
+   * The URL to get the next set of results.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly nextLink?: string;
+}
+
+/**
  * Defines values for ResourceDiscoveryMode.
  * Possible values include: 'ExistingNonCompliant', 'ReEvaluateCompliance'
  * @readonly
  * @enum {string}
  */
 export type ResourceDiscoveryMode = 'ExistingNonCompliant' | 'ReEvaluateCompliance';
+
+/**
+ * Defines values for ComplianceState.
+ * Possible values include: 'Compliant', 'NonCompliant', 'Unknown'
+ * @readonly
+ * @enum {string}
+ */
+export type ComplianceState = 'Compliant' | 'NonCompliant' | 'Unknown';
+
+/**
+ * Defines values for CreatedByType.
+ * Possible values include: 'User', 'Application', 'ManagedIdentity', 'Key'
+ * @readonly
+ * @enum {string}
+ */
+export type CreatedByType = 'User' | 'Application' | 'ManagedIdentity' | 'Key';
 
 /**
  * Defines values for PolicyStatesResource.
@@ -3259,5 +3473,305 @@ export type PolicyMetadataListNextResponse = PolicyMetadataCollection & {
        * The response body as parsed JSON or XML
        */
       parsedBody: PolicyMetadataCollection;
+    };
+};
+
+/**
+ * Contains response data for the listForSubscription operation.
+ */
+export type AttestationsListForSubscriptionResponse = AttestationListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: AttestationListResult;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdateAtSubscription operation.
+ */
+export type AttestationsCreateOrUpdateAtSubscriptionResponse = Attestation & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: Attestation;
+    };
+};
+
+/**
+ * Contains response data for the getAtSubscription operation.
+ */
+export type AttestationsGetAtSubscriptionResponse = Attestation & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: Attestation;
+    };
+};
+
+/**
+ * Contains response data for the listForResourceGroup operation.
+ */
+export type AttestationsListForResourceGroupResponse = AttestationListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: AttestationListResult;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdateAtResourceGroup operation.
+ */
+export type AttestationsCreateOrUpdateAtResourceGroupResponse = Attestation & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: Attestation;
+    };
+};
+
+/**
+ * Contains response data for the getAtResourceGroup operation.
+ */
+export type AttestationsGetAtResourceGroupResponse = Attestation & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: Attestation;
+    };
+};
+
+/**
+ * Contains response data for the listForResource operation.
+ */
+export type AttestationsListForResourceResponse = AttestationListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: AttestationListResult;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdateAtResource operation.
+ */
+export type AttestationsCreateOrUpdateAtResourceResponse = Attestation & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: Attestation;
+    };
+};
+
+/**
+ * Contains response data for the getAtResource operation.
+ */
+export type AttestationsGetAtResourceResponse = Attestation & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: Attestation;
+    };
+};
+
+/**
+ * Contains response data for the beginCreateOrUpdateAtSubscription operation.
+ */
+export type AttestationsBeginCreateOrUpdateAtSubscriptionResponse = Attestation & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: Attestation;
+    };
+};
+
+/**
+ * Contains response data for the beginCreateOrUpdateAtResourceGroup operation.
+ */
+export type AttestationsBeginCreateOrUpdateAtResourceGroupResponse = Attestation & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: Attestation;
+    };
+};
+
+/**
+ * Contains response data for the beginCreateOrUpdateAtResource operation.
+ */
+export type AttestationsBeginCreateOrUpdateAtResourceResponse = Attestation & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: Attestation;
+    };
+};
+
+/**
+ * Contains response data for the listForSubscriptionNext operation.
+ */
+export type AttestationsListForSubscriptionNextResponse = AttestationListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: AttestationListResult;
+    };
+};
+
+/**
+ * Contains response data for the listForResourceGroupNext operation.
+ */
+export type AttestationsListForResourceGroupNextResponse = AttestationListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: AttestationListResult;
+    };
+};
+
+/**
+ * Contains response data for the listForResourceNext operation.
+ */
+export type AttestationsListForResourceNextResponse = AttestationListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: AttestationListResult;
     };
 };

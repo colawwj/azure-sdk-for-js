@@ -1671,6 +1671,245 @@ export const SlimPolicyMetadata: msRest.CompositeMapper = {
   }
 };
 
+export const AttestationEvidence: msRest.CompositeMapper = {
+  serializedName: "AttestationEvidence",
+  type: {
+    name: "Composite",
+    className: "AttestationEvidence",
+    modelProperties: {
+      description: {
+        serializedName: "description",
+        type: {
+          name: "String"
+        }
+      },
+      sourceUri: {
+        serializedName: "sourceUri",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const SystemData: msRest.CompositeMapper = {
+  serializedName: "systemData",
+  type: {
+    name: "Composite",
+    className: "SystemData",
+    modelProperties: {
+      createdBy: {
+        serializedName: "createdBy",
+        type: {
+          name: "String"
+        }
+      },
+      createdByType: {
+        serializedName: "createdByType",
+        type: {
+          name: "String"
+        }
+      },
+      createdAt: {
+        serializedName: "createdAt",
+        type: {
+          name: "DateTime"
+        }
+      },
+      lastModifiedBy: {
+        serializedName: "lastModifiedBy",
+        type: {
+          name: "String"
+        }
+      },
+      lastModifiedByType: {
+        serializedName: "lastModifiedByType",
+        type: {
+          name: "String"
+        }
+      },
+      lastModifiedAt: {
+        serializedName: "lastModifiedAt",
+        type: {
+          name: "DateTime"
+        }
+      }
+    }
+  }
+};
+
+export const Resource: msRest.CompositeMapper = {
+  serializedName: "Resource",
+  type: {
+    name: "Composite",
+    className: "Resource",
+    modelProperties: {
+      id: {
+        readOnly: true,
+        serializedName: "id",
+        type: {
+          name: "String"
+        }
+      },
+      name: {
+        readOnly: true,
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      type: {
+        readOnly: true,
+        serializedName: "type",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const Attestation: msRest.CompositeMapper = {
+  serializedName: "Attestation",
+  type: {
+    name: "Composite",
+    className: "Attestation",
+    modelProperties: {
+      ...Resource.type.modelProperties,
+      policyAssignmentId: {
+        required: true,
+        serializedName: "properties.policyAssignmentId",
+        type: {
+          name: "String"
+        }
+      },
+      policyDefinitionReferenceId: {
+        serializedName: "properties.policyDefinitionReferenceId",
+        type: {
+          name: "String"
+        }
+      },
+      complianceState: {
+        serializedName: "properties.complianceState",
+        type: {
+          name: "String"
+        }
+      },
+      expiresOn: {
+        serializedName: "properties.expiresOn",
+        type: {
+          name: "DateTime"
+        }
+      },
+      owner: {
+        serializedName: "properties.owner",
+        type: {
+          name: "String"
+        }
+      },
+      comments: {
+        serializedName: "properties.comments",
+        type: {
+          name: "String"
+        }
+      },
+      evidence: {
+        serializedName: "properties.evidence",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "AttestationEvidence"
+            }
+          }
+        }
+      },
+      provisioningState: {
+        readOnly: true,
+        serializedName: "properties.provisioningState",
+        type: {
+          name: "String"
+        }
+      },
+      lastComplianceStateChangeAt: {
+        readOnly: true,
+        serializedName: "properties.lastComplianceStateChangeAt",
+        type: {
+          name: "DateTime"
+        }
+      },
+      systemData: {
+        readOnly: true,
+        serializedName: "systemData",
+        type: {
+          name: "Composite",
+          className: "SystemData"
+        }
+      }
+    }
+  }
+};
+
+export const ProxyResource: msRest.CompositeMapper = {
+  serializedName: "ProxyResource",
+  type: {
+    name: "Composite",
+    className: "ProxyResource",
+    modelProperties: {
+      ...Resource.type.modelProperties
+    }
+  }
+};
+
+export const TrackedResource: msRest.CompositeMapper = {
+  serializedName: "TrackedResource",
+  type: {
+    name: "Composite",
+    className: "TrackedResource",
+    modelProperties: {
+      ...Resource.type.modelProperties,
+      tags: {
+        serializedName: "tags",
+        type: {
+          name: "Dictionary",
+          value: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      location: {
+        required: true,
+        serializedName: "location",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const AzureEntityResource: msRest.CompositeMapper = {
+  serializedName: "AzureEntityResource",
+  type: {
+    name: "Composite",
+    className: "AzureEntityResource",
+    modelProperties: {
+      ...Resource.type.modelProperties,
+      etag: {
+        readOnly: true,
+        serializedName: "etag",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const QueryOptions: msRest.CompositeMapper = {
   type: {
     name: "Composite",
@@ -1926,6 +2165,36 @@ export const PolicyMetadataCollection: msRest.CompositeMapper = {
             type: {
               name: "Composite",
               className: "SlimPolicyMetadata"
+            }
+          }
+        }
+      },
+      nextLink: {
+        readOnly: true,
+        serializedName: "nextLink",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const AttestationListResult: msRest.CompositeMapper = {
+  serializedName: "AttestationListResult",
+  type: {
+    name: "Composite",
+    className: "AttestationListResult",
+    modelProperties: {
+      value: {
+        readOnly: true,
+        serializedName: "",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "Attestation"
             }
           }
         }
