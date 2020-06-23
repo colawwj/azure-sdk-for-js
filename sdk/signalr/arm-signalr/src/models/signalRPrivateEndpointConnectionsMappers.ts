@@ -10,6 +10,8 @@ export {
   BaseResource,
   ErrorResponse,
   ErrorResponseBody,
+  ManagedIdentityParameters,
+  ManagedIdentitySettings,
   NetworkACL,
   PrivateEndpoint,
   PrivateEndpointACL,
@@ -24,6 +26,9 @@ export {
   SignalRFeature,
   SignalRNetworkACLs,
   SignalRResource,
+  SignalRTlsSettings,
   TrackedResource,
-  UpstreamTemplate
+  UpstreamAuthSettings,
+  UpstreamTemplate,
+  UserAssignedIdentityProperty
 } from "../models/mappers";

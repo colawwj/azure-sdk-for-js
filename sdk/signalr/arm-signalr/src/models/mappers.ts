@@ -529,6 +529,88 @@ export const PrivateEndpointConnection: msRest.CompositeMapper = {
   }
 };
 
+export const SignalRTlsSettings: msRest.CompositeMapper = {
+  serializedName: "SignalRTlsSettings",
+  type: {
+    name: "Composite",
+    className: "SignalRTlsSettings",
+    modelProperties: {
+      clientCertEnabled: {
+        serializedName: "clientCertEnabled",
+        type: {
+          name: "Boolean"
+        }
+      }
+    }
+  }
+};
+
+export const UserAssignedIdentityProperty: msRest.CompositeMapper = {
+  serializedName: "UserAssignedIdentityProperty",
+  type: {
+    name: "Composite",
+    className: "UserAssignedIdentityProperty",
+    modelProperties: {
+      principalId: {
+        readOnly: true,
+        serializedName: "principalId",
+        type: {
+          name: "String"
+        }
+      },
+      clientId: {
+        readOnly: true,
+        serializedName: "clientId",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const ManagedIdentityParameters: msRest.CompositeMapper = {
+  serializedName: "ManagedIdentityParameters",
+  type: {
+    name: "Composite",
+    className: "ManagedIdentityParameters",
+    modelProperties: {
+      type: {
+        serializedName: "type",
+        type: {
+          name: "String"
+        }
+      },
+      userAssignedIdentities: {
+        serializedName: "userAssignedIdentities",
+        type: {
+          name: "Dictionary",
+          value: {
+            type: {
+              name: "Composite",
+              className: "UserAssignedIdentityProperty"
+            }
+          }
+        }
+      },
+      principalId: {
+        readOnly: true,
+        serializedName: "principalId",
+        type: {
+          name: "String"
+        }
+      },
+      tenantId: {
+        readOnly: true,
+        serializedName: "tenantId",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const TrackedResource: msRest.CompositeMapper = {
   serializedName: "TrackedResource",
   type: {
@@ -665,10 +747,24 @@ export const SignalRResource: msRest.CompositeMapper = {
           }
         }
       },
+      tls: {
+        serializedName: "properties.tls",
+        type: {
+          name: "Composite",
+          className: "SignalRTlsSettings"
+        }
+      },
       kind: {
         serializedName: "kind",
         type: {
           name: "String"
+        }
+      },
+      identity: {
+        serializedName: "identity",
+        type: {
+          name: "Composite",
+          className: "ManagedIdentityParameters"
         }
       }
     }
@@ -735,6 +831,45 @@ export const SignalRCorsSettings: msRest.CompositeMapper = {
   }
 };
 
+export const ManagedIdentitySettings: msRest.CompositeMapper = {
+  serializedName: "ManagedIdentitySettings",
+  type: {
+    name: "Composite",
+    className: "ManagedIdentitySettings",
+    modelProperties: {
+      resource: {
+        serializedName: "resource",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const UpstreamAuthSettings: msRest.CompositeMapper = {
+  serializedName: "UpstreamAuthSettings",
+  type: {
+    name: "Composite",
+    className: "UpstreamAuthSettings",
+    modelProperties: {
+      type: {
+        serializedName: "type",
+        type: {
+          name: "String"
+        }
+      },
+      managedIdentity: {
+        serializedName: "managedIdentity",
+        type: {
+          name: "Composite",
+          className: "ManagedIdentitySettings"
+        }
+      }
+    }
+  }
+};
+
 export const UpstreamTemplate: msRest.CompositeMapper = {
   serializedName: "UpstreamTemplate",
   type: {
@@ -764,6 +899,13 @@ export const UpstreamTemplate: msRest.CompositeMapper = {
         serializedName: "urlTemplate",
         type: {
           name: "String"
+        }
+      },
+      auth: {
+        serializedName: "auth",
+        type: {
+          name: "Composite",
+          className: "UpstreamAuthSettings"
         }
       }
     }
