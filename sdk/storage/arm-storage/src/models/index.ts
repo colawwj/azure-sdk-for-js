@@ -2192,6 +2192,36 @@ export interface LeaseContainerResponse {
 }
 
 /**
+ * An interface representing Multichannel.
+ */
+export interface Multichannel {
+  /**
+   * Indicates whether multichannel is enabled
+   */
+  enabled?: boolean;
+}
+
+/**
+ * An interface representing SmbSetting.
+ */
+export interface SmbSetting {
+  /**
+   * Multichannel setting. Applies to Premium FileStorage only.
+   */
+  multichannel?: Multichannel;
+}
+
+/**
+ * An interface representing ProtocolSettings.
+ */
+export interface ProtocolSettings {
+  /**
+   * Setting for SMB protocol
+   */
+  smb?: SmbSetting;
+}
+
+/**
  * The properties of File services in storage account.
  */
 export interface FileServiceProperties extends Resource {
@@ -2205,6 +2235,10 @@ export interface FileServiceProperties extends Resource {
    * The file service properties for share soft delete.
    */
   shareDeleteRetentionPolicy?: DeleteRetentionPolicy;
+  /**
+   * Protocol settings for file service
+   */
+  protocolSettings?: ProtocolSettings;
   /**
    * Sku name and tier.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -2566,22 +2600,6 @@ export interface BlobContainersLeaseOptionalParams extends msRest.RequestOptions
    * Lease Container request body.
    */
   parameters?: LeaseContainerRequest;
-}
-
-/**
- * Optional Parameters.
- */
-export interface FileServicesSetServicePropertiesOptionalParams extends msRest.RequestOptionsBase {
-  /**
-   * Specifies CORS rules for the File service. You can include up to five CorsRule elements in the
-   * request. If no CorsRule elements are included in the request body, all CORS rules will be
-   * deleted, and CORS will be disabled for the File service.
-   */
-  cors?: CorsRules;
-  /**
-   * The file service properties for share soft delete.
-   */
-  shareDeleteRetentionPolicy?: DeleteRetentionPolicy;
 }
 
 /**

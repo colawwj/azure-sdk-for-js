@@ -3493,6 +3493,56 @@ export const LeaseContainerResponse: msRest.CompositeMapper = {
   }
 };
 
+export const Multichannel: msRest.CompositeMapper = {
+  serializedName: "Multichannel",
+  type: {
+    name: "Composite",
+    className: "Multichannel",
+    modelProperties: {
+      enabled: {
+        serializedName: "enabled",
+        type: {
+          name: "Boolean"
+        }
+      }
+    }
+  }
+};
+
+export const SmbSetting: msRest.CompositeMapper = {
+  serializedName: "SmbSetting",
+  type: {
+    name: "Composite",
+    className: "SmbSetting",
+    modelProperties: {
+      multichannel: {
+        serializedName: "multichannel",
+        type: {
+          name: "Composite",
+          className: "Multichannel"
+        }
+      }
+    }
+  }
+};
+
+export const ProtocolSettings: msRest.CompositeMapper = {
+  serializedName: "ProtocolSettings",
+  type: {
+    name: "Composite",
+    className: "ProtocolSettings",
+    modelProperties: {
+      smb: {
+        serializedName: "smb",
+        type: {
+          name: "Composite",
+          className: "SmbSetting"
+        }
+      }
+    }
+  }
+};
+
 export const FileServiceProperties: msRest.CompositeMapper = {
   serializedName: "FileServiceProperties",
   type: {
@@ -3512,6 +3562,13 @@ export const FileServiceProperties: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "DeleteRetentionPolicy"
+        }
+      },
+      protocolSettings: {
+        serializedName: "properties.protocolSettings",
+        type: {
+          name: "Composite",
+          className: "ProtocolSettings"
         }
       },
       sku: {
