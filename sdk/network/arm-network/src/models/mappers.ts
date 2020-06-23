@@ -12094,15 +12094,10 @@ export const HopLink: msRest.CompositeMapper = {
         readOnly: true,
         serializedName: "context",
         type: {
-          name: "Sequence",
-          element: {
+          name: "Dictionary",
+          value: {
             type: {
-              name: "Dictionary",
-              value: {
-                type: {
-                  name: "String"
-                }
-              }
+              name: "String"
             }
           }
         }

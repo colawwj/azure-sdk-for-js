@@ -7205,10 +7205,10 @@ export interface HopLink {
    */
   readonly issues?: ConnectivityIssue[];
   /**
-   * Provides additional context on the issue.
+   * Provides additional context on links.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly context?: { [propertyName: string]: string }[];
+  readonly context?: { [propertyName: string]: string };
   /**
    * Resource ID.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
