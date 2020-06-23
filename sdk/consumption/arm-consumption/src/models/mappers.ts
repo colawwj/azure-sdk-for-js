@@ -136,7 +136,7 @@ export const UsageDetail: msRest.CompositeMapper = {
       serializedName: "kind",
       clientName: "kind"
     },
-    uberParent: "BaseResource",
+    uberParent: "UsageDetail",
     className: "UsageDetail",
     modelProperties: {
       ...Resource.type.modelProperties,
@@ -200,6 +200,8 @@ export const LegacyUsageDetail: msRest.CompositeMapper = {
   serializedName: "legacy",
   type: {
     name: "Composite",
+    polymorphicDiscriminator: UsageDetail.type.polymorphicDiscriminator,
+    uberParent: "UsageDetail",
     className: "LegacyUsageDetail",
     modelProperties: {
       ...UsageDetail.type.modelProperties,
@@ -506,6 +508,8 @@ export const ModernUsageDetail: msRest.CompositeMapper = {
   serializedName: "modern",
   type: {
     name: "Composite",
+    polymorphicDiscriminator: UsageDetail.type.polymorphicDiscriminator,
+    uberParent: "UsageDetail",
     className: "ModernUsageDetail",
     modelProperties: {
       ...UsageDetail.type.modelProperties,
@@ -2612,6 +2616,30 @@ export const BudgetComparisonExpression: msRest.CompositeMapper = {
   }
 };
 
+export const BudgetFilterProperties: msRest.CompositeMapper = {
+  serializedName: "BudgetFilterProperties",
+  type: {
+    name: "Composite",
+    className: "BudgetFilterProperties",
+    modelProperties: {
+      dimensions: {
+        serializedName: "dimensions",
+        type: {
+          name: "Composite",
+          className: "BudgetComparisonExpression"
+        }
+      },
+      tags: {
+        serializedName: "tags",
+        type: {
+          name: "Composite",
+          className: "BudgetComparisonExpression"
+        }
+      }
+    }
+  }
+};
+
 export const BudgetFilter: msRest.CompositeMapper = {
   serializedName: "BudgetFilter",
   type: {
@@ -2628,7 +2656,7 @@ export const BudgetFilter: msRest.CompositeMapper = {
           element: {
             type: {
               name: "Composite",
-              className: "BudgetFilter"
+              className: "BudgetFilterProperties"
             }
           }
         }
@@ -2637,7 +2665,7 @@ export const BudgetFilter: msRest.CompositeMapper = {
         serializedName: "not",
         type: {
           name: "Composite",
-          className: "BudgetFilter"
+          className: "BudgetFilterProperties"
         }
       },
       dimensions: {
@@ -3124,7 +3152,7 @@ export const ChargeSummary: msRest.CompositeMapper = {
       serializedName: "kind",
       clientName: "kind"
     },
-    uberParent: "BaseResource",
+    uberParent: "ChargeSummary",
     className: "ChargeSummary",
     modelProperties: {
       ...Resource.type.modelProperties,
@@ -3166,6 +3194,8 @@ export const LegacyChargeSummary: msRest.CompositeMapper = {
   serializedName: "legacy",
   type: {
     name: "Composite",
+    polymorphicDiscriminator: ChargeSummary.type.polymorphicDiscriminator,
+    uberParent: "ChargeSummary",
     className: "LegacyChargeSummary",
     modelProperties: {
       ...ChargeSummary.type.modelProperties,
@@ -3226,6 +3256,8 @@ export const ModernChargeSummary: msRest.CompositeMapper = {
   serializedName: "modern",
   type: {
     name: "Composite",
+    polymorphicDiscriminator: ChargeSummary.type.polymorphicDiscriminator,
+    uberParent: "ChargeSummary",
     className: "ModernChargeSummary",
     modelProperties: {
       ...ChargeSummary.type.modelProperties,
@@ -3989,14 +4021,14 @@ export const Lots: msRest.CompositeMapper = {
 };
 
 export const discriminators = {
-  'BaseResource.UsageDetail' : UsageDetail,
-  'BaseResource.legacy' : LegacyUsageDetail,
-  'BaseResource.modern' : ModernUsageDetail,
+  'UsageDetail' : UsageDetail,
+  'UsageDetail.legacy' : LegacyUsageDetail,
+  'UsageDetail.modern' : ModernUsageDetail,
   'ReservationRecommendation' : ReservationRecommendation,
   'ReservationRecommendation.legacy' : LegacyReservationRecommendation,
   'ReservationRecommendation.modern' : ModernReservationRecommendation,
-  'BaseResource.ChargeSummary' : ChargeSummary,
-  'BaseResource.legacy' : LegacyChargeSummary,
-  'BaseResource.modern' : ModernChargeSummary
+  'ChargeSummary' : ChargeSummary,
+  'ChargeSummary.legacy' : LegacyChargeSummary,
+  'ChargeSummary.modern' : ModernChargeSummary
 
 };

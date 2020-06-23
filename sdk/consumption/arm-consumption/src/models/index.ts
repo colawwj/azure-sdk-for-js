@@ -1963,17 +1963,31 @@ export interface BudgetComparisonExpression {
 }
 
 /**
+ * The Dimensions or Tags to filter a budget by.
+ */
+export interface BudgetFilterProperties {
+  /**
+   * Has comparison expression for a dimension
+   */
+  dimensions?: BudgetComparisonExpression;
+  /**
+   * Has comparison expression for a tag
+   */
+  tags?: BudgetComparisonExpression;
+}
+
+/**
  * May be used to filter budgets by resource group, resource, or meter.
  */
 export interface BudgetFilter {
   /**
    * The logical "AND" expression. Must have at least 2 items.
    */
-  and?: BudgetFilter[];
+  and?: BudgetFilterProperties[];
   /**
    * The logical "NOT" expression.
    */
-  not?: BudgetFilter;
+  not?: BudgetFilterProperties;
   /**
    * Has comparison expression for a dimension
    */

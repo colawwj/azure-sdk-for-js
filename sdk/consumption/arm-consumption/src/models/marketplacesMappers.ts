@@ -16,6 +16,7 @@ export {
   Budget,
   BudgetComparisonExpression,
   BudgetFilter,
+  BudgetFilterProperties,
   BudgetTimePeriod,
   ChargeSummary,
   CreditBalanceSummary,
