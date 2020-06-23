@@ -4977,6 +4977,91 @@ export interface FirewallPolicyThreatIntelWhitelist {
 }
 
 /**
+ * Intrusion system rules specification states.
+ */
+export interface FirewallPolicyIntrusionSystemRuleSpecifications {
+  /**
+   * Rule id (sid).
+   */
+  ruleId?: string;
+  /**
+   * The rule state. Possible values include: 'Off', 'Alert', 'Deny'
+   */
+  state?: FirewallPolicyIntrusionSystemStateType;
+}
+
+/**
+ * Intrusion system ignored traffic specification.
+ */
+export interface FirewallPolicyIntrusionSystemIgnoredTrafficSpecifications {
+  /**
+   * Name of the ignored traffic rule.
+   */
+  name?: string;
+  /**
+   * Description of the ignored traffic rule.
+   */
+  description?: string;
+  /**
+   * The FirewallPolicyIntrusionSystemIgnoredTrafficProtocol. Possible values include: 'TCP',
+   * 'UDP', 'ICMP', 'ANY'
+   */
+  protocol?: FirewallPolicyIntrusionSystemProtocol;
+  /**
+   * List of source IP addresses or ranges for this rule.
+   */
+  sourceAddresses?: string[];
+  /**
+   * List of destination IP addresses or ranges for this rule.
+   */
+  destinationAddresses?: string[];
+  /**
+   * List of destination ports or ranges.
+   */
+  destinationPorts?: string[];
+  /**
+   * List of source IpGroups for this rule.
+   */
+  sourceIpGroups?: string[];
+  /**
+   * List of destination IpGroups for this rule.
+   */
+  destinationIpGroups?: string[];
+}
+
+/**
+ * The operation for configuring intrusion system.
+ */
+export interface FirewallPolicyIntrusionSystemConfiguration {
+  /**
+   * List of specific rules states.
+   */
+  rules?: FirewallPolicyIntrusionSystemRuleSpecifications[];
+  /**
+   * List of rules for traffic to ignore.
+   */
+  ignoredTraffic?: FirewallPolicyIntrusionSystemIgnoredTrafficSpecifications[];
+  /**
+   * Boolean indicating whether child policies are allowed to have ignoredTraffic.
+   */
+  allowChildPolicyToIgnoreTraffic?: boolean;
+}
+
+/**
+ * Configuration for Intrusion system mode and rules.
+ */
+export interface FirewallPolicyIntrusionSystem {
+  /**
+   * The operation mode for Intrusion system mode. Possible values include: 'Off', 'Alert', 'Deny'
+   */
+  mode?: FirewallPolicyIntrusionSystemMode;
+  /**
+   * The intrusion system configuration properties.
+   */
+  configuration?: FirewallPolicyIntrusionSystemConfiguration;
+}
+
+/**
  * Trusted Root certificates properties for tls.
  */
 export interface FirewallPolicyCertificateAuthority {
@@ -5079,9 +5164,9 @@ export interface FirewallPolicy extends Resource {
    */
   threatIntelWhitelist?: FirewallPolicyThreatIntelWhitelist;
   /**
-   * The operation mode for Intrusion system. Possible values include: 'Enabled', 'Disabled'
+   * The configuration for Intrusion system.
    */
-  intrusionSystemMode?: FirewallPolicyIntrusionSystemMode;
+  intrusionSystem?: FirewallPolicyIntrusionSystem;
   /**
    * TLS Configuration definition.
    */
@@ -10968,7 +11053,7 @@ export interface VpnConnection extends SubResource {
    */
   routingWeight?: number;
   /**
-   * The dead peer detection timeout for a vpn connection in seconds.
+   * DPD timeout in seconds for vpn connection.
    */
   dpdTimeoutSeconds?: number;
   /**
@@ -11050,6 +11135,24 @@ export interface VpnConnection extends SubResource {
 }
 
 /**
+ * IP Configuration of a VPN Gateway Resource.
+ */
+export interface VpnGatewayIpConfiguration {
+  /**
+   * The identifier of the IP configuration for a VPN Gateway.
+   */
+  id?: string;
+  /**
+   * The public IP address of this IP configuration.
+   */
+  publicIpAddress?: string;
+  /**
+   * The private IP address of this IP configuration.
+   */
+  privateIpAddress?: string;
+}
+
+/**
  * VpnGateway Resource.
  */
 export interface VpnGateway extends Resource {
@@ -11075,6 +11178,11 @@ export interface VpnGateway extends Resource {
    * The scale unit for this vpn gateway.
    */
   vpnGatewayScaleUnit?: number;
+  /**
+   * List of all IPs configured on the gateway.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly ipConfigurations?: VpnGatewayIpConfiguration[];
   /**
    * A unique read-only string that changes whenever the resource is updated.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -11168,12 +11276,12 @@ export interface HubRouteTable extends SubResource {
    * List of all connections associated with this route table.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly associatedConnections?: string[];
+  readonly associatedConnections?: SubResource[];
   /**
    * List of all connections that advertise to this route table.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly propagatingConnections?: string[];
+  readonly propagatingConnections?: SubResource[];
   /**
    * The provisioning state of the RouteTable resource. Possible values include: 'Succeeded',
    * 'Updating', 'Deleting', 'Failed'
@@ -11714,7 +11822,7 @@ export interface VirtualHubEffectiveRoute {
 /**
  * EffectiveRoutes List.
  */
-export interface VirtualHubEffectiveRouteList {
+export interface VirtualHubEffectiveRouteEffectiveRouteList {
   /**
    * The list of effective routes configured on the virtual hub or the specified resource.
    */
@@ -13981,11 +14089,27 @@ export type ExpressRoutePortsEncapsulation = 'Dot1Q' | 'QinQ';
 
 /**
  * Defines values for FirewallPolicyIntrusionSystemMode.
- * Possible values include: 'Enabled', 'Disabled'
+ * Possible values include: 'Off', 'Alert', 'Deny'
  * @readonly
  * @enum {string}
  */
-export type FirewallPolicyIntrusionSystemMode = 'Enabled' | 'Disabled';
+export type FirewallPolicyIntrusionSystemMode = 'Off' | 'Alert' | 'Deny';
+
+/**
+ * Defines values for FirewallPolicyIntrusionSystemStateType.
+ * Possible values include: 'Off', 'Alert', 'Deny'
+ * @readonly
+ * @enum {string}
+ */
+export type FirewallPolicyIntrusionSystemStateType = 'Off' | 'Alert' | 'Deny';
+
+/**
+ * Defines values for FirewallPolicyIntrusionSystemProtocol.
+ * Possible values include: 'TCP', 'UDP', 'ICMP', 'ANY'
+ * @readonly
+ * @enum {string}
+ */
+export type FirewallPolicyIntrusionSystemProtocol = 'TCP' | 'UDP' | 'ICMP' | 'ANY';
 
 /**
  * Defines values for FirewallPolicyNatRuleCollectionActionType.
