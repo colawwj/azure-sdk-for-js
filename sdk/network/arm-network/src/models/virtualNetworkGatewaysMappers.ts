@@ -289,6 +289,7 @@ export {
   VpnConnection,
   VpnDeviceScriptParameters,
   VpnGateway,
+  VpnGatewayIpConfiguration,
   VpnLinkBgpSettings,
   VpnLinkProviderProperties,
   VpnPacketCaptureStartParameters,
