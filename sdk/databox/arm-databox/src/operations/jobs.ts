@@ -52,6 +52,41 @@ export class Jobs {
   }
 
   /**
+   * This method gets the unencrypted secrets related to the job.
+   * @param resourceGroupName The Resource Group Name
+   * @param jobName The name of the job Resource within the specified resource group. job names must
+   * be between 3 and 24 characters in length and use any alphanumeric and underscore only
+   * @param [options] The optional parameters
+   * @returns Promise<Models.JobsListCredentialsResponse>
+   */
+  listCredentials(resourceGroupName: string, jobName: string, options?: msRest.RequestOptionsBase): Promise<Models.JobsListCredentialsResponse>;
+  /**
+   * @param resourceGroupName The Resource Group Name
+   * @param jobName The name of the job Resource within the specified resource group. job names must
+   * be between 3 and 24 characters in length and use any alphanumeric and underscore only
+   * @param callback The callback
+   */
+  listCredentials(resourceGroupName: string, jobName: string, callback: msRest.ServiceCallback<Models.UnencryptedCredentialsList>): void;
+  /**
+   * @param resourceGroupName The Resource Group Name
+   * @param jobName The name of the job Resource within the specified resource group. job names must
+   * be between 3 and 24 characters in length and use any alphanumeric and underscore only
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  listCredentials(resourceGroupName: string, jobName: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.UnencryptedCredentialsList>): void;
+  listCredentials(resourceGroupName: string, jobName: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.UnencryptedCredentialsList>, callback?: msRest.ServiceCallback<Models.UnencryptedCredentialsList>): Promise<Models.JobsListCredentialsResponse> {
+    return this.client.sendOperationRequest(
+      {
+        resourceGroupName,
+        jobName,
+        options
+      },
+      listCredentialsOperationSpec,
+      callback) as Promise<Models.JobsListCredentialsResponse>;
+  }
+
+  /**
    * Lists all the jobs available under the given resource group.
    * @param resourceGroupName The Resource Group Name
    * @param [options] The optional parameters
@@ -235,41 +270,6 @@ export class Jobs {
   }
 
   /**
-   * This method gets the unencrypted secrets related to the job.
-   * @param resourceGroupName The Resource Group Name
-   * @param jobName The name of the job Resource within the specified resource group. job names must
-   * be between 3 and 24 characters in length and use any alphanumeric and underscore only
-   * @param [options] The optional parameters
-   * @returns Promise<Models.JobsListCredentialsResponse>
-   */
-  listCredentials(resourceGroupName: string, jobName: string, options?: msRest.RequestOptionsBase): Promise<Models.JobsListCredentialsResponse>;
-  /**
-   * @param resourceGroupName The Resource Group Name
-   * @param jobName The name of the job Resource within the specified resource group. job names must
-   * be between 3 and 24 characters in length and use any alphanumeric and underscore only
-   * @param callback The callback
-   */
-  listCredentials(resourceGroupName: string, jobName: string, callback: msRest.ServiceCallback<Models.UnencryptedCredentialsList>): void;
-  /**
-   * @param resourceGroupName The Resource Group Name
-   * @param jobName The name of the job Resource within the specified resource group. job names must
-   * be between 3 and 24 characters in length and use any alphanumeric and underscore only
-   * @param options The optional parameters
-   * @param callback The callback
-   */
-  listCredentials(resourceGroupName: string, jobName: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.UnencryptedCredentialsList>): void;
-  listCredentials(resourceGroupName: string, jobName: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.UnencryptedCredentialsList>, callback?: msRest.ServiceCallback<Models.UnencryptedCredentialsList>): Promise<Models.JobsListCredentialsResponse> {
-    return this.client.sendOperationRequest(
-      {
-        resourceGroupName,
-        jobName,
-        options
-      },
-      listCredentialsOperationSpec,
-      callback) as Promise<Models.JobsListCredentialsResponse>;
-  }
-
-  /**
    * Creates a new job with the specified parameters. Existing job cannot be updated with this API
    * and should instead be updated with the Update job API.
    * @param resourceGroupName The Resource Group Name
@@ -414,6 +414,31 @@ const listOperationSpec: msRest.OperationSpec = {
   serializer
 };
 
+const listCredentialsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}/listCredentials",
+  urlParameters: [
+    Parameters.subscriptionId,
+    Parameters.resourceGroupName,
+    Parameters.jobName
+  ],
+  queryParameters: [
+    Parameters.apiVersion
+  ],
+  headerParameters: [
+    Parameters.acceptLanguage
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.UnencryptedCredentialsList
+    },
+    default: {
+      bodyMapper: Mappers.CloudError
+    }
+  },
+  serializer
+};
+
 const listByResourceGroupOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
   path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs",
@@ -522,31 +547,6 @@ const cancelOperationSpec: msRest.OperationSpec = {
   },
   responses: {
     204: {},
-    default: {
-      bodyMapper: Mappers.CloudError
-    }
-  },
-  serializer
-};
-
-const listCredentialsOperationSpec: msRest.OperationSpec = {
-  httpMethod: "POST",
-  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}/listCredentials",
-  urlParameters: [
-    Parameters.subscriptionId,
-    Parameters.resourceGroupName,
-    Parameters.jobName
-  ],
-  queryParameters: [
-    Parameters.apiVersion
-  ],
-  headerParameters: [
-    Parameters.acceptLanguage
-  ],
-  responses: {
-    200: {
-      bodyMapper: Mappers.UnencryptedCredentialsList
-    },
     default: {
       bodyMapper: Mappers.CloudError
     }

@@ -8,6 +8,7 @@
 
 export {
   discriminators,
+  AdditionalErrorInfo,
   CloudError,
   Operation,
   OperationDisplay,
