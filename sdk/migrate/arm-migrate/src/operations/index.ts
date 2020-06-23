@@ -8,11 +8,12 @@
  * regenerated.
  */
 
-export * from "./location";
-export * from "./assessmentOptions";
 export * from "./projects";
+export * from "./projectOperations";
 export * from "./machines";
 export * from "./groups";
 export * from "./assessments";
 export * from "./assessedMachines";
+export * from "./hyperVCollectors";
+export * from "./vMwareCollectors";
 export * from "./operations";

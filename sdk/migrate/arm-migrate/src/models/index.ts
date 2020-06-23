@@ -12,37 +12,9 @@ import * as msRest from "@azure/ms-rest-js";
 export { BaseResource, CloudError };
 
 /**
- * Azure Migrate Project.
+ * Properties of a project.
  */
-export interface Project extends BaseResource {
-  /**
-   * Path reference to this project
-   * /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/projects/{projectName}
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Name of the project.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Type of the object = [Microsoft.Migrate/projects].
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * For optimistic concurrency control.
-   */
-  eTag?: string;
-  /**
-   * Azure location in which project is created.
-   */
-  location?: string;
-  /**
-   * Tags provided by Azure Tagging service.
-   */
-  tags?: any;
+export interface ProjectProperties {
   /**
    * Time when this project was created. Date-Time represented in ISO-8601 format.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -54,30 +26,26 @@ export interface Project extends BaseResource {
    */
   readonly updatedTimestamp?: Date;
   /**
-   * Reports whether project is under discovery. Possible values include: 'Unknown', 'NotStarted',
-   * 'InProgress', 'Completed'
+   * Endpoint at which the collector agent can call agent REST API.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly discoveryStatus?: DiscoveryStatus;
+  readonly serviceEndpoint?: string;
   /**
-   * ARM ID of the Service Map workspace created by user.
+   * Assessment solution ARM id tracked by Microsoft.Migrate/migrateProjects.
+   */
+  assessmentSolutionId?: string;
+  /**
+   * Assessment project status. Possible values include: 'Active', 'Inactive'
+   */
+  projectStatus?: ProjectStatus;
+  /**
+   * The ARM id of service map workspace created by customer.
    */
   customerWorkspaceId?: string;
   /**
-   * Location of the Service Map workspace created by user.
+   * Location of service map workspace created by customer.
    */
   customerWorkspaceLocation?: string;
-  /**
-   * Time when this project was created. Date-Time represented in ISO-8601 format. This value will
-   * be null until discovery is complete.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly lastDiscoveryTimestamp?: Date;
-  /**
-   * Session id of the last discovery.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly lastDiscoverySessionId?: string;
   /**
    * Number of groups created in the project.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -102,8 +70,84 @@ export interface Project extends BaseResource {
   /**
    * Provisioning state of the project. Possible values include: 'Accepted', 'Creating',
    * 'Deleting', 'Failed', 'Moving', 'Succeeded'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  provisioningState?: ProvisioningState;
+  readonly provisioningState?: ProvisioningState;
+}
+
+/**
+ * Azure Migrate Project.
+ */
+export interface Project extends BaseResource {
+  /**
+   * Path reference to this project
+   * /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/assessmentProjects/{projectName}
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the project.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Type of the object = [Microsoft.Migrate/assessmentProjects].
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * For optimistic concurrency control.
+   */
+  eTag?: string;
+  /**
+   * Azure location in which project is created.
+   */
+  location?: string;
+  /**
+   * Tags provided by Azure Tagging service.
+   */
+  tags?: any;
+  /**
+   * Properties of the project.
+   */
+  properties?: ProjectProperties;
+}
+
+/**
+ * Properties of group resource.
+ */
+export interface GroupProperties {
+  /**
+   * Whether the group has been created and is valid. Possible values include: 'Created',
+   * 'Updated', 'Running', 'Completed', 'Invalid'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly groupStatus?: GroupStatus;
+  /**
+   * Number of machines part of this group.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly machineCount?: number;
+  /**
+   * List of References to Assessments created on this group.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly assessments?: string[];
+  /**
+   * If the assessments are in running state.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly areAssessmentsRunning?: boolean;
+  /**
+   * Time when this group was created. Date-Time represented in ISO-8601 format.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly createdTimestamp?: Date;
+  /**
+   * Time when this group was last updated. Date-Time represented in ISO-8601 format.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly updatedTimestamp?: Date;
 }
 
 /**
@@ -112,7 +156,7 @@ export interface Project extends BaseResource {
 export interface Group extends BaseResource {
   /**
    * Path reference to this group.
-   * /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/projects/{projectName}/groups/{groupName}
+   * /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/assessmentProjects/{projectName}/groups/{groupName}
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly id?: string;
@@ -126,55 +170,62 @@ export interface Group extends BaseResource {
    */
   eTag?: string;
   /**
-   * Type of the object = [Microsoft.Migrate/projects/groups].
+   * Type of the object = [Microsoft.Migrate/assessmentProjects/groups].
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly type?: string;
   /**
-   * List of machine names that are part of this group.
+   * Properties of the group.
    */
-  machines: string[];
-  /**
-   * List of References to Assessments created on this group.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly assessments?: string[];
-  /**
-   * Time when this project was created. Date-Time represented in ISO-8601 format.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly createdTimestamp?: Date;
-  /**
-   * Time when this project was last updated. Date-Time represented in ISO-8601 format.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly updatedTimestamp?: Date;
+  properties: GroupProperties;
 }
 
 /**
- * An assessment created for a group in the Migration project.
+ * Body properties of group update.
  */
-export interface Assessment extends BaseResource {
+export interface GroupBodyProperties {
   /**
-   * Path reference to this assessment.
-   * /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/projects/{projectName}/groups/{groupName}/assessment/{assessmentName}
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   * Whether to add or remove the machines. Possible values include: 'Add', 'Remove'
    */
-  readonly id?: string;
+  operationType?: GroupUpdateOperation;
   /**
-   * Unique name of an assessment.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   * List of machine names that are part of this group.
    */
-  readonly name?: string;
+  machines?: string[];
+}
+
+/**
+ * Properties of group update.
+ */
+export interface UpdateGroupBody {
   /**
    * For optimistic concurrency control.
    */
   eTag?: string;
   /**
-   * Type of the object = [Microsoft.Migrate/projects/groups/assessments].
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   * Properties of the group.
    */
-  readonly type?: string;
+  properties?: GroupBodyProperties;
+}
+
+/**
+ * An interface representing VmUptime.
+ */
+export interface VmUptime {
+  /**
+   * Number of days in a month for VM uptime.
+   */
+  daysPerMonth?: number;
+  /**
+   * Number of hours per day for VM uptime.
+   */
+  hoursPerDay?: number;
+}
+
+/**
+ * Properties of an assessment.
+ */
+export interface AssessmentProperties {
   /**
    * Target Azure location for which the machines should be assessed. These enums are the same as
    * used by Compute API. Possible values include: 'Unknown', 'EastAsia', 'SoutheastAsia',
@@ -182,7 +233,8 @@ export interface Assessment extends BaseResource {
    * 'WestEurope', 'NorthEurope', 'CentralIndia', 'SouthIndia', 'WestIndia', 'JapanEast',
    * 'JapanWest', 'KoreaCentral', 'KoreaSouth', 'UkWest', 'UkSouth', 'NorthCentralUs', 'EastUs',
    * 'WestUs2', 'SouthCentralUs', 'CentralUs', 'EastUs2', 'WestUs', 'WestCentralUs',
-   * 'GermanyCentral', 'GermanyNortheast', 'ChinaNorth', 'ChinaEast'
+   * 'GermanyCentral', 'GermanyNortheast', 'ChinaNorth', 'ChinaEast', 'USGovArizona', 'USGovTexas',
+   * 'USGovIowa', 'USGovVirginia', 'USDoDCentral', 'USDoDEast'
    */
   azureLocation: AzureLocation;
   /**
@@ -193,9 +245,14 @@ export interface Assessment extends BaseResource {
    * 'MSAZR0125P', 'MSAZR0126P', 'MSAZR0127P', 'MSAZR0128P', 'MSAZR0129P', 'MSAZR0130P',
    * 'MSAZR0111P', 'MSAZR0144P', 'MSAZR0149P', 'MSMCAZR0044P', 'MSMCAZR0059P', 'MSMCAZR0060P',
    * 'MSMCAZR0063P', 'MSMCAZR0120P', 'MSMCAZR0121P', 'MSMCAZR0125P', 'MSMCAZR0128P',
-   * 'MSAZRDE0003P', 'MSAZRDE0044P'
+   * 'MSAZRDE0003P', 'MSAZRDE0044P', 'MSAZRUSGOV0003P', 'EA'
    */
   azureOfferCode: AzureOfferCode;
+  /**
+   * Enterprise agreement subscription arm id.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly eaSubscriptionId?: string;
   /**
    * Pricing tier for Size evaluation. Possible values include: 'Standard', 'Basic'
    */
@@ -217,9 +274,19 @@ export interface Assessment extends BaseResource {
   percentile: Percentile;
   /**
    * Time range of performance data used to recommend a size. Possible values include: 'Day',
-   * 'Week', 'Month'
+   * 'Week', 'Month', 'Custom'
    */
   timeRange: TimeRange;
+  /**
+   * Start time to consider performance data for assessment
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly perfDataStartTime?: Date;
+  /**
+   * End time to consider performance data for assessment
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly perfDataEndTime?: Date;
   /**
    * User configurable setting that describes the status of the assessment. Possible values
    * include: 'InProgress', 'UnderReview', 'Approved'
@@ -248,6 +315,23 @@ export interface Assessment extends BaseResource {
    * Assessment sizing criterion. Possible values include: 'PerformanceBased', 'AsOnPremises'
    */
   sizingCriterion: AssessmentSizingCriterion;
+  /**
+   * Azure reserved instance. Possible values include: 'None', 'RI1Year', 'RI3Year'
+   */
+  reservedInstance: ReservedInstance;
+  /**
+   * List of azure VM families.
+   */
+  azureVmFamilies: AzureVmFamily[];
+  /**
+   * Storage type selected for this disk. Possible values include: 'Unknown', 'Standard',
+   * 'Premium', 'StandardSSD', 'StandardOrPremium'
+   */
+  azureDiskType: AzureDiskType;
+  /**
+   * Specify the duration for which the VMs are up in the on-premises environment.
+   */
+  vmUptime: VmUptime;
   /**
    * Time when the Azure Prices were queried. Date-Time represented in ISO-8601 format.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -282,8 +366,20 @@ export interface Assessment extends BaseResource {
    */
   readonly monthlyStorageCost?: number;
   /**
+   * Monthly premium storage cost estimate for the machines that are part of this assessment as a
+   * group, for a 31-day month.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly monthlyPremiumStorageCost?: number;
+  /**
+   * Monthly standard SSD storage cost estimate for the machines that are part of this assessment
+   * as a group, for a 31-day month.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly monthlyStandardSSDStorageCost?: number;
+  /**
    * Whether the assessment has been created and is valid. Possible values include: 'Created',
-   * 'Updated', 'Running', 'Completed', 'Invalid'
+   * 'Updated', 'Running', 'Completed', 'Invalid', 'OutOfSync', 'OutDated'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly status?: AssessmentStatus;
@@ -292,6 +388,36 @@ export interface Assessment extends BaseResource {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly numberOfMachines?: number;
+}
+
+/**
+ * An assessment created for a group in the Migration project.
+ */
+export interface Assessment extends BaseResource {
+  /**
+   * Path reference to this assessment.
+   * /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/assessmentProjects/{projectName}/groups/{groupName}/assessment/{assessmentName}
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Unique name of an assessment.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * For optimistic concurrency control.
+   */
+  eTag?: string;
+  /**
+   * Type of the object = [Microsoft.Migrate/assessmentProjects/groups/assessments].
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * Properties of the assessment.
+   */
+  properties: AssessmentProperties;
 }
 
 /**
@@ -304,10 +430,10 @@ export interface Disk {
    */
   readonly gigabytesAllocated?: number;
   /**
-   * Gigabytes of storage consumed by this disk.
+   * User friendly name of the disk.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly gigabytesConsumed?: number;
+  readonly displayName?: string;
 }
 
 /**
@@ -324,63 +450,37 @@ export interface NetworkAdapter {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly ipAddresses?: string[];
+  /**
+   * User friendly name of the network adapter.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly displayName?: string;
 }
 
 /**
- * A machine in a migration project.
+ * Properties of a machine.
  */
-export interface Machine extends BaseResource {
-  /**
-   * Path reference to this machine.
-   * /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/projects/{projectName}/machines/{machineName}
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Name of the machine. It is a GUID which is unique identifier of machine in private data
-   * center. For user-readable name, we have a displayName property on this machine.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * For optimistic concurrency control.
-   */
-  eTag?: string;
-  /**
-   * Type of the object = [Microsoft.Migrate/projects/machines].
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
+export interface MachineProperties {
   /**
    * Boot type of the machine. Possible values include: 'Unknown', 'EFI', 'BIOS'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly bootType?: MachineBootType;
   /**
-   * Container defined in the management solution that this machine is part of in the datacenter.
+   * ARM ID of the data center as tracked by the Microsoft.OffAzure.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly datacenterContainer?: string;
+  readonly datacenterManagementServerArmId?: string;
+  /**
+   * ARM ID of the machine as tracked by the Microsoft.OffAzure.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly discoveryMachineArmId?: string;
   /**
    * Name of the server hosting the datacenter management solution.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly datacenterManagementServer?: string;
-  /**
-   * ID of the machine as tracked by the datacenter management solution.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly datacenterMachineId?: string;
-  /**
-   * ID of the server hosting the datacenter management solution.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly datacenterManagementServerId?: string;
-  /**
-   * Description of the machine
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly description?: string;
+  readonly datacenterManagementServerName?: string;
   /**
    * User readable name of the machine as defined by the user in their private datacenter.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -397,10 +497,25 @@ export interface Machine extends BaseResource {
    */
   readonly numberOfCores?: number;
   /**
-   * Operating System of the machine.
+   * Operating System type of the machine.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly operatingSystem?: string;
+  readonly operatingSystemType?: string;
+  /**
+   * Operating System name of the machine.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly operatingSystemName?: string;
+  /**
+   * Operating System version of the machine.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly operatingSystemVersion?: string;
+  /**
+   * Description of the machine
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly description?: string;
   /**
    * List of references to the groups that the machine is member of.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -417,12 +532,6 @@ export interface Machine extends BaseResource {
    */
   readonly updatedTimestamp?: Date;
   /**
-   * Time when this machine was discovered by Azure Migrate agent. Date-Time represented in
-   * ISO-8601 format.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly discoveredTimestamp?: Date;
-  /**
    * Dictionary of disks attached to the machine. Key is ID of disk. Value is a disk object
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
@@ -436,6 +545,37 @@ export interface Machine extends BaseResource {
 }
 
 /**
+ * A machine in a migration project.
+ */
+export interface Machine extends BaseResource {
+  /**
+   * Path reference to this machine.
+   * /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/assessmentProjects/{projectName}/machines/{machineName}
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the machine. It is a GUID which is unique identifier of machine in private data
+   * center. For user-readable name, we have a displayName property on this machine.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * For optimistic concurrency control.
+   */
+  eTag?: string;
+  /**
+   * Type of the object = [Microsoft.Migrate/assessmentProjects/machines].
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * Properties of the machine.
+   */
+  properties?: MachineProperties;
+}
+
+/**
  * A disk assessed for an assessment.
  */
 export interface AssessedDisk {
@@ -445,90 +585,55 @@ export interface AssessedDisk {
    */
   readonly name?: string;
   /**
+   * User friendly name of the assessed disk.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly displayName?: string;
+  /**
    * Gigabytes of storage provisioned for this disk.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly gigabytesProvisioned?: number;
-  /**
-   * Gigabytes of storage consumed by this disk.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly gigabytesConsumed?: number;
   /**
    * Disk throughput in MegaBytes per second.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly megabytesPerSecondOfRead?: number;
   /**
-   * Expected data points for MegaBytes per second of read.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly megabytesPerSecondOfReadDataPointsExpected?: number;
-  /**
-   * Received data points for MegaBytes per second of read.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly megabytesPerSecondOfReadDataPointsReceived?: number;
-  /**
    * Disk throughput in MegaBytes per second.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly megabytesPerSecondOfWrite?: number;
-  /**
-   * Expected data points for MegaBytes per second of write.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly megabytesPerSecondOfWriteDataPointsExpected?: number;
-  /**
-   * Received data points for MegaBytes per second of write.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly megabytesPerSecondOfWriteDataPointsReceived?: number;
   /**
    * Number of read operations per second for the disk.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly numberOfReadOperationsPerSecond?: number;
   /**
-   * Expected number of data points for read operations per second.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly numberOfReadOperationsPerSecondDataPointsExpected?: number;
-  /**
-   * Received number of data points for read operations per second.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly numberOfReadOperationsPerSecondDataPointsReceived?: number;
-  /**
    * Number of read and write operations per second for the disk.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly numberOfWriteOperationsPerSecond?: number;
-  /**
-   * Expected number of data points for write operations per second.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly numberOfWriteOperationsPerSecondDataPointsExpected?: number;
-  /**
-   * Received number of data points for write operations per second.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly numberOfWriteOperationsPerSecondDataPointsReceived?: number;
   /**
    * Estimated aggregate storage cost for a 31-day month for this disk.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly monthlyStorageCost?: number;
   /**
-   * Storage type selected for this disk. Possible values include: 'Unknown', 'Standard', 'Premium'
+   * Storage type selected for this disk. Possible values include: 'Unknown', 'Standard',
+   * 'Premium', 'StandardSSD', 'StandardOrPremium'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly recommendedDiskType?: AzureDiskType;
   /**
    * Recommended Azure size for the disk, given utilization data and preferences set on Assessment.
    * Possible values include: 'Unknown', 'Standard_S4', 'Standard_S6', 'Standard_S10',
-   * 'Standard_S20', 'Standard_S30', 'Standard_S40', 'Standard_S50', 'Premium_P4', 'Premium_P6',
-   * 'Premium_P10', 'Premium_P20', 'Premium_P30', 'Premium_P40', 'Premium_P50'
+   * 'Standard_S15', 'Standard_S20', 'Standard_S30', 'Standard_S40', 'Standard_S50', 'Premium_P4',
+   * 'Premium_P6', 'Premium_P10', 'Premium_P15', 'Premium_P20', 'Premium_P30', 'Premium_P40',
+   * 'Premium_P50', 'Standard_S60', 'Standard_S70', 'Standard_S80', 'Premium_P60', 'Premium_P70',
+   * 'Premium_P80', 'StandardSSD_E10', 'StandardSSD_E15', 'StandardSSD_E20', 'StandardSSD_E30',
+   * 'StandardSSD_E40', 'StandardSSD_E50', 'StandardSSD_E60', 'StandardSSD_E70', 'StandardSSD_E80',
+   * 'StandardSSD_E4', 'StandardSSD_E6'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly recommendedDiskSize?: AzureDiskSize;
@@ -544,13 +649,26 @@ export interface AssessedDisk {
    */
   readonly suitability?: CloudSuitability;
   /**
-   * If disk is suitable, this explains the reasons and mitigation steps. Possible values include:
-   * 'Unknown', 'NotApplicable', 'DiskSizeGreaterThanSupported', 'NoSuitableDiskSizeForIops',
-   * 'NoSuitableDiskSizeForThroughput', 'NoDiskSizeFoundInSelectedLocation',
-   * 'NoDiskSizeFoundForSelectedRedundancy', 'InternalErrorOccurredForDiskEvaluation'
+   * If disk is not suitable to be migrated, this explains the reasons and mitigation steps.
+   * Possible values include: 'Unknown', 'NotApplicable', 'DiskSizeGreaterThanSupported',
+   * 'NoSuitableDiskSizeForIops', 'NoSuitableDiskSizeForThroughput',
+   * 'NoDiskSizeFoundInSelectedLocation', 'NoDiskSizeFoundForSelectedRedundancy',
+   * 'InternalErrorOccurredForDiskEvaluation', 'NoEaPriceFoundForDiskSize'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly suitabilityExplanation?: AzureDiskSuitabilityExplanation;
+  /**
+   * If disk is suitable to be migrate but some conditions/checks were not considered while
+   * calculating suitability, this explains the details. Possible values include: 'None',
+   * 'NumberOfReadOperationsPerSecondMissing', 'NumberOfWriteOperationsPerSecondMissing',
+   * 'MegabytesPerSecondOfReadMissing', 'MegabytesPerSecondOfWriteMissing',
+   * 'DiskGigabytesConsumedMissing', 'DiskGigabytesProvisionedMissing',
+   * 'NumberOfReadOperationsPerSecondOutOfRange', 'NumberOfWriteOperationsPerSecondOutOfRange',
+   * 'MegabytesPerSecondOfReadOutOfRange', 'MegabytesPerSecondOfWriteOutOfRange',
+   * 'DiskGigabytesConsumedOutOfRange', 'DiskGigabytesProvisionedOutOfRange'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly suitabilityDetail?: AzureDiskSuitabilityDetail;
 }
 
 /**
@@ -568,6 +686,11 @@ export interface AssessedNetworkAdapter {
    */
   readonly ipAddresses?: string[];
   /**
+   * User friendly name of the assessed network adapter.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly displayName?: string;
+  /**
    * Monthly cost estimate for network bandwidth used by this network adapter.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
@@ -578,30 +701,10 @@ export interface AssessedNetworkAdapter {
    */
   readonly megabytesPerSecondReceived?: number;
   /**
-   * Expected data points for incoming traffic in MegaBytes per second.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly megabytesPerSecondReceivedDataPointsExpected?: number;
-  /**
-   * Received data points for incoming traffic in MegaBytes per second.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly megabytesPerSecondOfReadDataPointsReceived?: number;
-  /**
    * Adapter throughput for outgoing traffic in MegaBytes per second.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly megabytesPerSecondTransmitted?: number;
-  /**
-   * Expected data points for outgoing traffic in MegaBytes per second.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly megabytesPerSecondTransmittedDataPointsExpected?: number;
-  /**
-   * Received data points for outgoing traffic in MegaBytes per second.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly megabytesPerSecondTransmittedDataPointsReceived?: number;
   /**
    * Gigabytes transmitted through this adapter each month.
    */
@@ -614,72 +717,42 @@ export interface AssessedNetworkAdapter {
   readonly suitability?: CloudSuitability;
   /**
    * If network adapter is suitable, this explains the reasons and mitigation steps. Possible
-   * values include: 'Unknown', 'NotApplicable', 'InternalErrorOccured'
+   * values include: 'Unknown', 'NotApplicable', 'InternalErrorOccurred'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly suitabilityExplanation?: AzureNetworkAdapterSuitabilityExplanation;
+  /**
+   * If network adapter is not suitable for cloud, this explains the reasons. Possible values
+   * include: 'None', 'MegabytesOfDataTransmittedMissing', 'MegabytesOfDataTransmittedOutOfRange'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly suitabilityDetail?: AzureNetworkAdapterSuitabilityDetail;
 }
 
 /**
- * A machine evaluated as part of an assessment.
+ * Properties of an assessed machine.
  */
-export interface AssessedMachine extends BaseResource {
-  /**
-   * Path reference to this assessed machine.
-   * /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/projects/{projectName}/groups/{groupName}/assessments/{assessmentName}/assessedMachines/{assessedMachineName}
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Name of the machine.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * For optimistic concurrency control.
-   */
-  eTag?: string;
-  /**
-   * Type of the object = [Microsoft.Migrate/projects/groups/assessments/assessedMachines].
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * List of references to the groups that the machine is member of.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly groups?: string[];
-  /**
-   * Time when this machine was discovered by Azure Migrate agent. Date-Time represented in
-   * ISO-8601 format.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly discoveredTimestamp?: Date;
+export interface AssessedMachineProperties {
   /**
    * Boot type of the machine. Possible values include: 'Unknown', 'EFI', 'BIOS'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly bootType?: MachineBootType;
   /**
-   * Container defined in the management solution that this machine is part of in the datacenter.
+   * ARM ID of the discovered machine.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly datacenterContainer?: string;
+  readonly datacenterMachineArmId?: string;
+  /**
+   * ARM ID of the discovered datacenter.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly datacenterManagementServerArmId?: string;
   /**
    * Name of the server hosting the datacenter management solution.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly datacenterManagementServer?: string;
-  /**
-   * ID of the machine as tracked by the datacenter management solution.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly datacenterMachineId?: string;
-  /**
-   * ID of the server hosting the datacenter management solution.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly datacenterManagementServerId?: string;
+  readonly datacenterManagementServerName?: string;
   /**
    * Description of the machine
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -701,10 +774,20 @@ export interface AssessedMachine extends BaseResource {
    */
   readonly numberOfCores?: number;
   /**
-   * Operating System of the machine.
+   * Operating System type of the machine.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly operatingSystem?: string;
+  readonly operatingSystemType?: string;
+  /**
+   * Operating System name of the machine.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly operatingSystemName?: string;
+  /**
+   * Operating System version of the machine.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly operatingSystemVersion?: string;
   /**
    * Monthly network cost estimate for the network adapters that are attached to this machine as a
    * group, for a 31-day month.
@@ -717,6 +800,23 @@ export interface AssessedMachine extends BaseResource {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly monthlyStorageCost?: number;
+  /**
+   * Monthly premium storage cost estimate for the disks that are attached to this machine as a
+   * group, for a 31-day month.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly monthlyPremiumStorageCost?: number;
+  /**
+   * Monthly standard SSD storage cost estimate for the disks that are attached to this machine as
+   * a group, for a 31-day month.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly monthlyStandardSSDStorageCost?: number;
+  /**
+   * Confidence rating of assessed machine.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly confidenceRatingInPercentage?: number;
   /**
    * Dictionary of disks attached to the machine. Key is ID of disk. Value is a disk object.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -746,7 +846,15 @@ export interface AssessedMachine extends BaseResource {
    * 'Standard_F16s', 'Standard_G1', 'Standard_G2', 'Standard_G3', 'Standard_G4', 'Standard_G5',
    * 'Standard_GS1', 'Standard_GS2', 'Standard_GS3', 'Standard_GS4', 'Standard_GS5', 'Standard_H8',
    * 'Standard_H16', 'Standard_H8m', 'Standard_H16m', 'Standard_H16r', 'Standard_H16mr',
-   * 'Standard_L4s', 'Standard_L8s', 'Standard_L16s', 'Standard_L32s'
+   * 'Standard_L4s', 'Standard_L8s', 'Standard_L16s', 'Standard_L32s', 'Standard_D2s_v3',
+   * 'Standard_D4s_v3', 'Standard_D8s_v3', 'Standard_D16s_v3', 'Standard_D32s_v3',
+   * 'Standard_D64s_v3', 'Standard_D2_v3', 'Standard_D4_v3', 'Standard_D8_v3', 'Standard_D16_v3',
+   * 'Standard_D32_v3', 'Standard_D64_v3', 'Standard_F2s_v2', 'Standard_F4s_v2', 'Standard_F8s_v2',
+   * 'Standard_F16s_v2', 'Standard_F32s_v2', 'Standard_F64s_v2', 'Standard_F72s_v2',
+   * 'Standard_E2_v3', 'Standard_E4_v3', 'Standard_E8_v3', 'Standard_E16_v3', 'Standard_E32_v3',
+   * 'Standard_E64_v3', 'Standard_E2s_v3', 'Standard_E4s_v3', 'Standard_E8s_v3',
+   * 'Standard_E16s_v3', 'Standard_E32s_v3', 'Standard_E64s_v3', 'Standard_M64s', 'Standard_M64ms',
+   * 'Standard_M128s', 'Standard_M128ms'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly recommendedSize?: AzureVmSize;
@@ -781,26 +889,6 @@ export interface AssessedMachine extends BaseResource {
    */
   readonly percentageMemoryUtilization?: number;
   /**
-   * Expected data points for percentage of cores utilization.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly percentageCoresUtilizationDataPointsExpected?: number;
-  /**
-   * Received data points for percentage of cores utilization.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly percentageCoresUtilizationDataPointsReceived?: number;
-  /**
-   * Expected data points for percentage of memory utilization.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly percentageMemoryUtilizationDataPointsExpected?: number;
-  /**
-   * Received data points for percentage of memory utilization.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly percentageMemoryUtilizationDataPointsReceived?: number;
-  /**
    * Whether machine is suitable for migration to Azure. Possible values include: 'Unknown',
    * 'NotSuitable', 'Suitable', 'ConditionallySuitable', 'ReadinessUnknown'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -812,8 +900,9 @@ export interface AssessedMachine extends BaseResource {
    * 'GuestOperatingSystemArchitectureNotSupported', 'GuestOperatingSystemNotSupported',
    * 'BootTypeNotSupported', 'MoreDisksThanSupported', 'NoSuitableVmSizeFound',
    * 'OneOrMoreDisksNotSuitable', 'OneOrMoreAdaptersNotSuitable',
-   * 'InternalErrorOccuredDuringComputeEvaluation', 'InternalErrorOccuredDuringStorageEvaluation',
-   * 'InternalErrorOccuredDuringNetworkEvaluation', 'NoVmSizeSupportsStoragePerformance',
+   * 'InternalErrorOccurredDuringComputeEvaluation',
+   * 'InternalErrorOccurredDuringStorageEvaluation',
+   * 'InternalErrorOccurredDuringNetworkEvaluation', 'NoVmSizeSupportsStoragePerformance',
    * 'NoVmSizeSupportsNetworkPerformance', 'NoVmSizeForSelectedPricingTier',
    * 'NoVmSizeForSelectedAzureLocation', 'CheckRedHatLinuxVersion', 'CheckOpenSuseLinuxVersion',
    * 'CheckWindowsServer2008R2Version', 'CheckCentOsVersion', 'CheckDebianLinuxVersion',
@@ -828,6 +917,15 @@ export interface AssessedMachine extends BaseResource {
    */
   readonly suitabilityExplanation?: AzureVmSuitabilityExplanation;
   /**
+   * If machine is not suitable for cloud, this explains the reasons. Possible values include:
+   * 'None', 'RecommendedSizeHasLessNetworkAdapters', 'CannotReportComputeCost',
+   * 'CannotReportStorageCost', 'CannotReportBandwidthCosts', 'PercentageOfCoresUtilizedMissing',
+   * 'PercentageOfMemoryUtilizedMissing', 'PercentageOfCoresUtilizedOutOfRange',
+   * 'PercentageOfMemoryUtilizedOutOfRange'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly suitabilityDetail?: AzureVmSuitabilityDetail;
+  /**
    * Time when this machine was created. Date-Time represented in ISO-8601 format.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
@@ -840,19 +938,34 @@ export interface AssessedMachine extends BaseResource {
 }
 
 /**
- * ID and Key for Migration Project.
+ * A machine evaluated as part of an assessment.
  */
-export interface ProjectKey extends BaseResource {
+export interface AssessedMachine extends BaseResource {
   /**
-   * ID of Migration Project.
+   * Path reference to this assessed machine.
+   * /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/assessmentProjects/{projectName}/groups/{groupName}/assessments/{assessmentName}/assessedMachines/{assessedMachineName}
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly workspaceId?: string;
+  readonly id?: string;
   /**
-   * Key of Migration Project.
+   * Name of the machine.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly workspaceKey?: string;
+  readonly name?: string;
+  /**
+   * For optimistic concurrency control.
+   */
+  eTag?: string;
+  /**
+   * Type of the object =
+   * [Microsoft.Migrate/assessmentProjects/groups/assessments/assessedMachines].
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * Properties of an assessed machine.
+   */
+  properties?: AssessedMachineProperties;
 }
 
 /**
@@ -918,6 +1031,165 @@ export interface DownloadUrl {
 }
 
 /**
+ * List of projects.
+ */
+export interface ProjectResultList {
+  /**
+   * List of projects.
+   */
+  value?: Project[];
+}
+
+/**
+ * List of groups.
+ */
+export interface GroupResultList {
+  /**
+   * List of groups.
+   */
+  value?: Group[];
+}
+
+/**
+ * List of assessments.
+ */
+export interface AssessmentResultList {
+  /**
+   * List of assessments.
+   */
+  value?: Assessment[];
+}
+
+/**
+ * An interface representing CollectorBodyAgentSpnProperties.
+ */
+export interface CollectorBodyAgentSpnProperties {
+  /**
+   * AAD Authority URL which was used to request the token for the service principal.
+   */
+  authority?: string;
+  /**
+   * Application/client Id for the service principal with which the on-premise management/data
+   * plane components would communicate with our Azure services.
+   */
+  applicationId?: string;
+  /**
+   * Intended audience for the service principal.
+   */
+  audience?: string;
+  /**
+   * Object Id of the service principal with which the on-premise management/data plane components
+   * would communicate with our Azure services.
+   */
+  objectId?: string;
+  /**
+   * Tenant Id for the service principal with which the on-premise management/data plane components
+   * would communicate with our Azure services.
+   */
+  tenantId?: string;
+}
+
+/**
+ * An interface representing CollectorAgentProperties.
+ */
+export interface CollectorAgentProperties {
+  /**
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly version?: string;
+  /**
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly lastHeartbeatUtc?: Date;
+  spnDetails?: CollectorBodyAgentSpnProperties;
+}
+
+/**
+ * An interface representing CollectorProperties.
+ */
+export interface CollectorProperties {
+  /**
+   * The ARM id of the discovery service site.
+   */
+  discoverySiteId?: string;
+  /**
+   * Time when this collector was created. Date-Time represented in ISO-8601 format.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly createdTimestamp?: string;
+  /**
+   * Time when this collector was updated. Date-Time represented in ISO-8601 format.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly updatedTimestamp?: string;
+  agentProperties?: CollectorAgentProperties;
+}
+
+/**
+ * An interface representing HyperVCollector.
+ */
+export interface HyperVCollector extends BaseResource {
+  eTag?: string;
+  /**
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  properties?: CollectorProperties;
+}
+
+/**
+ * An interface representing VMwareCollector.
+ */
+export interface VMwareCollector extends BaseResource {
+  eTag?: string;
+  /**
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  properties?: CollectorProperties;
+}
+
+/**
+ * List of Hyper-V collectors.
+ */
+export interface HyperVCollectorList {
+  /**
+   * List of Hyper-V collectors.
+   */
+  value?: HyperVCollector[];
+}
+
+/**
+ * List of VMware collectors.
+ */
+export interface VMwareCollectorList {
+  /**
+   * List of VMware collectors.
+   */
+  value?: VMwareCollector[];
+}
+
+/**
  * VM family name, the list of targeted azure locations and the category of the family.
  */
 export interface VmFamily {
@@ -939,9 +1211,9 @@ export interface VmFamily {
 }
 
 /**
- * List of assessment options.
+ * Assessment options properties.
  */
-export interface AssessmentOptionsResultList {
+export interface AssessmentOptionsProperties {
   /**
    * Dictionary of VM families grouped by vm family name describing the targeted azure locations of
    * VM family and the category of the family.
@@ -953,39 +1225,61 @@ export interface AssessmentOptionsResultList {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly reservedInstanceVmFamilies?: string[];
+  /**
+   * List of supported Azure regions for reserved instances.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly reservedInstanceSupportedLocations?: string[];
+  /**
+   * List of supported currencies for reserved instances.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly reservedInstanceSupportedCurrencies?: string[];
+  /**
+   * List of supported Azure offer codes for reserved instances.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly reservedInstanceSupportedOffers?: string[];
 }
 
 /**
- * Parameters for a check name availability request.
+ * Assessment options.
  */
-export interface CheckNameAvailabilityParameters {
+export interface AssessmentOptions extends BaseResource {
   /**
-   * The name to check for availability
+   * Unique name of an assessment options.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  name: string;
+  readonly name?: string;
+  /**
+   * Unique identifier of an assessment options.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Properties of the assessment options.
+   */
+  properties: AssessmentOptionsProperties;
 }
 
 /**
- * The CheckNameAvailability operation response.
+ * List of API operations.
  */
-export interface CheckNameAvailabilityResult {
+export interface AssessmentOptionsResultList {
   /**
-   * Gets a boolean value that indicates whether the name is available for you to use. If true, the
-   * name is available. If false, the name has already been taken or invalid and cannot be used.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   * List of operations.
    */
-  readonly nameAvailable?: boolean;
+  value?: AssessmentOptions[];
+}
+
+/**
+ * List of API operations.
+ */
+export interface OperationResultList {
   /**
-   * Gets the reason that a project name could not be used. The Reason element is only returned if
-   * NameAvailable is false. Possible values include: 'Available', 'Invalid', 'AlreadyExists'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   * List of operations.
    */
-  readonly reason?: NameAvailabilityReason;
-  /**
-   * Gets an error message explaining the Reason value in more detail.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly message?: string;
+  value?: Operation[];
 }
 
 /**
@@ -1021,6 +1315,16 @@ export interface GroupsCreateOptionalParams extends msRest.RequestOptionsBase {
 /**
  * Optional Parameters.
  */
+export interface GroupsUpdateMachinesOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Machines list to be added or removed from group.
+   */
+  groupUpdateProperties?: UpdateGroupBody;
+}
+
+/**
+ * Optional Parameters.
+ */
 export interface AssessmentsCreateOptionalParams extends msRest.RequestOptionsBase {
   /**
    * New or Updated Assessment object.
@@ -1029,9 +1333,29 @@ export interface AssessmentsCreateOptionalParams extends msRest.RequestOptionsBa
 }
 
 /**
- * An interface representing AzureMigrateOptions.
+ * Optional Parameters.
  */
-export interface AzureMigrateOptions extends AzureServiceClientOptions {
+export interface HyperVCollectorsCreateOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * New or Updated Hyper-V collector.
+   */
+  collectorBody?: HyperVCollector;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface VMwareCollectorsCreateOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * New or Updated VMware collector.
+   */
+  collectorBody?: VMwareCollector;
+}
+
+/**
+ * An interface representing AzureMigrateV2Options.
+ */
+export interface AzureMigrateV2Options extends AzureServiceClientOptions {
   baseUri?: string;
 }
 
@@ -1046,9 +1370,9 @@ export interface ProjectsListBySubscriptionHeaders {
 }
 
 /**
- * Defines headers for ListByResourceGroup operation.
+ * Defines headers for List operation.
  */
-export interface ProjectsListByResourceGroupHeaders {
+export interface ProjectsListHeaders {
   /**
    * Service generated Request ID.
    */
@@ -1096,9 +1420,19 @@ export interface ProjectsDeleteHeaders {
 }
 
 /**
- * Defines headers for GetKeys operation.
+ * Defines headers for AssessmentOptions operation.
  */
-export interface ProjectsGetKeysHeaders {
+export interface ProjectAssessmentOptionsHeaders {
+  /**
+   * Service generated Request ID.
+   */
+  xMsRequestId: string;
+}
+
+/**
+ * Defines headers for AssessmentOptionsList operation.
+ */
+export interface ProjectAssessmentOptionsListHeaders {
   /**
    * Service generated Request ID.
    */
@@ -1159,6 +1493,16 @@ export interface GroupsCreateHeaders {
  * Defines headers for Delete operation.
  */
 export interface GroupsDeleteHeaders {
+  /**
+   * Service generated Request ID.
+   */
+  xMsRequestId: string;
+}
+
+/**
+ * Defines headers for UpdateMachines operation.
+ */
+export interface GroupsUpdateMachinesHeaders {
   /**
    * Service generated Request ID.
    */
@@ -1246,11 +1590,83 @@ export interface AssessedMachinesGetHeaders {
 }
 
 /**
- * @interface
- * List of projects.
- * @extends Array<Project>
+ * Defines headers for ListByProject operation.
  */
-export interface ProjectResultList extends Array<Project> {
+export interface HyperVCollectorsListByProjectHeaders {
+  /**
+   * Service generated Request ID.
+   */
+  xMsRequestId: string;
+}
+
+/**
+ * Defines headers for Get operation.
+ */
+export interface HyperVCollectorsGetHeaders {
+  /**
+   * Service generated Request ID.
+   */
+  xMsRequestId: string;
+}
+
+/**
+ * Defines headers for Create operation.
+ */
+export interface HyperVCollectorsCreateHeaders {
+  /**
+   * Service generated Request ID.
+   */
+  xMsRequestId: string;
+}
+
+/**
+ * Defines headers for Delete operation.
+ */
+export interface HyperVCollectorsDeleteHeaders {
+  /**
+   * Service generated Request ID.
+   */
+  xMsRequestId: string;
+}
+
+/**
+ * Defines headers for ListByProject operation.
+ */
+export interface VMwareCollectorsListByProjectHeaders {
+  /**
+   * Service generated Request ID.
+   */
+  xMsRequestId: string;
+}
+
+/**
+ * Defines headers for Get operation.
+ */
+export interface VMwareCollectorsGetHeaders {
+  /**
+   * Service generated Request ID.
+   */
+  xMsRequestId: string;
+}
+
+/**
+ * Defines headers for Create operation.
+ */
+export interface VMwareCollectorsCreateHeaders {
+  /**
+   * Service generated Request ID.
+   */
+  xMsRequestId: string;
+}
+
+/**
+ * Defines headers for Delete operation.
+ */
+export interface VMwareCollectorsDeleteHeaders {
+  /**
+   * Service generated Request ID.
+   */
+  xMsRequestId: string;
 }
 
 /**
@@ -1259,22 +1675,7 @@ export interface ProjectResultList extends Array<Project> {
  * @extends Array<Machine>
  */
 export interface MachineResultList extends Array<Machine> {
-}
-
-/**
- * @interface
- * List of groups.
- * @extends Array<Group>
- */
-export interface GroupResultList extends Array<Group> {
-}
-
-/**
- * @interface
- * List of assessments.
- * @extends Array<Assessment>
- */
-export interface AssessmentResultList extends Array<Assessment> {
+  nextLink?: string;
 }
 
 /**
@@ -1283,23 +1684,16 @@ export interface AssessmentResultList extends Array<Assessment> {
  * @extends Array<AssessedMachine>
  */
 export interface AssessedMachineResultList extends Array<AssessedMachine> {
+  nextLink?: string;
 }
 
 /**
- * @interface
- * List of API operations.
- * @extends Array<Operation>
- */
-export interface OperationResultList extends Array<Operation> {
-}
-
-/**
- * Defines values for DiscoveryStatus.
- * Possible values include: 'Unknown', 'NotStarted', 'InProgress', 'Completed'
+ * Defines values for ProjectStatus.
+ * Possible values include: 'Active', 'Inactive'
  * @readonly
  * @enum {string}
  */
-export type DiscoveryStatus = 'Unknown' | 'NotStarted' | 'InProgress' | 'Completed';
+export type ProjectStatus = 'Active' | 'Inactive';
 
 /**
  * Defines values for ProvisioningState.
@@ -1310,17 +1704,34 @@ export type DiscoveryStatus = 'Unknown' | 'NotStarted' | 'InProgress' | 'Complet
 export type ProvisioningState = 'Accepted' | 'Creating' | 'Deleting' | 'Failed' | 'Moving' | 'Succeeded';
 
 /**
+ * Defines values for GroupStatus.
+ * Possible values include: 'Created', 'Updated', 'Running', 'Completed', 'Invalid'
+ * @readonly
+ * @enum {string}
+ */
+export type GroupStatus = 'Created' | 'Updated' | 'Running' | 'Completed' | 'Invalid';
+
+/**
+ * Defines values for GroupUpdateOperation.
+ * Possible values include: 'Add', 'Remove'
+ * @readonly
+ * @enum {string}
+ */
+export type GroupUpdateOperation = 'Add' | 'Remove';
+
+/**
  * Defines values for AzureLocation.
  * Possible values include: 'Unknown', 'EastAsia', 'SoutheastAsia', 'AustraliaEast',
  * 'AustraliaSoutheast', 'BrazilSouth', 'CanadaCentral', 'CanadaEast', 'WestEurope', 'NorthEurope',
  * 'CentralIndia', 'SouthIndia', 'WestIndia', 'JapanEast', 'JapanWest', 'KoreaCentral',
  * 'KoreaSouth', 'UkWest', 'UkSouth', 'NorthCentralUs', 'EastUs', 'WestUs2', 'SouthCentralUs',
  * 'CentralUs', 'EastUs2', 'WestUs', 'WestCentralUs', 'GermanyCentral', 'GermanyNortheast',
- * 'ChinaNorth', 'ChinaEast'
+ * 'ChinaNorth', 'ChinaEast', 'USGovArizona', 'USGovTexas', 'USGovIowa', 'USGovVirginia',
+ * 'USDoDCentral', 'USDoDEast'
  * @readonly
  * @enum {string}
  */
-export type AzureLocation = 'Unknown' | 'EastAsia' | 'SoutheastAsia' | 'AustraliaEast' | 'AustraliaSoutheast' | 'BrazilSouth' | 'CanadaCentral' | 'CanadaEast' | 'WestEurope' | 'NorthEurope' | 'CentralIndia' | 'SouthIndia' | 'WestIndia' | 'JapanEast' | 'JapanWest' | 'KoreaCentral' | 'KoreaSouth' | 'UkWest' | 'UkSouth' | 'NorthCentralUs' | 'EastUs' | 'WestUs2' | 'SouthCentralUs' | 'CentralUs' | 'EastUs2' | 'WestUs' | 'WestCentralUs' | 'GermanyCentral' | 'GermanyNortheast' | 'ChinaNorth' | 'ChinaEast';
+export type AzureLocation = 'Unknown' | 'EastAsia' | 'SoutheastAsia' | 'AustraliaEast' | 'AustraliaSoutheast' | 'BrazilSouth' | 'CanadaCentral' | 'CanadaEast' | 'WestEurope' | 'NorthEurope' | 'CentralIndia' | 'SouthIndia' | 'WestIndia' | 'JapanEast' | 'JapanWest' | 'KoreaCentral' | 'KoreaSouth' | 'UkWest' | 'UkSouth' | 'NorthCentralUs' | 'EastUs' | 'WestUs2' | 'SouthCentralUs' | 'CentralUs' | 'EastUs2' | 'WestUs' | 'WestCentralUs' | 'GermanyCentral' | 'GermanyNortheast' | 'ChinaNorth' | 'ChinaEast' | 'USGovArizona' | 'USGovTexas' | 'USGovIowa' | 'USGovVirginia' | 'USDoDCentral' | 'USDoDEast';
 
 /**
  * Defines values for AzureOfferCode.
@@ -1330,11 +1741,11 @@ export type AzureLocation = 'Unknown' | 'EastAsia' | 'SoutheastAsia' | 'Australi
  * 'MSAZR0123P', 'MSAZR0124P', 'MSAZR0125P', 'MSAZR0126P', 'MSAZR0127P', 'MSAZR0128P',
  * 'MSAZR0129P', 'MSAZR0130P', 'MSAZR0111P', 'MSAZR0144P', 'MSAZR0149P', 'MSMCAZR0044P',
  * 'MSMCAZR0059P', 'MSMCAZR0060P', 'MSMCAZR0063P', 'MSMCAZR0120P', 'MSMCAZR0121P', 'MSMCAZR0125P',
- * 'MSMCAZR0128P', 'MSAZRDE0003P', 'MSAZRDE0044P'
+ * 'MSMCAZR0128P', 'MSAZRDE0003P', 'MSAZRDE0044P', 'MSAZRUSGOV0003P', 'EA'
  * @readonly
  * @enum {string}
  */
-export type AzureOfferCode = 'Unknown' | 'MSAZR0003P' | 'MSAZR0044P' | 'MSAZR0059P' | 'MSAZR0060P' | 'MSAZR0062P' | 'MSAZR0063P' | 'MSAZR0064P' | 'MSAZR0029P' | 'MSAZR0022P' | 'MSAZR0023P' | 'MSAZR0148P' | 'MSAZR0025P' | 'MSAZR0036P' | 'MSAZR0120P' | 'MSAZR0121P' | 'MSAZR0122P' | 'MSAZR0123P' | 'MSAZR0124P' | 'MSAZR0125P' | 'MSAZR0126P' | 'MSAZR0127P' | 'MSAZR0128P' | 'MSAZR0129P' | 'MSAZR0130P' | 'MSAZR0111P' | 'MSAZR0144P' | 'MSAZR0149P' | 'MSMCAZR0044P' | 'MSMCAZR0059P' | 'MSMCAZR0060P' | 'MSMCAZR0063P' | 'MSMCAZR0120P' | 'MSMCAZR0121P' | 'MSMCAZR0125P' | 'MSMCAZR0128P' | 'MSAZRDE0003P' | 'MSAZRDE0044P';
+export type AzureOfferCode = 'Unknown' | 'MSAZR0003P' | 'MSAZR0044P' | 'MSAZR0059P' | 'MSAZR0060P' | 'MSAZR0062P' | 'MSAZR0063P' | 'MSAZR0064P' | 'MSAZR0029P' | 'MSAZR0022P' | 'MSAZR0023P' | 'MSAZR0148P' | 'MSAZR0025P' | 'MSAZR0036P' | 'MSAZR0120P' | 'MSAZR0121P' | 'MSAZR0122P' | 'MSAZR0123P' | 'MSAZR0124P' | 'MSAZR0125P' | 'MSAZR0126P' | 'MSAZR0127P' | 'MSAZR0128P' | 'MSAZR0129P' | 'MSAZR0130P' | 'MSAZR0111P' | 'MSAZR0144P' | 'MSAZR0149P' | 'MSMCAZR0044P' | 'MSMCAZR0059P' | 'MSMCAZR0060P' | 'MSMCAZR0063P' | 'MSMCAZR0120P' | 'MSMCAZR0121P' | 'MSMCAZR0125P' | 'MSMCAZR0128P' | 'MSAZRDE0003P' | 'MSAZRDE0044P' | 'MSAZRUSGOV0003P' | 'EA';
 
 /**
  * Defines values for AzurePricingTier.
@@ -1363,11 +1774,11 @@ export type Percentile = 'Percentile50' | 'Percentile90' | 'Percentile95' | 'Per
 
 /**
  * Defines values for TimeRange.
- * Possible values include: 'Day', 'Week', 'Month'
+ * Possible values include: 'Day', 'Week', 'Month', 'Custom'
  * @readonly
  * @enum {string}
  */
-export type TimeRange = 'Day' | 'Week' | 'Month';
+export type TimeRange = 'Day' | 'Week' | 'Month' | 'Custom';
 
 /**
  * Defines values for AssessmentStage.
@@ -1404,12 +1815,40 @@ export type AzureHybridUseBenefit = 'Unknown' | 'Yes' | 'No';
 export type AssessmentSizingCriterion = 'PerformanceBased' | 'AsOnPremises';
 
 /**
- * Defines values for AssessmentStatus.
- * Possible values include: 'Created', 'Updated', 'Running', 'Completed', 'Invalid'
+ * Defines values for ReservedInstance.
+ * Possible values include: 'None', 'RI1Year', 'RI3Year'
  * @readonly
  * @enum {string}
  */
-export type AssessmentStatus = 'Created' | 'Updated' | 'Running' | 'Completed' | 'Invalid';
+export type ReservedInstance = 'None' | 'RI1Year' | 'RI3Year';
+
+/**
+ * Defines values for AzureVmFamily.
+ * Possible values include: 'Unknown', 'Basic_A0_A4', 'Standard_A0_A7', 'Standard_A8_A11',
+ * 'Av2_series', 'D_series', 'Dv2_series', 'DS_series', 'DSv2_series', 'F_series', 'Fs_series',
+ * 'G_series', 'GS_series', 'H_series', 'Ls_series', 'Dsv3_series', 'Dv3_series', 'Fsv2_series',
+ * 'Ev3_series', 'Esv3_series', 'M_series', 'DC_Series'
+ * @readonly
+ * @enum {string}
+ */
+export type AzureVmFamily = 'Unknown' | 'Basic_A0_A4' | 'Standard_A0_A7' | 'Standard_A8_A11' | 'Av2_series' | 'D_series' | 'Dv2_series' | 'DS_series' | 'DSv2_series' | 'F_series' | 'Fs_series' | 'G_series' | 'GS_series' | 'H_series' | 'Ls_series' | 'Dsv3_series' | 'Dv3_series' | 'Fsv2_series' | 'Ev3_series' | 'Esv3_series' | 'M_series' | 'DC_Series';
+
+/**
+ * Defines values for AzureDiskType.
+ * Possible values include: 'Unknown', 'Standard', 'Premium', 'StandardSSD', 'StandardOrPremium'
+ * @readonly
+ * @enum {string}
+ */
+export type AzureDiskType = 'Unknown' | 'Standard' | 'Premium' | 'StandardSSD' | 'StandardOrPremium';
+
+/**
+ * Defines values for AssessmentStatus.
+ * Possible values include: 'Created', 'Updated', 'Running', 'Completed', 'Invalid', 'OutOfSync',
+ * 'OutDated'
+ * @readonly
+ * @enum {string}
+ */
+export type AssessmentStatus = 'Created' | 'Updated' | 'Running' | 'Completed' | 'Invalid' | 'OutOfSync' | 'OutDated';
 
 /**
  * Defines values for MachineBootType.
@@ -1420,22 +1859,18 @@ export type AssessmentStatus = 'Created' | 'Updated' | 'Running' | 'Completed' |
 export type MachineBootType = 'Unknown' | 'EFI' | 'BIOS';
 
 /**
- * Defines values for AzureDiskType.
- * Possible values include: 'Unknown', 'Standard', 'Premium'
- * @readonly
- * @enum {string}
- */
-export type AzureDiskType = 'Unknown' | 'Standard' | 'Premium';
-
-/**
  * Defines values for AzureDiskSize.
  * Possible values include: 'Unknown', 'Standard_S4', 'Standard_S6', 'Standard_S10',
- * 'Standard_S20', 'Standard_S30', 'Standard_S40', 'Standard_S50', 'Premium_P4', 'Premium_P6',
- * 'Premium_P10', 'Premium_P20', 'Premium_P30', 'Premium_P40', 'Premium_P50'
+ * 'Standard_S15', 'Standard_S20', 'Standard_S30', 'Standard_S40', 'Standard_S50', 'Premium_P4',
+ * 'Premium_P6', 'Premium_P10', 'Premium_P15', 'Premium_P20', 'Premium_P30', 'Premium_P40',
+ * 'Premium_P50', 'Standard_S60', 'Standard_S70', 'Standard_S80', 'Premium_P60', 'Premium_P70',
+ * 'Premium_P80', 'StandardSSD_E10', 'StandardSSD_E15', 'StandardSSD_E20', 'StandardSSD_E30',
+ * 'StandardSSD_E40', 'StandardSSD_E50', 'StandardSSD_E60', 'StandardSSD_E70', 'StandardSSD_E80',
+ * 'StandardSSD_E4', 'StandardSSD_E6'
  * @readonly
  * @enum {string}
  */
-export type AzureDiskSize = 'Unknown' | 'Standard_S4' | 'Standard_S6' | 'Standard_S10' | 'Standard_S20' | 'Standard_S30' | 'Standard_S40' | 'Standard_S50' | 'Premium_P4' | 'Premium_P6' | 'Premium_P10' | 'Premium_P20' | 'Premium_P30' | 'Premium_P40' | 'Premium_P50';
+export type AzureDiskSize = 'Unknown' | 'Standard_S4' | 'Standard_S6' | 'Standard_S10' | 'Standard_S15' | 'Standard_S20' | 'Standard_S30' | 'Standard_S40' | 'Standard_S50' | 'Premium_P4' | 'Premium_P6' | 'Premium_P10' | 'Premium_P15' | 'Premium_P20' | 'Premium_P30' | 'Premium_P40' | 'Premium_P50' | 'Standard_S60' | 'Standard_S70' | 'Standard_S80' | 'Premium_P60' | 'Premium_P70' | 'Premium_P80' | 'StandardSSD_E10' | 'StandardSSD_E15' | 'StandardSSD_E20' | 'StandardSSD_E30' | 'StandardSSD_E40' | 'StandardSSD_E50' | 'StandardSSD_E60' | 'StandardSSD_E70' | 'StandardSSD_E80' | 'StandardSSD_E4' | 'StandardSSD_E6';
 
 /**
  * Defines values for CloudSuitability.
@@ -1451,19 +1886,42 @@ export type CloudSuitability = 'Unknown' | 'NotSuitable' | 'Suitable' | 'Conditi
  * Possible values include: 'Unknown', 'NotApplicable', 'DiskSizeGreaterThanSupported',
  * 'NoSuitableDiskSizeForIops', 'NoSuitableDiskSizeForThroughput',
  * 'NoDiskSizeFoundInSelectedLocation', 'NoDiskSizeFoundForSelectedRedundancy',
- * 'InternalErrorOccurredForDiskEvaluation'
+ * 'InternalErrorOccurredForDiskEvaluation', 'NoEaPriceFoundForDiskSize'
  * @readonly
  * @enum {string}
  */
-export type AzureDiskSuitabilityExplanation = 'Unknown' | 'NotApplicable' | 'DiskSizeGreaterThanSupported' | 'NoSuitableDiskSizeForIops' | 'NoSuitableDiskSizeForThroughput' | 'NoDiskSizeFoundInSelectedLocation' | 'NoDiskSizeFoundForSelectedRedundancy' | 'InternalErrorOccurredForDiskEvaluation';
+export type AzureDiskSuitabilityExplanation = 'Unknown' | 'NotApplicable' | 'DiskSizeGreaterThanSupported' | 'NoSuitableDiskSizeForIops' | 'NoSuitableDiskSizeForThroughput' | 'NoDiskSizeFoundInSelectedLocation' | 'NoDiskSizeFoundForSelectedRedundancy' | 'InternalErrorOccurredForDiskEvaluation' | 'NoEaPriceFoundForDiskSize';
+
+/**
+ * Defines values for AzureDiskSuitabilityDetail.
+ * Possible values include: 'None', 'NumberOfReadOperationsPerSecondMissing',
+ * 'NumberOfWriteOperationsPerSecondMissing', 'MegabytesPerSecondOfReadMissing',
+ * 'MegabytesPerSecondOfWriteMissing', 'DiskGigabytesConsumedMissing',
+ * 'DiskGigabytesProvisionedMissing', 'NumberOfReadOperationsPerSecondOutOfRange',
+ * 'NumberOfWriteOperationsPerSecondOutOfRange', 'MegabytesPerSecondOfReadOutOfRange',
+ * 'MegabytesPerSecondOfWriteOutOfRange', 'DiskGigabytesConsumedOutOfRange',
+ * 'DiskGigabytesProvisionedOutOfRange'
+ * @readonly
+ * @enum {string}
+ */
+export type AzureDiskSuitabilityDetail = 'None' | 'NumberOfReadOperationsPerSecondMissing' | 'NumberOfWriteOperationsPerSecondMissing' | 'MegabytesPerSecondOfReadMissing' | 'MegabytesPerSecondOfWriteMissing' | 'DiskGigabytesConsumedMissing' | 'DiskGigabytesProvisionedMissing' | 'NumberOfReadOperationsPerSecondOutOfRange' | 'NumberOfWriteOperationsPerSecondOutOfRange' | 'MegabytesPerSecondOfReadOutOfRange' | 'MegabytesPerSecondOfWriteOutOfRange' | 'DiskGigabytesConsumedOutOfRange' | 'DiskGigabytesProvisionedOutOfRange';
 
 /**
  * Defines values for AzureNetworkAdapterSuitabilityExplanation.
- * Possible values include: 'Unknown', 'NotApplicable', 'InternalErrorOccured'
+ * Possible values include: 'Unknown', 'NotApplicable', 'InternalErrorOccurred'
  * @readonly
  * @enum {string}
  */
-export type AzureNetworkAdapterSuitabilityExplanation = 'Unknown' | 'NotApplicable' | 'InternalErrorOccured';
+export type AzureNetworkAdapterSuitabilityExplanation = 'Unknown' | 'NotApplicable' | 'InternalErrorOccurred';
+
+/**
+ * Defines values for AzureNetworkAdapterSuitabilityDetail.
+ * Possible values include: 'None', 'MegabytesOfDataTransmittedMissing',
+ * 'MegabytesOfDataTransmittedOutOfRange'
+ * @readonly
+ * @enum {string}
+ */
+export type AzureNetworkAdapterSuitabilityDetail = 'None' | 'MegabytesOfDataTransmittedMissing' | 'MegabytesOfDataTransmittedOutOfRange';
 
 /**
  * Defines values for AzureVmSize.
@@ -1483,11 +1941,19 @@ export type AzureNetworkAdapterSuitabilityExplanation = 'Unknown' | 'NotApplicab
  * 'Standard_F8s', 'Standard_F16s', 'Standard_G1', 'Standard_G2', 'Standard_G3', 'Standard_G4',
  * 'Standard_G5', 'Standard_GS1', 'Standard_GS2', 'Standard_GS3', 'Standard_GS4', 'Standard_GS5',
  * 'Standard_H8', 'Standard_H16', 'Standard_H8m', 'Standard_H16m', 'Standard_H16r',
- * 'Standard_H16mr', 'Standard_L4s', 'Standard_L8s', 'Standard_L16s', 'Standard_L32s'
+ * 'Standard_H16mr', 'Standard_L4s', 'Standard_L8s', 'Standard_L16s', 'Standard_L32s',
+ * 'Standard_D2s_v3', 'Standard_D4s_v3', 'Standard_D8s_v3', 'Standard_D16s_v3', 'Standard_D32s_v3',
+ * 'Standard_D64s_v3', 'Standard_D2_v3', 'Standard_D4_v3', 'Standard_D8_v3', 'Standard_D16_v3',
+ * 'Standard_D32_v3', 'Standard_D64_v3', 'Standard_F2s_v2', 'Standard_F4s_v2', 'Standard_F8s_v2',
+ * 'Standard_F16s_v2', 'Standard_F32s_v2', 'Standard_F64s_v2', 'Standard_F72s_v2',
+ * 'Standard_E2_v3', 'Standard_E4_v3', 'Standard_E8_v3', 'Standard_E16_v3', 'Standard_E32_v3',
+ * 'Standard_E64_v3', 'Standard_E2s_v3', 'Standard_E4s_v3', 'Standard_E8s_v3', 'Standard_E16s_v3',
+ * 'Standard_E32s_v3', 'Standard_E64s_v3', 'Standard_M64s', 'Standard_M64ms', 'Standard_M128s',
+ * 'Standard_M128ms'
  * @readonly
  * @enum {string}
  */
-export type AzureVmSize = 'Unknown' | 'Basic_A0' | 'Basic_A1' | 'Basic_A2' | 'Basic_A3' | 'Basic_A4' | 'Standard_A0' | 'Standard_A1' | 'Standard_A2' | 'Standard_A3' | 'Standard_A4' | 'Standard_A5' | 'Standard_A6' | 'Standard_A7' | 'Standard_A8' | 'Standard_A9' | 'Standard_A10' | 'Standard_A11' | 'Standard_A1_v2' | 'Standard_A2_v2' | 'Standard_A4_v2' | 'Standard_A8_v2' | 'Standard_A2m_v2' | 'Standard_A4m_v2' | 'Standard_A8m_v2' | 'Standard_D1' | 'Standard_D2' | 'Standard_D3' | 'Standard_D4' | 'Standard_D11' | 'Standard_D12' | 'Standard_D13' | 'Standard_D14' | 'Standard_D1_v2' | 'Standard_D2_v2' | 'Standard_D3_v2' | 'Standard_D4_v2' | 'Standard_D5_v2' | 'Standard_D11_v2' | 'Standard_D12_v2' | 'Standard_D13_v2' | 'Standard_D14_v2' | 'Standard_D15_v2' | 'Standard_DS1' | 'Standard_DS2' | 'Standard_DS3' | 'Standard_DS4' | 'Standard_DS11' | 'Standard_DS12' | 'Standard_DS13' | 'Standard_DS14' | 'Standard_DS1_v2' | 'Standard_DS2_v2' | 'Standard_DS3_v2' | 'Standard_DS4_v2' | 'Standard_DS5_v2' | 'Standard_DS11_v2' | 'Standard_DS12_v2' | 'Standard_DS13_v2' | 'Standard_DS14_v2' | 'Standard_DS15_v2' | 'Standard_F1' | 'Standard_F2' | 'Standard_F4' | 'Standard_F8' | 'Standard_F16' | 'Standard_F1s' | 'Standard_F2s' | 'Standard_F4s' | 'Standard_F8s' | 'Standard_F16s' | 'Standard_G1' | 'Standard_G2' | 'Standard_G3' | 'Standard_G4' | 'Standard_G5' | 'Standard_GS1' | 'Standard_GS2' | 'Standard_GS3' | 'Standard_GS4' | 'Standard_GS5' | 'Standard_H8' | 'Standard_H16' | 'Standard_H8m' | 'Standard_H16m' | 'Standard_H16r' | 'Standard_H16mr' | 'Standard_L4s' | 'Standard_L8s' | 'Standard_L16s' | 'Standard_L32s';
+export type AzureVmSize = 'Unknown' | 'Basic_A0' | 'Basic_A1' | 'Basic_A2' | 'Basic_A3' | 'Basic_A4' | 'Standard_A0' | 'Standard_A1' | 'Standard_A2' | 'Standard_A3' | 'Standard_A4' | 'Standard_A5' | 'Standard_A6' | 'Standard_A7' | 'Standard_A8' | 'Standard_A9' | 'Standard_A10' | 'Standard_A11' | 'Standard_A1_v2' | 'Standard_A2_v2' | 'Standard_A4_v2' | 'Standard_A8_v2' | 'Standard_A2m_v2' | 'Standard_A4m_v2' | 'Standard_A8m_v2' | 'Standard_D1' | 'Standard_D2' | 'Standard_D3' | 'Standard_D4' | 'Standard_D11' | 'Standard_D12' | 'Standard_D13' | 'Standard_D14' | 'Standard_D1_v2' | 'Standard_D2_v2' | 'Standard_D3_v2' | 'Standard_D4_v2' | 'Standard_D5_v2' | 'Standard_D11_v2' | 'Standard_D12_v2' | 'Standard_D13_v2' | 'Standard_D14_v2' | 'Standard_D15_v2' | 'Standard_DS1' | 'Standard_DS2' | 'Standard_DS3' | 'Standard_DS4' | 'Standard_DS11' | 'Standard_DS12' | 'Standard_DS13' | 'Standard_DS14' | 'Standard_DS1_v2' | 'Standard_DS2_v2' | 'Standard_DS3_v2' | 'Standard_DS4_v2' | 'Standard_DS5_v2' | 'Standard_DS11_v2' | 'Standard_DS12_v2' | 'Standard_DS13_v2' | 'Standard_DS14_v2' | 'Standard_DS15_v2' | 'Standard_F1' | 'Standard_F2' | 'Standard_F4' | 'Standard_F8' | 'Standard_F16' | 'Standard_F1s' | 'Standard_F2s' | 'Standard_F4s' | 'Standard_F8s' | 'Standard_F16s' | 'Standard_G1' | 'Standard_G2' | 'Standard_G3' | 'Standard_G4' | 'Standard_G5' | 'Standard_GS1' | 'Standard_GS2' | 'Standard_GS3' | 'Standard_GS4' | 'Standard_GS5' | 'Standard_H8' | 'Standard_H16' | 'Standard_H8m' | 'Standard_H16m' | 'Standard_H16r' | 'Standard_H16mr' | 'Standard_L4s' | 'Standard_L8s' | 'Standard_L16s' | 'Standard_L32s' | 'Standard_D2s_v3' | 'Standard_D4s_v3' | 'Standard_D8s_v3' | 'Standard_D16s_v3' | 'Standard_D32s_v3' | 'Standard_D64s_v3' | 'Standard_D2_v3' | 'Standard_D4_v3' | 'Standard_D8_v3' | 'Standard_D16_v3' | 'Standard_D32_v3' | 'Standard_D64_v3' | 'Standard_F2s_v2' | 'Standard_F4s_v2' | 'Standard_F8s_v2' | 'Standard_F16s_v2' | 'Standard_F32s_v2' | 'Standard_F64s_v2' | 'Standard_F72s_v2' | 'Standard_E2_v3' | 'Standard_E4_v3' | 'Standard_E8_v3' | 'Standard_E16_v3' | 'Standard_E32_v3' | 'Standard_E64_v3' | 'Standard_E2s_v3' | 'Standard_E4s_v3' | 'Standard_E8s_v3' | 'Standard_E16s_v3' | 'Standard_E32s_v3' | 'Standard_E64s_v3' | 'Standard_M64s' | 'Standard_M64ms' | 'Standard_M128s' | 'Standard_M128ms';
 
 /**
  * Defines values for AzureVmSuitabilityExplanation.
@@ -1495,8 +1961,8 @@ export type AzureVmSize = 'Unknown' | 'Basic_A0' | 'Basic_A1' | 'Basic_A2' | 'Ba
  * 'GuestOperatingSystemArchitectureNotSupported', 'GuestOperatingSystemNotSupported',
  * 'BootTypeNotSupported', 'MoreDisksThanSupported', 'NoSuitableVmSizeFound',
  * 'OneOrMoreDisksNotSuitable', 'OneOrMoreAdaptersNotSuitable',
- * 'InternalErrorOccuredDuringComputeEvaluation', 'InternalErrorOccuredDuringStorageEvaluation',
- * 'InternalErrorOccuredDuringNetworkEvaluation', 'NoVmSizeSupportsStoragePerformance',
+ * 'InternalErrorOccurredDuringComputeEvaluation', 'InternalErrorOccurredDuringStorageEvaluation',
+ * 'InternalErrorOccurredDuringNetworkEvaluation', 'NoVmSizeSupportsStoragePerformance',
  * 'NoVmSizeSupportsNetworkPerformance', 'NoVmSizeForSelectedPricingTier',
  * 'NoVmSizeForSelectedAzureLocation', 'CheckRedHatLinuxVersion', 'CheckOpenSuseLinuxVersion',
  * 'CheckWindowsServer2008R2Version', 'CheckCentOsVersion', 'CheckDebianLinuxVersion',
@@ -1509,55 +1975,18 @@ export type AzureVmSize = 'Unknown' | 'Basic_A0' | 'Basic_A1' | 'Basic_A2' | 'Ba
  * @readonly
  * @enum {string}
  */
-export type AzureVmSuitabilityExplanation = 'Unknown' | 'NotApplicable' | 'GuestOperatingSystemArchitectureNotSupported' | 'GuestOperatingSystemNotSupported' | 'BootTypeNotSupported' | 'MoreDisksThanSupported' | 'NoSuitableVmSizeFound' | 'OneOrMoreDisksNotSuitable' | 'OneOrMoreAdaptersNotSuitable' | 'InternalErrorOccuredDuringComputeEvaluation' | 'InternalErrorOccuredDuringStorageEvaluation' | 'InternalErrorOccuredDuringNetworkEvaluation' | 'NoVmSizeSupportsStoragePerformance' | 'NoVmSizeSupportsNetworkPerformance' | 'NoVmSizeForSelectedPricingTier' | 'NoVmSizeForSelectedAzureLocation' | 'CheckRedHatLinuxVersion' | 'CheckOpenSuseLinuxVersion' | 'CheckWindowsServer2008R2Version' | 'CheckCentOsVersion' | 'CheckDebianLinuxVersion' | 'CheckSuseLinuxVersion' | 'CheckOracleLinuxVersion' | 'CheckUbuntuLinuxVersion' | 'CheckCoreOsLinuxVersion' | 'WindowsServerVersionConditionallySupported' | 'NoGuestOperatingSystemConditionallySupported' | 'WindowsClientVersionsConditionallySupported' | 'BootTypeUnknown' | 'GuestOperatingSystemUnknown' | 'WindowsServerVersionsSupportedWithCaveat' | 'WindowsOSNoLongerUnderMSSupport' | 'EndorsedWithConditionsLinuxDistributions' | 'UnendorsedLinuxDistributions' | 'NoVmSizeForStandardPricingTier' | 'NoVmSizeForBasicPricingTier';
+export type AzureVmSuitabilityExplanation = 'Unknown' | 'NotApplicable' | 'GuestOperatingSystemArchitectureNotSupported' | 'GuestOperatingSystemNotSupported' | 'BootTypeNotSupported' | 'MoreDisksThanSupported' | 'NoSuitableVmSizeFound' | 'OneOrMoreDisksNotSuitable' | 'OneOrMoreAdaptersNotSuitable' | 'InternalErrorOccurredDuringComputeEvaluation' | 'InternalErrorOccurredDuringStorageEvaluation' | 'InternalErrorOccurredDuringNetworkEvaluation' | 'NoVmSizeSupportsStoragePerformance' | 'NoVmSizeSupportsNetworkPerformance' | 'NoVmSizeForSelectedPricingTier' | 'NoVmSizeForSelectedAzureLocation' | 'CheckRedHatLinuxVersion' | 'CheckOpenSuseLinuxVersion' | 'CheckWindowsServer2008R2Version' | 'CheckCentOsVersion' | 'CheckDebianLinuxVersion' | 'CheckSuseLinuxVersion' | 'CheckOracleLinuxVersion' | 'CheckUbuntuLinuxVersion' | 'CheckCoreOsLinuxVersion' | 'WindowsServerVersionConditionallySupported' | 'NoGuestOperatingSystemConditionallySupported' | 'WindowsClientVersionsConditionallySupported' | 'BootTypeUnknown' | 'GuestOperatingSystemUnknown' | 'WindowsServerVersionsSupportedWithCaveat' | 'WindowsOSNoLongerUnderMSSupport' | 'EndorsedWithConditionsLinuxDistributions' | 'UnendorsedLinuxDistributions' | 'NoVmSizeForStandardPricingTier' | 'NoVmSizeForBasicPricingTier';
 
 /**
- * Defines values for NameAvailabilityReason.
- * Possible values include: 'Available', 'Invalid', 'AlreadyExists'
+ * Defines values for AzureVmSuitabilityDetail.
+ * Possible values include: 'None', 'RecommendedSizeHasLessNetworkAdapters',
+ * 'CannotReportComputeCost', 'CannotReportStorageCost', 'CannotReportBandwidthCosts',
+ * 'PercentageOfCoresUtilizedMissing', 'PercentageOfMemoryUtilizedMissing',
+ * 'PercentageOfCoresUtilizedOutOfRange', 'PercentageOfMemoryUtilizedOutOfRange'
  * @readonly
  * @enum {string}
  */
-export type NameAvailabilityReason = 'Available' | 'Invalid' | 'AlreadyExists';
-
-/**
- * Contains response data for the checkNameAvailability operation.
- */
-export type LocationCheckNameAvailabilityResponse = CheckNameAvailabilityResult & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: CheckNameAvailabilityResult;
-    };
-};
-
-/**
- * Contains response data for the get operation.
- */
-export type AssessmentOptionsGetResponse = AssessmentOptionsResultList & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: AssessmentOptionsResultList;
-    };
-};
+export type AzureVmSuitabilityDetail = 'None' | 'RecommendedSizeHasLessNetworkAdapters' | 'CannotReportComputeCost' | 'CannotReportStorageCost' | 'CannotReportBandwidthCosts' | 'PercentageOfCoresUtilizedMissing' | 'PercentageOfMemoryUtilizedMissing' | 'PercentageOfCoresUtilizedOutOfRange' | 'PercentageOfMemoryUtilizedOutOfRange';
 
 /**
  * Contains response data for the listBySubscription operation.
@@ -1585,9 +2014,9 @@ export type ProjectsListBySubscriptionResponse = ProjectResultList & ProjectsLis
 };
 
 /**
- * Contains response data for the listByResourceGroup operation.
+ * Contains response data for the list operation.
  */
-export type ProjectsListByResourceGroupResponse = ProjectResultList & ProjectsListByResourceGroupHeaders & {
+export type ProjectsListResponse = ProjectResultList & ProjectsListHeaders & {
   /**
    * The underlying HTTP response.
    */
@@ -1595,7 +2024,7 @@ export type ProjectsListByResourceGroupResponse = ProjectResultList & ProjectsLi
       /**
        * The parsed HTTP response headers.
        */
-      parsedHeaders: ProjectsListByResourceGroupHeaders;
+      parsedHeaders: ProjectsListHeaders;
 
       /**
        * The response body as text (string format)
@@ -1700,9 +2129,9 @@ export type ProjectsDeleteResponse = ProjectsDeleteHeaders & {
 };
 
 /**
- * Contains response data for the getKeys operation.
+ * Contains response data for the assessmentOptionsMethod operation.
  */
-export type ProjectsGetKeysResponse = ProjectKey & ProjectsGetKeysHeaders & {
+export type ProjectAssessmentOptionsResponse = AssessmentOptions & ProjectAssessmentOptionsHeaders & {
   /**
    * The underlying HTTP response.
    */
@@ -1710,7 +2139,7 @@ export type ProjectsGetKeysResponse = ProjectKey & ProjectsGetKeysHeaders & {
       /**
        * The parsed HTTP response headers.
        */
-      parsedHeaders: ProjectsGetKeysHeaders;
+      parsedHeaders: ProjectAssessmentOptionsHeaders;
 
       /**
        * The response body as text (string format)
@@ -1720,7 +2149,32 @@ export type ProjectsGetKeysResponse = ProjectKey & ProjectsGetKeysHeaders & {
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: ProjectKey;
+      parsedBody: AssessmentOptions;
+    };
+};
+
+/**
+ * Contains response data for the assessmentOptionsList operation.
+ */
+export type ProjectAssessmentOptionsListResponse = AssessmentOptionsResultList & ProjectAssessmentOptionsListHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: ProjectAssessmentOptionsListHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: AssessmentOptionsResultList;
     };
 };
 
@@ -1861,6 +2315,31 @@ export type GroupsDeleteResponse = GroupsDeleteHeaders & {
        * The parsed HTTP response headers.
        */
       parsedHeaders: GroupsDeleteHeaders;
+    };
+};
+
+/**
+ * Contains response data for the updateMachines operation.
+ */
+export type GroupsUpdateMachinesResponse = Group & GroupsUpdateMachinesHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: GroupsUpdateMachinesHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: Group;
     };
 };
 
@@ -2051,6 +2530,186 @@ export type AssessedMachinesGetResponse = AssessedMachine & AssessedMachinesGetH
        * The response body as parsed JSON or XML
        */
       parsedBody: AssessedMachine;
+    };
+};
+
+/**
+ * Contains response data for the listByProject operation.
+ */
+export type HyperVCollectorsListByProjectResponse = HyperVCollectorList & HyperVCollectorsListByProjectHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: HyperVCollectorsListByProjectHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: HyperVCollectorList;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type HyperVCollectorsGetResponse = HyperVCollector & HyperVCollectorsGetHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: HyperVCollectorsGetHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: HyperVCollector;
+    };
+};
+
+/**
+ * Contains response data for the create operation.
+ */
+export type HyperVCollectorsCreateResponse = HyperVCollector & HyperVCollectorsCreateHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: HyperVCollectorsCreateHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: HyperVCollector;
+    };
+};
+
+/**
+ * Contains response data for the deleteMethod operation.
+ */
+export type HyperVCollectorsDeleteResponse = HyperVCollectorsDeleteHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: HyperVCollectorsDeleteHeaders;
+    };
+};
+
+/**
+ * Contains response data for the listByProject operation.
+ */
+export type VMwareCollectorsListByProjectResponse = VMwareCollectorList & VMwareCollectorsListByProjectHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: VMwareCollectorsListByProjectHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: VMwareCollectorList;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type VMwareCollectorsGetResponse = VMwareCollector & VMwareCollectorsGetHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: VMwareCollectorsGetHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: VMwareCollector;
+    };
+};
+
+/**
+ * Contains response data for the create operation.
+ */
+export type VMwareCollectorsCreateResponse = VMwareCollector & VMwareCollectorsCreateHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: VMwareCollectorsCreateHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: VMwareCollector;
+    };
+};
+
+/**
+ * Contains response data for the deleteMethod operation.
+ */
+export type VMwareCollectorsDeleteResponse = VMwareCollectorsDeleteHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: VMwareCollectorsDeleteHeaders;
     };
 };
 

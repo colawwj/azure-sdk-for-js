@@ -12,17 +12,17 @@ import * as msRest from "@azure/ms-rest-js";
 import * as Models from "../models";
 import * as Mappers from "../models/projectsMappers";
 import * as Parameters from "../models/parameters";
-import { AzureMigrateContext } from "../azureMigrateContext";
+import { AzureMigrateV2Context } from "../azureMigrateV2Context";
 
 /** Class representing a Projects. */
 export class Projects {
-  private readonly client: AzureMigrateContext;
+  private readonly client: AzureMigrateV2Context;
 
   /**
    * Create a Projects.
-   * @param {AzureMigrateContext} client Reference to the service client.
+   * @param {AzureMigrateV2Context} client Reference to the service client.
    */
-  constructor(client: AzureMigrateContext) {
+  constructor(client: AzureMigrateV2Context) {
     this.client = client;
   }
 
@@ -56,28 +56,28 @@ export class Projects {
    * @summary Get all projects.
    * @param resourceGroupName Name of the Azure Resource Group that project is part of.
    * @param [options] The optional parameters
-   * @returns Promise<Models.ProjectsListByResourceGroupResponse>
+   * @returns Promise<Models.ProjectsListResponse>
    */
-  listByResourceGroup(resourceGroupName: string, options?: msRest.RequestOptionsBase): Promise<Models.ProjectsListByResourceGroupResponse>;
+  list(resourceGroupName: string, options?: msRest.RequestOptionsBase): Promise<Models.ProjectsListResponse>;
   /**
    * @param resourceGroupName Name of the Azure Resource Group that project is part of.
    * @param callback The callback
    */
-  listByResourceGroup(resourceGroupName: string, callback: msRest.ServiceCallback<Models.ProjectResultList>): void;
+  list(resourceGroupName: string, callback: msRest.ServiceCallback<Models.ProjectResultList>): void;
   /**
    * @param resourceGroupName Name of the Azure Resource Group that project is part of.
    * @param options The optional parameters
    * @param callback The callback
    */
-  listByResourceGroup(resourceGroupName: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.ProjectResultList>): void;
-  listByResourceGroup(resourceGroupName: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.ProjectResultList>, callback?: msRest.ServiceCallback<Models.ProjectResultList>): Promise<Models.ProjectsListByResourceGroupResponse> {
+  list(resourceGroupName: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.ProjectResultList>): void;
+  list(resourceGroupName: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.ProjectResultList>, callback?: msRest.ServiceCallback<Models.ProjectResultList>): Promise<Models.ProjectsListResponse> {
     return this.client.sendOperationRequest(
       {
         resourceGroupName,
         options
       },
-      listByResourceGroupOperationSpec,
-      callback) as Promise<Models.ProjectsListByResourceGroupResponse>;
+      listOperationSpec,
+      callback) as Promise<Models.ProjectsListResponse>;
   }
 
   /**
@@ -212,46 +212,13 @@ export class Projects {
       deleteMethodOperationSpec,
       callback) as Promise<Models.ProjectsDeleteResponse>;
   }
-
-  /**
-   * Gets the Log Analytics Workspace ID and Primary Key for the specified project.
-   * @summary Get shared keys for the project.
-   * @param resourceGroupName Name of the Azure Resource Group that project is part of.
-   * @param projectName Name of the Azure Migrate project.
-   * @param [options] The optional parameters
-   * @returns Promise<Models.ProjectsGetKeysResponse>
-   */
-  getKeys(resourceGroupName: string, projectName: string, options?: msRest.RequestOptionsBase): Promise<Models.ProjectsGetKeysResponse>;
-  /**
-   * @param resourceGroupName Name of the Azure Resource Group that project is part of.
-   * @param projectName Name of the Azure Migrate project.
-   * @param callback The callback
-   */
-  getKeys(resourceGroupName: string, projectName: string, callback: msRest.ServiceCallback<Models.ProjectKey>): void;
-  /**
-   * @param resourceGroupName Name of the Azure Resource Group that project is part of.
-   * @param projectName Name of the Azure Migrate project.
-   * @param options The optional parameters
-   * @param callback The callback
-   */
-  getKeys(resourceGroupName: string, projectName: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.ProjectKey>): void;
-  getKeys(resourceGroupName: string, projectName: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.ProjectKey>, callback?: msRest.ServiceCallback<Models.ProjectKey>): Promise<Models.ProjectsGetKeysResponse> {
-    return this.client.sendOperationRequest(
-      {
-        resourceGroupName,
-        projectName,
-        options
-      },
-      getKeysOperationSpec,
-      callback) as Promise<Models.ProjectsGetKeysResponse>;
-  }
 }
 
 // Operation Specifications
 const serializer = new msRest.Serializer(Mappers);
 const listBySubscriptionOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
-  path: "subscriptions/{subscriptionId}/providers/Microsoft.Migrate/projects",
+  path: "subscriptions/{subscriptionId}/providers/Microsoft.Migrate/assessmentProjects",
   urlParameters: [
     Parameters.subscriptionId
   ],
@@ -267,15 +234,16 @@ const listBySubscriptionOperationSpec: msRest.OperationSpec = {
       headersMapper: Mappers.ProjectsListBySubscriptionHeaders
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.CloudError,
+      headersMapper: Mappers.ProjectsListBySubscriptionHeaders
     }
   },
   serializer
 };
 
-const listByResourceGroupOperationSpec: msRest.OperationSpec = {
+const listOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
-  path: "subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Migrate/projects",
+  path: "subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Migrate/assessmentProjects",
   urlParameters: [
     Parameters.subscriptionId,
     Parameters.resourceGroupName
@@ -289,10 +257,11 @@ const listByResourceGroupOperationSpec: msRest.OperationSpec = {
   responses: {
     200: {
       bodyMapper: Mappers.ProjectResultList,
-      headersMapper: Mappers.ProjectsListByResourceGroupHeaders
+      headersMapper: Mappers.ProjectsListHeaders
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.CloudError,
+      headersMapper: Mappers.ProjectsListHeaders
     }
   },
   serializer
@@ -300,7 +269,7 @@ const listByResourceGroupOperationSpec: msRest.OperationSpec = {
 
 const getOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
-  path: "subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Migrate/projects/{projectName}",
+  path: "subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Migrate/assessmentProjects/{projectName}",
   urlParameters: [
     Parameters.subscriptionId,
     Parameters.resourceGroupName,
@@ -318,7 +287,8 @@ const getOperationSpec: msRest.OperationSpec = {
       headersMapper: Mappers.ProjectsGetHeaders
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.CloudError,
+      headersMapper: Mappers.ProjectsGetHeaders
     }
   },
   serializer
@@ -326,7 +296,7 @@ const getOperationSpec: msRest.OperationSpec = {
 
 const createOperationSpec: msRest.OperationSpec = {
   httpMethod: "PUT",
-  path: "subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Migrate/projects/{projectName}",
+  path: "subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Migrate/assessmentProjects/{projectName}",
   urlParameters: [
     Parameters.subscriptionId,
     Parameters.resourceGroupName,
@@ -355,7 +325,8 @@ const createOperationSpec: msRest.OperationSpec = {
       headersMapper: Mappers.ProjectsCreateHeaders
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.CloudError,
+      headersMapper: Mappers.ProjectsCreateHeaders
     }
   },
   serializer
@@ -363,7 +334,7 @@ const createOperationSpec: msRest.OperationSpec = {
 
 const updateOperationSpec: msRest.OperationSpec = {
   httpMethod: "PATCH",
-  path: "subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Migrate/projects/{projectName}",
+  path: "subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Migrate/assessmentProjects/{projectName}",
   urlParameters: [
     Parameters.subscriptionId,
     Parameters.resourceGroupName,
@@ -388,7 +359,8 @@ const updateOperationSpec: msRest.OperationSpec = {
       headersMapper: Mappers.ProjectsUpdateHeaders
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.CloudError,
+      headersMapper: Mappers.ProjectsUpdateHeaders
     }
   },
   serializer
@@ -396,7 +368,7 @@ const updateOperationSpec: msRest.OperationSpec = {
 
 const deleteMethodOperationSpec: msRest.OperationSpec = {
   httpMethod: "DELETE",
-  path: "subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Migrate/projects/{projectName}",
+  path: "subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Migrate/assessmentProjects/{projectName}",
   urlParameters: [
     Parameters.subscriptionId,
     Parameters.resourceGroupName,
@@ -412,34 +384,12 @@ const deleteMethodOperationSpec: msRest.OperationSpec = {
     200: {
       headersMapper: Mappers.ProjectsDeleteHeaders
     },
-    default: {
-      bodyMapper: Mappers.CloudError
-    }
-  },
-  serializer
-};
-
-const getKeysOperationSpec: msRest.OperationSpec = {
-  httpMethod: "POST",
-  path: "subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Migrate/projects/{projectName}/keys",
-  urlParameters: [
-    Parameters.subscriptionId,
-    Parameters.resourceGroupName,
-    Parameters.projectName
-  ],
-  queryParameters: [
-    Parameters.apiVersion
-  ],
-  headerParameters: [
-    Parameters.acceptLanguage
-  ],
-  responses: {
-    200: {
-      bodyMapper: Mappers.ProjectKey,
-      headersMapper: Mappers.ProjectsGetKeysHeaders
+    204: {
+      headersMapper: Mappers.ProjectsDeleteHeaders
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.CloudError,
+      headersMapper: Mappers.ProjectsDeleteHeaders
     }
   },
   serializer

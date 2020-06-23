@@ -1,7 +1,7 @@
 {
   "name": "@azure/arm-migrate",
   "author": "Microsoft Corporation",
-  "description": "AzureMigrate Library with typescript type definitions for node.js and browser.",
+  "description": "AzureMigrateV2 Library with typescript type definitions for node.js and browser.",
   "version": "1.1.0",
   "dependencies": {
     "@azure/ms-rest-azure-js": "^2.0.1",
@@ -17,8 +17,8 @@
   ],
   "license": "MIT",
   "main": "./dist/arm-migrate.js",
-  "module": "./esm/azureMigrate.js",
-  "types": "./esm/azureMigrate.d.ts",
+  "module": "./esm/azureMigrateV2.js",
+  "types": "./esm/azureMigrateV2.d.ts",
   "devDependencies": {
     "typescript": "^3.5.3",
     "rollup": "^1.18.0",
