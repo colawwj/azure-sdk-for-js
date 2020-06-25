@@ -80,32 +80,9 @@ export class VpnGateways {
    * @param [options] The optional parameters
    * @returns Promise<Models.VpnGatewaysUpdateTagsResponse>
    */
-  updateTags(resourceGroupName: string, gatewayName: string, vpnGatewayParameters: Models.TagsObject, options?: msRest.RequestOptionsBase): Promise<Models.VpnGatewaysUpdateTagsResponse>;
-  /**
-   * @param resourceGroupName The resource group name of the VpnGateway.
-   * @param gatewayName The name of the gateway.
-   * @param vpnGatewayParameters Parameters supplied to update a virtual wan vpn gateway tags.
-   * @param callback The callback
-   */
-  updateTags(resourceGroupName: string, gatewayName: string, vpnGatewayParameters: Models.TagsObject, callback: msRest.ServiceCallback<Models.VpnGateway>): void;
-  /**
-   * @param resourceGroupName The resource group name of the VpnGateway.
-   * @param gatewayName The name of the gateway.
-   * @param vpnGatewayParameters Parameters supplied to update a virtual wan vpn gateway tags.
-   * @param options The optional parameters
-   * @param callback The callback
-   */
-  updateTags(resourceGroupName: string, gatewayName: string, vpnGatewayParameters: Models.TagsObject, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.VpnGateway>): void;
-  updateTags(resourceGroupName: string, gatewayName: string, vpnGatewayParameters: Models.TagsObject, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.VpnGateway>, callback?: msRest.ServiceCallback<Models.VpnGateway>): Promise<Models.VpnGatewaysUpdateTagsResponse> {
-    return this.client.sendOperationRequest(
-      {
-        resourceGroupName,
-        gatewayName,
-        vpnGatewayParameters,
-        options
-      },
-      updateTagsOperationSpec,
-      callback) as Promise<Models.VpnGatewaysUpdateTagsResponse>;
+  updateTags(resourceGroupName: string, gatewayName: string, vpnGatewayParameters: Models.TagsObject, options?: msRest.RequestOptionsBase): Promise<Models.VpnGatewaysUpdateTagsResponse> {
+    return this.beginUpdateTags(resourceGroupName,gatewayName,vpnGatewayParameters,options)
+      .then(lroPoller => lroPoller.pollUntilFinished()) as Promise<Models.VpnGatewaysUpdateTagsResponse>;
   }
 
   /**
@@ -201,6 +178,26 @@ export class VpnGateways {
         options
       },
       beginCreateOrUpdateOperationSpec,
+      options);
+  }
+
+  /**
+   * Updates virtual wan vpn gateway tags.
+   * @param resourceGroupName The resource group name of the VpnGateway.
+   * @param gatewayName The name of the gateway.
+   * @param vpnGatewayParameters Parameters supplied to update a virtual wan vpn gateway tags.
+   * @param [options] The optional parameters
+   * @returns Promise<msRestAzure.LROPoller>
+   */
+  beginUpdateTags(resourceGroupName: string, gatewayName: string, vpnGatewayParameters: Models.TagsObject, options?: msRest.RequestOptionsBase): Promise<msRestAzure.LROPoller> {
+    return this.client.sendLRORequest(
+      {
+        resourceGroupName,
+        gatewayName,
+        vpnGatewayParameters,
+        options
+      },
+      beginUpdateTagsOperationSpec,
       options);
   }
 
@@ -324,38 +321,6 @@ const getOperationSpec: msRest.OperationSpec = {
   serializer
 };
 
-const updateTagsOperationSpec: msRest.OperationSpec = {
-  httpMethod: "PATCH",
-  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}",
-  urlParameters: [
-    Parameters.subscriptionId,
-    Parameters.resourceGroupName,
-    Parameters.gatewayName
-  ],
-  queryParameters: [
-    Parameters.apiVersion0
-  ],
-  headerParameters: [
-    Parameters.acceptLanguage
-  ],
-  requestBody: {
-    parameterPath: "vpnGatewayParameters",
-    mapper: {
-      ...Mappers.TagsObject,
-      required: true
-    }
-  },
-  responses: {
-    200: {
-      bodyMapper: Mappers.VpnGateway
-    },
-    default: {
-      bodyMapper: Mappers.CloudError
-    }
-  },
-  serializer
-};
-
 const listByResourceGroupOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
   path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways",
@@ -431,6 +396,39 @@ const beginCreateOrUpdateOperationSpec: msRest.OperationSpec = {
     201: {
       bodyMapper: Mappers.VpnGateway
     },
+    default: {
+      bodyMapper: Mappers.CloudError
+    }
+  },
+  serializer
+};
+
+const beginUpdateTagsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "PATCH",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}",
+  urlParameters: [
+    Parameters.subscriptionId,
+    Parameters.resourceGroupName,
+    Parameters.gatewayName
+  ],
+  queryParameters: [
+    Parameters.apiVersion0
+  ],
+  headerParameters: [
+    Parameters.acceptLanguage
+  ],
+  requestBody: {
+    parameterPath: "vpnGatewayParameters",
+    mapper: {
+      ...Mappers.TagsObject,
+      required: true
+    }
+  },
+  responses: {
+    200: {
+      bodyMapper: Mappers.VpnGateway
+    },
+    202: {},
     default: {
       bodyMapper: Mappers.CloudError
     }

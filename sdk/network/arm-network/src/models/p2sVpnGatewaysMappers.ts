@@ -280,6 +280,7 @@ export {
   VpnClientRootCertificate,
   VpnConnection,
   VpnGateway,
+  VpnGatewayIpConfiguration,
   VpnLinkBgpSettings,
   VpnLinkProviderProperties,
   VpnProfileResponse,
