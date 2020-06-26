@@ -3042,6 +3042,22 @@ export const ApplicationGatewaySslPolicy: msRest.CompositeMapper = {
   }
 };
 
+export const ApplicationGatewayClientAuthConfiguration: msRest.CompositeMapper = {
+  serializedName: "ApplicationGatewayClientAuthConfiguration",
+  type: {
+    name: "Composite",
+    className: "ApplicationGatewayClientAuthConfiguration",
+    modelProperties: {
+      verifyClientCertIssuerDN: {
+        serializedName: "verifyClientCertIssuerDN",
+        type: {
+          name: "Boolean"
+        }
+      }
+    }
+  }
+};
+
 export const ApplicationGatewayIPConfiguration: msRest.CompositeMapper = {
   serializedName: "ApplicationGatewayIPConfiguration",
   type: {
@@ -3146,6 +3162,50 @@ export const ApplicationGatewayTrustedRootCertificate: msRest.CompositeMapper = 
       },
       keyVaultSecretId: {
         serializedName: "properties.keyVaultSecretId",
+        type: {
+          name: "String"
+        }
+      },
+      provisioningState: {
+        readOnly: true,
+        serializedName: "properties.provisioningState",
+        type: {
+          name: "String"
+        }
+      },
+      name: {
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      etag: {
+        readOnly: true,
+        serializedName: "etag",
+        type: {
+          name: "String"
+        }
+      },
+      type: {
+        readOnly: true,
+        serializedName: "type",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const ApplicationGatewayTrustedClientCertificate: msRest.CompositeMapper = {
+  serializedName: "ApplicationGatewayTrustedClientCertificate",
+  type: {
+    name: "Composite",
+    className: "ApplicationGatewayTrustedClientCertificate",
+    modelProperties: {
+      ...SubResource.type.modelProperties,
+      data: {
+        serializedName: "properties.data",
         type: {
           name: "String"
         }
@@ -3359,6 +3419,70 @@ export const ApplicationGatewayFrontendPort: msRest.CompositeMapper = {
   }
 };
 
+export const ApplicationGatewaySslProfile: msRest.CompositeMapper = {
+  serializedName: "ApplicationGatewaySslProfile",
+  type: {
+    name: "Composite",
+    className: "ApplicationGatewaySslProfile",
+    modelProperties: {
+      ...SubResource.type.modelProperties,
+      trustedClientCertificates: {
+        serializedName: "properties.trustedClientCertificates",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "SubResource"
+            }
+          }
+        }
+      },
+      sslPolicy: {
+        serializedName: "properties.sslPolicy",
+        type: {
+          name: "Composite",
+          className: "ApplicationGatewaySslPolicy"
+        }
+      },
+      clientAuthConfiguration: {
+        serializedName: "properties.clientAuthConfiguration",
+        type: {
+          name: "Composite",
+          className: "ApplicationGatewayClientAuthConfiguration"
+        }
+      },
+      provisioningState: {
+        readOnly: true,
+        serializedName: "properties.provisioningState",
+        type: {
+          name: "String"
+        }
+      },
+      name: {
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      etag: {
+        readOnly: true,
+        serializedName: "etag",
+        type: {
+          name: "String"
+        }
+      },
+      type: {
+        readOnly: true,
+        serializedName: "type",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const ApplicationGatewayCustomError: msRest.CompositeMapper = {
   serializedName: "ApplicationGatewayCustomError",
   type: {
@@ -3416,6 +3540,13 @@ export const ApplicationGatewayHttpListener: msRest.CompositeMapper = {
       },
       sslCertificate: {
         serializedName: "properties.sslCertificate",
+        type: {
+          name: "Composite",
+          className: "SubResource"
+        }
+      },
+      sslProfile: {
+        serializedName: "properties.sslProfile",
         type: {
           name: "Composite",
           className: "SubResource"
@@ -4711,6 +4842,18 @@ export const ApplicationGateway: msRest.CompositeMapper = {
           }
         }
       },
+      trustedClientCertificates: {
+        serializedName: "properties.trustedClientCertificates",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "ApplicationGatewayTrustedClientCertificate"
+            }
+          }
+        }
+      },
       sslCertificates: {
         serializedName: "properties.sslCertificates",
         type: {
@@ -4791,6 +4934,18 @@ export const ApplicationGateway: msRest.CompositeMapper = {
             type: {
               name: "Composite",
               className: "ApplicationGatewayHttpListener"
+            }
+          }
+        }
+      },
+      sslProfiles: {
+        serializedName: "properties.sslProfiles",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "ApplicationGatewaySslProfile"
             }
           }
         }
@@ -8303,6 +8458,39 @@ export const ExpressRoutePort: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "ManagedServiceIdentity"
+        }
+      }
+    }
+  }
+};
+
+export const GenerateExpressRoutePortsLOARequest: msRest.CompositeMapper = {
+  serializedName: "GenerateExpressRoutePortsLOARequest",
+  type: {
+    name: "Composite",
+    className: "GenerateExpressRoutePortsLOARequest",
+    modelProperties: {
+      customerName: {
+        required: true,
+        serializedName: "customerName",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const GenerateExpressRoutePortsLOAResult: msRest.CompositeMapper = {
+  serializedName: "GenerateExpressRoutePortsLOAResult",
+  type: {
+    name: "Composite",
+    className: "GenerateExpressRoutePortsLOAResult",
+    modelProperties: {
+      encodedContent: {
+        serializedName: "encodedContent",
+        type: {
+          name: "String"
         }
       }
     }
@@ -18685,6 +18873,34 @@ export const VpnConnection: msRest.CompositeMapper = {
   }
 };
 
+export const VpnGatewayIpConfiguration: msRest.CompositeMapper = {
+  serializedName: "VpnGatewayIpConfiguration",
+  type: {
+    name: "Composite",
+    className: "VpnGatewayIpConfiguration",
+    modelProperties: {
+      id: {
+        serializedName: "id",
+        type: {
+          name: "String"
+        }
+      },
+      publicIpAddress: {
+        serializedName: "publicIpAddress",
+        type: {
+          name: "String"
+        }
+      },
+      privateIpAddress: {
+        serializedName: "privateIpAddress",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const VpnGateway: msRest.CompositeMapper = {
   serializedName: "VpnGateway",
   type: {
@@ -18729,6 +18945,19 @@ export const VpnGateway: msRest.CompositeMapper = {
         serializedName: "properties.vpnGatewayScaleUnit",
         type: {
           name: "Number"
+        }
+      },
+      ipConfigurations: {
+        readOnly: true,
+        serializedName: "properties.ipConfigurations",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "VpnGatewayIpConfiguration"
+            }
+          }
         }
       },
       etag: {
@@ -18892,7 +19121,8 @@ export const HubRouteTable: msRest.CompositeMapper = {
           name: "Sequence",
           element: {
             type: {
-              name: "String"
+              name: "Composite",
+              className: "SubResource"
             }
           }
         }
@@ -18904,7 +19134,8 @@ export const HubRouteTable: msRest.CompositeMapper = {
           name: "Sequence",
           element: {
             type: {
-              name: "String"
+              name: "Composite",
+              className: "SubResource"
             }
           }
         }
@@ -19843,11 +20074,11 @@ export const VirtualHubEffectiveRoute: msRest.CompositeMapper = {
   }
 };
 
-export const VirtualHubEffectiveRouteList: msRest.CompositeMapper = {
-  serializedName: "VirtualHubEffectiveRouteList",
+export const VirtualHubEffectiveRouteEffectiveRouteList: msRest.CompositeMapper = {
+  serializedName: "VirtualHubEffectiveRouteEffectiveRouteList",
   type: {
     name: "Composite",
-    className: "VirtualHubEffectiveRouteList",
+    className: "VirtualHubEffectiveRouteEffectiveRouteList",
     modelProperties: {
       value: {
         serializedName: "value",
