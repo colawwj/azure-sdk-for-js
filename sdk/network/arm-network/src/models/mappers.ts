@@ -8309,6 +8309,39 @@ export const ExpressRoutePort: msRest.CompositeMapper = {
   }
 };
 
+export const GenerateExpressRoutePortsLOARequest: msRest.CompositeMapper = {
+  serializedName: "GenerateExpressRoutePortsLOARequest",
+  type: {
+    name: "Composite",
+    className: "GenerateExpressRoutePortsLOARequest",
+    modelProperties: {
+      customerName: {
+        required: true,
+        serializedName: "customerName",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const GenerateExpressRoutePortsLOAResult: msRest.CompositeMapper = {
+  serializedName: "GenerateExpressRoutePortsLOAResult",
+  type: {
+    name: "Composite",
+    className: "GenerateExpressRoutePortsLOAResult",
+    modelProperties: {
+      encodedContent: {
+        serializedName: "encodedContent",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const FirewallPolicyThreatIntelWhitelist: msRest.CompositeMapper = {
   serializedName: "FirewallPolicyThreatIntelWhitelist",
   type: {
@@ -18685,6 +18718,34 @@ export const VpnConnection: msRest.CompositeMapper = {
   }
 };
 
+export const VpnGatewayIpConfiguration: msRest.CompositeMapper = {
+  serializedName: "VpnGatewayIpConfiguration",
+  type: {
+    name: "Composite",
+    className: "VpnGatewayIpConfiguration",
+    modelProperties: {
+      id: {
+        serializedName: "id",
+        type: {
+          name: "String"
+        }
+      },
+      publicIpAddress: {
+        serializedName: "publicIpAddress",
+        type: {
+          name: "String"
+        }
+      },
+      privateIpAddress: {
+        serializedName: "privateIpAddress",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const VpnGateway: msRest.CompositeMapper = {
   serializedName: "VpnGateway",
   type: {
@@ -18731,9 +18792,108 @@ export const VpnGateway: msRest.CompositeMapper = {
           name: "Number"
         }
       },
+      ipConfigurations: {
+        readOnly: true,
+        serializedName: "properties.ipConfigurations",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "VpnGatewayIpConfiguration"
+            }
+          }
+        }
+      },
       etag: {
         readOnly: true,
         serializedName: "etag",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const VpnConnectionPacketCaptureStartParameters: msRest.CompositeMapper = {
+  serializedName: "VpnConnectionPacketCaptureStartParameters",
+  type: {
+    name: "Composite",
+    className: "VpnConnectionPacketCaptureStartParameters",
+    modelProperties: {
+      filterData: {
+        serializedName: "filterData",
+        type: {
+          name: "String"
+        }
+      },
+      linkConnectionNames: {
+        serializedName: "linkConnectionNames",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const VpnConnectionPacketCaptureStopParameters: msRest.CompositeMapper = {
+  serializedName: "VpnConnectionPacketCaptureStopParameters",
+  type: {
+    name: "Composite",
+    className: "VpnConnectionPacketCaptureStopParameters",
+    modelProperties: {
+      sasUrl: {
+        serializedName: "sasUrl",
+        type: {
+          name: "String"
+        }
+      },
+      linkConnectionNames: {
+        serializedName: "linkConnectionNames",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const VpnGatewayPacketCaptureStartParameters: msRest.CompositeMapper = {
+  serializedName: "VpnGatewayPacketCaptureStartParameters",
+  type: {
+    name: "Composite",
+    className: "VpnGatewayPacketCaptureStartParameters",
+    modelProperties: {
+      filterData: {
+        serializedName: "filterData",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const VpnGatewayPacketCaptureStopParameters: msRest.CompositeMapper = {
+  serializedName: "VpnGatewayPacketCaptureStopParameters",
+  type: {
+    name: "Composite",
+    className: "VpnGatewayPacketCaptureStopParameters",
+    modelProperties: {
+      sasUrl: {
+        serializedName: "sasUrl",
         type: {
           name: "String"
         }
@@ -18892,7 +19052,8 @@ export const HubRouteTable: msRest.CompositeMapper = {
           name: "Sequence",
           element: {
             type: {
-              name: "String"
+              name: "Composite",
+              className: "SubResource"
             }
           }
         }
@@ -18904,7 +19065,8 @@ export const HubRouteTable: msRest.CompositeMapper = {
           name: "Sequence",
           element: {
             type: {
-              name: "String"
+              name: "Composite",
+              className: "SubResource"
             }
           }
         }
@@ -19843,11 +20005,11 @@ export const VirtualHubEffectiveRoute: msRest.CompositeMapper = {
   }
 };
 
-export const VirtualHubEffectiveRouteList: msRest.CompositeMapper = {
-  serializedName: "VirtualHubEffectiveRouteList",
+export const VirtualHubEffectiveRouteEffectiveRouteList: msRest.CompositeMapper = {
+  serializedName: "VirtualHubEffectiveRouteEffectiveRouteList",
   type: {
     name: "Composite",
-    className: "VirtualHubEffectiveRouteList",
+    className: "VirtualHubEffectiveRouteEffectiveRouteList",
     modelProperties: {
       value: {
         serializedName: "value",

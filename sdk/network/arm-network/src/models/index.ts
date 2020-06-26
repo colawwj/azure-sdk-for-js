@@ -4963,6 +4963,26 @@ export interface ExpressRoutePort extends Resource {
 }
 
 /**
+ * The customer name to be printed on a letter of authorization.
+ */
+export interface GenerateExpressRoutePortsLOARequest {
+  /**
+   * The customer name.
+   */
+  customerName: string;
+}
+
+/**
+ * Response for GenerateExpressRoutePortsLOA API service call.
+ */
+export interface GenerateExpressRoutePortsLOAResult {
+  /**
+   * The content as a base64 encoded string.
+   */
+  encodedContent?: string;
+}
+
+/**
  * ThreatIntel Whitelist for Firewall Policy.
  */
 export interface FirewallPolicyThreatIntelWhitelist {
@@ -10968,7 +10988,7 @@ export interface VpnConnection extends SubResource {
    */
   routingWeight?: number;
   /**
-   * The dead peer detection timeout for a vpn connection in seconds.
+   * DPD timeout in seconds for vpn connection.
    */
   dpdTimeoutSeconds?: number;
   /**
@@ -11050,6 +11070,24 @@ export interface VpnConnection extends SubResource {
 }
 
 /**
+ * IP Configuration of a VPN Gateway Resource.
+ */
+export interface VpnGatewayIpConfiguration {
+  /**
+   * The identifier of the IP configuration for a VPN Gateway.
+   */
+  id?: string;
+  /**
+   * The public IP address of this IP configuration.
+   */
+  publicIpAddress?: string;
+  /**
+   * The private IP address of this IP configuration.
+   */
+  privateIpAddress?: string;
+}
+
+/**
  * VpnGateway Resource.
  */
 export interface VpnGateway extends Resource {
@@ -11076,10 +11114,63 @@ export interface VpnGateway extends Resource {
    */
   vpnGatewayScaleUnit?: number;
   /**
+   * List of all IPs configured on the gateway.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly ipConfigurations?: VpnGatewayIpConfiguration[];
+  /**
    * A unique read-only string that changes whenever the resource is updated.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly etag?: string;
+}
+
+/**
+ * Vpn Connection packet capture parameters supplied to start packet capture on gateway connection.
+ */
+export interface VpnConnectionPacketCaptureStartParameters {
+  /**
+   * Start Packet capture parameters on vpn connection.
+   */
+  filterData?: string;
+  /**
+   * List of site link connection names.
+   */
+  linkConnectionNames?: string[];
+}
+
+/**
+ * Vpn Connection packet capture parameters supplied to stop packet capture on gateway connection.
+ */
+export interface VpnConnectionPacketCaptureStopParameters {
+  /**
+   * SAS url for packet capture on vpn connection.
+   */
+  sasUrl?: string;
+  /**
+   * List of site link connection names.
+   */
+  linkConnectionNames?: string[];
+}
+
+/**
+ * Start packet capture parameters.
+ */
+export interface VpnGatewayPacketCaptureStartParameters {
+  /**
+   * Start Packet capture parameters on vpn gateway.
+   */
+  filterData?: string;
+}
+
+/**
+ * Stop packet capture parameters.
+ */
+export interface VpnGatewayPacketCaptureStopParameters {
+  /**
+   * SAS url for packet capture on vpn gateway.
+   */
+  sasUrl?: string;
 }
 
 /**
@@ -11168,12 +11259,12 @@ export interface HubRouteTable extends SubResource {
    * List of all connections associated with this route table.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly associatedConnections?: string[];
+  readonly associatedConnections?: SubResource[];
   /**
    * List of all connections that advertise to this route table.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly propagatingConnections?: string[];
+  readonly propagatingConnections?: SubResource[];
   /**
    * The provisioning state of the RouteTable resource. Possible values include: 'Succeeded',
    * 'Updating', 'Deleting', 'Failed'
@@ -11714,7 +11805,7 @@ export interface VirtualHubEffectiveRoute {
 /**
  * EffectiveRoutes List.
  */
-export interface VirtualHubEffectiveRouteList {
+export interface VirtualHubEffectiveRouteEffectiveRouteList {
   /**
    * The list of effective routes configured on the virtual hub or the specified resource.
    */
@@ -12365,6 +12456,90 @@ export interface VirtualHubsBeginGetEffectiveVirtualHubRoutesOptionalParams exte
    * Parameters supplied to get the effective routes for a specific resource.
    */
   effectiveRoutesParameters?: EffectiveRoutesParameters;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface VpnGatewaysStartPacketCaptureOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Vpn gateway packet capture parameters supplied to start packet capture on vpn gateway.
+   */
+  parameters?: VpnGatewayPacketCaptureStartParameters;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface VpnGatewaysStopPacketCaptureOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Vpn gateway packet capture parameters supplied to stop packet capture on vpn gateway.
+   */
+  parameters?: VpnGatewayPacketCaptureStopParameters;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface VpnGatewaysBeginStartPacketCaptureOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Vpn gateway packet capture parameters supplied to start packet capture on vpn gateway.
+   */
+  parameters?: VpnGatewayPacketCaptureStartParameters;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface VpnGatewaysBeginStopPacketCaptureOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Vpn gateway packet capture parameters supplied to stop packet capture on vpn gateway.
+   */
+  parameters?: VpnGatewayPacketCaptureStopParameters;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface VpnConnectionsStartPacketCaptureOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Vpn Connection packet capture parameters supplied to start packet capture on gateway
+   * connection.
+   */
+  parameters?: VpnConnectionPacketCaptureStartParameters;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface VpnConnectionsStopPacketCaptureOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Vpn Connection packet capture parameters supplied to stop packet capture on gateway
+   * connection.
+   */
+  parameters?: VpnConnectionPacketCaptureStopParameters;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface VpnConnectionsBeginStartPacketCaptureOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Vpn Connection packet capture parameters supplied to start packet capture on gateway
+   * connection.
+   */
+  parameters?: VpnConnectionPacketCaptureStartParameters;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface VpnConnectionsBeginStopPacketCaptureOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Vpn Connection packet capture parameters supplied to stop packet capture on gateway
+   * connection.
+   */
+  parameters?: VpnConnectionPacketCaptureStopParameters;
 }
 
 /**
@@ -17726,6 +17901,26 @@ export type ExpressRoutePortsListResponse = ExpressRoutePortListResult & {
        * The response body as parsed JSON or XML
        */
       parsedBody: ExpressRoutePortListResult;
+    };
+};
+
+/**
+ * Contains response data for the generateLOA operation.
+ */
+export type ExpressRoutePortsGenerateLOAResponse = GenerateExpressRoutePortsLOAResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: GenerateExpressRoutePortsLOAResult;
     };
 };
 
@@ -26630,6 +26825,56 @@ export type VpnGatewaysResetResponse = VpnGateway & {
 };
 
 /**
+ * Contains response data for the startPacketCapture operation.
+ */
+export type VpnGatewaysStartPacketCaptureResponse = {
+  /**
+   * The parsed response body.
+   */
+  body: string;
+
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: string;
+    };
+};
+
+/**
+ * Contains response data for the stopPacketCapture operation.
+ */
+export type VpnGatewaysStopPacketCaptureResponse = {
+  /**
+   * The parsed response body.
+   */
+  body: string;
+
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: string;
+    };
+};
+
+/**
  * Contains response data for the listByResourceGroup operation.
  */
 export type VpnGatewaysListByResourceGroupResponse = ListVpnGatewaysResult & {
@@ -26690,6 +26935,26 @@ export type VpnGatewaysBeginCreateOrUpdateResponse = VpnGateway & {
 };
 
 /**
+ * Contains response data for the beginUpdateTags operation.
+ */
+export type VpnGatewaysBeginUpdateTagsResponse = VpnGateway & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: VpnGateway;
+    };
+};
+
+/**
  * Contains response data for the beginReset operation.
  */
 export type VpnGatewaysBeginResetResponse = VpnGateway & {
@@ -26706,6 +26971,56 @@ export type VpnGatewaysBeginResetResponse = VpnGateway & {
        * The response body as parsed JSON or XML
        */
       parsedBody: VpnGateway;
+    };
+};
+
+/**
+ * Contains response data for the beginStartPacketCapture operation.
+ */
+export type VpnGatewaysBeginStartPacketCaptureResponse = {
+  /**
+   * The parsed response body.
+   */
+  body: string;
+
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: string;
+    };
+};
+
+/**
+ * Contains response data for the beginStopPacketCapture operation.
+ */
+export type VpnGatewaysBeginStopPacketCaptureResponse = {
+  /**
+   * The parsed response body.
+   */
+  body: string;
+
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: string;
     };
 };
 
@@ -26790,6 +27105,56 @@ export type VpnConnectionsCreateOrUpdateResponse = VpnConnection & {
 };
 
 /**
+ * Contains response data for the startPacketCapture operation.
+ */
+export type VpnConnectionsStartPacketCaptureResponse = {
+  /**
+   * The parsed response body.
+   */
+  body: string;
+
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: string;
+    };
+};
+
+/**
+ * Contains response data for the stopPacketCapture operation.
+ */
+export type VpnConnectionsStopPacketCaptureResponse = {
+  /**
+   * The parsed response body.
+   */
+  body: string;
+
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: string;
+    };
+};
+
+/**
  * Contains response data for the listByVpnGateway operation.
  */
 export type VpnConnectionsListByVpnGatewayResponse = ListVpnConnectionsResult & {
@@ -26826,6 +27191,56 @@ export type VpnConnectionsBeginCreateOrUpdateResponse = VpnConnection & {
        * The response body as parsed JSON or XML
        */
       parsedBody: VpnConnection;
+    };
+};
+
+/**
+ * Contains response data for the beginStartPacketCapture operation.
+ */
+export type VpnConnectionsBeginStartPacketCaptureResponse = {
+  /**
+   * The parsed response body.
+   */
+  body: string;
+
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: string;
+    };
+};
+
+/**
+ * Contains response data for the beginStopPacketCapture operation.
+ */
+export type VpnConnectionsBeginStopPacketCaptureResponse = {
+  /**
+   * The parsed response body.
+   */
+  body: string;
+
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: string;
     };
 };
 
@@ -27073,6 +27488,26 @@ export type P2sVpnGatewaysGetP2sVpnConnectionHealthDetailedResponse = P2SVpnConn
  * Contains response data for the beginCreateOrUpdate operation.
  */
 export type P2sVpnGatewaysBeginCreateOrUpdateResponse = P2SVpnGateway & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: P2SVpnGateway;
+    };
+};
+
+/**
+ * Contains response data for the beginUpdateTags operation.
+ */
+export type P2sVpnGatewaysBeginUpdateTagsResponse = P2SVpnGateway & {
   /**
    * The underlying HTTP response.
    */
