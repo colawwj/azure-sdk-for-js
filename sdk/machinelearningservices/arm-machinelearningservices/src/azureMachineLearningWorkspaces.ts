@@ -21,7 +21,6 @@ class AzureMachineLearningWorkspaces extends AzureMachineLearningWorkspacesConte
   operations: operations.Operations;
   workspaces: operations.Workspaces;
   workspaceFeatures: operations.WorkspaceFeatures;
-  notebooks: operations.Notebooks;
   usages: operations.Usages;
   virtualMachineSizes: operations.VirtualMachineSizes;
   quotas: operations.Quotas;
@@ -40,7 +39,6 @@ class AzureMachineLearningWorkspaces extends AzureMachineLearningWorkspacesConte
     this.operations = new operations.Operations(this);
     this.workspaces = new operations.Workspaces(this);
     this.workspaceFeatures = new operations.WorkspaceFeatures(this);
-    this.notebooks = new operations.Notebooks(this);
     this.usages = new operations.Usages(this);
     this.virtualMachineSizes = new operations.VirtualMachineSizes(this);
     this.quotas = new operations.Quotas(this);

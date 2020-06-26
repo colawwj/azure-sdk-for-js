@@ -9,6 +9,8 @@
 export {
   discriminators,
   CloudError,
+  EstimatedVMPrice,
+  EstimatedVMPrices,
   VirtualMachineSize,
   VirtualMachineSizeListResult
 } from "../models/mappers";
