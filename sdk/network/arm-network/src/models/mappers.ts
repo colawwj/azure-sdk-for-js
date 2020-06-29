@@ -8309,6 +8309,39 @@ export const ExpressRoutePort: msRest.CompositeMapper = {
   }
 };
 
+export const GenerateExpressRoutePortsLOARequest: msRest.CompositeMapper = {
+  serializedName: "GenerateExpressRoutePortsLOARequest",
+  type: {
+    name: "Composite",
+    className: "GenerateExpressRoutePortsLOARequest",
+    modelProperties: {
+      customerName: {
+        required: true,
+        serializedName: "customerName",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const GenerateExpressRoutePortsLOAResult: msRest.CompositeMapper = {
+  serializedName: "GenerateExpressRoutePortsLOAResult",
+  type: {
+    name: "Composite",
+    className: "GenerateExpressRoutePortsLOAResult",
+    modelProperties: {
+      encodedContent: {
+        serializedName: "encodedContent",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const FirewallPolicyThreatIntelWhitelist: msRest.CompositeMapper = {
   serializedName: "FirewallPolicyThreatIntelWhitelist",
   type: {
@@ -12094,10 +12127,15 @@ export const HopLink: msRest.CompositeMapper = {
         readOnly: true,
         serializedName: "context",
         type: {
-          name: "Dictionary",
-          value: {
+          name: "Sequence",
+          element: {
             type: {
-              name: "String"
+              name: "Dictionary",
+              value: {
+                type: {
+                  name: "String"
+                }
+              }
             }
           }
         }
@@ -13104,6 +13142,12 @@ export const ConnectionMonitorTcpConfiguration: msRest.CompositeMapper = {
         serializedName: "disableTraceRoute",
         type: {
           name: "Boolean"
+        }
+      },
+      destinationPortBehavior: {
+        serializedName: "destinationPortBehavior",
+        type: {
+          name: "String"
         }
       }
     }
@@ -15331,6 +15375,30 @@ export const AddressSpace: msRest.CompositeMapper = {
   }
 };
 
+export const VirtualNetworkBgpCommunities: msRest.CompositeMapper = {
+  serializedName: "VirtualNetworkBgpCommunities",
+  type: {
+    name: "Composite",
+    className: "VirtualNetworkBgpCommunities",
+    modelProperties: {
+      virtualNetworkCommunity: {
+        required: true,
+        serializedName: "virtualNetworkCommunity",
+        type: {
+          name: "String"
+        }
+      },
+      regionalCommunity: {
+        readOnly: true,
+        serializedName: "regionalCommunity",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const VirtualNetworkPeering: msRest.CompositeMapper = {
   serializedName: "VirtualNetworkPeering",
   type: {
@@ -15374,6 +15442,13 @@ export const VirtualNetworkPeering: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "AddressSpace"
+        }
+      },
+      remoteBgpCommunities: {
+        serializedName: "properties.remoteBgpCommunities",
+        type: {
+          name: "Composite",
+          className: "VirtualNetworkBgpCommunities"
         }
       },
       peeringState: {
@@ -15479,30 +15554,6 @@ export const DhcpOptions: msRest.CompositeMapper = {
               name: "String"
             }
           }
-        }
-      }
-    }
-  }
-};
-
-export const VirtualNetworkBgpCommunities: msRest.CompositeMapper = {
-  serializedName: "VirtualNetworkBgpCommunities",
-  type: {
-    name: "Composite",
-    className: "VirtualNetworkBgpCommunities",
-    modelProperties: {
-      virtualNetworkCommunity: {
-        required: true,
-        serializedName: "virtualNetworkCommunity",
-        type: {
-          name: "String"
-        }
-      },
-      regionalCommunity: {
-        readOnly: true,
-        serializedName: "regionalCommunity",
-        type: {
-          name: "String"
         }
       }
     }
@@ -18680,6 +18731,34 @@ export const VpnConnection: msRest.CompositeMapper = {
   }
 };
 
+export const VpnGatewayIpConfiguration: msRest.CompositeMapper = {
+  serializedName: "VpnGatewayIpConfiguration",
+  type: {
+    name: "Composite",
+    className: "VpnGatewayIpConfiguration",
+    modelProperties: {
+      id: {
+        serializedName: "id",
+        type: {
+          name: "String"
+        }
+      },
+      publicIpAddress: {
+        serializedName: "publicIpAddress",
+        type: {
+          name: "String"
+        }
+      },
+      privateIpAddress: {
+        serializedName: "privateIpAddress",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const VpnGateway: msRest.CompositeMapper = {
   serializedName: "VpnGateway",
   type: {
@@ -18724,6 +18803,19 @@ export const VpnGateway: msRest.CompositeMapper = {
         serializedName: "properties.vpnGatewayScaleUnit",
         type: {
           name: "Number"
+        }
+      },
+      ipConfigurations: {
+        readOnly: true,
+        serializedName: "properties.ipConfigurations",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "VpnGatewayIpConfiguration"
+            }
+          }
         }
       },
       etag: {
@@ -18887,7 +18979,8 @@ export const HubRouteTable: msRest.CompositeMapper = {
           name: "Sequence",
           element: {
             type: {
-              name: "String"
+              name: "Composite",
+              className: "SubResource"
             }
           }
         }
@@ -18899,7 +18992,8 @@ export const HubRouteTable: msRest.CompositeMapper = {
           name: "Sequence",
           element: {
             type: {
-              name: "String"
+              name: "Composite",
+              className: "SubResource"
             }
           }
         }
@@ -19838,11 +19932,11 @@ export const VirtualHubEffectiveRoute: msRest.CompositeMapper = {
   }
 };
 
-export const VirtualHubEffectiveRouteList: msRest.CompositeMapper = {
-  serializedName: "VirtualHubEffectiveRouteList",
+export const VirtualHubEffectiveRouteEffectiveRouteList: msRest.CompositeMapper = {
+  serializedName: "VirtualHubEffectiveRouteEffectiveRouteList",
   type: {
     name: "Composite",
-    className: "VirtualHubEffectiveRouteList",
+    className: "VirtualHubEffectiveRouteEffectiveRouteList",
     modelProperties: {
       value: {
         serializedName: "value",

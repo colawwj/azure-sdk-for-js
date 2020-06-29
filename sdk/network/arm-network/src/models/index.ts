@@ -4963,6 +4963,26 @@ export interface ExpressRoutePort extends Resource {
 }
 
 /**
+ * The customer name to be printed on a letter of authorization.
+ */
+export interface GenerateExpressRoutePortsLOARequest {
+  /**
+   * The customer name.
+   */
+  customerName: string;
+}
+
+/**
+ * Response for GenerateExpressRoutePortsLOA API service call.
+ */
+export interface GenerateExpressRoutePortsLOAResult {
+  /**
+   * The content as a base64 encoded string.
+   */
+  encodedContent?: string;
+}
+
+/**
  * ThreatIntel Whitelist for Firewall Policy.
  */
 export interface FirewallPolicyThreatIntelWhitelist {
@@ -7205,10 +7225,10 @@ export interface HopLink {
    */
   readonly issues?: ConnectivityIssue[];
   /**
-   * Provides additional context on links.
+   * Provides additional context on the issue.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly context?: { [propertyName: string]: string };
+  readonly context?: { [propertyName: string]: string }[];
   /**
    * Resource ID.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -7764,6 +7784,10 @@ export interface ConnectionMonitorTcpConfiguration {
    * Value indicating whether path evaluation with trace route should be disabled.
    */
   disableTraceRoute?: boolean;
+  /**
+   * Destination port behavior.
+   */
+  destinationPortBehavior?: string;
 }
 
 /**
@@ -9028,6 +9052,21 @@ export interface AddressSpace {
 }
 
 /**
+ * Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET.
+ */
+export interface VirtualNetworkBgpCommunities {
+  /**
+   * The BGP community associated with the virtual network.
+   */
+  virtualNetworkCommunity: string;
+  /**
+   * The BGP community associated with the region of the virtual network.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly regionalCommunity?: string;
+}
+
+/**
  * Peerings in a virtual network resource.
  */
 export interface VirtualNetworkPeering extends SubResource {
@@ -9062,6 +9101,10 @@ export interface VirtualNetworkPeering extends SubResource {
    * The reference to the remote virtual network address space.
    */
   remoteAddressSpace?: AddressSpace;
+  /**
+   * The reference to the remote virtual network's Bgp Communities.
+   */
+  remoteBgpCommunities?: VirtualNetworkBgpCommunities;
   /**
    * The status of the virtual network peering. Possible values include: 'Initiated', 'Connected',
    * 'Disconnected'
@@ -9124,21 +9167,6 @@ export interface DhcpOptions {
    * The list of DNS servers IP addresses.
    */
   dnsServers?: string[];
-}
-
-/**
- * Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET.
- */
-export interface VirtualNetworkBgpCommunities {
-  /**
-   * The BGP community associated with the virtual network.
-   */
-  virtualNetworkCommunity: string;
-  /**
-   * The BGP community associated with the region of the virtual network.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly regionalCommunity?: string;
 }
 
 /**
@@ -10968,7 +10996,7 @@ export interface VpnConnection extends SubResource {
    */
   routingWeight?: number;
   /**
-   * The dead peer detection timeout for a vpn connection in seconds.
+   * DPD timeout in seconds for vpn connection.
    */
   dpdTimeoutSeconds?: number;
   /**
@@ -11050,6 +11078,24 @@ export interface VpnConnection extends SubResource {
 }
 
 /**
+ * IP Configuration of a VPN Gateway Resource.
+ */
+export interface VpnGatewayIpConfiguration {
+  /**
+   * The identifier of the IP configuration for a VPN Gateway.
+   */
+  id?: string;
+  /**
+   * The public IP address of this IP configuration.
+   */
+  publicIpAddress?: string;
+  /**
+   * The private IP address of this IP configuration.
+   */
+  privateIpAddress?: string;
+}
+
+/**
  * VpnGateway Resource.
  */
 export interface VpnGateway extends Resource {
@@ -11075,6 +11121,11 @@ export interface VpnGateway extends Resource {
    * The scale unit for this vpn gateway.
    */
   vpnGatewayScaleUnit?: number;
+  /**
+   * List of all IPs configured on the gateway.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly ipConfigurations?: VpnGatewayIpConfiguration[];
   /**
    * A unique read-only string that changes whenever the resource is updated.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -11168,12 +11219,12 @@ export interface HubRouteTable extends SubResource {
    * List of all connections associated with this route table.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly associatedConnections?: string[];
+  readonly associatedConnections?: SubResource[];
   /**
    * List of all connections that advertise to this route table.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly propagatingConnections?: string[];
+  readonly propagatingConnections?: SubResource[];
   /**
    * The provisioning state of the RouteTable resource. Possible values include: 'Succeeded',
    * 'Updating', 'Deleting', 'Failed'
@@ -11714,7 +11765,7 @@ export interface VirtualHubEffectiveRoute {
 /**
  * EffectiveRoutes List.
  */
-export interface VirtualHubEffectiveRouteList {
+export interface VirtualHubEffectiveRouteEffectiveRouteList {
   /**
    * The list of effective routes configured on the virtual hub or the specified resource.
    */
@@ -17730,6 +17781,26 @@ export type ExpressRoutePortsListResponse = ExpressRoutePortListResult & {
 };
 
 /**
+ * Contains response data for the generateLOA operation.
+ */
+export type ExpressRoutePortsGenerateLOAResponse = GenerateExpressRoutePortsLOAResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: GenerateExpressRoutePortsLOAResult;
+    };
+};
+
+/**
  * Contains response data for the beginCreateOrUpdate operation.
  */
 export type ExpressRoutePortsBeginCreateOrUpdateResponse = ExpressRoutePort & {
@@ -21430,6 +21501,26 @@ export type FlowLogsCreateOrUpdateResponse = FlowLog & {
 };
 
 /**
+ * Contains response data for the updateTags operation.
+ */
+export type FlowLogsUpdateTagsResponse = FlowLog & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: FlowLog;
+    };
+};
+
+/**
  * Contains response data for the get operation.
  */
 export type FlowLogsGetResponse = FlowLog & {
@@ -22106,46 +22197,6 @@ export type PrivateLinkServicesBeginCreateOrUpdateResponse = PrivateLinkService 
        * The response body as parsed JSON or XML
        */
       parsedBody: PrivateLinkService;
-    };
-};
-
-/**
- * Contains response data for the beginCheckPrivateLinkServiceVisibility operation.
- */
-export type PrivateLinkServicesBeginCheckPrivateLinkServiceVisibilityResponse = PrivateLinkServiceVisibility & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: PrivateLinkServiceVisibility;
-    };
-};
-
-/**
- * Contains response data for the beginCheckPrivateLinkServiceVisibilityByResourceGroup operation.
- */
-export type PrivateLinkServicesBeginCheckPrivateLinkServiceVisibilityByResourceGroupResponse = PrivateLinkServiceVisibility & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: PrivateLinkServiceVisibility;
     };
 };
 
@@ -26730,6 +26781,26 @@ export type VpnGatewaysBeginCreateOrUpdateResponse = VpnGateway & {
 };
 
 /**
+ * Contains response data for the beginUpdateTags operation.
+ */
+export type VpnGatewaysBeginUpdateTagsResponse = VpnGateway & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: VpnGateway;
+    };
+};
+
+/**
  * Contains response data for the beginReset operation.
  */
 export type VpnGatewaysBeginResetResponse = VpnGateway & {
@@ -27113,6 +27184,26 @@ export type P2sVpnGatewaysGetP2sVpnConnectionHealthDetailedResponse = P2SVpnConn
  * Contains response data for the beginCreateOrUpdate operation.
  */
 export type P2sVpnGatewaysBeginCreateOrUpdateResponse = P2SVpnGateway & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: P2SVpnGateway;
+    };
+};
+
+/**
+ * Contains response data for the beginUpdateTags operation.
+ */
+export type P2sVpnGatewaysBeginUpdateTagsResponse = P2SVpnGateway & {
   /**
    * The underlying HTTP response.
    */
