@@ -31,8 +31,6 @@ export {
   KeyVaultProperties,
   MachineLearningServiceError,
   NodeStateCounts,
-  NotebookPreparationError,
-  NotebookResourceInfo,
   PrivateEndpoint,
   PrivateEndpointConnection,
   PrivateLinkResource,
@@ -46,6 +44,7 @@ export {
   SystemService,
   UserAccountCredentials,
   VirtualMachine,
+  VirtualMachineImage,
   VirtualMachineProperties,
   VirtualMachineSshCredentials,
   Workspace

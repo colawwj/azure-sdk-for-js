@@ -69,79 +69,6 @@ export const Operation: msRest.CompositeMapper = {
   }
 };
 
-export const NotebookListCredentialsResult: msRest.CompositeMapper = {
-  serializedName: "NotebookListCredentialsResult",
-  type: {
-    name: "Composite",
-    className: "NotebookListCredentialsResult",
-    modelProperties: {
-      primaryAccessKey: {
-        serializedName: "primaryAccessKey",
-        type: {
-          name: "String"
-        }
-      },
-      secondaryAccessKey: {
-        serializedName: "secondaryAccessKey",
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const NotebookPreparationError: msRest.CompositeMapper = {
-  serializedName: "NotebookPreparationError",
-  type: {
-    name: "Composite",
-    className: "NotebookPreparationError",
-    modelProperties: {
-      errorMessage: {
-        serializedName: "errorMessage",
-        type: {
-          name: "String"
-        }
-      },
-      statusCode: {
-        serializedName: "statusCode",
-        type: {
-          name: "Number"
-        }
-      }
-    }
-  }
-};
-
-export const NotebookResourceInfo: msRest.CompositeMapper = {
-  serializedName: "NotebookResourceInfo",
-  type: {
-    name: "Composite",
-    className: "NotebookResourceInfo",
-    modelProperties: {
-      fqdn: {
-        serializedName: "fqdn",
-        type: {
-          name: "String"
-        }
-      },
-      resourceId: {
-        serializedName: "resourceId",
-        type: {
-          name: "String"
-        }
-      },
-      notebookPreparationError: {
-        serializedName: "notebookPreparationError",
-        type: {
-          name: "Composite",
-          className: "NotebookPreparationError"
-        }
-      }
-    }
-  }
-};
-
 export const KeyVaultProperties: msRest.CompositeMapper = {
   serializedName: "KeyVaultProperties",
   type: {
@@ -511,14 +438,6 @@ export const Workspace: msRest.CompositeMapper = {
             }
           }
         }
-      },
-      notebookInfo: {
-        readOnly: true,
-        serializedName: "properties.notebookInfo",
-        type: {
-          name: "Composite",
-          className: "NotebookResourceInfo"
-        }
       }
     }
   }
@@ -691,6 +610,78 @@ export const Usage: msRest.CompositeMapper = {
   }
 };
 
+export const EstimatedVMPrice: msRest.CompositeMapper = {
+  serializedName: "EstimatedVMPrice",
+  type: {
+    name: "Composite",
+    className: "EstimatedVMPrice",
+    modelProperties: {
+      retailPrice: {
+        required: true,
+        serializedName: "retailPrice",
+        type: {
+          name: "Number"
+        }
+      },
+      osType: {
+        required: true,
+        serializedName: "osType",
+        type: {
+          name: "String"
+        }
+      },
+      vmTier: {
+        required: true,
+        serializedName: "vmTier",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const EstimatedVMPrices: msRest.CompositeMapper = {
+  serializedName: "EstimatedVMPrices",
+  type: {
+    name: "Composite",
+    className: "EstimatedVMPrices",
+    modelProperties: {
+      billingCurrency: {
+        required: true,
+        isConstant: true,
+        serializedName: "billingCurrency",
+        defaultValue: 'USD',
+        type: {
+          name: "String"
+        }
+      },
+      unitOfMeasure: {
+        required: true,
+        isConstant: true,
+        serializedName: "unitOfMeasure",
+        defaultValue: 'OneHour',
+        type: {
+          name: "String"
+        }
+      },
+      values: {
+        required: true,
+        serializedName: "values",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "EstimatedVMPrice"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
 export const VirtualMachineSize: msRest.CompositeMapper = {
   serializedName: "VirtualMachineSize",
   type: {
@@ -758,6 +749,13 @@ export const VirtualMachineSize: msRest.CompositeMapper = {
         serializedName: "premiumIO",
         type: {
           name: "Boolean"
+        }
+      },
+      estimatedVMPrices: {
+        serializedName: "estimatedVMPrices",
+        type: {
+          name: "Composite",
+          className: "EstimatedVMPrices"
         }
       }
     }
@@ -1037,7 +1035,7 @@ export const Identity: msRest.CompositeMapper = {
           allowedValues: [
             "SystemAssigned",
             "UserAssigned",
-            "SystemAssigned,UserAssigned",
+            "SystemAssigned, UserAssigned",
             "None"
           ]
         }
@@ -1168,13 +1166,6 @@ export const ListWorkspaceKeysResult: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "RegistryListCredentialsResult"
-        }
-      },
-      notebookAccessKeys: {
-        serializedName: "notebookAccessKeys",
-        type: {
-          name: "Composite",
-          className: "NotebookListCredentialsResult"
         }
       }
     }
@@ -1545,6 +1536,23 @@ export const AKS: msRest.CompositeMapper = {
   }
 };
 
+export const VirtualMachineImage: msRest.CompositeMapper = {
+  serializedName: "VirtualMachineImage",
+  type: {
+    name: "Composite",
+    className: "VirtualMachineImage",
+    modelProperties: {
+      id: {
+        required: true,
+        serializedName: "id",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const ScaleSettings: msRest.CompositeMapper = {
   serializedName: "ScaleSettings",
   type: {
@@ -1662,6 +1670,12 @@ export const AmlComputeProperties: msRest.CompositeMapper = {
     name: "Composite",
     className: "AmlComputeProperties",
     modelProperties: {
+      osType: {
+        serializedName: "osType",
+        type: {
+          name: "String"
+        }
+      },
       vmSize: {
         serializedName: "vmSize",
         type: {
@@ -1672,6 +1686,19 @@ export const AmlComputeProperties: msRest.CompositeMapper = {
         serializedName: "vmPriority",
         type: {
           name: "String"
+        }
+      },
+      virtualMachineImage: {
+        serializedName: "virtualMachineImage",
+        type: {
+          name: "Composite",
+          className: "VirtualMachineImage"
+        }
+      },
+      isolatedNetwork: {
+        serializedName: "isolatedNetwork",
+        type: {
+          name: "Boolean"
         }
       },
       scaleSettings: {
@@ -1749,6 +1776,13 @@ export const AmlComputeProperties: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "NodeStateCounts"
+        }
+      },
+      enableNodePublicIp: {
+        serializedName: "enableNodePublicIp",
+        defaultValue: true,
+        type: {
+          name: "Boolean"
         }
       }
     }
@@ -2033,6 +2067,13 @@ export const ClusterUpdateParameters: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "ScaleSettings"
+        }
+      },
+      identity: {
+        serializedName: "identity",
+        type: {
+          name: "Composite",
+          className: "Identity"
         }
       }
     }

@@ -48,37 +48,6 @@ export interface Operation {
 }
 
 /**
- * An interface representing NotebookListCredentialsResult.
- */
-export interface NotebookListCredentialsResult {
-  primaryAccessKey?: string;
-  secondaryAccessKey?: string;
-}
-
-/**
- * An interface representing NotebookPreparationError.
- */
-export interface NotebookPreparationError {
-  errorMessage?: string;
-  statusCode?: number;
-}
-
-/**
- * An interface representing NotebookResourceInfo.
- */
-export interface NotebookResourceInfo {
-  fqdn?: string;
-  /**
-   * the data plane resourceId that used to initialize notebook component
-   */
-  resourceId?: string;
-  /**
-   * The error that occurs when preparing notebook.
-   */
-  notebookPreparationError?: NotebookPreparationError;
-}
-
-/**
  * An interface representing KeyVaultProperties.
  */
 export interface KeyVaultProperties {
@@ -317,11 +286,6 @@ export interface Workspace extends Resource {
    * The list of shared private link resources in this workspace.
    */
   sharedPrivateLinkResources?: SharedPrivateLinkResource[];
-  /**
-   * The notebook info of Azure ML workspace.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly notebookInfo?: NotebookResourceInfo;
 }
 
 /**
@@ -431,6 +395,35 @@ export interface Usage {
 }
 
 /**
+ * The estimated price info for using a VM of a particular OS type, tier, etc.
+ */
+export interface EstimatedVMPrice {
+  /**
+   * Retail price. The price charged for using the VM.
+   */
+  retailPrice: number;
+  /**
+   * OS type. Operating system type used by the VM. Possible values include: 'Linux', 'Windows'
+   */
+  osType: VMPriceOSType;
+  /**
+   * VM tier. The type of the VM. Possible values include: 'Standard', 'LowPriority', 'Spot'
+   */
+  vmTier: VMTier;
+}
+
+/**
+ * The estimated price info for using a VM.
+ */
+export interface EstimatedVMPrices {
+  /**
+   * List of estimated VM prices. The list of estimated prices for using a VM of a particular OS
+   * type, tier, etc.
+   */
+  values: EstimatedVMPrice[];
+}
+
+/**
  * Describes the properties of a VM size.
  */
 export interface VirtualMachineSize {
@@ -479,6 +472,10 @@ export interface VirtualMachineSize {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly premiumIO?: boolean;
+  /**
+   * Estimated VM prices. The estimated price information for using a VM.
+   */
+  estimatedVMPrices?: EstimatedVMPrices;
 }
 
 /**
@@ -650,8 +647,8 @@ export interface Identity {
    */
   readonly tenantId?: string;
   /**
-   * The identity type. Possible values include: 'SystemAssigned', 'UserAssigned',
-   * 'SystemAssigned,UserAssigned', 'None'
+   * The identity type. Possible values include: 'SystemAssigned', 'UserAssigned', 'SystemAssigned,
+   * UserAssigned', 'None'
    */
   type: ResourceIdentityType;
   /**
@@ -721,7 +718,6 @@ export interface ListWorkspaceKeysResult {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly containerRegistryCredentials?: RegistryListCredentialsResult;
-  notebookAccessKeys?: NotebookListCredentialsResult;
 }
 
 /**
@@ -989,6 +985,16 @@ export interface AKS {
 }
 
 /**
+ * Virtual Machine image for Windows AML Compute
+ */
+export interface VirtualMachineImage {
+  /**
+   * Virtual Machine image path
+   */
+  id: string;
+}
+
+/**
  * scale settings for AML Compute
  */
 export interface ScaleSettings {
@@ -1065,6 +1071,10 @@ export interface NodeStateCounts {
  */
 export interface AmlComputeProperties {
   /**
+   * Compute OS Type. Possible values include: 'Linux', 'Windows'
+   */
+  osType?: OsType;
+  /**
    * Virtual Machine Size
    */
   vmSize?: string;
@@ -1072,6 +1082,14 @@ export interface AmlComputeProperties {
    * Virtual Machine priority. Possible values include: 'Dedicated', 'LowPriority'
    */
   vmPriority?: VmPriority;
+  /**
+   * Virtual Machine image for AML Compute - windows only
+   */
+  virtualMachineImage?: VirtualMachineImage;
+  /**
+   * Network is isolated or not
+   */
+  isolatedNetwork?: boolean;
   /**
    * Scale settings for AML Compute
    */
@@ -1134,6 +1152,13 @@ export interface AmlComputeProperties {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly nodeStateCounts?: NodeStateCounts;
+  /**
+   * Enable node public IP. Enable or disable node public IP address provisioning. Possible values
+   * are: Possible values are: true - Indicates that the compute nodes will have public IPs
+   * provisioned. false - Indicates that the compute nodes will have a private endpoint and no
+   * public IPs. Default value: true.
+   */
+  enableNodePublicIp?: boolean;
 }
 
 /**
@@ -1548,6 +1573,10 @@ export interface ClusterUpdateParameters {
    * Scale settings. Desired scale settings for the amlCompute.
    */
   scaleSettings?: ScaleSettings;
+  /**
+   * identity. Identity of the compute
+   */
+  identity?: Identity;
 }
 
 /**
@@ -2027,6 +2056,22 @@ export type PrivateEndpointConnectionProvisioningState = 'Succeeded' | 'Creating
 export type UsageUnit = 'Count';
 
 /**
+ * Defines values for VMPriceOSType.
+ * Possible values include: 'Linux', 'Windows'
+ * @readonly
+ * @enum {string}
+ */
+export type VMPriceOSType = 'Linux' | 'Windows';
+
+/**
+ * Defines values for VMTier.
+ * Possible values include: 'Standard', 'LowPriority', 'Spot'
+ * @readonly
+ * @enum {string}
+ */
+export type VMTier = 'Standard' | 'LowPriority' | 'Spot';
+
+/**
  * Defines values for QuotaUnit.
  * Possible values include: 'Count'
  * @readonly
@@ -2046,11 +2091,20 @@ export type Status = 'Undefined' | 'Success' | 'Failure' | 'InvalidQuotaBelowClu
 
 /**
  * Defines values for ResourceIdentityType.
- * Possible values include: 'SystemAssigned', 'UserAssigned', 'SystemAssigned,UserAssigned', 'None'
+ * Possible values include: 'SystemAssigned', 'UserAssigned', 'SystemAssigned, UserAssigned',
+ * 'None'
  * @readonly
  * @enum {string}
  */
-export type ResourceIdentityType = 'SystemAssigned' | 'UserAssigned' | 'SystemAssigned,UserAssigned' | 'None';
+export type ResourceIdentityType = 'SystemAssigned' | 'UserAssigned' | 'SystemAssigned, UserAssigned' | 'None';
+
+/**
+ * Defines values for OsType.
+ * Possible values include: 'Linux', 'Windows'
+ * @readonly
+ * @enum {string}
+ */
+export type OsType = 'Linux' | 'Windows';
 
 /**
  * Defines values for VmPriority.
@@ -2354,46 +2408,6 @@ export type WorkspaceFeaturesListNextResponse = ListAmlUserFeatureResult & {
        * The response body as parsed JSON or XML
        */
       parsedBody: ListAmlUserFeatureResult;
-    };
-};
-
-/**
- * Contains response data for the prepare operation.
- */
-export type NotebooksPrepareResponse = NotebookResourceInfo & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: NotebookResourceInfo;
-    };
-};
-
-/**
- * Contains response data for the beginPrepare operation.
- */
-export type NotebooksBeginPrepareResponse = NotebookResourceInfo & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: NotebookResourceInfo;
     };
 };
 
