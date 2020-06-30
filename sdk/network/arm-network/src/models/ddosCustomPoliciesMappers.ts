@@ -287,4 +287,4 @@ export {
   VpnSiteLinkConnection,
   WebApplicationFirewallCustomRule,
   WebApplicationFirewallPolicy
-} from "./mappers";
+} from "../models/mappers";
