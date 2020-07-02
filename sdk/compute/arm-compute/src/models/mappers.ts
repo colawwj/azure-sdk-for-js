@@ -3084,6 +3084,24 @@ export const MaintenanceRedeployStatus: msRest.CompositeMapper = {
   }
 };
 
+export const VirtualMachineHealthStatus: msRest.CompositeMapper = {
+  serializedName: "VirtualMachineHealthStatus",
+  type: {
+    name: "Composite",
+    className: "VirtualMachineHealthStatus",
+    modelProperties: {
+      status: {
+        readOnly: true,
+        serializedName: "status",
+        type: {
+          name: "Composite",
+          className: "InstanceViewStatus"
+        }
+      }
+    }
+  }
+};
+
 export const VirtualMachineInstanceView: msRest.CompositeMapper = {
   serializedName: "VirtualMachineInstanceView",
   type: {
@@ -3168,6 +3186,14 @@ export const VirtualMachineInstanceView: msRest.CompositeMapper = {
               className: "VirtualMachineExtensionInstanceView"
             }
           }
+        }
+      },
+      vmHealth: {
+        readOnly: true,
+        serializedName: "vmHealth",
+        type: {
+          name: "Composite",
+          className: "VirtualMachineHealthStatus"
         }
       },
       bootDiagnostics: {
@@ -6040,24 +6066,6 @@ export const UpgradeOperationHistoricalStatusInfo: msRest.CompositeMapper = {
         serializedName: "location",
         type: {
           name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const VirtualMachineHealthStatus: msRest.CompositeMapper = {
-  serializedName: "VirtualMachineHealthStatus",
-  type: {
-    name: "Composite",
-    className: "VirtualMachineHealthStatus",
-    modelProperties: {
-      status: {
-        readOnly: true,
-        serializedName: "status",
-        type: {
-          name: "Composite",
-          className: "InstanceViewStatus"
         }
       }
     }
