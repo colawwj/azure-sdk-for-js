@@ -239,7 +239,7 @@ const getOperationSpec: msRest.OperationSpec = {
     Parameters.administratorName
   ],
   queryParameters: [
-    Parameters.apiVersion6
+    Parameters.apiVersion7
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -264,7 +264,7 @@ const listByServerOperationSpec: msRest.OperationSpec = {
     Parameters.serverName
   ],
   queryParameters: [
-    Parameters.apiVersion6
+    Parameters.apiVersion7
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -290,7 +290,7 @@ const beginCreateOrUpdateOperationSpec: msRest.OperationSpec = {
     Parameters.administratorName
   ],
   queryParameters: [
-    Parameters.apiVersion6
+    Parameters.apiVersion7
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -327,7 +327,7 @@ const beginDeleteMethodOperationSpec: msRest.OperationSpec = {
     Parameters.administratorName
   ],
   queryParameters: [
-    Parameters.apiVersion6
+    Parameters.apiVersion7
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -352,7 +352,7 @@ const beginDisableAzureADOnlyAuthenticationOperationSpec: msRest.OperationSpec =
     Parameters.serverName
   ],
   queryParameters: [
-    Parameters.apiVersion6
+    Parameters.apiVersion7
   ],
   headerParameters: [
     Parameters.acceptLanguage

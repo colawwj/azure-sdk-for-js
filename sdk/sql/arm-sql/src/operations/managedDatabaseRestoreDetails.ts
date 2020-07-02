@@ -79,7 +79,7 @@ const getOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion6
+    Parameters.apiVersion7
   ],
   headerParameters: [
     Parameters.acceptLanguage

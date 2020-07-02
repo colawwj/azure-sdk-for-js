@@ -571,260 +571,6 @@ export const GeoBackupPolicy: msRest.CompositeMapper = {
   }
 };
 
-export const ImportExtensionRequest: msRest.CompositeMapper = {
-  serializedName: "ImportExtensionRequest",
-  type: {
-    name: "Composite",
-    className: "ImportExtensionRequest",
-    modelProperties: {
-      name: {
-        serializedName: "name",
-        type: {
-          name: "String"
-        }
-      },
-      type: {
-        serializedName: "type",
-        type: {
-          name: "String"
-        }
-      },
-      storageKeyType: {
-        required: true,
-        serializedName: "properties.storageKeyType",
-        type: {
-          name: "Enum",
-          allowedValues: [
-            "StorageAccessKey",
-            "SharedAccessKey"
-          ]
-        }
-      },
-      storageKey: {
-        required: true,
-        serializedName: "properties.storageKey",
-        type: {
-          name: "String"
-        }
-      },
-      storageUri: {
-        required: true,
-        serializedName: "properties.storageUri",
-        type: {
-          name: "String"
-        }
-      },
-      administratorLogin: {
-        required: true,
-        serializedName: "properties.administratorLogin",
-        type: {
-          name: "String"
-        }
-      },
-      administratorLoginPassword: {
-        required: true,
-        serializedName: "properties.administratorLoginPassword",
-        type: {
-          name: "String"
-        }
-      },
-      authenticationType: {
-        serializedName: "properties.authenticationType",
-        defaultValue: 'SQL',
-        type: {
-          name: "Enum",
-          allowedValues: [
-            "SQL",
-            "ADPassword"
-          ]
-        }
-      },
-      operationMode: {
-        required: true,
-        isConstant: true,
-        serializedName: "properties.operationMode",
-        defaultValue: 'Import',
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const ImportExportResponse: msRest.CompositeMapper = {
-  serializedName: "ImportExportResponse",
-  type: {
-    name: "Composite",
-    className: "ImportExportResponse",
-    modelProperties: {
-      ...ProxyResource.type.modelProperties,
-      requestType: {
-        readOnly: true,
-        serializedName: "properties.requestType",
-        type: {
-          name: "String"
-        }
-      },
-      requestId: {
-        readOnly: true,
-        serializedName: "properties.requestId",
-        type: {
-          name: "Uuid"
-        }
-      },
-      serverName: {
-        readOnly: true,
-        serializedName: "properties.serverName",
-        type: {
-          name: "String"
-        }
-      },
-      databaseName: {
-        readOnly: true,
-        serializedName: "properties.databaseName",
-        type: {
-          name: "String"
-        }
-      },
-      status: {
-        readOnly: true,
-        serializedName: "properties.status",
-        type: {
-          name: "String"
-        }
-      },
-      lastModifiedTime: {
-        readOnly: true,
-        serializedName: "properties.lastModifiedTime",
-        type: {
-          name: "String"
-        }
-      },
-      queuedTime: {
-        readOnly: true,
-        serializedName: "properties.queuedTime",
-        type: {
-          name: "String"
-        }
-      },
-      blobUri: {
-        readOnly: true,
-        serializedName: "properties.blobUri",
-        type: {
-          name: "String"
-        }
-      },
-      errorMessage: {
-        readOnly: true,
-        serializedName: "properties.errorMessage",
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const ExportRequest: msRest.CompositeMapper = {
-  serializedName: "ExportRequest",
-  type: {
-    name: "Composite",
-    className: "ExportRequest",
-    modelProperties: {
-      storageKeyType: {
-        required: true,
-        serializedName: "storageKeyType",
-        type: {
-          name: "Enum",
-          allowedValues: [
-            "StorageAccessKey",
-            "SharedAccessKey"
-          ]
-        }
-      },
-      storageKey: {
-        required: true,
-        serializedName: "storageKey",
-        type: {
-          name: "String"
-        }
-      },
-      storageUri: {
-        required: true,
-        serializedName: "storageUri",
-        type: {
-          name: "String"
-        }
-      },
-      administratorLogin: {
-        required: true,
-        serializedName: "administratorLogin",
-        type: {
-          name: "String"
-        }
-      },
-      administratorLoginPassword: {
-        required: true,
-        serializedName: "administratorLoginPassword",
-        type: {
-          name: "String"
-        }
-      },
-      authenticationType: {
-        serializedName: "authenticationType",
-        defaultValue: 'SQL',
-        type: {
-          name: "Enum",
-          allowedValues: [
-            "SQL",
-            "ADPassword"
-          ]
-        }
-      }
-    }
-  }
-};
-
-export const ImportRequest: msRest.CompositeMapper = {
-  serializedName: "ImportRequest",
-  type: {
-    name: "Composite",
-    className: "ImportRequest",
-    modelProperties: {
-      ...ExportRequest.type.modelProperties,
-      databaseName: {
-        required: true,
-        serializedName: "databaseName",
-        type: {
-          name: "String"
-        }
-      },
-      edition: {
-        required: true,
-        serializedName: "edition",
-        type: {
-          name: "String"
-        }
-      },
-      serviceObjectiveName: {
-        required: true,
-        serializedName: "serviceObjectiveName",
-        type: {
-          name: "String"
-        }
-      },
-      maxSizeBytes: {
-        required: true,
-        serializedName: "maxSizeBytes",
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
 export const MetricValue: msRest.CompositeMapper = {
   serializedName: "MetricValue",
   type: {
@@ -9330,6 +9076,228 @@ export const SyncMember: msRest.CompositeMapper = {
         serializedName: "properties.syncState",
         type: {
           name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const NetworkIsolationSettings: msRest.CompositeMapper = {
+  serializedName: "NetworkIsolationSettings",
+  type: {
+    name: "Composite",
+    className: "NetworkIsolationSettings",
+    modelProperties: {
+      storageAccountResourceId: {
+        serializedName: "storageAccountResourceId",
+        type: {
+          name: "String"
+        }
+      },
+      sqlServerResourceId: {
+        serializedName: "sqlServerResourceId",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const ImportExportDatabaseDefinition: msRest.CompositeMapper = {
+  serializedName: "ImportExportDatabaseDefinition",
+  type: {
+    name: "Composite",
+    className: "ImportExportDatabaseDefinition",
+    modelProperties: {
+      databaseName: {
+        serializedName: "databaseName",
+        type: {
+          name: "String"
+        }
+      },
+      edition: {
+        serializedName: "edition",
+        type: {
+          name: "String"
+        }
+      },
+      serviceObjectiveName: {
+        serializedName: "serviceObjectiveName",
+        type: {
+          name: "String"
+        }
+      },
+      maxSizeBytes: {
+        serializedName: "maxSizeBytes",
+        type: {
+          name: "String"
+        }
+      },
+      storageKeyType: {
+        required: true,
+        serializedName: "storageKeyType",
+        type: {
+          name: "String"
+        }
+      },
+      storageKey: {
+        required: true,
+        serializedName: "storageKey",
+        type: {
+          name: "String"
+        }
+      },
+      storageUri: {
+        required: true,
+        serializedName: "storageUri",
+        type: {
+          name: "String"
+        }
+      },
+      administratorLogin: {
+        required: true,
+        serializedName: "administratorLogin",
+        type: {
+          name: "String"
+        }
+      },
+      administratorLoginPassword: {
+        required: true,
+        serializedName: "administratorLoginPassword",
+        type: {
+          name: "String"
+        }
+      },
+      authenticationType: {
+        serializedName: "authenticationType",
+        type: {
+          name: "String"
+        }
+      },
+      networkIsolation: {
+        serializedName: "networkIsolation",
+        type: {
+          name: "Composite",
+          className: "NetworkIsolationSettings"
+        }
+      }
+    }
+  }
+};
+
+export const PrivateEndpointConnectionRequestStatus: msRest.CompositeMapper = {
+  serializedName: "PrivateEndpointConnectionRequestStatus",
+  type: {
+    name: "Composite",
+    className: "PrivateEndpointConnectionRequestStatus",
+    modelProperties: {
+      privateLinkServiceId: {
+        readOnly: true,
+        serializedName: "privateLinkServiceId",
+        type: {
+          name: "String"
+        }
+      },
+      privateEndpointConnectionName: {
+        readOnly: true,
+        serializedName: "privateEndpointConnectionName",
+        type: {
+          name: "String"
+        }
+      },
+      status: {
+        readOnly: true,
+        serializedName: "status",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const ImportExportOperationResult: msRest.CompositeMapper = {
+  serializedName: "ImportExportOperationResult",
+  type: {
+    name: "Composite",
+    className: "ImportExportOperationResult",
+    modelProperties: {
+      ...ProxyResource.type.modelProperties,
+      requestId: {
+        readOnly: true,
+        serializedName: "properties.requestId",
+        type: {
+          name: "Uuid"
+        }
+      },
+      requestType: {
+        readOnly: true,
+        serializedName: "properties.requestType",
+        type: {
+          name: "String"
+        }
+      },
+      queuedTime: {
+        readOnly: true,
+        serializedName: "properties.queuedTime",
+        type: {
+          name: "String"
+        }
+      },
+      lastModifiedTime: {
+        readOnly: true,
+        serializedName: "properties.lastModifiedTime",
+        type: {
+          name: "String"
+        }
+      },
+      blobUri: {
+        readOnly: true,
+        serializedName: "properties.blobUri",
+        type: {
+          name: "String"
+        }
+      },
+      serverName: {
+        readOnly: true,
+        serializedName: "properties.serverName",
+        type: {
+          name: "String"
+        }
+      },
+      databaseName: {
+        readOnly: true,
+        serializedName: "properties.databaseName",
+        type: {
+          name: "String"
+        }
+      },
+      status: {
+        readOnly: true,
+        serializedName: "properties.status",
+        type: {
+          name: "String"
+        }
+      },
+      errorMessage: {
+        readOnly: true,
+        serializedName: "properties.errorMessage",
+        type: {
+          name: "String"
+        }
+      },
+      privateEndpointConnections: {
+        readOnly: true,
+        serializedName: "properties.privateEndpointConnections",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "PrivateEndpointConnectionRequestStatus"
+            }
+          }
         }
       }
     }

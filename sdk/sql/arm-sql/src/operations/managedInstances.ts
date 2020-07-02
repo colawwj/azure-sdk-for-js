@@ -571,7 +571,7 @@ const beginFailoverOperationSpec: msRest.OperationSpec = {
     Parameters.managedInstanceName
   ],
   queryParameters: [
-    Parameters.apiVersion5,
+    Parameters.apiVersion6,
     Parameters.replicaType
   ],
   headerParameters: [

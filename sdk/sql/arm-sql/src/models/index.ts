@@ -366,173 +366,6 @@ export interface GeoBackupPolicy extends ProxyResource {
 }
 
 /**
- * Import database parameters.
- */
-export interface ImportExtensionRequest {
-  /**
-   * The name of the extension.
-   */
-  name?: string;
-  /**
-   * The type of the extension.
-   */
-  type?: string;
-  /**
-   * The type of the storage key to use. Possible values include: 'StorageAccessKey',
-   * 'SharedAccessKey'
-   */
-  storageKeyType: StorageKeyType;
-  /**
-   * The storage key to use.  If storage key type is SharedAccessKey, it must be preceded with a
-   * "?."
-   */
-  storageKey: string;
-  /**
-   * The storage uri to use.
-   */
-  storageUri: string;
-  /**
-   * The name of the SQL administrator.
-   */
-  administratorLogin: string;
-  /**
-   * The password of the SQL administrator.
-   */
-  administratorLoginPassword: string;
-  /**
-   * The authentication type. Possible values include: 'SQL', 'ADPassword'. Default value: 'SQL'.
-   */
-  authenticationType?: AuthenticationType;
-}
-
-/**
- * Response for Import/Export Get operation.
- */
-export interface ImportExportResponse extends ProxyResource {
-  /**
-   * The request type of the operation.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly requestType?: string;
-  /**
-   * The request type of the operation.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly requestId?: string;
-  /**
-   * The name of the server.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly serverName?: string;
-  /**
-   * The name of the database.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly databaseName?: string;
-  /**
-   * The status message returned from the server.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly status?: string;
-  /**
-   * The operation status last modified time.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly lastModifiedTime?: string;
-  /**
-   * The operation queued time.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly queuedTime?: string;
-  /**
-   * The blob uri.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly blobUri?: string;
-  /**
-   * The error message returned from the server.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly errorMessage?: string;
-}
-
-/**
- * Export database parameters.
- */
-export interface ExportRequest {
-  /**
-   * The type of the storage key to use. Possible values include: 'StorageAccessKey',
-   * 'SharedAccessKey'
-   */
-  storageKeyType: StorageKeyType;
-  /**
-   * The storage key to use.  If storage key type is SharedAccessKey, it must be preceded with a
-   * "?."
-   */
-  storageKey: string;
-  /**
-   * The storage uri to use.
-   */
-  storageUri: string;
-  /**
-   * The name of the SQL administrator.
-   */
-  administratorLogin: string;
-  /**
-   * The password of the SQL administrator.
-   */
-  administratorLoginPassword: string;
-  /**
-   * The authentication type. Possible values include: 'SQL', 'ADPassword'. Default value: 'SQL'.
-   */
-  authenticationType?: AuthenticationType;
-}
-
-/**
- * Import database parameters.
- */
-export interface ImportRequest extends ExportRequest {
-  /**
-   * The name of the database to import.
-   */
-  databaseName: string;
-  /**
-   * The edition for the database being created.
-   *
-   * The list of SKUs may vary by region and support offer. To determine the SKUs (including the
-   * SKU name, tier/edition, family, and capacity) that are available to your subscription in an
-   * Azure region, use the `Capabilities_ListByLocation` REST API or one of the following commands:
-   *
-   * ```azurecli
-   * az sql db list-editions -l <location> -o table
-   * ````
-   *
-   * ```powershell
-   * Get-AzSqlServerServiceObjective -Location <location>
-   * ````
-   * . Possible values include: 'Web', 'Business', 'Basic', 'Standard', 'Premium', 'PremiumRS',
-   * 'Free', 'Stretch', 'DataWarehouse', 'System', 'System2', 'GeneralPurpose', 'BusinessCritical',
-   * 'Hyperscale'
-   */
-  edition: DatabaseEdition;
-  /**
-   * The name of the service objective to assign to the database. Possible values include:
-   * 'System', 'System0', 'System1', 'System2', 'System3', 'System4', 'System2L', 'System3L',
-   * 'System4L', 'Free', 'Basic', 'S0', 'S1', 'S2', 'S3', 'S4', 'S6', 'S7', 'S9', 'S12', 'P1',
-   * 'P2', 'P3', 'P4', 'P6', 'P11', 'P15', 'PRS1', 'PRS2', 'PRS4', 'PRS6', 'DW100', 'DW200',
-   * 'DW300', 'DW400', 'DW500', 'DW600', 'DW1000', 'DW1200', 'DW1000c', 'DW1500', 'DW1500c',
-   * 'DW2000', 'DW2000c', 'DW3000', 'DW2500c', 'DW3000c', 'DW6000', 'DW5000c', 'DW6000c',
-   * 'DW7500c', 'DW10000c', 'DW15000c', 'DW30000c', 'DS100', 'DS200', 'DS300', 'DS400', 'DS500',
-   * 'DS600', 'DS1000', 'DS1200', 'DS1500', 'DS2000', 'ElasticPool'
-   */
-  serviceObjectiveName: ServiceObjectiveName;
-  /**
-   * The maximum size for the newly imported database.
-   */
-  maxSizeBytes: string;
-}
-
-/**
  * Represents database metrics.
  */
 export interface MetricValue {
@@ -6354,6 +6187,151 @@ export interface SyncMember extends ProxyResource {
 }
 
 /**
+ * Contains the ARM resources for which to create private endpoint connection.
+ */
+export interface NetworkIsolationSettings {
+  /**
+   * The resource id for the storage account used to store BACPAC file. If set, private endpoint
+   * connection will be created for the storage account. Must match storage account used for
+   * StorageUri parameter.
+   */
+  storageAccountResourceId?: string;
+  /**
+   * The resource id for the SQL server which is the target of this request. If set, private
+   * endpoint connection will be created for the SQL server. Must match server which is target of
+   * the operation.
+   */
+  sqlServerResourceId?: string;
+}
+
+/**
+ * Contains the information necessary to perform import/export operation.
+ */
+export interface ImportExportDatabaseDefinition {
+  /**
+   * Name of the import database.
+   */
+  databaseName?: string;
+  /**
+   * Edition of the import database.
+   */
+  edition?: string;
+  /**
+   * Service level objective name of the import database.
+   */
+  serviceObjectiveName?: string;
+  /**
+   * Max size in bytes for the import database.
+   */
+  maxSizeBytes?: string;
+  /**
+   * Storage key type. Possible values include: 'SharedAccessKey', 'StorageAccessKey'
+   */
+  storageKeyType: StorageKeyType;
+  /**
+   * Storage key.
+   */
+  storageKey: string;
+  /**
+   * Storage Uri.
+   */
+  storageUri: string;
+  /**
+   * Administrator login name.
+   */
+  administratorLogin: string;
+  /**
+   * Administrator login password.
+   */
+  administratorLoginPassword: string;
+  /**
+   * Authentication type.
+   */
+  authenticationType?: string;
+  /**
+   * Optional resource information to enable network isolation for request.
+   */
+  networkIsolation?: NetworkIsolationSettings;
+}
+
+/**
+ * Contains the private endpoint connection requests status.
+ */
+export interface PrivateEndpointConnectionRequestStatus {
+  /**
+   * Resource id for which the private endpoint is created.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly privateLinkServiceId?: string;
+  /**
+   * The connection name for the private endpoint.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly privateEndpointConnectionName?: string;
+  /**
+   * Status of this private endpoint connection.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly status?: string;
+}
+
+/**
+ * An ImportExport operation result resource.
+ */
+export interface ImportExportOperationResult extends ProxyResource {
+  /**
+   * Request Id.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly requestId?: string;
+  /**
+   * Request type.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly requestType?: string;
+  /**
+   * Queued time.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly queuedTime?: string;
+  /**
+   * Last modified time.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly lastModifiedTime?: string;
+  /**
+   * Blob Uri.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly blobUri?: string;
+  /**
+   * Server name.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly serverName?: string;
+  /**
+   * Database name.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly databaseName?: string;
+  /**
+   * Operation status.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly status?: string;
+  /**
+   * Error message.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly errorMessage?: string;
+  /**
+   * Gets the status of private endpoints associated with this request.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly privateEndpointConnections?: PrivateEndpointConnectionRequestStatus[];
+}
+
+/**
  * Optional Parameters.
  */
 export interface DatabasesFailoverOptionalParams extends msRest.RequestOptionsBase {
@@ -7855,46 +7833,6 @@ export type DataMaskingFunction = 'Default' | 'CCN' | 'Email' | 'Number' | 'SSN'
 export type GeoBackupPolicyState = 'Disabled' | 'Enabled';
 
 /**
- * Defines values for DatabaseEdition.
- * Possible values include: 'Web', 'Business', 'Basic', 'Standard', 'Premium', 'PremiumRS', 'Free',
- * 'Stretch', 'DataWarehouse', 'System', 'System2', 'GeneralPurpose', 'BusinessCritical',
- * 'Hyperscale'
- * @readonly
- * @enum {string}
- */
-export type DatabaseEdition = 'Web' | 'Business' | 'Basic' | 'Standard' | 'Premium' | 'PremiumRS' | 'Free' | 'Stretch' | 'DataWarehouse' | 'System' | 'System2' | 'GeneralPurpose' | 'BusinessCritical' | 'Hyperscale';
-
-/**
- * Defines values for ServiceObjectiveName.
- * Possible values include: 'System', 'System0', 'System1', 'System2', 'System3', 'System4',
- * 'System2L', 'System3L', 'System4L', 'Free', 'Basic', 'S0', 'S1', 'S2', 'S3', 'S4', 'S6', 'S7',
- * 'S9', 'S12', 'P1', 'P2', 'P3', 'P4', 'P6', 'P11', 'P15', 'PRS1', 'PRS2', 'PRS4', 'PRS6',
- * 'DW100', 'DW200', 'DW300', 'DW400', 'DW500', 'DW600', 'DW1000', 'DW1200', 'DW1000c', 'DW1500',
- * 'DW1500c', 'DW2000', 'DW2000c', 'DW3000', 'DW2500c', 'DW3000c', 'DW6000', 'DW5000c', 'DW6000c',
- * 'DW7500c', 'DW10000c', 'DW15000c', 'DW30000c', 'DS100', 'DS200', 'DS300', 'DS400', 'DS500',
- * 'DS600', 'DS1000', 'DS1200', 'DS1500', 'DS2000', 'ElasticPool'
- * @readonly
- * @enum {string}
- */
-export type ServiceObjectiveName = 'System' | 'System0' | 'System1' | 'System2' | 'System3' | 'System4' | 'System2L' | 'System3L' | 'System4L' | 'Free' | 'Basic' | 'S0' | 'S1' | 'S2' | 'S3' | 'S4' | 'S6' | 'S7' | 'S9' | 'S12' | 'P1' | 'P2' | 'P3' | 'P4' | 'P6' | 'P11' | 'P15' | 'PRS1' | 'PRS2' | 'PRS4' | 'PRS6' | 'DW100' | 'DW200' | 'DW300' | 'DW400' | 'DW500' | 'DW600' | 'DW1000' | 'DW1200' | 'DW1000c' | 'DW1500' | 'DW1500c' | 'DW2000' | 'DW2000c' | 'DW3000' | 'DW2500c' | 'DW3000c' | 'DW6000' | 'DW5000c' | 'DW6000c' | 'DW7500c' | 'DW10000c' | 'DW15000c' | 'DW30000c' | 'DS100' | 'DS200' | 'DS300' | 'DS400' | 'DS500' | 'DS600' | 'DS1000' | 'DS1200' | 'DS1500' | 'DS2000' | 'ElasticPool';
-
-/**
- * Defines values for StorageKeyType.
- * Possible values include: 'StorageAccessKey', 'SharedAccessKey'
- * @readonly
- * @enum {string}
- */
-export type StorageKeyType = 'StorageAccessKey' | 'SharedAccessKey';
-
-/**
- * Defines values for AuthenticationType.
- * Possible values include: 'SQL', 'ADPassword'
- * @readonly
- * @enum {string}
- */
-export type AuthenticationType = 'SQL' | 'ADPassword';
-
-/**
  * Defines values for UnitType.
  * Possible values include: 'count', 'bytes', 'seconds', 'percent', 'countPerSecond',
  * 'bytesPerSecond'
@@ -7976,6 +7914,20 @@ export type RecommendedIndexType = 'CLUSTERED' | 'NONCLUSTERED' | 'COLUMNSTORE' 
  * @enum {string}
  */
 export type TransparentDataEncryptionStatus = 'Enabled' | 'Disabled';
+
+/**
+ * Defines values for ServiceObjectiveName.
+ * Possible values include: 'System', 'System0', 'System1', 'System2', 'System3', 'System4',
+ * 'System2L', 'System3L', 'System4L', 'Free', 'Basic', 'S0', 'S1', 'S2', 'S3', 'S4', 'S6', 'S7',
+ * 'S9', 'S12', 'P1', 'P2', 'P3', 'P4', 'P6', 'P11', 'P15', 'PRS1', 'PRS2', 'PRS4', 'PRS6',
+ * 'DW100', 'DW200', 'DW300', 'DW400', 'DW500', 'DW600', 'DW1000', 'DW1200', 'DW1000c', 'DW1500',
+ * 'DW1500c', 'DW2000', 'DW2000c', 'DW3000', 'DW2500c', 'DW3000c', 'DW6000', 'DW5000c', 'DW6000c',
+ * 'DW7500c', 'DW10000c', 'DW15000c', 'DW30000c', 'DS100', 'DS200', 'DS300', 'DS400', 'DS500',
+ * 'DS600', 'DS1000', 'DS1200', 'DS1500', 'DS2000', 'ElasticPool'
+ * @readonly
+ * @enum {string}
+ */
+export type ServiceObjectiveName = 'System' | 'System0' | 'System1' | 'System2' | 'System3' | 'System4' | 'System2L' | 'System3L' | 'System4L' | 'Free' | 'Basic' | 'S0' | 'S1' | 'S2' | 'S3' | 'S4' | 'S6' | 'S7' | 'S9' | 'S12' | 'P1' | 'P2' | 'P3' | 'P4' | 'P6' | 'P11' | 'P15' | 'PRS1' | 'PRS2' | 'PRS4' | 'PRS6' | 'DW100' | 'DW200' | 'DW300' | 'DW400' | 'DW500' | 'DW600' | 'DW1000' | 'DW1200' | 'DW1000c' | 'DW1500' | 'DW1500c' | 'DW2000' | 'DW2000c' | 'DW3000' | 'DW2500c' | 'DW3000c' | 'DW6000' | 'DW5000c' | 'DW6000c' | 'DW7500c' | 'DW10000c' | 'DW15000c' | 'DW30000c' | 'DS100' | 'DS200' | 'DS300' | 'DS400' | 'DS500' | 'DS600' | 'DS1000' | 'DS1200' | 'DS1500' | 'DS2000' | 'ElasticPool';
 
 /**
  * Defines values for TransparentDataEncryptionActivityStatus.
@@ -8482,6 +8434,14 @@ export type SyncDirection = 'Bidirectional' | 'OneWayMemberToHub' | 'OneWayHubTo
 export type SyncMemberState = 'SyncInProgress' | 'SyncSucceeded' | 'SyncFailed' | 'DisabledTombstoneCleanup' | 'DisabledBackupRestore' | 'SyncSucceededWithWarnings' | 'SyncCancelling' | 'SyncCancelled' | 'UnProvisioned' | 'Provisioning' | 'Provisioned' | 'ProvisionFailed' | 'DeProvisioning' | 'DeProvisioned' | 'DeProvisionFailed' | 'Reprovisioning' | 'ReprovisionFailed' | 'UnReprovisioned';
 
 /**
+ * Defines values for StorageKeyType.
+ * Possible values include: 'SharedAccessKey', 'StorageAccessKey'
+ * @readonly
+ * @enum {string}
+ */
+export type StorageKeyType = 'SharedAccessKey' | 'StorageAccessKey';
+
+/**
  * Defines values for LongTermRetentionDatabaseState.
  * Possible values include: 'All', 'Live', 'Deleted'
  * @readonly
@@ -8948,66 +8908,6 @@ export type GeoBackupPoliciesListByDatabaseResponse = GeoBackupPolicyListResult 
 };
 
 /**
- * Contains response data for the importMethod operation.
- */
-export type DatabasesImportMethodResponse = ImportExportResponse & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ImportExportResponse;
-    };
-};
-
-/**
- * Contains response data for the createImportOperation operation.
- */
-export type DatabasesCreateImportOperationResponse = ImportExportResponse & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ImportExportResponse;
-    };
-};
-
-/**
- * Contains response data for the exportMethod operation.
- */
-export type DatabasesExportMethodResponse = ImportExportResponse & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ImportExportResponse;
-    };
-};
-
-/**
  * Contains response data for the listMetrics operation.
  */
 export type DatabasesListMetricsResponse = MetricListResult & {
@@ -9188,9 +9088,9 @@ export type DatabasesResumeResponse = Database & {
 };
 
 /**
- * Contains response data for the beginImportMethod operation.
+ * Contains response data for the exportMethod operation.
  */
-export type DatabasesBeginImportMethodResponse = ImportExportResponse & {
+export type DatabasesExportMethodResponse = ImportExportOperationResult & {
   /**
    * The underlying HTTP response.
    */
@@ -9203,14 +9103,14 @@ export type DatabasesBeginImportMethodResponse = ImportExportResponse & {
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: ImportExportResponse;
+      parsedBody: ImportExportOperationResult;
     };
 };
 
 /**
- * Contains response data for the beginCreateImportOperation operation.
+ * Contains response data for the createImportOperation operation.
  */
-export type DatabasesBeginCreateImportOperationResponse = ImportExportResponse & {
+export type DatabasesCreateImportOperationResponse = ImportExportOperationResult & {
   /**
    * The underlying HTTP response.
    */
@@ -9223,14 +9123,14 @@ export type DatabasesBeginCreateImportOperationResponse = ImportExportResponse &
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: ImportExportResponse;
+      parsedBody: ImportExportOperationResult;
     };
 };
 
 /**
- * Contains response data for the beginExportMethod operation.
+ * Contains response data for the importMethod operation.
  */
-export type DatabasesBeginExportMethodResponse = ImportExportResponse & {
+export type DatabasesImportMethodResponse = ImportExportOperationResult & {
   /**
    * The underlying HTTP response.
    */
@@ -9243,7 +9143,7 @@ export type DatabasesBeginExportMethodResponse = ImportExportResponse & {
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: ImportExportResponse;
+      parsedBody: ImportExportOperationResult;
     };
 };
 
@@ -9324,6 +9224,66 @@ export type DatabasesBeginResumeResponse = Database & {
        * The response body as parsed JSON or XML
        */
       parsedBody: Database;
+    };
+};
+
+/**
+ * Contains response data for the beginExportMethod operation.
+ */
+export type DatabasesBeginExportMethodResponse = ImportExportOperationResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ImportExportOperationResult;
+    };
+};
+
+/**
+ * Contains response data for the beginCreateImportOperation operation.
+ */
+export type DatabasesBeginCreateImportOperationResponse = ImportExportOperationResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ImportExportOperationResult;
+    };
+};
+
+/**
+ * Contains response data for the beginImportMethod operation.
+ */
+export type DatabasesBeginImportMethodResponse = ImportExportOperationResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ImportExportOperationResult;
     };
 };
 

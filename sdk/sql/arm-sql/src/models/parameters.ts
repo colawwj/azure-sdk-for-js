@@ -74,7 +74,7 @@ export const apiVersion3: msRest.OperationQueryParameter = {
     required: true,
     isConstant: true,
     serializedName: "api-version",
-    defaultValue: '2015-05-01-preview',
+    defaultValue: '2020-02-02-preview',
     type: {
       name: "String"
     }
@@ -86,13 +86,25 @@ export const apiVersion4: msRest.OperationQueryParameter = {
     required: true,
     isConstant: true,
     serializedName: "api-version",
-    defaultValue: '2017-03-01-preview',
+    defaultValue: '2015-05-01-preview',
     type: {
       name: "String"
     }
   }
 };
 export const apiVersion5: msRest.OperationQueryParameter = {
+  parameterPath: "apiVersion",
+  mapper: {
+    required: true,
+    isConstant: true,
+    serializedName: "api-version",
+    defaultValue: '2017-03-01-preview',
+    type: {
+      name: "String"
+    }
+  }
+};
+export const apiVersion6: msRest.OperationQueryParameter = {
   parameterPath: "apiVersion",
   mapper: {
     required: true,
@@ -107,7 +119,7 @@ export const apiVersion5: msRest.OperationQueryParameter = {
     }
   }
 };
-export const apiVersion6: msRest.OperationQueryParameter = {
+export const apiVersion7: msRest.OperationQueryParameter = {
   parameterPath: "apiVersion",
   mapper: {
     required: true,
@@ -352,18 +364,6 @@ export const expandChildren: msRest.OperationQueryParameter = {
     serializedName: "expandChildren",
     type: {
       name: "Boolean"
-    }
-  }
-};
-export const extensionName: msRest.OperationURLParameter = {
-  parameterPath: "extensionName",
-  mapper: {
-    required: true,
-    isConstant: true,
-    serializedName: "extensionName",
-    defaultValue: 'import',
-    type: {
-      name: "String"
     }
   }
 };
