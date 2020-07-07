@@ -1587,6 +1587,12 @@ export const ManagedClusterWindowsProfile: msRest.CompositeMapper = {
         type: {
           name: "String"
         }
+      },
+      licenseType: {
+        serializedName: "licenseType",
+        type: {
+          name: "String"
+        }
       }
     }
   }

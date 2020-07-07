@@ -1136,6 +1136,11 @@ export interface ManagedClusterWindowsProfile {
    * The administrator password to use for Windows VMs.
    */
   adminPassword?: string;
+  /**
+   * The licenseType to use for Windows VMs. Windows_Server is used to enable Azure Hybrid User
+   * Benefits for Windows VMs. Possible values include: 'None', 'Windows_Server'
+   */
+  licenseType?: LicenseType;
 }
 
 /**
@@ -2008,6 +2013,14 @@ export type ScaleSetPriority = 'Spot' | 'Regular';
  * @enum {string}
  */
 export type ScaleSetEvictionPolicy = 'Delete' | 'Deallocate';
+
+/**
+ * Defines values for LicenseType.
+ * Possible values include: 'None', 'Windows_Server'
+ * @readonly
+ * @enum {string}
+ */
+export type LicenseType = 'None' | 'Windows_Server';
 
 /**
  * Defines values for NetworkPlugin.
