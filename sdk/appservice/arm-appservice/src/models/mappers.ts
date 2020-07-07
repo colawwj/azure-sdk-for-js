@@ -1475,7 +1475,8 @@ export const IpSecurityRestriction: msRest.CompositeMapper = {
           name: "Enum",
           allowedValues: [
             "Default",
-            "XffProxy"
+            "XffProxy",
+            "ServiceTag"
           ]
         }
       },
@@ -1495,6 +1496,22 @@ export const IpSecurityRestriction: msRest.CompositeMapper = {
         serializedName: "description",
         type: {
           name: "String"
+        }
+      },
+      headers: {
+        serializedName: "headers",
+        type: {
+          name: "Dictionary",
+          value: {
+            type: {
+              name: "Sequence",
+              element: {
+                type: {
+                  name: "String"
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -2700,6 +2717,16 @@ export const Site: msRest.CompositeMapper = {
         serializedName: "properties.clientCertEnabled",
         type: {
           name: "Boolean"
+        }
+      },
+      clientCertMode: {
+        serializedName: "properties.clientCertMode",
+        type: {
+          name: "Enum",
+          allowedValues: [
+            "Required",
+            "Optional"
+          ]
         }
       },
       clientCertExclusionPaths: {
@@ -11683,6 +11710,16 @@ export const SitePatchResource: msRest.CompositeMapper = {
         serializedName: "properties.clientCertEnabled",
         type: {
           name: "Boolean"
+        }
+      },
+      clientCertMode: {
+        serializedName: "properties.clientCertMode",
+        type: {
+          name: "Enum",
+          allowedValues: [
+            "Required",
+            "Optional"
+          ]
         }
       },
       clientCertExclusionPaths: {

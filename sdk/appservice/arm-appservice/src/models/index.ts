@@ -915,7 +915,7 @@ export interface IpSecurityRestriction {
   action?: string;
   /**
    * Defines what this IP filter will be used for. This is to support IP filtering on proxies.
-   * Possible values include: 'Default', 'XffProxy'
+   * Possible values include: 'Default', 'XffProxy', 'ServiceTag'
    */
   tag?: IpFilterTag;
   /**
@@ -930,6 +930,30 @@ export interface IpSecurityRestriction {
    * IP restriction rule description.
    */
   description?: string;
+  /**
+   * IP restriction rule headers.
+   * X-Forwarded-Host
+   * (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-Host#Examples).
+   * The matching logic is ..
+   * - If the property is null or empty (default), all hosts(or lack of) are allowed.
+   * - A value is compared using ordinal-ignore-case (excluding port number).
+   * - Subdomain wildcards are permitted but don't match the root domain. For example,
+   * *.contoso.com matches the subdomain foo.contoso.com
+   * but not the root domain contoso.com or multi-level foo.bar.contoso.com
+   * - Unicode host names are allowed but are converted to Punycode for matching.
+   *
+   * X-Forwarded-For
+   * (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For#Examples).
+   * The matching logic is ..
+   * - If the property is null or empty (default), any forwarded-for chains (or lack of) are
+   * allowed.
+   * - If any address (excluding port number) in the chain (comma separated) matches the CIDR
+   * defined by the property.
+   *
+   * X-Azure-FDID and X-FD-HealthProbe.
+   * The matching logic is exact match.
+   */
+  headers?: { [propertyName: string]: string[] };
 }
 
 /**
@@ -1652,6 +1676,14 @@ export interface Site extends Resource {
    * otherwise, <code>false</code>. Default is <code>false</code>.
    */
   clientCertEnabled?: boolean;
+  /**
+   * This composes with ClientCertEnabled setting.
+   * - ClientCertEnabled: false means ClientCert is ignored.
+   * - ClientCertEnabled: true and ClientCertMode: Required means ClientCert is required.
+   * - ClientCertEnabled: true and ClientCertMode: Optional means ClientCert is optional or
+   * accepted. Possible values include: 'Required', 'Optional'
+   */
+  clientCertMode?: ClientCertMode;
   /**
    * client certificate authentication comma-separated exclusion paths
    */
@@ -6621,6 +6653,14 @@ export interface SitePatchResource extends ProxyOnlyResource {
    */
   clientCertEnabled?: boolean;
   /**
+   * This composes with ClientCertEnabled setting.
+   * - ClientCertEnabled: false means ClientCert is ignored.
+   * - ClientCertEnabled: true and ClientCertMode: Required means ClientCert is required.
+   * - ClientCertEnabled: true and ClientCertMode: Optional means ClientCert is optional or
+   * accepted. Possible values include: 'Required', 'Optional'
+   */
+  clientCertMode?: ClientCertMode;
+  /**
    * client certificate authentication comma-separated exclusion paths
    */
   clientCertExclusionPaths?: string;
@@ -9692,11 +9732,11 @@ export type ManagedServiceIdentityType = 'SystemAssigned' | 'UserAssigned' | 'Sy
 
 /**
  * Defines values for IpFilterTag.
- * Possible values include: 'Default', 'XffProxy'
+ * Possible values include: 'Default', 'XffProxy', 'ServiceTag'
  * @readonly
  * @enum {string}
  */
-export type IpFilterTag = 'Default' | 'XffProxy';
+export type IpFilterTag = 'Default' | 'XffProxy' | 'ServiceTag';
 
 /**
  * Defines values for AutoHealActionType.
@@ -9789,6 +9829,14 @@ export type UsageState = 'Normal' | 'Exceeded';
  * @enum {string}
  */
 export type SiteAvailabilityState = 'Normal' | 'Limited' | 'DisasterRecoveryMode';
+
+/**
+ * Defines values for ClientCertMode.
+ * Possible values include: 'Required', 'Optional'
+ * @readonly
+ * @enum {string}
+ */
+export type ClientCertMode = 'Required' | 'Optional';
 
 /**
  * Defines values for RedundancyMode.
