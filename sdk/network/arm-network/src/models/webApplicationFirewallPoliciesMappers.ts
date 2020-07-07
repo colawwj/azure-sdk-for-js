@@ -173,7 +173,6 @@ export {
   Ipv6ExpressRouteCircuitPeeringConfig,
   LoadBalancer,
   LoadBalancerBackendAddress,
-  LoadBalancerListResult,
   LoadBalancerSku,
   LoadBalancingRule,
   LocalNetworkGateway,
@@ -250,7 +249,6 @@ export {
   StaticRoute,
   Subnet,
   SubResource,
-  TagsObject,
   TrafficAnalyticsConfigurationProperties,
   TrafficAnalyticsProperties,
   TrafficSelectorPolicy,
@@ -297,5 +295,6 @@ export {
   VpnSiteLink,
   VpnSiteLinkConnection,
   WebApplicationFirewallCustomRule,
-  WebApplicationFirewallPolicy
+  WebApplicationFirewallPolicy,
+  WebApplicationFirewallPolicyListResult
 } from "../models/mappers";
