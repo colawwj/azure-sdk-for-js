@@ -28,38 +28,15 @@ export class ManagedInstances {
   }
 
   /**
-   * Gets a list of all managed instances in an instance pool.
-   * @param resourceGroupName The name of the resource group that contains the resource. You can
-   * obtain this value from the Azure Resource Manager API or the portal.
-   * @param instancePoolName The instance pool name.
+   * Failovers a managed instance.
+   * @param resourceGroupName The name of the resource group. The name is case insensitive.
+   * @param managedInstanceName The name of the managed instance.
    * @param [options] The optional parameters
-   * @returns Promise<Models.ManagedInstancesListByInstancePoolResponse>
+   * @returns Promise<msRest.RestResponse>
    */
-  listByInstancePool(resourceGroupName: string, instancePoolName: string, options?: msRest.RequestOptionsBase): Promise<Models.ManagedInstancesListByInstancePoolResponse>;
-  /**
-   * @param resourceGroupName The name of the resource group that contains the resource. You can
-   * obtain this value from the Azure Resource Manager API or the portal.
-   * @param instancePoolName The instance pool name.
-   * @param callback The callback
-   */
-  listByInstancePool(resourceGroupName: string, instancePoolName: string, callback: msRest.ServiceCallback<Models.ManagedInstanceListResult>): void;
-  /**
-   * @param resourceGroupName The name of the resource group that contains the resource. You can
-   * obtain this value from the Azure Resource Manager API or the portal.
-   * @param instancePoolName The instance pool name.
-   * @param options The optional parameters
-   * @param callback The callback
-   */
-  listByInstancePool(resourceGroupName: string, instancePoolName: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.ManagedInstanceListResult>): void;
-  listByInstancePool(resourceGroupName: string, instancePoolName: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.ManagedInstanceListResult>, callback?: msRest.ServiceCallback<Models.ManagedInstanceListResult>): Promise<Models.ManagedInstancesListByInstancePoolResponse> {
-    return this.client.sendOperationRequest(
-      {
-        resourceGroupName,
-        instancePoolName,
-        options
-      },
-      listByInstancePoolOperationSpec,
-      callback) as Promise<Models.ManagedInstancesListByInstancePoolResponse>;
+  failover(resourceGroupName: string, managedInstanceName: string, options?: Models.ManagedInstancesFailoverOptionalParams): Promise<msRest.RestResponse> {
+    return this.beginFailover(resourceGroupName,managedInstanceName,options)
+      .then(lroPoller => lroPoller.pollUntilFinished());
   }
 
   /**
@@ -170,6 +147,41 @@ export class ManagedInstances {
   }
 
   /**
+   * Gets a list of all managed instances in an instance pool.
+   * @param resourceGroupName The name of the resource group that contains the resource. You can
+   * obtain this value from the Azure Resource Manager API or the portal.
+   * @param instancePoolName The instance pool name.
+   * @param [options] The optional parameters
+   * @returns Promise<Models.ManagedInstancesListByInstancePoolResponse>
+   */
+  listByInstancePool(resourceGroupName: string, instancePoolName: string, options?: msRest.RequestOptionsBase): Promise<Models.ManagedInstancesListByInstancePoolResponse>;
+  /**
+   * @param resourceGroupName The name of the resource group that contains the resource. You can
+   * obtain this value from the Azure Resource Manager API or the portal.
+   * @param instancePoolName The instance pool name.
+   * @param callback The callback
+   */
+  listByInstancePool(resourceGroupName: string, instancePoolName: string, callback: msRest.ServiceCallback<Models.ManagedInstanceListResult>): void;
+  /**
+   * @param resourceGroupName The name of the resource group that contains the resource. You can
+   * obtain this value from the Azure Resource Manager API or the portal.
+   * @param instancePoolName The instance pool name.
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  listByInstancePool(resourceGroupName: string, instancePoolName: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.ManagedInstanceListResult>): void;
+  listByInstancePool(resourceGroupName: string, instancePoolName: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.ManagedInstanceListResult>, callback?: msRest.ServiceCallback<Models.ManagedInstanceListResult>): Promise<Models.ManagedInstancesListByInstancePoolResponse> {
+    return this.client.sendOperationRequest(
+      {
+        resourceGroupName,
+        instancePoolName,
+        options
+      },
+      listByInstancePoolOperationSpec,
+      callback) as Promise<Models.ManagedInstancesListByInstancePoolResponse>;
+  }
+
+  /**
    * Gets a list of all managed instances in the subscription.
    * @param [options] The optional parameters
    * @returns Promise<Models.ManagedInstancesListResponse>
@@ -198,11 +210,17 @@ export class ManagedInstances {
    * @param resourceGroupName The name of the resource group. The name is case insensitive.
    * @param managedInstanceName The name of the managed instance.
    * @param [options] The optional parameters
-   * @returns Promise<msRest.RestResponse>
+   * @returns Promise<msRestAzure.LROPoller>
    */
-  failover(resourceGroupName: string, managedInstanceName: string, options?: Models.ManagedInstancesFailoverOptionalParams): Promise<msRest.RestResponse> {
-    return this.beginFailover(resourceGroupName,managedInstanceName,options)
-      .then(lroPoller => lroPoller.pollUntilFinished());
+  beginFailover(resourceGroupName: string, managedInstanceName: string, options?: Models.ManagedInstancesBeginFailoverOptionalParams): Promise<msRestAzure.LROPoller> {
+    return this.client.sendLRORequest(
+      {
+        resourceGroupName,
+        managedInstanceName,
+        options
+      },
+      beginFailoverOperationSpec,
+      options);
   }
 
   /**
@@ -267,21 +285,31 @@ export class ManagedInstances {
   }
 
   /**
-   * Failovers a managed instance.
-   * @param resourceGroupName The name of the resource group. The name is case insensitive.
-   * @param managedInstanceName The name of the managed instance.
+   * Gets a list of managed instances in a resource group.
+   * @param nextPageLink The NextLink from the previous successful call to List operation.
    * @param [options] The optional parameters
-   * @returns Promise<msRestAzure.LROPoller>
+   * @returns Promise<Models.ManagedInstancesListByResourceGroupNextResponse>
    */
-  beginFailover(resourceGroupName: string, managedInstanceName: string, options?: Models.ManagedInstancesBeginFailoverOptionalParams): Promise<msRestAzure.LROPoller> {
-    return this.client.sendLRORequest(
+  listByResourceGroupNext(nextPageLink: string, options?: msRest.RequestOptionsBase): Promise<Models.ManagedInstancesListByResourceGroupNextResponse>;
+  /**
+   * @param nextPageLink The NextLink from the previous successful call to List operation.
+   * @param callback The callback
+   */
+  listByResourceGroupNext(nextPageLink: string, callback: msRest.ServiceCallback<Models.ManagedInstanceListResult>): void;
+  /**
+   * @param nextPageLink The NextLink from the previous successful call to List operation.
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  listByResourceGroupNext(nextPageLink: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.ManagedInstanceListResult>): void;
+  listByResourceGroupNext(nextPageLink: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.ManagedInstanceListResult>, callback?: msRest.ServiceCallback<Models.ManagedInstanceListResult>): Promise<Models.ManagedInstancesListByResourceGroupNextResponse> {
+    return this.client.sendOperationRequest(
       {
-        resourceGroupName,
-        managedInstanceName,
+        nextPageLink,
         options
       },
-      beginFailoverOperationSpec,
-      options);
+      listByResourceGroupNextOperationSpec,
+      callback) as Promise<Models.ManagedInstancesListByResourceGroupNextResponse>;
   }
 
   /**
@@ -310,34 +338,6 @@ export class ManagedInstances {
       },
       listByInstancePoolNextOperationSpec,
       callback) as Promise<Models.ManagedInstancesListByInstancePoolNextResponse>;
-  }
-
-  /**
-   * Gets a list of managed instances in a resource group.
-   * @param nextPageLink The NextLink from the previous successful call to List operation.
-   * @param [options] The optional parameters
-   * @returns Promise<Models.ManagedInstancesListByResourceGroupNextResponse>
-   */
-  listByResourceGroupNext(nextPageLink: string, options?: msRest.RequestOptionsBase): Promise<Models.ManagedInstancesListByResourceGroupNextResponse>;
-  /**
-   * @param nextPageLink The NextLink from the previous successful call to List operation.
-   * @param callback The callback
-   */
-  listByResourceGroupNext(nextPageLink: string, callback: msRest.ServiceCallback<Models.ManagedInstanceListResult>): void;
-  /**
-   * @param nextPageLink The NextLink from the previous successful call to List operation.
-   * @param options The optional parameters
-   * @param callback The callback
-   */
-  listByResourceGroupNext(nextPageLink: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.ManagedInstanceListResult>): void;
-  listByResourceGroupNext(nextPageLink: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.ManagedInstanceListResult>, callback?: msRest.ServiceCallback<Models.ManagedInstanceListResult>): Promise<Models.ManagedInstancesListByResourceGroupNextResponse> {
-    return this.client.sendOperationRequest(
-      {
-        nextPageLink,
-        options
-      },
-      listByResourceGroupNextOperationSpec,
-      callback) as Promise<Models.ManagedInstancesListByResourceGroupNextResponse>;
   }
 
   /**
@@ -371,31 +371,6 @@ export class ManagedInstances {
 
 // Operation Specifications
 const serializer = new msRest.Serializer(Mappers);
-const listByInstancePoolOperationSpec: msRest.OperationSpec = {
-  httpMethod: "GET",
-  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}/managedInstances",
-  urlParameters: [
-    Parameters.resourceGroupName0,
-    Parameters.instancePoolName,
-    Parameters.subscriptionId
-  ],
-  queryParameters: [
-    Parameters.apiVersion2
-  ],
-  headerParameters: [
-    Parameters.acceptLanguage
-  ],
-  responses: {
-    200: {
-      bodyMapper: Mappers.ManagedInstanceListResult
-    },
-    default: {
-      bodyMapper: Mappers.CloudError
-    }
-  },
-  serializer
-};
-
 const listByResourceGroupOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
   path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances",
@@ -404,7 +379,7 @@ const listByResourceGroupOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion2
+    Parameters.apiVersion7
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -429,7 +404,7 @@ const getOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion2
+    Parameters.apiVersion7
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -445,14 +420,16 @@ const getOperationSpec: msRest.OperationSpec = {
   serializer
 };
 
-const listOperationSpec: msRest.OperationSpec = {
+const listByInstancePoolOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
-  path: "subscriptions/{subscriptionId}/providers/Microsoft.Sql/managedInstances",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/instancePools/{instancePoolName}/managedInstances",
   urlParameters: [
+    Parameters.resourceGroupName0,
+    Parameters.instancePoolName,
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion2
+    Parameters.apiVersion7
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -461,6 +438,54 @@ const listOperationSpec: msRest.OperationSpec = {
     200: {
       bodyMapper: Mappers.ManagedInstanceListResult
     },
+    default: {
+      bodyMapper: Mappers.CloudError
+    }
+  },
+  serializer
+};
+
+const listOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "subscriptions/{subscriptionId}/providers/Microsoft.Sql/managedInstances",
+  urlParameters: [
+    Parameters.subscriptionId
+  ],
+  queryParameters: [
+    Parameters.apiVersion7
+  ],
+  headerParameters: [
+    Parameters.acceptLanguage
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.ManagedInstanceListResult
+    },
+    default: {
+      bodyMapper: Mappers.CloudError
+    }
+  },
+  serializer
+};
+
+const beginFailoverOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/failover",
+  urlParameters: [
+    Parameters.resourceGroupName1,
+    Parameters.subscriptionId,
+    Parameters.managedInstanceName
+  ],
+  queryParameters: [
+    Parameters.apiVersion6,
+    Parameters.replicaType
+  ],
+  headerParameters: [
+    Parameters.acceptLanguage
+  ],
+  responses: {
+    200: {},
+    202: {},
     default: {
       bodyMapper: Mappers.CloudError
     }
@@ -477,7 +502,7 @@ const beginCreateOrUpdateOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion2
+    Parameters.apiVersion7
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -513,7 +538,7 @@ const beginDeleteMethodOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion2
+    Parameters.apiVersion7
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -538,7 +563,7 @@ const beginUpdateOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion2
+    Parameters.apiVersion7
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -562,32 +587,7 @@ const beginUpdateOperationSpec: msRest.OperationSpec = {
   serializer
 };
 
-const beginFailoverOperationSpec: msRest.OperationSpec = {
-  httpMethod: "POST",
-  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/failover",
-  urlParameters: [
-    Parameters.resourceGroupName1,
-    Parameters.subscriptionId,
-    Parameters.managedInstanceName
-  ],
-  queryParameters: [
-    Parameters.apiVersion5,
-    Parameters.replicaType
-  ],
-  headerParameters: [
-    Parameters.acceptLanguage
-  ],
-  responses: {
-    200: {},
-    202: {},
-    default: {
-      bodyMapper: Mappers.CloudError
-    }
-  },
-  serializer
-};
-
-const listByInstancePoolNextOperationSpec: msRest.OperationSpec = {
+const listByResourceGroupNextOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
   baseUrl: "https://management.azure.com",
   path: "{nextLink}",
@@ -608,7 +608,7 @@ const listByInstancePoolNextOperationSpec: msRest.OperationSpec = {
   serializer
 };
 
-const listByResourceGroupNextOperationSpec: msRest.OperationSpec = {
+const listByInstancePoolNextOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
   baseUrl: "https://management.azure.com",
   path: "{nextLink}",

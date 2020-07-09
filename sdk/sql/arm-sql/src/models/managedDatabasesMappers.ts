@@ -57,6 +57,7 @@ export {
   JobTargetGroup,
   JobVersion,
   LongTermRetentionBackup,
+  MaintenanceWindowSettings,
   ManagedBackupShortTermRetentionPolicy,
   ManagedDatabase,
   ManagedDatabaseListResult,

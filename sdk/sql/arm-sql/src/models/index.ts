@@ -4359,261 +4359,6 @@ export interface Usage {
 }
 
 /**
- * Azure Active Directory identity configuration for a resource.
- */
-export interface ResourceIdentity {
-  /**
-   * The Azure Active Directory principal id.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly principalId?: string;
-  /**
-   * The identity type. Set this to 'SystemAssigned' in order to automatically create and assign an
-   * Azure Active Directory principal for the resource. Possible values include: 'SystemAssigned'
-   */
-  type?: IdentityType;
-  /**
-   * The Azure Active Directory tenant id.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly tenantId?: string;
-}
-
-/**
- * An Azure SQL managed instance.
- */
-export interface ManagedInstance extends TrackedResource {
-  /**
-   * The Azure Active Directory identity of the managed instance.
-   */
-  identity?: ResourceIdentity;
-  /**
-   * Managed instance SKU. Allowed values for sku.name: GP_Gen4, GP_Gen5, BC_Gen4, BC_Gen5
-   */
-  sku?: Sku;
-  /**
-   * Specifies the mode of database creation.
-   *
-   * Default: Regular instance creation.
-   *
-   * Restore: Creates an instance by restoring a set of backups to specific point in time.
-   * RestorePointInTime and SourceManagedInstanceId must be specified. Possible values include:
-   * 'Default', 'PointInTimeRestore'
-   */
-  managedInstanceCreateMode?: ManagedServerCreateMode;
-  /**
-   * The fully qualified domain name of the managed instance.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly fullyQualifiedDomainName?: string;
-  /**
-   * Administrator username for the managed instance. Can only be specified when the managed
-   * instance is being created (and is required for creation).
-   */
-  administratorLogin?: string;
-  /**
-   * The administrator login password (required for managed instance creation).
-   */
-  administratorLoginPassword?: string;
-  /**
-   * Subnet resource ID for the managed instance.
-   */
-  subnetId?: string;
-  /**
-   * The state of the managed instance.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly state?: string;
-  /**
-   * The license type. Possible values are 'LicenseIncluded' (regular price inclusive of a new SQL
-   * license) and 'BasePrice' (discounted AHB price for bringing your own SQL licenses). Possible
-   * values include: 'LicenseIncluded', 'BasePrice'
-   */
-  licenseType?: ManagedInstanceLicenseType;
-  /**
-   * The number of vCores. Allowed values: 8, 16, 24, 32, 40, 64, 80.
-   */
-  vCores?: number;
-  /**
-   * Storage size in GB. Minimum value: 32. Maximum value: 8192. Increments of 32 GB allowed only.
-   */
-  storageSizeInGB?: number;
-  /**
-   * Collation of the managed instance.
-   */
-  collation?: string;
-  /**
-   * The Dns Zone that the managed instance is in.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly dnsZone?: string;
-  /**
-   * The resource id of another managed instance whose DNS zone this managed instance will share
-   * after creation.
-   */
-  dnsZonePartner?: string;
-  /**
-   * Whether or not the public data endpoint is enabled.
-   */
-  publicDataEndpointEnabled?: boolean;
-  /**
-   * The resource identifier of the source managed instance associated with create operation of
-   * this instance.
-   */
-  sourceManagedInstanceId?: string;
-  /**
-   * Specifies the point in time (ISO8601 format) of the source database that will be restored to
-   * create the new database.
-   */
-  restorePointInTime?: Date;
-  /**
-   * Connection type used for connecting to the instance. Possible values include: 'Proxy',
-   * 'Redirect', 'Default'
-   */
-  proxyOverride?: ManagedInstanceProxyOverride;
-  /**
-   * Id of the timezone. Allowed values are timezones supported by Windows.
-   * Windows keeps details on supported timezones, including the id, in registry under
-   * KEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time Zones.
-   * You can get those registry values via SQL Server by querying SELECT name AS timezone_id FROM
-   * sys.time_zone_info.
-   * List of Ids can also be obtained by executing [System.TimeZoneInfo]::GetSystemTimeZones() in
-   * PowerShell.
-   * An example of valid timezone id is "Pacific Standard Time" or "W. Europe Standard Time".
-   */
-  timezoneId?: string;
-  /**
-   * The Id of the instance pool this managed server belongs to.
-   */
-  instancePoolId?: string;
-  /**
-   * Specifies maintenance configuration id to apply to this managed instance.
-   */
-  maintenanceConfigurationId?: string;
-  /**
-   * Minimal TLS version. Allowed values: 'None', '1.0', '1.1', '1.2'
-   */
-  minimalTlsVersion?: string;
-}
-
-/**
- * An update request for an Azure SQL Database managed instance.
- */
-export interface ManagedInstanceUpdate {
-  /**
-   * Managed instance sku
-   */
-  sku?: Sku;
-  /**
-   * Specifies the mode of database creation.
-   *
-   * Default: Regular instance creation.
-   *
-   * Restore: Creates an instance by restoring a set of backups to specific point in time.
-   * RestorePointInTime and SourceManagedInstanceId must be specified. Possible values include:
-   * 'Default', 'PointInTimeRestore'
-   */
-  managedInstanceCreateMode?: ManagedServerCreateMode;
-  /**
-   * The fully qualified domain name of the managed instance.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly fullyQualifiedDomainName?: string;
-  /**
-   * Administrator username for the managed instance. Can only be specified when the managed
-   * instance is being created (and is required for creation).
-   */
-  administratorLogin?: string;
-  /**
-   * The administrator login password (required for managed instance creation).
-   */
-  administratorLoginPassword?: string;
-  /**
-   * Subnet resource ID for the managed instance.
-   */
-  subnetId?: string;
-  /**
-   * The state of the managed instance.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly state?: string;
-  /**
-   * The license type. Possible values are 'LicenseIncluded' (regular price inclusive of a new SQL
-   * license) and 'BasePrice' (discounted AHB price for bringing your own SQL licenses). Possible
-   * values include: 'LicenseIncluded', 'BasePrice'
-   */
-  licenseType?: ManagedInstanceLicenseType;
-  /**
-   * The number of vCores. Allowed values: 8, 16, 24, 32, 40, 64, 80.
-   */
-  vCores?: number;
-  /**
-   * Storage size in GB. Minimum value: 32. Maximum value: 8192. Increments of 32 GB allowed only.
-   */
-  storageSizeInGB?: number;
-  /**
-   * Collation of the managed instance.
-   */
-  collation?: string;
-  /**
-   * The Dns Zone that the managed instance is in.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly dnsZone?: string;
-  /**
-   * The resource id of another managed instance whose DNS zone this managed instance will share
-   * after creation.
-   */
-  dnsZonePartner?: string;
-  /**
-   * Whether or not the public data endpoint is enabled.
-   */
-  publicDataEndpointEnabled?: boolean;
-  /**
-   * The resource identifier of the source managed instance associated with create operation of
-   * this instance.
-   */
-  sourceManagedInstanceId?: string;
-  /**
-   * Specifies the point in time (ISO8601 format) of the source database that will be restored to
-   * create the new database.
-   */
-  restorePointInTime?: Date;
-  /**
-   * Connection type used for connecting to the instance. Possible values include: 'Proxy',
-   * 'Redirect', 'Default'
-   */
-  proxyOverride?: ManagedInstanceProxyOverride;
-  /**
-   * Id of the timezone. Allowed values are timezones supported by Windows.
-   * Windows keeps details on supported timezones, including the id, in registry under
-   * KEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time Zones.
-   * You can get those registry values via SQL Server by querying SELECT name AS timezone_id FROM
-   * sys.time_zone_info.
-   * List of Ids can also be obtained by executing [System.TimeZoneInfo]::GetSystemTimeZones() in
-   * PowerShell.
-   * An example of valid timezone id is "Pacific Standard Time" or "W. Europe Standard Time".
-   */
-  timezoneId?: string;
-  /**
-   * The Id of the instance pool this managed server belongs to.
-   */
-  instancePoolId?: string;
-  /**
-   * Specifies maintenance configuration id to apply to this managed instance.
-   */
-  maintenanceConfigurationId?: string;
-  /**
-   * Minimal TLS version. Allowed values: 'None', '1.0', '1.1', '1.2'
-   */
-  minimalTlsVersion?: string;
-  /**
-   * Resource tags.
-   */
-  tags?: { [propertyName: string]: string };
-}
-
-/**
  * An interface representing PrivateEndpointProperty.
  */
 export interface PrivateEndpointProperty extends BaseResource {
@@ -4708,6 +4453,27 @@ export interface PrivateLinkResource extends ProxyResource {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly properties?: PrivateLinkResourceProperties;
+}
+
+/**
+ * Azure Active Directory identity configuration for a resource.
+ */
+export interface ResourceIdentity {
+  /**
+   * The Azure Active Directory principal id.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly principalId?: string;
+  /**
+   * The identity type. Set this to 'SystemAssigned' in order to automatically create and assign an
+   * Azure Active Directory principal for the resource. Possible values include: 'SystemAssigned'
+   */
+  type?: IdentityType;
+  /**
+   * The Azure Active Directory tenant id.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly tenantId?: string;
 }
 
 /**
@@ -6424,6 +6190,293 @@ export interface SyncMember extends ProxyResource {
 }
 
 /**
+ * The properties of managed instance maintenance window.
+ */
+export interface MaintenanceWindowSettings {
+  /**
+   * Specifies time of upgrade for maintenance window of managed instance.
+   */
+  timeOfUpgrade?: string;
+  /**
+   * Specifies days of the month when maintenance window is to be opened.
+   */
+  dates?: number[];
+  /**
+   * Specifies days in a week when maintenance window is to be opened.
+   */
+  scheduledDays?: string[];
+  /**
+   * Specifies weeks on which the maintenance window should be opened. E.g. if '1,3' is provided
+   * and for ScheduledDays Sunday is provided,
+   * that means that window is to be opened on Sunday every first and third week.
+   */
+  scheduledWeeks?: number[];
+  /**
+   * Specifies one off start time for a maintenance window. This is the time when window will be
+   * opened for the first time.
+   */
+  oneOffStartTime?: Date;
+  /**
+   * Specifies frequency of a maintenance window.
+   * None - No recurring pattern,
+   * Daily - Daily window; specified by days of week,
+   * Monthly - Monthly window; specified by dates in a month,
+   * Flexible - Flexible window; specified by week numbers and days of week. Possible values
+   * include: 'NonRecurrent', 'Weekly', 'Monthly', 'Flexible'
+   */
+  frequency: MaintenanceWindowFrequency;
+  /**
+   * Specifies the timezone for which the window will be set. See reference for TimezoneId of
+   * ManagedInstance.
+   */
+  customerTimeZone: string;
+}
+
+/**
+ * An Azure SQL managed instance.
+ */
+export interface ManagedInstance extends TrackedResource {
+  /**
+   * The Azure Active Directory identity of the managed instance.
+   */
+  identity?: ResourceIdentity;
+  /**
+   * Managed instance SKU. Allowed values for sku.name: GP_Gen4, GP_Gen5, BC_Gen4, BC_Gen5
+   */
+  sku?: Sku;
+  /**
+   * Possible values include: 'Creating', 'Deleting', 'Updating', 'Unknown', 'Succeeded', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState1;
+  /**
+   * Specifies the mode of database creation.
+   *
+   * Default: Regular instance creation.
+   *
+   * Restore: Creates an instance by restoring a set of backups to specific point in time.
+   * RestorePointInTime and SourceManagedInstanceId must be specified. Possible values include:
+   * 'Default', 'PointInTimeRestore'
+   */
+  managedInstanceCreateMode?: ManagedServerCreateMode;
+  /**
+   * The fully qualified domain name of the managed instance.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly fullyQualifiedDomainName?: string;
+  /**
+   * Administrator username for the managed instance. Can only be specified when the managed
+   * instance is being created (and is required for creation).
+   */
+  administratorLogin?: string;
+  /**
+   * The administrator login password (required for managed instance creation).
+   */
+  administratorLoginPassword?: string;
+  /**
+   * Subnet resource ID for the managed instance.
+   */
+  subnetId?: string;
+  /**
+   * The state of the managed instance.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly state?: string;
+  /**
+   * The license type. Possible values are 'LicenseIncluded' (regular price inclusive of a new SQL
+   * license) and 'BasePrice' (discounted AHB price for bringing your own SQL licenses). Possible
+   * values include: 'LicenseIncluded', 'BasePrice'
+   */
+  licenseType?: ManagedInstanceLicenseType;
+  /**
+   * The number of vCores. Allowed values: 8, 16, 24, 32, 40, 64, 80.
+   */
+  vCores?: number;
+  /**
+   * Storage size in GB. Minimum value: 32. Maximum value: 8192. Increments of 32 GB allowed only.
+   */
+  storageSizeInGB?: number;
+  /**
+   * Collation of the managed instance.
+   */
+  collation?: string;
+  /**
+   * The Dns Zone that the managed instance is in.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly dnsZone?: string;
+  /**
+   * The resource id of another managed instance whose DNS zone this managed instance will share
+   * after creation.
+   */
+  dnsZonePartner?: string;
+  /**
+   * Whether or not the public data endpoint is enabled.
+   */
+  publicDataEndpointEnabled?: boolean;
+  /**
+   * The resource identifier of the source managed instance associated with create operation of
+   * this instance.
+   */
+  sourceManagedInstanceId?: string;
+  /**
+   * Specifies the point in time (ISO8601 format) of the source database that will be restored to
+   * create the new database.
+   */
+  restorePointInTime?: Date;
+  /**
+   * Connection type used for connecting to the instance. Possible values include: 'Proxy',
+   * 'Redirect', 'Default'
+   */
+  proxyOverride?: ManagedInstanceProxyOverride;
+  /**
+   * Id of the timezone. Allowed values are timezones supported by Windows.
+   * Windows keeps details on supported timezones, including the id, in registry under
+   * KEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time Zones.
+   * You can get those registry values via SQL Server by querying SELECT name AS timezone_id FROM
+   * sys.time_zone_info.
+   * List of Ids can also be obtained by executing [System.TimeZoneInfo]::GetSystemTimeZones() in
+   * PowerShell.
+   * An example of valid timezone id is "Pacific Standard Time" or "W. Europe Standard Time".
+   */
+  timezoneId?: string;
+  /**
+   * The Id of the instance pool this managed server belongs to.
+   */
+  instancePoolId?: string;
+  /**
+   * Specifies maintenance window settings for a managed instance.
+   */
+  maintenanceWindowSettings?: MaintenanceWindowSettings;
+  /**
+   * Minimal TLS version. Allowed values: 'None', '1.0', '1.1', '1.2'
+   */
+  minimalTlsVersion?: string;
+}
+
+/**
+ * An update request for an Azure SQL Database managed instance.
+ */
+export interface ManagedInstanceUpdate {
+  /**
+   * Managed instance sku
+   */
+  sku?: Sku;
+  /**
+   * Possible values include: 'Creating', 'Deleting', 'Updating', 'Unknown', 'Succeeded', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState1;
+  /**
+   * Specifies the mode of database creation.
+   *
+   * Default: Regular instance creation.
+   *
+   * Restore: Creates an instance by restoring a set of backups to specific point in time.
+   * RestorePointInTime and SourceManagedInstanceId must be specified. Possible values include:
+   * 'Default', 'PointInTimeRestore'
+   */
+  managedInstanceCreateMode?: ManagedServerCreateMode;
+  /**
+   * The fully qualified domain name of the managed instance.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly fullyQualifiedDomainName?: string;
+  /**
+   * Administrator username for the managed instance. Can only be specified when the managed
+   * instance is being created (and is required for creation).
+   */
+  administratorLogin?: string;
+  /**
+   * The administrator login password (required for managed instance creation).
+   */
+  administratorLoginPassword?: string;
+  /**
+   * Subnet resource ID for the managed instance.
+   */
+  subnetId?: string;
+  /**
+   * The state of the managed instance.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly state?: string;
+  /**
+   * The license type. Possible values are 'LicenseIncluded' (regular price inclusive of a new SQL
+   * license) and 'BasePrice' (discounted AHB price for bringing your own SQL licenses). Possible
+   * values include: 'LicenseIncluded', 'BasePrice'
+   */
+  licenseType?: ManagedInstanceLicenseType;
+  /**
+   * The number of vCores. Allowed values: 8, 16, 24, 32, 40, 64, 80.
+   */
+  vCores?: number;
+  /**
+   * Storage size in GB. Minimum value: 32. Maximum value: 8192. Increments of 32 GB allowed only.
+   */
+  storageSizeInGB?: number;
+  /**
+   * Collation of the managed instance.
+   */
+  collation?: string;
+  /**
+   * The Dns Zone that the managed instance is in.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly dnsZone?: string;
+  /**
+   * The resource id of another managed instance whose DNS zone this managed instance will share
+   * after creation.
+   */
+  dnsZonePartner?: string;
+  /**
+   * Whether or not the public data endpoint is enabled.
+   */
+  publicDataEndpointEnabled?: boolean;
+  /**
+   * The resource identifier of the source managed instance associated with create operation of
+   * this instance.
+   */
+  sourceManagedInstanceId?: string;
+  /**
+   * Specifies the point in time (ISO8601 format) of the source database that will be restored to
+   * create the new database.
+   */
+  restorePointInTime?: Date;
+  /**
+   * Connection type used for connecting to the instance. Possible values include: 'Proxy',
+   * 'Redirect', 'Default'
+   */
+  proxyOverride?: ManagedInstanceProxyOverride;
+  /**
+   * Id of the timezone. Allowed values are timezones supported by Windows.
+   * Windows keeps details on supported timezones, including the id, in registry under
+   * KEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time Zones.
+   * You can get those registry values via SQL Server by querying SELECT name AS timezone_id FROM
+   * sys.time_zone_info.
+   * List of Ids can also be obtained by executing [System.TimeZoneInfo]::GetSystemTimeZones() in
+   * PowerShell.
+   * An example of valid timezone id is "Pacific Standard Time" or "W. Europe Standard Time".
+   */
+  timezoneId?: string;
+  /**
+   * The Id of the instance pool this managed server belongs to.
+   */
+  instancePoolId?: string;
+  /**
+   * Specifies maintenance window settings for a managed instance.
+   */
+  maintenanceWindowSettings?: MaintenanceWindowSettings;
+  /**
+   * Minimal TLS version. Allowed values: 'None', '1.0', '1.1', '1.2'
+   */
+  minimalTlsVersion?: string;
+  /**
+   * Resource tags.
+   */
+  tags?: { [propertyName: string]: string };
+}
+
+/**
  * Optional Parameters.
  */
 export interface DatabasesFailoverOptionalParams extends msRest.RequestOptionsBase {
@@ -6786,26 +6839,6 @@ export interface UsagesListByInstancePoolOptionalParams extends msRest.RequestOp
 /**
  * Optional Parameters.
  */
-export interface ManagedInstancesFailoverOptionalParams extends msRest.RequestOptionsBase {
-  /**
-   * The type of replica to be failed over. Possible values include: 'Primary', 'ReadableSecondary'
-   */
-  replicaType?: ReplicaType;
-}
-
-/**
- * Optional Parameters.
- */
-export interface ManagedInstancesBeginFailoverOptionalParams extends msRest.RequestOptionsBase {
-  /**
-   * The type of replica to be failed over. Possible values include: 'Primary', 'ReadableSecondary'
-   */
-  replicaType?: ReplicaType;
-}
-
-/**
- * Optional Parameters.
- */
 export interface CapabilitiesListByLocationOptionalParams extends msRest.RequestOptionsBase {
   /**
    * If specified, restricts the response to only include the selected item. Possible values
@@ -6914,6 +6947,26 @@ export interface SyncGroupsListLogsOptionalParams extends msRest.RequestOptionsB
    * The continuation token for this operation.
    */
   continuationToken?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface ManagedInstancesFailoverOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * The type of replica to be failed over. Possible values include: 'Primary', 'ReadableSecondary'
+   */
+  replicaType?: ReplicaType;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface ManagedInstancesBeginFailoverOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * The type of replica to be failed over. Possible values include: 'Primary', 'ReadableSecondary'
+   */
+  replicaType?: ReplicaType;
 }
 
 /**
@@ -7654,19 +7707,6 @@ export interface UsageListResult extends Array<Usage> {
 
 /**
  * @interface
- * A list of managed instances.
- * @extends Array<ManagedInstance>
- */
-export interface ManagedInstanceListResult extends Array<ManagedInstance> {
-  /**
-   * Link to retrieve next page of results.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly nextLink?: string;
-}
-
-/**
- * @interface
  * A list of private endpoint connections.
  * @extends Array<PrivateEndpointConnection>
  */
@@ -7853,6 +7893,19 @@ export interface SyncGroupListResult extends Array<SyncGroup> {
  * @extends Array<SyncMember>
  */
 export interface SyncMemberListResult extends Array<SyncMember> {
+  /**
+   * Link to retrieve next page of results.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly nextLink?: string;
+}
+
+/**
+ * @interface
+ * A list of managed instances.
+ * @extends Array<ManagedInstance>
+ */
+export interface ManagedInstanceListResult extends Array<ManagedInstance> {
   /**
    * Link to retrieve next page of results.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -8378,38 +8431,6 @@ export type InstanceFailoverGroupReplicationRole = 'Primary' | 'Secondary';
 export type InstancePoolLicenseType = 'LicenseIncluded' | 'BasePrice';
 
 /**
- * Defines values for IdentityType.
- * Possible values include: 'SystemAssigned'
- * @readonly
- * @enum {string}
- */
-export type IdentityType = 'SystemAssigned';
-
-/**
- * Defines values for ManagedServerCreateMode.
- * Possible values include: 'Default', 'PointInTimeRestore'
- * @readonly
- * @enum {string}
- */
-export type ManagedServerCreateMode = 'Default' | 'PointInTimeRestore';
-
-/**
- * Defines values for ManagedInstanceLicenseType.
- * Possible values include: 'LicenseIncluded', 'BasePrice'
- * @readonly
- * @enum {string}
- */
-export type ManagedInstanceLicenseType = 'LicenseIncluded' | 'BasePrice';
-
-/**
- * Defines values for ManagedInstanceProxyOverride.
- * Possible values include: 'Proxy', 'Redirect', 'Default'
- * @readonly
- * @enum {string}
- */
-export type ManagedInstanceProxyOverride = 'Proxy' | 'Redirect' | 'Default';
-
-/**
  * Defines values for PrivateLinkServiceConnectionStateStatus.
  * Possible values include: 'Approved', 'Pending', 'Rejected', 'Disconnected'
  * @readonly
@@ -8432,6 +8453,14 @@ export type PrivateLinkServiceConnectionStateActionsRequire = 'None';
  * @enum {string}
  */
 export type PrivateEndpointProvisioningState = 'Approving' | 'Ready' | 'Dropping' | 'Failed' | 'Rejecting';
+
+/**
+ * Defines values for IdentityType.
+ * Possible values include: 'SystemAssigned'
+ * @readonly
+ * @enum {string}
+ */
+export type IdentityType = 'SystemAssigned';
 
 /**
  * Defines values for ServerPublicNetworkAccess.
@@ -8552,6 +8581,38 @@ export type SyncDirection = 'Bidirectional' | 'OneWayMemberToHub' | 'OneWayHubTo
 export type SyncMemberState = 'SyncInProgress' | 'SyncSucceeded' | 'SyncFailed' | 'DisabledTombstoneCleanup' | 'DisabledBackupRestore' | 'SyncSucceededWithWarnings' | 'SyncCancelling' | 'SyncCancelled' | 'UnProvisioned' | 'Provisioning' | 'Provisioned' | 'ProvisionFailed' | 'DeProvisioning' | 'DeProvisioned' | 'DeProvisionFailed' | 'Reprovisioning' | 'ReprovisionFailed' | 'UnReprovisioned';
 
 /**
+ * Defines values for ManagedServerCreateMode.
+ * Possible values include: 'Default', 'PointInTimeRestore'
+ * @readonly
+ * @enum {string}
+ */
+export type ManagedServerCreateMode = 'Default' | 'PointInTimeRestore';
+
+/**
+ * Defines values for ManagedInstanceLicenseType.
+ * Possible values include: 'LicenseIncluded', 'BasePrice'
+ * @readonly
+ * @enum {string}
+ */
+export type ManagedInstanceLicenseType = 'LicenseIncluded' | 'BasePrice';
+
+/**
+ * Defines values for ManagedInstanceProxyOverride.
+ * Possible values include: 'Proxy', 'Redirect', 'Default'
+ * @readonly
+ * @enum {string}
+ */
+export type ManagedInstanceProxyOverride = 'Proxy' | 'Redirect' | 'Default';
+
+/**
+ * Defines values for MaintenanceWindowFrequency.
+ * Possible values include: 'NonRecurrent', 'Weekly', 'Monthly', 'Flexible'
+ * @readonly
+ * @enum {string}
+ */
+export type MaintenanceWindowFrequency = 'NonRecurrent' | 'Weekly' | 'Monthly' | 'Flexible';
+
+/**
  * Defines values for LongTermRetentionDatabaseState.
  * Possible values include: 'All', 'Live', 'Deleted'
  * @readonly
@@ -8657,6 +8718,14 @@ export type StorageAccountType = 'GRS' | 'LRS' | 'ZRS';
  * @enum {string}
  */
 export type Status = 'NotStarted' | 'InProgress' | 'SlowedDown' | 'Completed' | 'Failed' | 'Canceled';
+
+/**
+ * Defines values for ProvisioningState1.
+ * Possible values include: 'Creating', 'Deleting', 'Updating', 'Unknown', 'Succeeded', 'Failed'
+ * @readonly
+ * @enum {string}
+ */
+export type ProvisioningState1 = 'Creating' | 'Deleting' | 'Updating' | 'Unknown' | 'Succeeded' | 'Failed';
 
 /**
  * Defines values for Type.
@@ -15247,226 +15316,6 @@ export type UsagesListByInstancePoolNextResponse = UsageListResult & {
 };
 
 /**
- * Contains response data for the listByInstancePool operation.
- */
-export type ManagedInstancesListByInstancePoolResponse = ManagedInstanceListResult & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ManagedInstanceListResult;
-    };
-};
-
-/**
- * Contains response data for the listByResourceGroup operation.
- */
-export type ManagedInstancesListByResourceGroupResponse = ManagedInstanceListResult & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ManagedInstanceListResult;
-    };
-};
-
-/**
- * Contains response data for the get operation.
- */
-export type ManagedInstancesGetResponse = ManagedInstance & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ManagedInstance;
-    };
-};
-
-/**
- * Contains response data for the createOrUpdate operation.
- */
-export type ManagedInstancesCreateOrUpdateResponse = ManagedInstance & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ManagedInstance;
-    };
-};
-
-/**
- * Contains response data for the update operation.
- */
-export type ManagedInstancesUpdateResponse = ManagedInstance & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ManagedInstance;
-    };
-};
-
-/**
- * Contains response data for the list operation.
- */
-export type ManagedInstancesListResponse = ManagedInstanceListResult & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ManagedInstanceListResult;
-    };
-};
-
-/**
- * Contains response data for the beginCreateOrUpdate operation.
- */
-export type ManagedInstancesBeginCreateOrUpdateResponse = ManagedInstance & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ManagedInstance;
-    };
-};
-
-/**
- * Contains response data for the beginUpdate operation.
- */
-export type ManagedInstancesBeginUpdateResponse = ManagedInstance & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ManagedInstance;
-    };
-};
-
-/**
- * Contains response data for the listByInstancePoolNext operation.
- */
-export type ManagedInstancesListByInstancePoolNextResponse = ManagedInstanceListResult & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ManagedInstanceListResult;
-    };
-};
-
-/**
- * Contains response data for the listByResourceGroupNext operation.
- */
-export type ManagedInstancesListByResourceGroupNextResponse = ManagedInstanceListResult & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ManagedInstanceListResult;
-    };
-};
-
-/**
- * Contains response data for the listNext operation.
- */
-export type ManagedInstancesListNextResponse = ManagedInstanceListResult & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ManagedInstanceListResult;
-    };
-};
-
-/**
  * Contains response data for the get operation.
  */
 export type PrivateEndpointConnectionsGetResponse = PrivateEndpointConnection & {
@@ -17263,5 +17112,225 @@ export type SyncMembersListMemberSchemasNextResponse = SyncFullSchemaPropertiesL
        * The response body as parsed JSON or XML
        */
       parsedBody: SyncFullSchemaPropertiesListResult;
+    };
+};
+
+/**
+ * Contains response data for the listByResourceGroup operation.
+ */
+export type ManagedInstancesListByResourceGroupResponse = ManagedInstanceListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ManagedInstanceListResult;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type ManagedInstancesGetResponse = ManagedInstance & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ManagedInstance;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdate operation.
+ */
+export type ManagedInstancesCreateOrUpdateResponse = ManagedInstance & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ManagedInstance;
+    };
+};
+
+/**
+ * Contains response data for the update operation.
+ */
+export type ManagedInstancesUpdateResponse = ManagedInstance & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ManagedInstance;
+    };
+};
+
+/**
+ * Contains response data for the listByInstancePool operation.
+ */
+export type ManagedInstancesListByInstancePoolResponse = ManagedInstanceListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ManagedInstanceListResult;
+    };
+};
+
+/**
+ * Contains response data for the list operation.
+ */
+export type ManagedInstancesListResponse = ManagedInstanceListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ManagedInstanceListResult;
+    };
+};
+
+/**
+ * Contains response data for the beginCreateOrUpdate operation.
+ */
+export type ManagedInstancesBeginCreateOrUpdateResponse = ManagedInstance & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ManagedInstance;
+    };
+};
+
+/**
+ * Contains response data for the beginUpdate operation.
+ */
+export type ManagedInstancesBeginUpdateResponse = ManagedInstance & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ManagedInstance;
+    };
+};
+
+/**
+ * Contains response data for the listByResourceGroupNext operation.
+ */
+export type ManagedInstancesListByResourceGroupNextResponse = ManagedInstanceListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ManagedInstanceListResult;
+    };
+};
+
+/**
+ * Contains response data for the listByInstancePoolNext operation.
+ */
+export type ManagedInstancesListByInstancePoolNextResponse = ManagedInstanceListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ManagedInstanceListResult;
+    };
+};
+
+/**
+ * Contains response data for the listNext operation.
+ */
+export type ManagedInstancesListNextResponse = ManagedInstanceListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ManagedInstanceListResult;
     };
 };

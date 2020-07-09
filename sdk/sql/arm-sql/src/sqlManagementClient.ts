@@ -93,7 +93,6 @@ class SqlManagementClient extends SqlManagementClientContext {
   managedDatabaseSensitivityLabels: operations.ManagedDatabaseSensitivityLabels;
   instancePools: operations.InstancePools;
   usages: operations.Usages;
-  managedInstances: operations.ManagedInstances;
   privateEndpointConnections: operations.PrivateEndpointConnections;
   privateLinkResources: operations.PrivateLinkResources;
   servers: operations.Servers;
@@ -108,6 +107,7 @@ class SqlManagementClient extends SqlManagementClientContext {
   managedInstanceOperations: operations.ManagedInstanceOperations;
   syncGroups: operations.SyncGroups;
   syncMembers: operations.SyncMembers;
+  managedInstances: operations.ManagedInstances;
 
   /**
    * Initializes a new instance of the SqlManagementClient class.
@@ -193,7 +193,6 @@ class SqlManagementClient extends SqlManagementClientContext {
     this.managedDatabaseSensitivityLabels = new operations.ManagedDatabaseSensitivityLabels(this);
     this.instancePools = new operations.InstancePools(this);
     this.usages = new operations.Usages(this);
-    this.managedInstances = new operations.ManagedInstances(this);
     this.privateEndpointConnections = new operations.PrivateEndpointConnections(this);
     this.privateLinkResources = new operations.PrivateLinkResources(this);
     this.servers = new operations.Servers(this);
@@ -208,6 +207,7 @@ class SqlManagementClient extends SqlManagementClientContext {
     this.managedInstanceOperations = new operations.ManagedInstanceOperations(this);
     this.syncGroups = new operations.SyncGroups(this);
     this.syncMembers = new operations.SyncMembers(this);
+    this.managedInstances = new operations.ManagedInstances(this);
   }
 }
 

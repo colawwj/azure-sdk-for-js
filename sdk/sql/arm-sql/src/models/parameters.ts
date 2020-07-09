@@ -99,9 +99,6 @@ export const apiVersion5: msRest.OperationQueryParameter = {
     isConstant: true,
     serializedName: "api-version",
     defaultValue: '2019-06-01-preview',
-    constraints: {
-      MinLength: 1
-    },
     type: {
       name: "String"
     }
@@ -114,6 +111,21 @@ export const apiVersion6: msRest.OperationQueryParameter = {
     isConstant: true,
     serializedName: "api-version",
     defaultValue: '2019-06-01-preview',
+    constraints: {
+      MinLength: 1
+    },
+    type: {
+      name: "String"
+    }
+  }
+};
+export const apiVersion7: msRest.OperationQueryParameter = {
+  parameterPath: "apiVersion",
+  mapper: {
+    required: true,
+    isConstant: true,
+    serializedName: "api-version",
+    defaultValue: '2020-02-02-preview',
     type: {
       name: "String"
     }

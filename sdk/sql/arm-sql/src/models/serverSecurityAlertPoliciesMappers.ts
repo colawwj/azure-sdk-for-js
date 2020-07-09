@@ -57,6 +57,7 @@ export {
   JobVersion,
   LogicalServerSecurityAlertPolicyListResult,
   LongTermRetentionBackup,
+  MaintenanceWindowSettings,
   ManagedBackupShortTermRetentionPolicy,
   ManagedDatabase,
   ManagedDatabaseRestoreDetailsResult,
