@@ -79,6 +79,7 @@ export {
   BgpServiceCommunity,
   BgpSettings,
   BreakOutCategoryPolicies,
+  CloudError,
   ConnectionMonitorDestination,
   ConnectionMonitorEndpoint,
   ConnectionMonitorEndpointFilter,
@@ -108,8 +109,6 @@ export {
   DhcpOptions,
   DnsSettings,
   EndpointServiceResult,
-  ErrorDetails,
-  ErrorModel,
   ExpressRouteCircuit,
   ExpressRouteCircuitAuthorization,
   ExpressRouteCircuitConnection,
@@ -275,7 +274,6 @@ export {
   VirtualNetworkTap,
   VirtualRouter,
   VirtualRouterPeering,
-  VirtualRouterPeeringListResult,
   VirtualWAN,
   VM,
   VnetRoute,
@@ -297,5 +295,6 @@ export {
   VpnSiteLink,
   VpnSiteLinkConnection,
   WebApplicationFirewallCustomRule,
-  WebApplicationFirewallPolicy
+  WebApplicationFirewallPolicy,
+  WebApplicationFirewallPolicyListResult
 } from "../models/mappers";

@@ -1816,6 +1816,16 @@ export interface ApplicationGatewaySslPolicy {
 }
 
 /**
+ * Application gateway client authentication configuration.
+ */
+export interface ApplicationGatewayClientAuthConfiguration {
+  /**
+   * Verify client certificate issuer name on the application gateway.
+   */
+  verifyClientCertIssuerDN?: boolean;
+}
+
+/**
  * IP configuration of an application gateway. Currently 1 public and 1 private IP configuration is
  * allowed.
  */
@@ -1898,6 +1908,36 @@ export interface ApplicationGatewayTrustedRootCertificate extends SubResource {
   readonly provisioningState?: ProvisioningState;
   /**
    * Name of the trusted root certificate that is unique within an Application Gateway.
+   */
+  name?: string;
+  /**
+   * A unique read-only string that changes whenever the resource is updated.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly etag?: string;
+  /**
+   * Type of the resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+}
+
+/**
+ * Trusted client certificates of an application gateway.
+ */
+export interface ApplicationGatewayTrustedClientCertificate extends SubResource {
+  /**
+   * Certificate public data.
+   */
+  data?: string;
+  /**
+   * The provisioning state of the trusted client certificate resource. Possible values include:
+   * 'Succeeded', 'Updating', 'Deleting', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState;
+  /**
+   * Name of the trusted client certificate that is unique within an Application Gateway.
    */
   name?: string;
   /**
@@ -2034,6 +2074,44 @@ export interface ApplicationGatewayFrontendPort extends SubResource {
 }
 
 /**
+ * SSL profile of an application gateway.
+ */
+export interface ApplicationGatewaySslProfile extends SubResource {
+  /**
+   * Array of references to application gateway trusted client certificates.
+   */
+  trustedClientCertificates?: SubResource[];
+  /**
+   * SSL policy of the application gateway resource.
+   */
+  sslPolicy?: ApplicationGatewaySslPolicy;
+  /**
+   * Client authentication configuration of the application gateway resource.
+   */
+  clientAuthConfiguration?: ApplicationGatewayClientAuthConfiguration;
+  /**
+   * The provisioning state of the HTTP listener resource. Possible values include: 'Succeeded',
+   * 'Updating', 'Deleting', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState;
+  /**
+   * Name of the SSL profile that is unique within an Application Gateway.
+   */
+  name?: string;
+  /**
+   * A unique read-only string that changes whenever the resource is updated.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly etag?: string;
+  /**
+   * Type of the resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+}
+
+/**
  * Customer error of an application gateway.
  */
 export interface ApplicationGatewayCustomError {
@@ -2072,6 +2150,10 @@ export interface ApplicationGatewayHttpListener extends SubResource {
    * SSL certificate resource of an application gateway.
    */
   sslCertificate?: SubResource;
+  /**
+   * SSL profile resource of the application gateway.
+   */
+  sslProfile?: SubResource;
   /**
    * Applicable only if protocol is https. Enables SNI for multi-hosting.
    */
@@ -2840,6 +2922,12 @@ export interface ApplicationGateway extends Resource {
    */
   trustedRootCertificates?: ApplicationGatewayTrustedRootCertificate[];
   /**
+   * Trusted client certificates of the application gateway resource. For default limits, see
+   * [Application Gateway
+   * limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).
+   */
+  trustedClientCertificates?: ApplicationGatewayTrustedClientCertificate[];
+  /**
    * SSL certificates of the application gateway resource. For default limits, see [Application
    * Gateway
    * limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).
@@ -2879,6 +2967,11 @@ export interface ApplicationGateway extends Resource {
    * limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).
    */
   httpListeners?: ApplicationGatewayHttpListener[];
+  /**
+   * SSL profiles of the application gateway resource. For default limits, see [Application Gateway
+   * limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).
+   */
+  sslProfiles?: ApplicationGatewaySslProfile[];
   /**
    * URL path map of the application gateway resource. For default limits, see [Application Gateway
    * limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits).
@@ -3838,6 +3931,52 @@ export interface DnsNameAvailabilityResult {
    * Domain availability (True/False).
    */
   available?: boolean;
+}
+
+/**
+ * Custom IP prefix resource.
+ */
+export interface CustomIpPrefix extends Resource {
+  /**
+   * The prefix range in CIDR notation. Should include the start address and the prefix length.
+   * Should be a subset of its master custom IP Prefix parent CIDR.
+   */
+  cidr?: string;
+  /**
+   * The master custom IP Prefix parent.
+   */
+  masterCustomIpPrefix?: SubResource;
+  /**
+   * The commissioned state of the Custom IP Prefix. Possible values include: 'Provisioning',
+   * 'Provisioned', 'Commissioning', 'Commissioned', 'Decommissioning', 'Deprovisioning'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly commissionedState?: CommissionedState;
+  /**
+   * The list of all referenced PublicIpPrefixes.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly publicIpPrefixes?: SubResource[];
+  /**
+   * The resource GUID property of the custom IP prefix resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly resourceGuid?: string;
+  /**
+   * The provisioning state of the custom IP prefix resource. Possible values include: 'Succeeded',
+   * 'Updating', 'Deleting', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState;
+  /**
+   * A unique read-only string that changes whenever the resource is updated.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly etag?: string;
+  /**
+   * A list of availability zones denoting the IP allocated for the resource needs to come from.
+   */
+  zones?: string[];
 }
 
 /**
@@ -4963,6 +5102,26 @@ export interface ExpressRoutePort extends Resource {
 }
 
 /**
+ * The customer name to be printed on a letter of authorization.
+ */
+export interface GenerateExpressRoutePortsLOARequest {
+  /**
+   * The customer name.
+   */
+  customerName: string;
+}
+
+/**
+ * Response for GenerateExpressRoutePortsLOA API service call.
+ */
+export interface GenerateExpressRoutePortsLOAResult {
+  /**
+   * The content as a base64 encoded string.
+   */
+  encodedContent?: string;
+}
+
+/**
  * ThreatIntel Whitelist for Firewall Policy.
  */
 export interface FirewallPolicyThreatIntelWhitelist {
@@ -4974,6 +5133,91 @@ export interface FirewallPolicyThreatIntelWhitelist {
    * List of FQDNs for the ThreatIntel Whitelist.
    */
   fqdns?: string[];
+}
+
+/**
+ * Intrusion system rules specification states.
+ */
+export interface FirewallPolicyIntrusionSystemRuleSpecifications {
+  /**
+   * Rule id (sid).
+   */
+  ruleId?: string;
+  /**
+   * The rule state. Possible values include: 'Off', 'Alert', 'Deny'
+   */
+  state?: FirewallPolicyIntrusionSystemStateType;
+}
+
+/**
+ * Intrusion system ignored traffic specification.
+ */
+export interface FirewallPolicyIntrusionSystemIgnoredTrafficSpecifications {
+  /**
+   * Name of the ignored traffic rule.
+   */
+  name?: string;
+  /**
+   * Description of the ignored traffic rule.
+   */
+  description?: string;
+  /**
+   * The FirewallPolicyIntrusionSystemIgnoredTrafficProtocol. Possible values include: 'TCP',
+   * 'UDP', 'ICMP', 'ANY'
+   */
+  protocol?: FirewallPolicyIntrusionSystemProtocol;
+  /**
+   * List of source IP addresses or ranges for this rule.
+   */
+  sourceAddresses?: string[];
+  /**
+   * List of destination IP addresses or ranges for this rule.
+   */
+  destinationAddresses?: string[];
+  /**
+   * List of destination ports or ranges.
+   */
+  destinationPorts?: string[];
+  /**
+   * List of source IpGroups for this rule.
+   */
+  sourceIpGroups?: string[];
+  /**
+   * List of destination IpGroups for this rule.
+   */
+  destinationIpGroups?: string[];
+}
+
+/**
+ * The operation for configuring intrusion system.
+ */
+export interface FirewallPolicyIntrusionSystemConfiguration {
+  /**
+   * List of specific rules states.
+   */
+  rules?: FirewallPolicyIntrusionSystemRuleSpecifications[];
+  /**
+   * List of rules for traffic to ignore.
+   */
+  ignoredTraffic?: FirewallPolicyIntrusionSystemIgnoredTrafficSpecifications[];
+  /**
+   * Boolean indicating whether child policies are allowed to have ignoredTraffic.
+   */
+  allowChildPolicyToIgnoreTraffic?: boolean;
+}
+
+/**
+ * Configuration for Intrusion system mode and rules.
+ */
+export interface FirewallPolicyIntrusionSystem {
+  /**
+   * The operation mode for Intrusion system mode. Possible values include: 'Off', 'Alert', 'Deny'
+   */
+  mode?: FirewallPolicyIntrusionSystemMode;
+  /**
+   * The intrusion system configuration properties.
+   */
+  configuration?: FirewallPolicyIntrusionSystemConfiguration;
 }
 
 /**
@@ -5079,9 +5323,9 @@ export interface FirewallPolicy extends Resource {
    */
   threatIntelWhitelist?: FirewallPolicyThreatIntelWhitelist;
   /**
-   * The operation mode for Intrusion system. Possible values include: 'Enabled', 'Disabled'
+   * The configuration for Intrusion system.
    */
-  intrusionSystemMode?: FirewallPolicyIntrusionSystemMode;
+  intrusionSystem?: FirewallPolicyIntrusionSystem;
   /**
    * TLS Configuration definition.
    */
@@ -5809,6 +6053,51 @@ export interface LoadBalancer extends Resource {
   /**
    * The provisioning state of the load balancer resource. Possible values include: 'Succeeded',
    * 'Updating', 'Deleting', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState;
+  /**
+   * A unique read-only string that changes whenever the resource is updated.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly etag?: string;
+}
+
+/**
+ * Master Custom IP prefix resource.
+ */
+export interface MasterCustomIpPrefix extends Resource {
+  /**
+   * The prefix range in CIDR notation. Should include the start address and the prefix length.
+   */
+  cidr?: string;
+  /**
+   * Original message used to request creation of master custom IP Prefix.
+   */
+  originalValidationMessage?: string;
+  /**
+   * Signed message used to request creation of master custom IP Prefix.
+   */
+  signedValidationMessage?: string;
+  /**
+   * The list of corresponding Custom IP Prefixes.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly customIpPrefixes?: SubResource[];
+  /**
+   * The validation state of the ROA for the corresponding RIR (ARIN/RIPE/APNIC/LACNIC/AFRINIC).
+   * Possible values include: 'Validating', 'Valid', 'Invalid'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly validationState?: ValidationStatus;
+  /**
+   * The resource GUID property of the master custom IP prefix resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly resourceGuid?: string;
+  /**
+   * The provisioning state of the master custom IP prefix resource. Possible values include:
+   * 'Succeeded', 'Updating', 'Deleting', 'Failed'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly provisioningState?: ProvisioningState;
@@ -7205,10 +7494,10 @@ export interface HopLink {
    */
   readonly issues?: ConnectivityIssue[];
   /**
-   * Provides additional context on links.
+   * Provides additional context on the issue.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly context?: { [propertyName: string]: string };
+  readonly context?: { [propertyName: string]: string }[];
   /**
    * Resource ID.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -7764,6 +8053,10 @@ export interface ConnectionMonitorTcpConfiguration {
    * Value indicating whether path evaluation with trace route should be disabled.
    */
   disableTraceRoute?: boolean;
+  /**
+   * Destination port behavior. Possible values include: 'None', 'ListenIfAvailable'
+   */
+  destinationPortBehavior?: DestinationPortBehavior;
 }
 
 /**
@@ -8657,6 +8950,10 @@ export interface PublicIPPrefix extends Resource {
    */
   readonly loadBalancerFrontendIpConfiguration?: SubResource;
   /**
+   * The customIpPrefix that this prefix is associated with.
+   */
+  customIPPrefix?: SubResource;
+  /**
    * The resource GUID property of the public IP prefix resource.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
@@ -9028,6 +9325,21 @@ export interface AddressSpace {
 }
 
 /**
+ * Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET.
+ */
+export interface VirtualNetworkBgpCommunities {
+  /**
+   * The BGP community associated with the virtual network.
+   */
+  virtualNetworkCommunity: string;
+  /**
+   * The BGP community associated with the region of the virtual network.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly regionalCommunity?: string;
+}
+
+/**
  * Peerings in a virtual network resource.
  */
 export interface VirtualNetworkPeering extends SubResource {
@@ -9062,6 +9374,10 @@ export interface VirtualNetworkPeering extends SubResource {
    * The reference to the remote virtual network address space.
    */
   remoteAddressSpace?: AddressSpace;
+  /**
+   * The reference to the remote virtual network's Bgp Communities.
+   */
+  remoteBgpCommunities?: VirtualNetworkBgpCommunities;
   /**
    * The status of the virtual network peering. Possible values include: 'Initiated', 'Connected',
    * 'Disconnected'
@@ -9124,21 +9440,6 @@ export interface DhcpOptions {
    * The list of DNS servers IP addresses.
    */
   dnsServers?: string[];
-}
-
-/**
- * Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET.
- */
-export interface VirtualNetworkBgpCommunities {
-  /**
-   * The BGP community associated with the virtual network.
-   */
-  virtualNetworkCommunity: string;
-  /**
-   * The BGP community associated with the region of the virtual network.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly regionalCommunity?: string;
 }
 
 /**
@@ -10968,7 +11269,7 @@ export interface VpnConnection extends SubResource {
    */
   routingWeight?: number;
   /**
-   * The dead peer detection timeout for a vpn connection in seconds.
+   * DPD timeout in seconds for vpn connection.
    */
   dpdTimeoutSeconds?: number;
   /**
@@ -11050,6 +11351,24 @@ export interface VpnConnection extends SubResource {
 }
 
 /**
+ * IP Configuration of a VPN Gateway Resource.
+ */
+export interface VpnGatewayIpConfiguration {
+  /**
+   * The identifier of the IP configuration for a VPN Gateway.
+   */
+  id?: string;
+  /**
+   * The public IP address of this IP configuration.
+   */
+  publicIpAddress?: string;
+  /**
+   * The private IP address of this IP configuration.
+   */
+  privateIpAddress?: string;
+}
+
+/**
  * VpnGateway Resource.
  */
 export interface VpnGateway extends Resource {
@@ -11076,10 +11395,63 @@ export interface VpnGateway extends Resource {
    */
   vpnGatewayScaleUnit?: number;
   /**
+   * List of all IPs configured on the gateway.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly ipConfigurations?: VpnGatewayIpConfiguration[];
+  /**
    * A unique read-only string that changes whenever the resource is updated.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly etag?: string;
+}
+
+/**
+ * Vpn Connection packet capture parameters supplied to start packet capture on gateway connection.
+ */
+export interface VpnConnectionPacketCaptureStartParameters {
+  /**
+   * Start Packet capture parameters on vpn connection.
+   */
+  filterData?: string;
+  /**
+   * List of site link connection names.
+   */
+  linkConnectionNames?: string[];
+}
+
+/**
+ * Vpn Connection packet capture parameters supplied to stop packet capture on gateway connection.
+ */
+export interface VpnConnectionPacketCaptureStopParameters {
+  /**
+   * SAS url for packet capture on vpn connection.
+   */
+  sasUrl?: string;
+  /**
+   * List of site link connection names.
+   */
+  linkConnectionNames?: string[];
+}
+
+/**
+ * Start packet capture parameters.
+ */
+export interface VpnGatewayPacketCaptureStartParameters {
+  /**
+   * Start Packet capture parameters on vpn gateway.
+   */
+  filterData?: string;
+}
+
+/**
+ * Stop packet capture parameters.
+ */
+export interface VpnGatewayPacketCaptureStopParameters {
+  /**
+   * SAS url for packet capture on vpn gateway.
+   */
+  sasUrl?: string;
 }
 
 /**
@@ -11168,12 +11540,12 @@ export interface HubRouteTable extends SubResource {
    * List of all connections associated with this route table.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly associatedConnections?: string[];
+  readonly associatedConnections?: SubResource[];
   /**
    * List of all connections that advertise to this route table.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly propagatingConnections?: string[];
+  readonly propagatingConnections?: SubResource[];
   /**
    * The provisioning state of the RouteTable resource. Possible values include: 'Succeeded',
    * 'Updating', 'Deleting', 'Failed'
@@ -11323,6 +11695,11 @@ export interface P2SConnectionConfiguration extends SubResource {
    * connection.
    */
   routingConfiguration?: RoutingConfiguration;
+  /**
+   * Flag indicating whether the enable internet security flag is turned on for the P2S Connections
+   * or not.
+   */
+  enableInternetSecurity?: boolean;
   /**
    * The provisioning state of the P2SConnectionConfiguration resource. Possible values include:
    * 'Succeeded', 'Updating', 'Deleting', 'Failed'
@@ -11714,7 +12091,7 @@ export interface VirtualHubEffectiveRoute {
 /**
  * EffectiveRoutes List.
  */
-export interface VirtualHubEffectiveRouteList {
+export interface VirtualHubEffectiveRouteEffectiveRouteList {
   /**
    * The list of effective routes configured on the virtual hub or the specified resource.
    */
@@ -11734,6 +12111,242 @@ export interface EffectiveRoutesParameters {
    * HubVirtualNetworkConnection, VpnConnection and P2SConnection.
    */
   virtualWanResourceType?: string;
+}
+
+/**
+ * Defines contents of a web application firewall global configuration.
+ */
+export interface PolicySettings {
+  /**
+   * The state of the policy. Possible values include: 'Disabled', 'Enabled'
+   */
+  state?: WebApplicationFirewallEnabledState;
+  /**
+   * The mode of the policy. Possible values include: 'Prevention', 'Detection'
+   */
+  mode?: WebApplicationFirewallMode;
+  /**
+   * Whether to allow WAF to check request Body.
+   */
+  requestBodyCheck?: boolean;
+  /**
+   * Maximum request body size in Kb for WAF.
+   */
+  maxRequestBodySizeInKb?: number;
+  /**
+   * Maximum file upload size in Mb for WAF.
+   */
+  fileUploadLimitInMb?: number;
+}
+
+/**
+ * Define match variables.
+ */
+export interface MatchVariable {
+  /**
+   * Match Variable. Possible values include: 'RemoteAddr', 'RequestMethod', 'QueryString',
+   * 'PostArgs', 'RequestUri', 'RequestHeaders', 'RequestBody', 'RequestCookies'
+   */
+  variableName: WebApplicationFirewallMatchVariable;
+  /**
+   * The selector of match variable.
+   */
+  selector?: string;
+}
+
+/**
+ * Define match conditions.
+ */
+export interface MatchCondition {
+  /**
+   * List of match variables.
+   */
+  matchVariables: MatchVariable[];
+  /**
+   * The operator to be matched. Possible values include: 'IPMatch', 'Equal', 'Contains',
+   * 'LessThan', 'GreaterThan', 'LessThanOrEqual', 'GreaterThanOrEqual', 'BeginsWith', 'EndsWith',
+   * 'Regex', 'GeoMatch'
+   */
+  operator: WebApplicationFirewallOperator;
+  /**
+   * Whether this is negate condition or not.
+   */
+  negationConditon?: boolean;
+  /**
+   * Match value.
+   */
+  matchValues: string[];
+  /**
+   * List of transforms.
+   */
+  transforms?: WebApplicationFirewallTransform[];
+}
+
+/**
+ * Defines contents of a web application rule.
+ */
+export interface WebApplicationFirewallCustomRule {
+  /**
+   * The name of the resource that is unique within a policy. This name can be used to access the
+   * resource.
+   */
+  name?: string;
+  /**
+   * A unique read-only string that changes whenever the resource is updated.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly etag?: string;
+  /**
+   * Priority of the rule. Rules with a lower value will be evaluated before rules with a higher
+   * value.
+   */
+  priority: number;
+  /**
+   * The rule type. Possible values include: 'MatchRule', 'Invalid'
+   */
+  ruleType: WebApplicationFirewallRuleType;
+  /**
+   * List of match conditions.
+   */
+  matchConditions: MatchCondition[];
+  /**
+   * Type of Actions. Possible values include: 'Allow', 'Block', 'Log'
+   */
+  action: WebApplicationFirewallAction;
+}
+
+/**
+ * Allow to exclude some variable satisfy the condition for the WAF check.
+ */
+export interface OwaspCrsExclusionEntry {
+  /**
+   * The variable to be excluded. Possible values include: 'RequestHeaderNames',
+   * 'RequestCookieNames', 'RequestArgNames'
+   */
+  matchVariable: OwaspCrsExclusionEntryMatchVariable;
+  /**
+   * When matchVariable is a collection, operate on the selector to specify which elements in the
+   * collection this exclusion applies to. Possible values include: 'Equals', 'Contains',
+   * 'StartsWith', 'EndsWith', 'EqualsAny'
+   */
+  selectorMatchOperator: OwaspCrsExclusionEntrySelectorMatchOperator;
+  /**
+   * When matchVariable is a collection, operator used to specify which elements in the collection
+   * this exclusion applies to.
+   */
+  selector: string;
+}
+
+/**
+ * Defines a managed rule group override setting.
+ */
+export interface ManagedRuleOverride {
+  /**
+   * Identifier for the managed rule.
+   */
+  ruleId: string;
+  /**
+   * The state of the managed rule. Defaults to Disabled if not specified. Possible values include:
+   * 'Disabled'
+   */
+  state?: ManagedRuleEnabledState;
+}
+
+/**
+ * Defines a managed rule group override setting.
+ */
+export interface ManagedRuleGroupOverride {
+  /**
+   * The managed rule group to override.
+   */
+  ruleGroupName: string;
+  /**
+   * List of rules that will be disabled. If none specified, all rules in the group will be
+   * disabled.
+   */
+  rules?: ManagedRuleOverride[];
+}
+
+/**
+ * Defines a managed rule set.
+ */
+export interface ManagedRuleSet {
+  /**
+   * Defines the rule set type to use.
+   */
+  ruleSetType: string;
+  /**
+   * Defines the version of the rule set to use.
+   */
+  ruleSetVersion: string;
+  /**
+   * Defines the rule group overrides to apply to the rule set.
+   */
+  ruleGroupOverrides?: ManagedRuleGroupOverride[];
+}
+
+/**
+ * Allow to exclude some variable satisfy the condition for the WAF check.
+ */
+export interface ManagedRulesDefinition {
+  /**
+   * The Exclusions that are applied on the policy.
+   */
+  exclusions?: OwaspCrsExclusionEntry[];
+  /**
+   * The managed rule sets that are associated with the policy.
+   */
+  managedRuleSets: ManagedRuleSet[];
+}
+
+/**
+ * Defines web application firewall policy.
+ */
+export interface WebApplicationFirewallPolicy extends Resource {
+  /**
+   * The PolicySettings for policy.
+   */
+  policySettings?: PolicySettings;
+  /**
+   * The custom rules inside the policy.
+   */
+  customRules?: WebApplicationFirewallCustomRule[];
+  /**
+   * A collection of references to application gateways.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly applicationGateways?: ApplicationGateway[];
+  /**
+   * The provisioning state of the web application firewall policy resource. Possible values
+   * include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState;
+  /**
+   * Resource status of the policy. Resource status of the policy. Possible values include:
+   * 'Creating', 'Enabling', 'Enabled', 'Disabling', 'Disabled', 'Deleting'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly resourceState?: WebApplicationFirewallPolicyResourceState;
+  /**
+   * Describes the managedRules structure.
+   */
+  managedRules: ManagedRulesDefinition;
+  /**
+   * A collection of references to application gateway http listeners.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly httpListeners?: SubResource[];
+  /**
+   * A collection of references to application gateway path rules.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly pathBasedRules?: SubResource[];
+  /**
+   * A unique read-only string that changes whenever the resource is updated.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly etag?: string;
 }
 
 /**
@@ -11772,6 +12385,16 @@ export interface ApplicationGatewaysBeginBackendHealthOptionalParams extends msR
 export interface ApplicationGatewaysBeginBackendHealthOnDemandOptionalParams extends msRest.RequestOptionsBase {
   /**
    * Expands BackendAddressPool and BackendHttpSettings referenced in backend health.
+   */
+  expand?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface CustomIPPrefixesGetOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Expands referenced resources.
    */
   expand?: string;
 }
@@ -11821,6 +12444,16 @@ export interface LoadBalancersGetOptionalParams extends msRest.RequestOptionsBas
  * Optional Parameters.
  */
 export interface InboundNatRulesGetOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Expands referenced resources.
+   */
+  expand?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface MasterCustomIPPrefixesGetOptionalParams extends msRest.RequestOptionsBase {
   /**
    * Expands referenced resources.
    */
@@ -12132,6 +12765,90 @@ export interface VirtualHubsBeginGetEffectiveVirtualHubRoutesOptionalParams exte
 }
 
 /**
+ * Optional Parameters.
+ */
+export interface VpnGatewaysStartPacketCaptureOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Vpn gateway packet capture parameters supplied to start packet capture on vpn gateway.
+   */
+  parameters?: VpnGatewayPacketCaptureStartParameters;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface VpnGatewaysStopPacketCaptureOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Vpn gateway packet capture parameters supplied to stop packet capture on vpn gateway.
+   */
+  parameters?: VpnGatewayPacketCaptureStopParameters;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface VpnGatewaysBeginStartPacketCaptureOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Vpn gateway packet capture parameters supplied to start packet capture on vpn gateway.
+   */
+  parameters?: VpnGatewayPacketCaptureStartParameters;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface VpnGatewaysBeginStopPacketCaptureOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Vpn gateway packet capture parameters supplied to stop packet capture on vpn gateway.
+   */
+  parameters?: VpnGatewayPacketCaptureStopParameters;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface VpnConnectionsStartPacketCaptureOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Vpn Connection packet capture parameters supplied to start packet capture on gateway
+   * connection.
+   */
+  parameters?: VpnConnectionPacketCaptureStartParameters;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface VpnConnectionsStopPacketCaptureOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Vpn Connection packet capture parameters supplied to stop packet capture on gateway
+   * connection.
+   */
+  parameters?: VpnConnectionPacketCaptureStopParameters;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface VpnConnectionsBeginStartPacketCaptureOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Vpn Connection packet capture parameters supplied to start packet capture on gateway
+   * connection.
+   */
+  parameters?: VpnConnectionPacketCaptureStartParameters;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface VpnConnectionsBeginStopPacketCaptureOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Vpn Connection packet capture parameters supplied to stop packet capture on gateway
+   * connection.
+   */
+  parameters?: VpnConnectionPacketCaptureStopParameters;
+}
+
+/**
  * An interface representing NetworkManagementClientOptions.
  */
 export interface NetworkManagementClientOptions extends AzureServiceClientOptions {
@@ -12293,6 +13010,18 @@ export interface BastionActiveSessionListResult extends Array<BastionActiveSessi
  * @extends Array<BastionSessionState>
  */
 export interface BastionSessionDeleteResult extends Array<BastionSessionState> {
+  /**
+   * The URL to get the next set of results.
+   */
+  nextLink?: string;
+}
+
+/**
+ * @interface
+ * Response for ListCustomIpPrefixes API service call.
+ * @extends Array<CustomIpPrefix>
+ */
+export interface CustomIpPrefixListResult extends Array<CustomIpPrefix> {
   /**
    * The URL to get the next set of results.
    */
@@ -12616,6 +13345,18 @@ export interface LoadBalancerProbeListResult extends Array<Probe> {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly nextLink?: string;
+}
+
+/**
+ * @interface
+ * Response for ListMasterCustomIpPrefixes API service call.
+ * @extends Array<MasterCustomIpPrefix>
+ */
+export interface MasterCustomIpPrefixListResult extends Array<MasterCustomIpPrefix> {
+  /**
+   * The URL to get the next set of results.
+   */
+  nextLink?: string;
 }
 
 /**
@@ -13320,6 +14061,20 @@ export interface ListHubRouteTablesResult extends Array<HubRouteTable> {
 }
 
 /**
+ * @interface
+ * Result of the request to list WebApplicationFirewallPolicies. It contains a list of
+ * WebApplicationFirewallPolicy objects and a URL link to get the next set of results.
+ * @extends Array<WebApplicationFirewallPolicy>
+ */
+export interface WebApplicationFirewallPolicyListResult extends Array<WebApplicationFirewallPolicy> {
+  /**
+   * URL to get the next set of WebApplicationFirewallPolicy objects if there are any.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly nextLink?: string;
+}
+
+/**
  * Defines values for ApplicationGatewayProtocol.
  * Possible values include: 'Http', 'Https'
  * @readonly
@@ -13610,6 +14365,15 @@ export type AzureFirewallSkuTier = 'Standard' | 'Premium';
 export type BastionConnectProtocol = 'SSH' | 'RDP';
 
 /**
+ * Defines values for CommissionedState.
+ * Possible values include: 'Provisioning', 'Provisioned', 'Commissioning', 'Commissioned',
+ * 'Decommissioning', 'Deprovisioning'
+ * @readonly
+ * @enum {string}
+ */
+export type CommissionedState = 'Provisioning' | 'Provisioned' | 'Commissioning' | 'Commissioned' | 'Decommissioning' | 'Deprovisioning';
+
+/**
  * Defines values for DdosCustomPolicyProtocol.
  * Possible values include: 'Tcp', 'Udp', 'Syn'
  * @readonly
@@ -13731,11 +14495,27 @@ export type ExpressRoutePortsEncapsulation = 'Dot1Q' | 'QinQ';
 
 /**
  * Defines values for FirewallPolicyIntrusionSystemMode.
- * Possible values include: 'Enabled', 'Disabled'
+ * Possible values include: 'Off', 'Alert', 'Deny'
  * @readonly
  * @enum {string}
  */
-export type FirewallPolicyIntrusionSystemMode = 'Enabled' | 'Disabled';
+export type FirewallPolicyIntrusionSystemMode = 'Off' | 'Alert' | 'Deny';
+
+/**
+ * Defines values for FirewallPolicyIntrusionSystemStateType.
+ * Possible values include: 'Off', 'Alert', 'Deny'
+ * @readonly
+ * @enum {string}
+ */
+export type FirewallPolicyIntrusionSystemStateType = 'Off' | 'Alert' | 'Deny';
+
+/**
+ * Defines values for FirewallPolicyIntrusionSystemProtocol.
+ * Possible values include: 'TCP', 'UDP', 'ICMP', 'ANY'
+ * @readonly
+ * @enum {string}
+ */
+export type FirewallPolicyIntrusionSystemProtocol = 'TCP' | 'UDP' | 'ICMP' | 'ANY';
 
 /**
  * Defines values for FirewallPolicyNatRuleCollectionActionType.
@@ -13808,6 +14588,14 @@ export type ProbeProtocol = 'Http' | 'Tcp' | 'Https';
  * @enum {string}
  */
 export type LoadBalancerOutboundRuleProtocol = 'Tcp' | 'Udp' | 'All';
+
+/**
+ * Defines values for ValidationStatus.
+ * Possible values include: 'Validating', 'Valid', 'Invalid'
+ * @readonly
+ * @enum {string}
+ */
+export type ValidationStatus = 'Validating' | 'Valid' | 'Invalid';
 
 /**
  * Defines values for NatGatewaySkuName.
@@ -14019,6 +14807,14 @@ export type PreferredIPVersion = 'IPv4' | 'IPv6';
  * @enum {string}
  */
 export type HTTPConfigurationMethod = 'Get' | 'Post';
+
+/**
+ * Defines values for DestinationPortBehavior.
+ * Possible values include: 'None', 'ListenIfAvailable'
+ * @readonly
+ * @enum {string}
+ */
+export type DestinationPortBehavior = 'None' | 'ListenIfAvailable';
 
 /**
  * Defines values for OutputType.
@@ -14306,6 +15102,97 @@ export type VpnGatewayTunnelingProtocol = 'IkeV2' | 'OpenVPN';
  * @enum {string}
  */
 export type VpnAuthenticationType = 'Certificate' | 'Radius' | 'AAD';
+
+/**
+ * Defines values for WebApplicationFirewallEnabledState.
+ * Possible values include: 'Disabled', 'Enabled'
+ * @readonly
+ * @enum {string}
+ */
+export type WebApplicationFirewallEnabledState = 'Disabled' | 'Enabled';
+
+/**
+ * Defines values for WebApplicationFirewallMode.
+ * Possible values include: 'Prevention', 'Detection'
+ * @readonly
+ * @enum {string}
+ */
+export type WebApplicationFirewallMode = 'Prevention' | 'Detection';
+
+/**
+ * Defines values for WebApplicationFirewallRuleType.
+ * Possible values include: 'MatchRule', 'Invalid'
+ * @readonly
+ * @enum {string}
+ */
+export type WebApplicationFirewallRuleType = 'MatchRule' | 'Invalid';
+
+/**
+ * Defines values for WebApplicationFirewallMatchVariable.
+ * Possible values include: 'RemoteAddr', 'RequestMethod', 'QueryString', 'PostArgs', 'RequestUri',
+ * 'RequestHeaders', 'RequestBody', 'RequestCookies'
+ * @readonly
+ * @enum {string}
+ */
+export type WebApplicationFirewallMatchVariable = 'RemoteAddr' | 'RequestMethod' | 'QueryString' | 'PostArgs' | 'RequestUri' | 'RequestHeaders' | 'RequestBody' | 'RequestCookies';
+
+/**
+ * Defines values for WebApplicationFirewallOperator.
+ * Possible values include: 'IPMatch', 'Equal', 'Contains', 'LessThan', 'GreaterThan',
+ * 'LessThanOrEqual', 'GreaterThanOrEqual', 'BeginsWith', 'EndsWith', 'Regex', 'GeoMatch'
+ * @readonly
+ * @enum {string}
+ */
+export type WebApplicationFirewallOperator = 'IPMatch' | 'Equal' | 'Contains' | 'LessThan' | 'GreaterThan' | 'LessThanOrEqual' | 'GreaterThanOrEqual' | 'BeginsWith' | 'EndsWith' | 'Regex' | 'GeoMatch';
+
+/**
+ * Defines values for WebApplicationFirewallTransform.
+ * Possible values include: 'Lowercase', 'Trim', 'UrlDecode', 'UrlEncode', 'RemoveNulls',
+ * 'HtmlEntityDecode'
+ * @readonly
+ * @enum {string}
+ */
+export type WebApplicationFirewallTransform = 'Lowercase' | 'Trim' | 'UrlDecode' | 'UrlEncode' | 'RemoveNulls' | 'HtmlEntityDecode';
+
+/**
+ * Defines values for WebApplicationFirewallAction.
+ * Possible values include: 'Allow', 'Block', 'Log'
+ * @readonly
+ * @enum {string}
+ */
+export type WebApplicationFirewallAction = 'Allow' | 'Block' | 'Log';
+
+/**
+ * Defines values for WebApplicationFirewallPolicyResourceState.
+ * Possible values include: 'Creating', 'Enabling', 'Enabled', 'Disabling', 'Disabled', 'Deleting'
+ * @readonly
+ * @enum {string}
+ */
+export type WebApplicationFirewallPolicyResourceState = 'Creating' | 'Enabling' | 'Enabled' | 'Disabling' | 'Disabled' | 'Deleting';
+
+/**
+ * Defines values for OwaspCrsExclusionEntryMatchVariable.
+ * Possible values include: 'RequestHeaderNames', 'RequestCookieNames', 'RequestArgNames'
+ * @readonly
+ * @enum {string}
+ */
+export type OwaspCrsExclusionEntryMatchVariable = 'RequestHeaderNames' | 'RequestCookieNames' | 'RequestArgNames';
+
+/**
+ * Defines values for OwaspCrsExclusionEntrySelectorMatchOperator.
+ * Possible values include: 'Equals', 'Contains', 'StartsWith', 'EndsWith', 'EqualsAny'
+ * @readonly
+ * @enum {string}
+ */
+export type OwaspCrsExclusionEntrySelectorMatchOperator = 'Equals' | 'Contains' | 'StartsWith' | 'EndsWith' | 'EqualsAny';
+
+/**
+ * Defines values for ManagedRuleEnabledState.
+ * Possible values include: 'Disabled'
+ * @readonly
+ * @enum {string}
+ */
+export type ManagedRuleEnabledState = 'Disabled';
 
 /**
  * Contains response data for the get operation.
@@ -15851,6 +16738,166 @@ export type BeginGetActiveSessionsNextResponse = BastionActiveSessionListResult 
 /**
  * Contains response data for the get operation.
  */
+export type CustomIPPrefixesGetResponse = CustomIpPrefix & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: CustomIpPrefix;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdate operation.
+ */
+export type CustomIPPrefixesCreateOrUpdateResponse = CustomIpPrefix & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: CustomIpPrefix;
+    };
+};
+
+/**
+ * Contains response data for the updateTags operation.
+ */
+export type CustomIPPrefixesUpdateTagsResponse = CustomIpPrefix & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: CustomIpPrefix;
+    };
+};
+
+/**
+ * Contains response data for the listAll operation.
+ */
+export type CustomIPPrefixesListAllResponse = CustomIpPrefixListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: CustomIpPrefixListResult;
+    };
+};
+
+/**
+ * Contains response data for the list operation.
+ */
+export type CustomIPPrefixesListResponse = CustomIpPrefixListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: CustomIpPrefixListResult;
+    };
+};
+
+/**
+ * Contains response data for the beginCreateOrUpdate operation.
+ */
+export type CustomIPPrefixesBeginCreateOrUpdateResponse = CustomIpPrefix & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: CustomIpPrefix;
+    };
+};
+
+/**
+ * Contains response data for the listAllNext operation.
+ */
+export type CustomIPPrefixesListAllNextResponse = CustomIpPrefixListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: CustomIpPrefixListResult;
+    };
+};
+
+/**
+ * Contains response data for the listNext operation.
+ */
+export type CustomIPPrefixesListNextResponse = CustomIpPrefixListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: CustomIpPrefixListResult;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
 export type DdosCustomPoliciesGetResponse = DdosCustomPolicy & {
   /**
    * The underlying HTTP response.
@@ -17389,6 +18436,26 @@ export type ExpressRoutePortsListResponse = ExpressRoutePortListResult & {
 };
 
 /**
+ * Contains response data for the generateLOA operation.
+ */
+export type ExpressRoutePortsGenerateLOAResponse = GenerateExpressRoutePortsLOAResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: GenerateExpressRoutePortsLOAResult;
+    };
+};
+
+/**
  * Contains response data for the beginCreateOrUpdate operation.
  */
 export type ExpressRoutePortsBeginCreateOrUpdateResponse = ExpressRoutePort & {
@@ -18705,6 +19772,166 @@ export type LoadBalancerProbesListNextResponse = LoadBalancerProbeListResult & {
        * The response body as parsed JSON or XML
        */
       parsedBody: LoadBalancerProbeListResult;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type MasterCustomIPPrefixesGetResponse = MasterCustomIpPrefix & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: MasterCustomIpPrefix;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdate operation.
+ */
+export type MasterCustomIPPrefixesCreateOrUpdateResponse = MasterCustomIpPrefix & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: MasterCustomIpPrefix;
+    };
+};
+
+/**
+ * Contains response data for the updateTags operation.
+ */
+export type MasterCustomIPPrefixesUpdateTagsResponse = MasterCustomIpPrefix & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: MasterCustomIpPrefix;
+    };
+};
+
+/**
+ * Contains response data for the listAll operation.
+ */
+export type MasterCustomIPPrefixesListAllResponse = MasterCustomIpPrefixListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: MasterCustomIpPrefixListResult;
+    };
+};
+
+/**
+ * Contains response data for the list operation.
+ */
+export type MasterCustomIPPrefixesListResponse = MasterCustomIpPrefixListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: MasterCustomIpPrefixListResult;
+    };
+};
+
+/**
+ * Contains response data for the beginCreateOrUpdate operation.
+ */
+export type MasterCustomIPPrefixesBeginCreateOrUpdateResponse = MasterCustomIpPrefix & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: MasterCustomIpPrefix;
+    };
+};
+
+/**
+ * Contains response data for the listAllNext operation.
+ */
+export type MasterCustomIPPrefixesListAllNextResponse = MasterCustomIpPrefixListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: MasterCustomIpPrefixListResult;
+    };
+};
+
+/**
+ * Contains response data for the listNext operation.
+ */
+export type MasterCustomIPPrefixesListNextResponse = MasterCustomIpPrefixListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: MasterCustomIpPrefixListResult;
     };
 };
 
@@ -21072,6 +22299,26 @@ export type ConnectionMonitorsBeginQueryResponse = ConnectionMonitorQueryResult 
  * Contains response data for the createOrUpdate operation.
  */
 export type FlowLogsCreateOrUpdateResponse = FlowLog & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: FlowLog;
+    };
+};
+
+/**
+ * Contains response data for the updateTags operation.
+ */
+export type FlowLogsUpdateTagsResponse = FlowLog & {
   /**
    * The underlying HTTP response.
    */
@@ -26329,6 +27576,56 @@ export type VpnGatewaysResetResponse = VpnGateway & {
 };
 
 /**
+ * Contains response data for the startPacketCapture operation.
+ */
+export type VpnGatewaysStartPacketCaptureResponse = {
+  /**
+   * The parsed response body.
+   */
+  body: string;
+
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: string;
+    };
+};
+
+/**
+ * Contains response data for the stopPacketCapture operation.
+ */
+export type VpnGatewaysStopPacketCaptureResponse = {
+  /**
+   * The parsed response body.
+   */
+  body: string;
+
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: string;
+    };
+};
+
+/**
  * Contains response data for the listByResourceGroup operation.
  */
 export type VpnGatewaysListByResourceGroupResponse = ListVpnGatewaysResult & {
@@ -26389,6 +27686,26 @@ export type VpnGatewaysBeginCreateOrUpdateResponse = VpnGateway & {
 };
 
 /**
+ * Contains response data for the beginUpdateTags operation.
+ */
+export type VpnGatewaysBeginUpdateTagsResponse = VpnGateway & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: VpnGateway;
+    };
+};
+
+/**
  * Contains response data for the beginReset operation.
  */
 export type VpnGatewaysBeginResetResponse = VpnGateway & {
@@ -26405,6 +27722,56 @@ export type VpnGatewaysBeginResetResponse = VpnGateway & {
        * The response body as parsed JSON or XML
        */
       parsedBody: VpnGateway;
+    };
+};
+
+/**
+ * Contains response data for the beginStartPacketCapture operation.
+ */
+export type VpnGatewaysBeginStartPacketCaptureResponse = {
+  /**
+   * The parsed response body.
+   */
+  body: string;
+
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: string;
+    };
+};
+
+/**
+ * Contains response data for the beginStopPacketCapture operation.
+ */
+export type VpnGatewaysBeginStopPacketCaptureResponse = {
+  /**
+   * The parsed response body.
+   */
+  body: string;
+
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: string;
     };
 };
 
@@ -26489,6 +27856,56 @@ export type VpnConnectionsCreateOrUpdateResponse = VpnConnection & {
 };
 
 /**
+ * Contains response data for the startPacketCapture operation.
+ */
+export type VpnConnectionsStartPacketCaptureResponse = {
+  /**
+   * The parsed response body.
+   */
+  body: string;
+
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: string;
+    };
+};
+
+/**
+ * Contains response data for the stopPacketCapture operation.
+ */
+export type VpnConnectionsStopPacketCaptureResponse = {
+  /**
+   * The parsed response body.
+   */
+  body: string;
+
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: string;
+    };
+};
+
+/**
  * Contains response data for the listByVpnGateway operation.
  */
 export type VpnConnectionsListByVpnGatewayResponse = ListVpnConnectionsResult & {
@@ -26525,6 +27942,56 @@ export type VpnConnectionsBeginCreateOrUpdateResponse = VpnConnection & {
        * The response body as parsed JSON or XML
        */
       parsedBody: VpnConnection;
+    };
+};
+
+/**
+ * Contains response data for the beginStartPacketCapture operation.
+ */
+export type VpnConnectionsBeginStartPacketCaptureResponse = {
+  /**
+   * The parsed response body.
+   */
+  body: string;
+
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: string;
+    };
+};
+
+/**
+ * Contains response data for the beginStopPacketCapture operation.
+ */
+export type VpnConnectionsBeginStopPacketCaptureResponse = {
+  /**
+   * The parsed response body.
+   */
+  body: string;
+
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: string;
     };
 };
 
@@ -26709,6 +28176,26 @@ export type P2sVpnGatewaysListResponse = ListP2SVpnGatewaysResult & {
 };
 
 /**
+ * Contains response data for the reset operation.
+ */
+export type P2sVpnGatewaysResetResponse = P2SVpnGateway & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: P2SVpnGateway;
+    };
+};
+
+/**
  * Contains response data for the generateVpnProfile operation.
  */
 export type P2sVpnGatewaysGenerateVpnProfileResponse = VpnProfileResponse & {
@@ -26772,6 +28259,46 @@ export type P2sVpnGatewaysGetP2sVpnConnectionHealthDetailedResponse = P2SVpnConn
  * Contains response data for the beginCreateOrUpdate operation.
  */
 export type P2sVpnGatewaysBeginCreateOrUpdateResponse = P2SVpnGateway & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: P2SVpnGateway;
+    };
+};
+
+/**
+ * Contains response data for the beginUpdateTags operation.
+ */
+export type P2sVpnGatewaysBeginUpdateTagsResponse = P2SVpnGateway & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: P2SVpnGateway;
+    };
+};
+
+/**
+ * Contains response data for the beginReset operation.
+ */
+export type P2sVpnGatewaysBeginResetResponse = P2SVpnGateway & {
   /**
    * The underlying HTTP response.
    */
@@ -27505,5 +29032,125 @@ export type HubRouteTablesListNextResponse = ListHubRouteTablesResult & {
        * The response body as parsed JSON or XML
        */
       parsedBody: ListHubRouteTablesResult;
+    };
+};
+
+/**
+ * Contains response data for the list operation.
+ */
+export type WebApplicationFirewallPoliciesListResponse = WebApplicationFirewallPolicyListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: WebApplicationFirewallPolicyListResult;
+    };
+};
+
+/**
+ * Contains response data for the listAll operation.
+ */
+export type WebApplicationFirewallPoliciesListAllResponse = WebApplicationFirewallPolicyListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: WebApplicationFirewallPolicyListResult;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type WebApplicationFirewallPoliciesGetResponse = WebApplicationFirewallPolicy & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: WebApplicationFirewallPolicy;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdate operation.
+ */
+export type WebApplicationFirewallPoliciesCreateOrUpdateResponse = WebApplicationFirewallPolicy & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: WebApplicationFirewallPolicy;
+    };
+};
+
+/**
+ * Contains response data for the listNext operation.
+ */
+export type WebApplicationFirewallPoliciesListNextResponse = WebApplicationFirewallPolicyListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: WebApplicationFirewallPolicyListResult;
+    };
+};
+
+/**
+ * Contains response data for the listAllNext operation.
+ */
+export type WebApplicationFirewallPoliciesListAllNextResponse = WebApplicationFirewallPolicyListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: WebApplicationFirewallPolicyListResult;
     };
 };
