@@ -594,9 +594,14 @@ export interface ImageUrl {
  */
 export interface ComputerVisionError {
   /**
-   * The error code.
+   * The error code. Possible values include: 'InvalidImageFormat', 'UnsupportedMediaType',
+   * 'InvalidImageUrl', 'NotSupportedFeature', 'NotSupportedImage', 'Timeout',
+   * 'InternalServerError', 'InvalidImageSize', 'BadArgument', 'DetectFaceError',
+   * 'NotSupportedLanguage', 'InvalidThumbnailSize', 'InvalidDetails', 'InvalidModel',
+   * 'CancelledRequest', 'NotSupportedVisualFeature', 'FailedToProcess', 'Unspecified',
+   * 'StorageException'
    */
-  code: any;
+  code: ComputerVisionErrorCodes;
   /**
    * A message explaining the error reported by the service.
    */
@@ -1025,6 +1030,18 @@ export interface ReadInStreamHeaders {
  * @enum {string}
  */
 export type Gender = 'Male' | 'Female';
+
+/**
+ * Defines values for ComputerVisionErrorCodes.
+ * Possible values include: 'InvalidImageFormat', 'UnsupportedMediaType', 'InvalidImageUrl',
+ * 'NotSupportedFeature', 'NotSupportedImage', 'Timeout', 'InternalServerError',
+ * 'InvalidImageSize', 'BadArgument', 'DetectFaceError', 'NotSupportedLanguage',
+ * 'InvalidThumbnailSize', 'InvalidDetails', 'InvalidModel', 'CancelledRequest',
+ * 'NotSupportedVisualFeature', 'FailedToProcess', 'Unspecified', 'StorageException'
+ * @readonly
+ * @enum {string}
+ */
+export type ComputerVisionErrorCodes = 'InvalidImageFormat' | 'UnsupportedMediaType' | 'InvalidImageUrl' | 'NotSupportedFeature' | 'NotSupportedImage' | 'Timeout' | 'InternalServerError' | 'InvalidImageSize' | 'BadArgument' | 'DetectFaceError' | 'NotSupportedLanguage' | 'InvalidThumbnailSize' | 'InvalidDetails' | 'InvalidModel' | 'CancelledRequest' | 'NotSupportedVisualFeature' | 'FailedToProcess' | 'Unspecified' | 'StorageException';
 
 /**
  * Defines values for OperationStatusCodes.

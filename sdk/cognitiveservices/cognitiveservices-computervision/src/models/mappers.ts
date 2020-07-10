@@ -1104,7 +1104,7 @@ export const ComputerVisionError: msRest.CompositeMapper = {
         required: true,
         serializedName: "code",
         type: {
-          name: "Object"
+          name: "String"
         }
       },
       message: {
