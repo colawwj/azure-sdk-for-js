@@ -3614,7 +3614,7 @@ export const FileShare: msRest.CompositeMapper = {
         readOnly: true,
         serializedName: "properties.deletedTime",
         type: {
-          name: "DateTime"
+          name: "DateTimeRfc1123"
         }
       },
       remainingRetentionDays: {
@@ -3744,7 +3744,7 @@ export const FileShareItem: msRest.CompositeMapper = {
         readOnly: true,
         serializedName: "properties.deletedTime",
         type: {
-          name: "DateTime"
+          name: "DateTimeRfc1123"
         }
       },
       remainingRetentionDays: {
