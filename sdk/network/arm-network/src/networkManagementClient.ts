@@ -31,6 +31,7 @@ class NetworkManagementClient extends NetworkManagementClientContext {
   bastionHosts: operations.BastionHosts;
   ddosCustomPolicies: operations.DdosCustomPolicies;
   ddosProtectionPlans: operations.DdosProtectionPlans;
+  dscpConfiguration: operations.DscpConfigurationOperations;
   availableEndpointServices: operations.AvailableEndpointServices;
   expressRouteCircuitAuthorizations: operations.ExpressRouteCircuitAuthorizations;
   expressRouteCircuitPeerings: operations.ExpressRouteCircuitPeerings;
@@ -119,6 +120,8 @@ class NetworkManagementClient extends NetworkManagementClientContext {
   virtualHubBgpConnections: operations.VirtualHubBgpConnections;
   virtualHubIpConfiguration: operations.VirtualHubIpConfiguration;
   hubRouteTables: operations.HubRouteTables;
+  webApplicationFirewallPolicies: operations.WebApplicationFirewallPolicies;
+  expressRouteProviderPorts: operations.ExpressRouteProviderPorts;
 
   /**
    * Initializes a new instance of the NetworkManagementClient class.
@@ -141,6 +144,7 @@ class NetworkManagementClient extends NetworkManagementClientContext {
     this.bastionHosts = new operations.BastionHosts(this);
     this.ddosCustomPolicies = new operations.DdosCustomPolicies(this);
     this.ddosProtectionPlans = new operations.DdosProtectionPlans(this);
+    this.dscpConfiguration = new operations.DscpConfigurationOperations(this);
     this.availableEndpointServices = new operations.AvailableEndpointServices(this);
     this.expressRouteCircuitAuthorizations = new operations.ExpressRouteCircuitAuthorizations(this);
     this.expressRouteCircuitPeerings = new operations.ExpressRouteCircuitPeerings(this);
@@ -229,6 +233,8 @@ class NetworkManagementClient extends NetworkManagementClientContext {
     this.virtualHubBgpConnections = new operations.VirtualHubBgpConnections(this);
     this.virtualHubIpConfiguration = new operations.VirtualHubIpConfiguration(this);
     this.hubRouteTables = new operations.HubRouteTables(this);
+    this.webApplicationFirewallPolicies = new operations.WebApplicationFirewallPolicies(this);
+    this.expressRouteProviderPorts = new operations.ExpressRouteProviderPorts(this);
   }
 
   /**

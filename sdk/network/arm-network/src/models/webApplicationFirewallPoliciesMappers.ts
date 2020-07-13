@@ -131,7 +131,6 @@ export {
   ExpressRoutePort,
   ExpressRoutePortsLocation,
   ExpressRoutePortsLocationBandwidths,
-  ExpressRoutePortsLocationListResult,
   ExpressRouteProviderPort,
   ExpressRouteServiceProvider,
   ExpressRouteServiceProviderBandwidthsOffered,
@@ -299,5 +298,6 @@ export {
   VpnSiteLink,
   VpnSiteLinkConnection,
   WebApplicationFirewallCustomRule,
-  WebApplicationFirewallPolicy
+  WebApplicationFirewallPolicy,
+  WebApplicationFirewallPolicyListResult
 } from "../models/mappers";
