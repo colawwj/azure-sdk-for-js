@@ -230,6 +230,43 @@ export interface IpFilterRule {
 }
 
 /**
+ * IP Rule to be applied as part of Network Rule Set
+ */
+export interface NetworkRuleSetIpRule {
+  /**
+   * Name of the IP filter rule.
+   */
+  filterName: string;
+  /**
+   * A string that contains the IP address range in CIDR notation for the rule.
+   */
+  ipMask: string;
+  /**
+   * IP Filter Action. Possible values include: 'Allow'. Default value: 'Allow'.
+   */
+  action?: NetworkRuleIPAction;
+}
+
+/**
+ * Network Rule Set Properties of IotHub
+ */
+export interface NetworkRuleSetProperties {
+  /**
+   * Default Action for Network Rule Set. Possible values include: 'Allow', 'Deny'. Default value:
+   * 'Deny'.
+   */
+  defaultAction?: DefaultAction;
+  /**
+   * If True, then Network Rule Set is also applied to BuiltIn EventHub EndPoint of IotHub
+   */
+  applyToBuiltInEventHubEndpoint: boolean;
+  /**
+   * List of IP Rules
+   */
+  ipRules: NetworkRuleSetIpRule[];
+}
+
+/**
  * The private endpoint property of a private endpoint connection
  */
 export interface PrivateEndpoint {
@@ -760,6 +797,7 @@ export interface IotHubProperties {
    * The IP filter rules.
    */
   ipFilterRules?: IpFilterRule[];
+  networkRuleSets?: NetworkRuleSetProperties;
   /**
    * Specifies the minimum TLS version to support for this hub. Can be set to "1.2" to have clients
    * that use a TLS version below 1.2 to be rejected.
@@ -1747,6 +1785,22 @@ export type PublicNetworkAccess = 'Enabled' | 'Disabled';
  * @enum {string}
  */
 export type IpFilterActionType = 'Accept' | 'Reject';
+
+/**
+ * Defines values for DefaultAction.
+ * Possible values include: 'Allow', 'Deny'
+ * @readonly
+ * @enum {string}
+ */
+export type DefaultAction = 'Allow' | 'Deny';
+
+/**
+ * Defines values for NetworkRuleIPAction.
+ * Possible values include: 'Allow'
+ * @readonly
+ * @enum {string}
+ */
+export type NetworkRuleIPAction = 'Allow';
 
 /**
  * Defines values for PrivateLinkServiceConnectionStatus.

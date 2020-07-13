@@ -25,6 +25,8 @@ export {
   IotHubSkuInfo,
   IpFilterRule,
   MessagingEndpointProperties,
+  NetworkRuleSetIpRule,
+  NetworkRuleSetProperties,
   PrivateEndpoint,
   PrivateEndpointConnection,
   PrivateEndpointConnectionProperties,
