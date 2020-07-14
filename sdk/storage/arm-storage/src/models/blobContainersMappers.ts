@@ -70,6 +70,7 @@ export {
   ProxyResource,
   QueueServiceProperties,
   Resource,
+  ResourceAccessRule,
   RestorePolicyProperties,
   RoutingPreference,
   Sku,

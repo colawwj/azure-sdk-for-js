@@ -564,6 +564,28 @@ export const Encryption: msRest.CompositeMapper = {
   }
 };
 
+export const ResourceAccessRule: msRest.CompositeMapper = {
+  serializedName: "ResourceAccessRule",
+  type: {
+    name: "Composite",
+    className: "ResourceAccessRule",
+    modelProperties: {
+      tenantId: {
+        serializedName: "tenantId",
+        type: {
+          name: "String"
+        }
+      },
+      resourceId: {
+        serializedName: "resourceId",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const VirtualNetworkRule: msRest.CompositeMapper = {
   serializedName: "VirtualNetworkRule",
   type: {
@@ -642,6 +664,18 @@ export const NetworkRuleSet: msRest.CompositeMapper = {
         defaultValue: 'AzureServices',
         type: {
           name: "String"
+        }
+      },
+      resourceAccessRules: {
+        serializedName: "resourceAccessRules",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "ResourceAccessRule"
+            }
+          }
         }
       },
       virtualNetworkRules: {

@@ -354,6 +354,20 @@ export interface Encryption {
 }
 
 /**
+ * Resource Access Rule.
+ */
+export interface ResourceAccessRule {
+  /**
+   * Tenant Id
+   */
+  tenantId?: string;
+  /**
+   * Resource Id
+   */
+  resourceId?: string;
+}
+
+/**
  * Virtual Network rule.
  */
 export interface VirtualNetworkRule {
@@ -398,6 +412,7 @@ export interface NetworkRuleSet {
    * 'AzureServices'. Default value: 'AzureServices'.
    */
   bypass?: Bypass;
+  resourceAccessRules?: ResourceAccessRule[];
   /**
    * Sets the virtual network rules
    */
