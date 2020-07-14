@@ -1184,6 +1184,12 @@ export const VirtualMachineExtension: msRest.CompositeMapper = {
           name: "Boolean"
         }
       },
+      enableAutomaticUpgrade: {
+        serializedName: "properties.enableAutomaticUpgrade",
+        type: {
+          name: "Boolean"
+        }
+      },
       settings: {
         serializedName: "properties.settings",
         type: {
@@ -1247,6 +1253,12 @@ export const VirtualMachineExtensionUpdate: msRest.CompositeMapper = {
       },
       autoUpgradeMinorVersion: {
         serializedName: "properties.autoUpgradeMinorVersion",
+        type: {
+          name: "Boolean"
+        }
+      },
+      enableAutomaticUpgrade: {
+        serializedName: "properties.enableAutomaticUpgrade",
         type: {
           name: "Boolean"
         }
@@ -3084,6 +3096,24 @@ export const MaintenanceRedeployStatus: msRest.CompositeMapper = {
   }
 };
 
+export const VirtualMachineHealthStatus: msRest.CompositeMapper = {
+  serializedName: "VirtualMachineHealthStatus",
+  type: {
+    name: "Composite",
+    className: "VirtualMachineHealthStatus",
+    modelProperties: {
+      status: {
+        readOnly: true,
+        serializedName: "status",
+        type: {
+          name: "Composite",
+          className: "InstanceViewStatus"
+        }
+      }
+    }
+  }
+};
+
 export const VirtualMachineInstanceView: msRest.CompositeMapper = {
   serializedName: "VirtualMachineInstanceView",
   type: {
@@ -3168,6 +3198,14 @@ export const VirtualMachineInstanceView: msRest.CompositeMapper = {
               className: "VirtualMachineExtensionInstanceView"
             }
           }
+        }
+      },
+      vmHealth: {
+        readOnly: true,
+        serializedName: "vmHealth",
+        type: {
+          name: "Composite",
+          className: "VirtualMachineHealthStatus"
         }
       },
       bootDiagnostics: {
@@ -4967,6 +5005,12 @@ export const VirtualMachineScaleSetExtension: msRest.CompositeMapper = {
           name: "Boolean"
         }
       },
+      enableAutomaticUpgrade: {
+        serializedName: "properties.enableAutomaticUpgrade",
+        type: {
+          name: "Boolean"
+        }
+      },
       settings: {
         serializedName: "properties.settings",
         type: {
@@ -5048,6 +5092,12 @@ export const VirtualMachineScaleSetExtensionUpdate: msRest.CompositeMapper = {
       },
       autoUpgradeMinorVersion: {
         serializedName: "properties.autoUpgradeMinorVersion",
+        type: {
+          name: "Boolean"
+        }
+      },
+      enableAutomaticUpgrade: {
+        serializedName: "properties.enableAutomaticUpgrade",
         type: {
           name: "Boolean"
         }
@@ -6040,24 +6090,6 @@ export const UpgradeOperationHistoricalStatusInfo: msRest.CompositeMapper = {
         serializedName: "location",
         type: {
           name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const VirtualMachineHealthStatus: msRest.CompositeMapper = {
-  serializedName: "VirtualMachineHealthStatus",
-  type: {
-    name: "Composite",
-    className: "VirtualMachineHealthStatus",
-    modelProperties: {
-      status: {
-        readOnly: true,
-        serializedName: "status",
-        type: {
-          name: "Composite",
-          className: "InstanceViewStatus"
         }
       }
     }
