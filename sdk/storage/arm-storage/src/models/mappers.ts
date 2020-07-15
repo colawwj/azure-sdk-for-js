@@ -3319,6 +3319,16 @@ export const ChangeFeed: msRest.CompositeMapper = {
         type: {
           name: "Boolean"
         }
+      },
+      retentionInDays: {
+        serializedName: "retentionInDays",
+        constraints: {
+          InclusiveMaximum: 146000,
+          InclusiveMinimum: 1
+        },
+        type: {
+          name: "Number"
+        }
       }
     }
   }
