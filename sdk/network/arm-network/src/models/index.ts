@@ -11813,6 +11813,16 @@ export interface NetworkInterfacesGetVirtualMachineScaleSetIpConfigurationOption
 /**
  * Optional Parameters.
  */
+export interface NetworkInterfacesGetCloudServiceNetworkInterfaceOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Expands referenced resources.
+   */
+  expand?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
 export interface NetworkProfilesGetOptionalParams extends msRest.RequestOptionsBase {
   /**
    * Expands referenced resources.
@@ -19034,6 +19044,46 @@ export type NetworkInterfacesGetVirtualMachineScaleSetIpConfigurationResponse = 
 };
 
 /**
+ * Contains response data for the listCloudServiceNetworkInterfaces operation.
+ */
+export type NetworkInterfacesListCloudServiceNetworkInterfacesResponse = NetworkInterfaceListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: NetworkInterfaceListResult;
+    };
+};
+
+/**
+ * Contains response data for the getCloudServiceNetworkInterface operation.
+ */
+export type NetworkInterfacesGetCloudServiceNetworkInterfaceResponse = NetworkInterface & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: NetworkInterface;
+    };
+};
+
+/**
  * Contains response data for the beginCreateOrUpdate operation.
  */
 export type NetworkInterfacesBeginCreateOrUpdateResponse = NetworkInterface & {
@@ -19190,6 +19240,26 @@ export type NetworkInterfacesListVirtualMachineScaleSetIpConfigurationsNextRespo
        * The response body as parsed JSON or XML
        */
       parsedBody: NetworkInterfaceIPConfigurationListResult;
+    };
+};
+
+/**
+ * Contains response data for the listCloudServiceNetworkInterfacesNext operation.
+ */
+export type NetworkInterfacesListCloudServiceNetworkInterfacesNextResponse = NetworkInterfaceListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: NetworkInterfaceListResult;
     };
 };
 
@@ -21994,6 +22064,26 @@ export type PublicIPAddressesGetVirtualMachineScaleSetPublicIPAddressResponse = 
 };
 
 /**
+ * Contains response data for the listCloudServicePublicIPAddresses operation.
+ */
+export type PublicIPAddressesListCloudServicePublicIPAddressesResponse = PublicIPAddressListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PublicIPAddressListResult;
+    };
+};
+
+/**
  * Contains response data for the beginCreateOrUpdate operation.
  */
 export type PublicIPAddressesBeginCreateOrUpdateResponse = PublicIPAddress & {
@@ -22077,6 +22167,26 @@ export type PublicIPAddressesListVirtualMachineScaleSetPublicIPAddressesNextResp
  * Contains response data for the listVirtualMachineScaleSetVMPublicIPAddressesNext operation.
  */
 export type PublicIPAddressesListVirtualMachineScaleSetVMPublicIPAddressesNextResponse = PublicIPAddressListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PublicIPAddressListResult;
+    };
+};
+
+/**
+ * Contains response data for the listCloudServicePublicIPAddressesNext operation.
+ */
+export type PublicIPAddressesListCloudServicePublicIPAddressesNextResponse = PublicIPAddressListResult & {
   /**
    * The underlying HTTP response.
    */

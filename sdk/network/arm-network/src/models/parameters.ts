@@ -128,6 +128,16 @@ export const circuitName: msRest.OperationURLParameter = {
     }
   }
 };
+export const cloudServiceName: msRest.OperationURLParameter = {
+  parameterPath: "cloudServiceName",
+  mapper: {
+    required: true,
+    serializedName: "cloudServiceName",
+    type: {
+      name: "String"
+    }
+  }
+};
 export const connectionMonitorName: msRest.OperationURLParameter = {
   parameterPath: "connectionMonitorName",
   mapper: {
@@ -646,6 +656,16 @@ export const resourceGroupName: msRest.OperationURLParameter = {
   mapper: {
     required: true,
     serializedName: "resourceGroupName",
+    type: {
+      name: "String"
+    }
+  }
+};
+export const roleInstanceName: msRest.OperationURLParameter = {
+  parameterPath: "roleInstanceName",
+  mapper: {
+    required: true,
+    serializedName: "roleInstanceName",
     type: {
       name: "String"
     }
