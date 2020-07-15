@@ -789,7 +789,7 @@ const addFaceFromUrlOperationSpec: msRest.OperationSpec = {
   queryParameters: [
     Parameters.userData,
     Parameters.targetFace,
-    Parameters.detectionModel
+    Parameters.detectionModel1
   ],
   requestBody: {
     parameterPath: {
@@ -854,7 +854,7 @@ const addFaceFromStreamOperationSpec: msRest.OperationSpec = {
   queryParameters: [
     Parameters.userData,
     Parameters.targetFace,
-    Parameters.detectionModel
+    Parameters.detectionModel1
   ],
   requestBody: {
     parameterPath: "image",

@@ -1217,6 +1217,124 @@ export const VerifyResult: msRest.CompositeMapper = {
   }
 };
 
+export const CompareFaceToFaceRequest: msRest.CompositeMapper = {
+  serializedName: "CompareFaceToFaceRequest",
+  type: {
+    name: "Composite",
+    className: "CompareFaceToFaceRequest",
+    modelProperties: {
+      sourceImageUrl: {
+        required: true,
+        serializedName: "sourceImageUrl",
+        type: {
+          name: "String"
+        }
+      },
+      targetImageUrl: {
+        required: true,
+        serializedName: "targetImageUrl",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const TargetImageFace: msRest.CompositeMapper = {
+  serializedName: "TargetImageFace",
+  type: {
+    name: "Composite",
+    className: "TargetImageFace",
+    modelProperties: {
+      faceRectangle: {
+        required: true,
+        serializedName: "faceRectangle",
+        type: {
+          name: "Composite",
+          className: "FaceRectangle"
+        }
+      },
+      confidence: {
+        required: true,
+        serializedName: "confidence",
+        type: {
+          name: "Number"
+        }
+      },
+      isIdentical: {
+        required: true,
+        serializedName: "isIdentical",
+        type: {
+          name: "Boolean"
+        }
+      }
+    }
+  }
+};
+
+export const SourceImageFace: msRest.CompositeMapper = {
+  serializedName: "SourceImageFace",
+  type: {
+    name: "Composite",
+    className: "SourceImageFace",
+    modelProperties: {
+      faceRectangle: {
+        required: true,
+        serializedName: "faceRectangle",
+        type: {
+          name: "Composite",
+          className: "FaceRectangle"
+        }
+      }
+    }
+  }
+};
+
+export const CompareResult: msRest.CompositeMapper = {
+  serializedName: "CompareResult",
+  type: {
+    name: "Composite",
+    className: "CompareResult",
+    modelProperties: {
+      targetImageFace: {
+        required: true,
+        serializedName: "targetImageFace",
+        type: {
+          name: "Composite",
+          className: "TargetImageFace"
+        }
+      },
+      sourceImageFace: {
+        required: true,
+        serializedName: "sourceImageFace",
+        type: {
+          name: "Composite",
+          className: "SourceImageFace"
+        }
+      },
+      detectionModel: {
+        required: true,
+        nullable: false,
+        serializedName: "detectionModel",
+        defaultValue: 'detection_02',
+        type: {
+          name: "String"
+        }
+      },
+      recognitionModel: {
+        required: true,
+        nullable: false,
+        serializedName: "recognitionModel",
+        defaultValue: 'recognition_01',
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const PersistedFace: msRest.CompositeMapper = {
   serializedName: "PersistedFace",
   type: {

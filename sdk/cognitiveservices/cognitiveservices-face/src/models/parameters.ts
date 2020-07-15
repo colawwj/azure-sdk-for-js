@@ -28,7 +28,20 @@ export const applyScope: msRest.OperationQueryParameter = {
   },
   collectionFormat: msRest.QueryCollectionFormat.Csv
 };
-export const detectionModel: msRest.OperationQueryParameter = {
+export const detectionModel0: msRest.OperationQueryParameter = {
+  parameterPath: [
+    "options",
+    "detectionModel"
+  ],
+  mapper: {
+    serializedName: "detectionModel",
+    defaultValue: 'detection_02',
+    type: {
+      name: "String"
+    }
+  }
+};
+export const detectionModel1: msRest.OperationQueryParameter = {
   parameterPath: [
     "options",
     "detectionModel"
@@ -139,7 +152,20 @@ export const personId: msRest.OperationURLParameter = {
     }
   }
 };
-export const recognitionModel: msRest.OperationQueryParameter = {
+export const recognitionModel0: msRest.OperationQueryParameter = {
+  parameterPath: [
+    "options",
+    "recognitionModel"
+  ],
+  mapper: {
+    serializedName: "recognitionModel",
+    defaultValue: 'recognition_03',
+    type: {
+      name: "String"
+    }
+  }
+};
+export const recognitionModel1: msRest.OperationQueryParameter = {
   parameterPath: [
     "options",
     "recognitionModel"
@@ -235,6 +261,16 @@ export const snapshotId: msRest.OperationURLParameter = {
     }
   }
 };
+export const source: msRest.OperationParameter = {
+  parameterPath: "source",
+  mapper: {
+    required: true,
+    serializedName: "source",
+    type: {
+      name: "Stream"
+    }
+  }
+};
 export const start0: msRest.OperationQueryParameter = {
   parameterPath: [
     "options",
@@ -259,6 +295,16 @@ export const start1: msRest.OperationQueryParameter = {
     },
     type: {
       name: "String"
+    }
+  }
+};
+export const target: msRest.OperationParameter = {
+  parameterPath: "target",
+  mapper: {
+    required: true,
+    serializedName: "target",
+    type: {
+      name: "Stream"
     }
   }
 };

@@ -10,6 +10,8 @@ export {
   Accessory,
   APIError,
   Blur,
+  CompareFaceToFaceRequest,
+  CompareResult,
   Coordinate,
   DetectedFace,
   Emotion,
@@ -33,6 +35,8 @@ export {
   Noise,
   Occlusion,
   SimilarFace,
+  SourceImageFace,
+  TargetImageFace,
   VerifyFaceToFaceRequest,
   VerifyFaceToPersonRequest,
   VerifyResult

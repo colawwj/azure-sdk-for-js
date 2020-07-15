@@ -534,6 +534,74 @@ export interface VerifyResult {
 }
 
 /**
+ * Request body for face to face comparison.
+ */
+export interface CompareFaceToFaceRequest {
+  /**
+   * Publicly reachable URL of the source image
+   */
+  sourceImageUrl: string;
+  /**
+   * Publicly reachable URL of the target image
+   */
+  targetImageUrl: string;
+}
+
+/**
+ * The face used for comparison from target image.
+ */
+export interface TargetImageFace {
+  faceRectangle: FaceRectangle;
+  /**
+   * A number indicates the similarity confidence two faces. By default, isIdentical is set to True
+   * if similarity confidence is greater than or equal to 0.5. This is useful for advanced users to
+   * override "isIdentical" and fine-tune the result on their own data.
+   */
+  confidence: number;
+  /**
+   * True if the two faces belong to the same person, otherwise false.
+   */
+  isIdentical: boolean;
+}
+
+/**
+ * The face used for comparison from source image.
+ */
+export interface SourceImageFace {
+  faceRectangle: FaceRectangle;
+}
+
+/**
+ * Result of the compare operation.
+ */
+export interface CompareResult {
+  /**
+   * The face used for comparison from source image. along with confidence and isIdentical flag.
+   */
+  targetImageFace: TargetImageFace;
+  /**
+   * The face used for comparison from target image.
+   */
+  sourceImageFace: SourceImageFace;
+  /**
+   * A number indicates the similarity confidence of whether two faces belong to the same person,
+   * or whether the face belongs to the person. By default, isIdentical is set to True if
+   * similarity confidence is greater than or equal to 0.5. This is useful for advanced users to
+   * override "isIdentical" and fine-tune the result on their own data. Possible values include:
+   * 'detection_01', 'detection_02'. Default value: 'detection_02'.
+   */
+  detectionModel: DetectionModel;
+  /**
+   * A number indicates the similarity confidence of whether two faces belong to the same person,
+   * or whether the face belongs to the person. By default, isIdentical is set to True if
+   * similarity confidence is greater than or equal to 0.5. This is useful for advanced users to
+   * override "isIdentical" and fine-tune the result on their own data. Possible values include:
+   * 'recognition_01', 'recognition_02', 'recognition_03'. Default value: 'recognition_01'.
+   */
+  recognitionModel: RecognitionModel;
+}
+
+/**
  * PersonFace object.
  */
 export interface PersistedFace {
@@ -893,6 +961,22 @@ export interface FaceIdentifyOptionalParams extends msRest.RequestOptionsBase {
 /**
  * Optional Parameters.
  */
+export interface FaceCompareWithUrlOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Name of detection model. Detection model is used to detect faces in the submitted image.
+   * Possible values include: 'detection_01', 'detection_02'. Default value: 'detection_02'.
+   */
+  detectionModel?: DetectionModel;
+  /**
+   * Name of recognition model. Possible values include: 'recognition_01', 'recognition_02',
+   * 'recognition_03'. Default value: 'recognition_03'.
+   */
+  recognitionModel?: RecognitionModel;
+}
+
+/**
+ * Optional Parameters.
+ */
 export interface FaceDetectWithUrlOptionalParams extends msRest.RequestOptionsBase {
   /**
    * A value indicating whether the operation should return faceIds of detected faces. Default
@@ -951,6 +1035,22 @@ export interface FaceVerifyFaceToPersonOptionalParams extends msRest.RequestOpti
    * largePersonGroupId should not be provided at the same time.
    */
   largePersonGroupId?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface FaceCompareWithStreamOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Name of detection model. Detection model is used to detect faces in the submitted image.
+   * Possible values include: 'detection_01', 'detection_02'. Default value: 'detection_02'.
+   */
+  detectionModel?: DetectionModel;
+  /**
+   * Name of recognition model. Possible values include: 'recognition_01', 'recognition_02',
+   * 'recognition_03'. Default value: 'recognition_03'.
+   */
+  recognitionModel?: RecognitionModel;
 }
 
 /**
@@ -1714,6 +1814,14 @@ export type NoiseLevel = 'Low' | 'Medium' | 'High';
 export type FindSimilarMatchMode = 'matchPerson' | 'matchFace';
 
 /**
+ * Defines values for DetectionModel.
+ * Possible values include: 'detection_01', 'detection_02'
+ * @readonly
+ * @enum {string}
+ */
+export type DetectionModel = 'detection_01' | 'detection_02';
+
+/**
  * Defines values for TrainingStatusType.
  * Possible values include: 'nonstarted', 'running', 'succeeded', 'failed'
  * @readonly
@@ -1753,14 +1861,6 @@ export type OperationStatusType = 'notstarted' | 'running' | 'succeeded' | 'fail
  * @enum {string}
  */
 export type FaceAttributeType = 'age' | 'gender' | 'headPose' | 'smile' | 'facialHair' | 'glasses' | 'emotion' | 'hair' | 'makeup' | 'occlusion' | 'accessories' | 'blur' | 'exposure' | 'noise';
-
-/**
- * Defines values for DetectionModel.
- * Possible values include: 'detection_01', 'detection_02'
- * @readonly
- * @enum {string}
- */
-export type DetectionModel = 'detection_01' | 'detection_02';
 
 /**
  * Contains response data for the findSimilar operation.
@@ -1843,6 +1943,26 @@ export type FaceVerifyFaceToFaceResponse = VerifyResult & {
 };
 
 /**
+ * Contains response data for the compareWithUrl operation.
+ */
+export type FaceCompareWithUrlResponse = CompareResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: CompareResult;
+    };
+};
+
+/**
  * Contains response data for the detectWithUrl operation.
  */
 export type FaceDetectWithUrlResponse = Array<DetectedFace> & {
@@ -1879,6 +1999,26 @@ export type FaceVerifyFaceToPersonResponse = VerifyResult & {
        * The response body as parsed JSON or XML
        */
       parsedBody: VerifyResult;
+    };
+};
+
+/**
+ * Contains response data for the compareWithStream operation.
+ */
+export type FaceCompareWithStreamResponse = CompareResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: CompareResult;
     };
 };
 

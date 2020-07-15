@@ -209,6 +209,43 @@ export class Face {
   }
 
   /**
+   * Compare faces from two image URLs based on similarity.
+   * <br/>
+   * Remarks:<br />
+   * * Higher face image quality means better identification precision. Please consider high-quality
+   * faces: frontal, clear, and face size is 200x200 pixels (100 pixels between eyes) or bigger.
+   * * For the scenarios that are sensitive to accuracy please make your own judgment.
+   * @param sourceImageUrl Publicly reachable URL of the source image
+   * @param targetImageUrl Publicly reachable URL of the target image
+   * @param [options] The optional parameters
+   * @returns Promise<Models.FaceCompareWithUrlResponse>
+   */
+  compareWithUrl(sourceImageUrl: string, targetImageUrl: string, options?: Models.FaceCompareWithUrlOptionalParams): Promise<Models.FaceCompareWithUrlResponse>;
+  /**
+   * @param sourceImageUrl Publicly reachable URL of the source image
+   * @param targetImageUrl Publicly reachable URL of the target image
+   * @param callback The callback
+   */
+  compareWithUrl(sourceImageUrl: string, targetImageUrl: string, callback: msRest.ServiceCallback<Models.CompareResult>): void;
+  /**
+   * @param sourceImageUrl Publicly reachable URL of the source image
+   * @param targetImageUrl Publicly reachable URL of the target image
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  compareWithUrl(sourceImageUrl: string, targetImageUrl: string, options: Models.FaceCompareWithUrlOptionalParams, callback: msRest.ServiceCallback<Models.CompareResult>): void;
+  compareWithUrl(sourceImageUrl: string, targetImageUrl: string, options?: Models.FaceCompareWithUrlOptionalParams | msRest.ServiceCallback<Models.CompareResult>, callback?: msRest.ServiceCallback<Models.CompareResult>): Promise<Models.FaceCompareWithUrlResponse> {
+    return this.client.sendOperationRequest(
+      {
+        sourceImageUrl,
+        targetImageUrl,
+        options
+      },
+      compareWithUrlOperationSpec,
+      callback) as Promise<Models.FaceCompareWithUrlResponse>;
+  }
+
+  /**
    * Detect human faces in an image, return face rectangles, and optionally with faceIds, landmarks,
    * and attributes.<br />
    * * No image will be stored. Only the extracted face feature will be stored on server. The faceId
@@ -323,6 +360,43 @@ export class Face {
       },
       verifyFaceToPersonOperationSpec,
       callback) as Promise<Models.FaceVerifyFaceToPersonResponse>;
+  }
+
+  /**
+   * Compare faces from two image streams based on similarity.
+   * <br/>
+   * Remarks:<br />
+   * * Higher face image quality means better identification precision. Please consider high-quality
+   * faces: frontal, clear, and face size is 200x200 pixels (100 pixels between eyes) or bigger.
+   * * For the scenarios that are sensitive to accuracy please make your own judgment.
+   * @param source Source image files for face to face comparison.
+   * @param target Target image files for face to face comparison.
+   * @param [options] The optional parameters
+   * @returns Promise<Models.FaceCompareWithStreamResponse>
+   */
+  compareWithStream(source: msRest.HttpRequestBody, target: msRest.HttpRequestBody, options?: Models.FaceCompareWithStreamOptionalParams): Promise<Models.FaceCompareWithStreamResponse>;
+  /**
+   * @param source Source image files for face to face comparison.
+   * @param target Target image files for face to face comparison.
+   * @param callback The callback
+   */
+  compareWithStream(source: msRest.HttpRequestBody, target: msRest.HttpRequestBody, callback: msRest.ServiceCallback<Models.CompareResult>): void;
+  /**
+   * @param source Source image files for face to face comparison.
+   * @param target Target image files for face to face comparison.
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  compareWithStream(source: msRest.HttpRequestBody, target: msRest.HttpRequestBody, options: Models.FaceCompareWithStreamOptionalParams, callback: msRest.ServiceCallback<Models.CompareResult>): void;
+  compareWithStream(source: msRest.HttpRequestBody, target: msRest.HttpRequestBody, options?: Models.FaceCompareWithStreamOptionalParams | msRest.ServiceCallback<Models.CompareResult>, callback?: msRest.ServiceCallback<Models.CompareResult>): Promise<Models.FaceCompareWithStreamResponse> {
+    return this.client.sendOperationRequest(
+      {
+        source,
+        target,
+        options
+      },
+      compareWithStreamOperationSpec,
+      callback) as Promise<Models.FaceCompareWithStreamResponse>;
   }
 
   /**
@@ -573,6 +647,37 @@ const verifyFaceToFaceOperationSpec: msRest.OperationSpec = {
   serializer
 };
 
+const compareWithUrlOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "compare",
+  urlParameters: [
+    Parameters.endpoint
+  ],
+  queryParameters: [
+    Parameters.detectionModel0,
+    Parameters.recognitionModel0
+  ],
+  requestBody: {
+    parameterPath: {
+      sourceImageUrl: "sourceImageUrl",
+      targetImageUrl: "targetImageUrl"
+    },
+    mapper: {
+      ...Mappers.CompareFaceToFaceRequest,
+      required: true
+    }
+  },
+  responses: {
+    200: {
+      bodyMapper: Mappers.CompareResult
+    },
+    default: {
+      bodyMapper: Mappers.APIError
+    }
+  },
+  serializer
+};
+
 const detectWithUrlOperationSpec: msRest.OperationSpec = {
   httpMethod: "POST",
   path: "detect",
@@ -583,9 +688,9 @@ const detectWithUrlOperationSpec: msRest.OperationSpec = {
     Parameters.returnFaceId,
     Parameters.returnFaceLandmarks,
     Parameters.returnFaceAttributes,
-    Parameters.recognitionModel,
+    Parameters.recognitionModel1,
     Parameters.returnRecognitionModel,
-    Parameters.detectionModel
+    Parameters.detectionModel1
   ],
   requestBody: {
     parameterPath: {
@@ -653,6 +758,32 @@ const verifyFaceToPersonOperationSpec: msRest.OperationSpec = {
   serializer
 };
 
+const compareWithStreamOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "compare",
+  urlParameters: [
+    Parameters.endpoint
+  ],
+  queryParameters: [
+    Parameters.detectionModel0,
+    Parameters.recognitionModel0
+  ],
+  formDataParameters: [
+    Parameters.source,
+    Parameters.target
+  ],
+  contentType: "multipart/form-data",
+  responses: {
+    200: {
+      bodyMapper: Mappers.CompareResult
+    },
+    default: {
+      bodyMapper: Mappers.APIError
+    }
+  },
+  serializer
+};
+
 const detectWithStreamOperationSpec: msRest.OperationSpec = {
   httpMethod: "POST",
   path: "detect",
@@ -663,9 +794,9 @@ const detectWithStreamOperationSpec: msRest.OperationSpec = {
     Parameters.returnFaceId,
     Parameters.returnFaceLandmarks,
     Parameters.returnFaceAttributes,
-    Parameters.recognitionModel,
+    Parameters.recognitionModel1,
     Parameters.returnRecognitionModel,
-    Parameters.detectionModel
+    Parameters.detectionModel1
   ],
   requestBody: {
     parameterPath: "image",
