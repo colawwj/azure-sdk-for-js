@@ -45,7 +45,7 @@ export class KeyVaultManagementClientContext extends msRestAzure.AzureServiceCli
 
     super(credentials, options);
 
-    this.apiVersion = '2019-09-01';
+    this.apiVersion = '2020-04-01-preview';
     this.acceptLanguage = 'en-US';
     this.longRunningOperationRetryTimeout = 30;
     this.baseUri = options.baseUri || this.baseUri || "https://management.azure.com";

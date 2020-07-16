@@ -21,6 +21,8 @@ class KeyVaultManagementClient extends KeyVaultManagementClientContext {
   privateEndpointConnections: operations.PrivateEndpointConnections;
   privateLinkResources: operations.PrivateLinkResources;
   operations: operations.Operations;
+  secrets: operations.Secrets;
+  managedHsms: operations.ManagedHsms;
 
   /**
    * Initializes a new instance of the KeyVaultManagementClient class.
@@ -35,6 +37,8 @@ class KeyVaultManagementClient extends KeyVaultManagementClientContext {
     this.privateEndpointConnections = new operations.PrivateEndpointConnections(this);
     this.privateLinkResources = new operations.PrivateLinkResources(this);
     this.operations = new operations.Operations(this);
+    this.secrets = new operations.Secrets(this);
+    this.managedHsms = new operations.ManagedHsms(this);
   }
 }
 

@@ -201,7 +201,8 @@ const putOperationSpec: msRest.OperationSpec = {
       headersMapper: Mappers.PrivateEndpointConnectionsPutHeaders
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.CloudError,
+      headersMapper: Mappers.PrivateEndpointConnectionsPutHeaders
     }
   },
   serializer
@@ -234,7 +235,8 @@ const beginDeleteMethodOperationSpec: msRest.OperationSpec = {
       headersMapper: Mappers.PrivateEndpointConnectionsDeleteHeaders
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.CloudError,
+      headersMapper: Mappers.PrivateEndpointConnectionsDeleteHeaders
     }
   },
   serializer
