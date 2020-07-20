@@ -290,7 +290,7 @@ export interface ModernSubscriptionCreationParameters {
   displayName: string;
   /**
    * The SKU ID of the Azure plan. Azure plan determines the pricing and service-level agreement of
-   * the subscription.  Use 001 for Microsoft Azure Plan and 002 for Microsoft Azure Plan for
+   * the subscription. Use 0001 for Microsoft Azure Plan and 0002 for Microsoft Azure Plan for
    * DevTest.
    */
   skuId: string;
@@ -323,7 +323,7 @@ export interface ModernCspSubscriptionCreationParameters {
   displayName: string;
   /**
    * The SKU ID of the Azure plan. Azure plan determines the pricing and service-level agreement of
-   * the subscription.  Use 001 for Microsoft Azure Plan and 002 for Microsoft Azure Plan for
+   * the subscription. Use 0001 for Microsoft Azure Plan and 0002 for Microsoft Azure Plan for
    * DevTest.
    */
   skuId: string;
@@ -331,6 +331,94 @@ export interface ModernCspSubscriptionCreationParameters {
    * Reseller ID, basically MPN Id.
    */
   resellerId?: string;
+}
+
+/**
+ * Put subscription properties.
+ */
+export interface PutSubscriptionRequestProperties {
+  /**
+   * The friendly name of the subscription.
+   */
+  displayName: string;
+  /**
+   * The SKU ID of the Azure plan. Azure plan determines the pricing and service-level agreement of
+   * the subscription. Use 0001 for Microsoft Azure Plan and 0002 for Microsoft Azure Plan for
+   * DevTest.
+   */
+  skuId: string;
+  /**
+   * Determines customerLed / fieldLed
+   * (/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/invoiceSections/{invoiceSectionId}),
+   * partnerLed (/billingAccounts/{billingAccountId}/customers/{customerId}).
+   */
+  billingScope: string;
+  /**
+   * Initial owner principal Id.
+   */
+  initialOwnerPrincipalId?: string;
+  /**
+   * Initial owner tenant Id.
+   */
+  initialOwnerTenantId?: string;
+}
+
+/**
+ * The parameters required to create a new subscription.
+ */
+export interface PutSubscriptionRequest {
+  /**
+   * Put subscription request properties.
+   */
+  properties?: PutSubscriptionRequestProperties;
+}
+
+/**
+ * Put subscription creation result properties.
+ */
+export interface PutSubscriptionResponseProperties {
+  /**
+   * The friendly name of the subscription.
+   */
+  displayName?: string;
+  /**
+   * The SKU ID of the Azure plan.
+   */
+  skuId?: string;
+  /**
+   * Corresponding billing scope.
+   */
+  billingScope?: string;
+  /**
+   * Initial owner principal Id.
+   */
+  initialOwnerPrincipalId?: string;
+  /**
+   * Initial owner tenant Id.
+   */
+  initialOwnerTenantId?: string;
+}
+
+/**
+ * Subscription information (same as Microsoft.Resources/subscription).
+ */
+export interface PutSubscriptionResponse {
+  /**
+   * Fully qualified ID for the subscription resource.
+   */
+  id?: string;
+  /**
+   * Subscription ID.
+   */
+  name?: string;
+  /**
+   * Resource type, Microsoft.Subscriptions.
+   */
+  type?: string;
+  /**
+   * Put subscription response properties.
+   */
+  properties?: PutSubscriptionResponseProperties;
 }
 
 /**
@@ -389,6 +477,36 @@ export interface SubscriptionCreateSubscriptionHeaders {
  * Defines headers for CreateCspSubscription operation.
  */
 export interface SubscriptionCreateCspSubscriptionHeaders {
+  /**
+   * GET this URL to retrieve the status of the asynchronous operation.
+   */
+  location: string;
+  /**
+   * The amount of delay to use while the status of the operation is checked. The value is
+   * expressed in seconds.
+   */
+  retryAfter: number;
+}
+
+/**
+ * Defines headers for PutSubscription operation.
+ */
+export interface SubscriptionPutSubscriptionHeaders {
+  /**
+   * GET this URL to retrieve the status of the asynchronous operation.
+   */
+  location: string;
+  /**
+   * The amount of delay to use while the status of the operation is checked. The value is
+   * expressed in seconds.
+   */
+  retryAfter: number;
+}
+
+/**
+ * Defines headers for GetSubscription operation.
+ */
+export interface SubscriptionGetSubscriptionHeaders {
   /**
    * GET this URL to retrieve the status of the asynchronous operation.
    */
@@ -708,6 +826,56 @@ export type SubscriptionCreateCspSubscriptionResponse = SubscriptionCreationResu
        * The response body as parsed JSON or XML
        */
       parsedBody: SubscriptionCreationResult;
+    };
+};
+
+/**
+ * Contains response data for the putSubscription operation.
+ */
+export type SubscriptionPutSubscriptionResponse = PutSubscriptionResponse & SubscriptionPutSubscriptionHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: SubscriptionPutSubscriptionHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PutSubscriptionResponse;
+    };
+};
+
+/**
+ * Contains response data for the getSubscription operation.
+ */
+export type SubscriptionGetSubscriptionResponse = PutSubscriptionResponse & SubscriptionGetSubscriptionHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: SubscriptionGetSubscriptionHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PutSubscriptionResponse;
     };
 };
 

@@ -518,6 +518,141 @@ export const ModernCspSubscriptionCreationParameters: msRest.CompositeMapper = {
   }
 };
 
+export const PutSubscriptionRequestProperties: msRest.CompositeMapper = {
+  serializedName: "PutSubscriptionRequestProperties",
+  type: {
+    name: "Composite",
+    className: "PutSubscriptionRequestProperties",
+    modelProperties: {
+      displayName: {
+        required: true,
+        serializedName: "displayName",
+        type: {
+          name: "String"
+        }
+      },
+      skuId: {
+        required: true,
+        serializedName: "skuId",
+        type: {
+          name: "String"
+        }
+      },
+      billingScope: {
+        required: true,
+        serializedName: "billingScope",
+        type: {
+          name: "String"
+        }
+      },
+      initialOwnerPrincipalId: {
+        serializedName: "initialOwnerPrincipalId",
+        type: {
+          name: "String"
+        }
+      },
+      initialOwnerTenantId: {
+        serializedName: "initialOwnerTenantId",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const PutSubscriptionRequest: msRest.CompositeMapper = {
+  serializedName: "PutSubscriptionRequest",
+  type: {
+    name: "Composite",
+    className: "PutSubscriptionRequest",
+    modelProperties: {
+      properties: {
+        serializedName: "properties",
+        type: {
+          name: "Composite",
+          className: "PutSubscriptionRequestProperties"
+        }
+      }
+    }
+  }
+};
+
+export const PutSubscriptionResponseProperties: msRest.CompositeMapper = {
+  serializedName: "PutSubscriptionResponseProperties",
+  type: {
+    name: "Composite",
+    className: "PutSubscriptionResponseProperties",
+    modelProperties: {
+      displayName: {
+        serializedName: "displayName",
+        type: {
+          name: "String"
+        }
+      },
+      skuId: {
+        serializedName: "skuId",
+        type: {
+          name: "String"
+        }
+      },
+      billingScope: {
+        serializedName: "billingScope",
+        type: {
+          name: "String"
+        }
+      },
+      initialOwnerPrincipalId: {
+        serializedName: "initialOwnerPrincipalId",
+        type: {
+          name: "String"
+        }
+      },
+      initialOwnerTenantId: {
+        serializedName: "initialOwnerTenantId",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const PutSubscriptionResponse: msRest.CompositeMapper = {
+  serializedName: "PutSubscriptionResponse",
+  type: {
+    name: "Composite",
+    className: "PutSubscriptionResponse",
+    modelProperties: {
+      id: {
+        serializedName: "id",
+        type: {
+          name: "String"
+        }
+      },
+      name: {
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      type: {
+        serializedName: "type",
+        type: {
+          name: "String"
+        }
+      },
+      properties: {
+        serializedName: "properties",
+        type: {
+          name: "Composite",
+          className: "PutSubscriptionResponseProperties"
+        }
+      }
+    }
+  }
+};
+
 export const SubscriptionCreateSubscriptionInEnrollmentAccountHeaders: msRest.CompositeMapper = {
   serializedName: "subscription-createsubscriptioninenrollmentaccount-headers",
   type: {
@@ -589,6 +724,50 @@ export const SubscriptionCreateCspSubscriptionHeaders: msRest.CompositeMapper = 
   type: {
     name: "Composite",
     className: "SubscriptionCreateCspSubscriptionHeaders",
+    modelProperties: {
+      location: {
+        serializedName: "location",
+        type: {
+          name: "String"
+        }
+      },
+      retryAfter: {
+        serializedName: "retry-after",
+        type: {
+          name: "Number"
+        }
+      }
+    }
+  }
+};
+
+export const SubscriptionPutSubscriptionHeaders: msRest.CompositeMapper = {
+  serializedName: "subscription-putsubscription-headers",
+  type: {
+    name: "Composite",
+    className: "SubscriptionPutSubscriptionHeaders",
+    modelProperties: {
+      location: {
+        serializedName: "location",
+        type: {
+          name: "String"
+        }
+      },
+      retryAfter: {
+        serializedName: "retry-after",
+        type: {
+          name: "Number"
+        }
+      }
+    }
+  }
+};
+
+export const SubscriptionGetSubscriptionHeaders: msRest.CompositeMapper = {
+  serializedName: "subscription-getsubscription-headers",
+  type: {
+    name: "Composite",
+    className: "SubscriptionGetSubscriptionHeaders",
     modelProperties: {
       location: {
         serializedName: "location",

@@ -13,11 +13,17 @@ export {
   ErrorResponse,
   ModernCspSubscriptionCreationParameters,
   ModernSubscriptionCreationParameters,
+  PutSubscriptionRequest,
+  PutSubscriptionRequestProperties,
+  PutSubscriptionResponse,
+  PutSubscriptionResponseProperties,
   RenamedSubscriptionId,
   SubscriptionCreateCspSubscriptionHeaders,
   SubscriptionCreateSubscriptionHeaders,
   SubscriptionCreateSubscriptionInEnrollmentAccountHeaders,
   SubscriptionCreationParameters,
   SubscriptionCreationResult,
-  SubscriptionName
+  SubscriptionGetSubscriptionHeaders,
+  SubscriptionName,
+  SubscriptionPutSubscriptionHeaders
 } from "../models/mappers";

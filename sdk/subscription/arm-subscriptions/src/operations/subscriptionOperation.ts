@@ -81,7 +81,8 @@ const getOperationSpec: msRest.OperationSpec = {
       headersMapper: Mappers.SubscriptionOperationGetHeaders
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.CloudError,
+      headersMapper: Mappers.SubscriptionOperationGetHeaders
     }
   },
   serializer

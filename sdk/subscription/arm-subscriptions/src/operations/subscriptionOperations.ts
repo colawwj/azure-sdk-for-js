@@ -160,6 +160,47 @@ export class SubscriptionOperations {
   }
 
   /**
+   * The operation to create a new subscription or update the display name of an existing
+   * subscription.
+   * @param subscriptionId Subscription Id.
+   * @param body
+   * @param [options] The optional parameters
+   * @returns Promise<Models.SubscriptionPutSubscriptionResponse>
+   */
+  putSubscription(subscriptionId: string, body: Models.PutSubscriptionRequest, options?: msRest.RequestOptionsBase): Promise<Models.SubscriptionPutSubscriptionResponse> {
+    return this.beginPutSubscription(subscriptionId,body,options)
+      .then(lroPoller => lroPoller.pollUntilFinished()) as Promise<Models.SubscriptionPutSubscriptionResponse>;
+  }
+
+  /**
+   * Get Subscription.
+   * @param subscriptionId Subscription Id.
+   * @param [options] The optional parameters
+   * @returns Promise<Models.SubscriptionGetSubscriptionResponse>
+   */
+  getSubscription(subscriptionId: string, options?: msRest.RequestOptionsBase): Promise<Models.SubscriptionGetSubscriptionResponse>;
+  /**
+   * @param subscriptionId Subscription Id.
+   * @param callback The callback
+   */
+  getSubscription(subscriptionId: string, callback: msRest.ServiceCallback<Models.PutSubscriptionResponse>): void;
+  /**
+   * @param subscriptionId Subscription Id.
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  getSubscription(subscriptionId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.PutSubscriptionResponse>): void;
+  getSubscription(subscriptionId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.PutSubscriptionResponse>, callback?: msRest.ServiceCallback<Models.PutSubscriptionResponse>): Promise<Models.SubscriptionGetSubscriptionResponse> {
+    return this.client.sendOperationRequest(
+      {
+        subscriptionId,
+        options
+      },
+      getSubscriptionOperationSpec,
+      callback) as Promise<Models.SubscriptionGetSubscriptionResponse>;
+  }
+
+  /**
    * Creates an Azure subscription
    * @param enrollmentAccountName The name of the enrollment account to which the subscription will
    * be billed.
@@ -221,6 +262,25 @@ export class SubscriptionOperations {
         options
       },
       beginCreateCspSubscriptionOperationSpec,
+      options);
+  }
+
+  /**
+   * The operation to create a new subscription or update the display name of an existing
+   * subscription.
+   * @param subscriptionId Subscription Id.
+   * @param body
+   * @param [options] The optional parameters
+   * @returns Promise<msRestAzure.LROPoller>
+   */
+  beginPutSubscription(subscriptionId: string, body: Models.PutSubscriptionRequest, options?: msRest.RequestOptionsBase): Promise<msRestAzure.LROPoller> {
+    return this.client.sendLRORequest(
+      {
+        subscriptionId,
+        body,
+        options
+      },
+      beginPutSubscriptionOperationSpec,
       options);
   }
 }
@@ -303,6 +363,34 @@ const enableOperationSpec: msRest.OperationSpec = {
   serializer
 };
 
+const getSubscriptionOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "providers/Microsoft.Subscription/subscriptions/{subscriptionId}",
+  urlParameters: [
+    Parameters.subscriptionId
+  ],
+  queryParameters: [
+    Parameters.apiVersion1
+  ],
+  headerParameters: [
+    Parameters.acceptLanguage
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.PutSubscriptionResponse,
+      headersMapper: Mappers.SubscriptionGetSubscriptionHeaders
+    },
+    202: {
+      headersMapper: Mappers.SubscriptionGetSubscriptionHeaders
+    },
+    default: {
+      bodyMapper: Mappers.ErrorResponse,
+      headersMapper: Mappers.SubscriptionGetSubscriptionHeaders
+    }
+  },
+  serializer
+};
+
 const beginCreateSubscriptionInEnrollmentAccountOperationSpec: msRest.OperationSpec = {
   httpMethod: "POST",
   path: "providers/Microsoft.Billing/enrollmentAccounts/{enrollmentAccountName}/providers/Microsoft.Subscription/createSubscription",
@@ -331,7 +419,8 @@ const beginCreateSubscriptionInEnrollmentAccountOperationSpec: msRest.OperationS
       headersMapper: Mappers.SubscriptionCreateSubscriptionInEnrollmentAccountHeaders
     },
     default: {
-      bodyMapper: Mappers.ErrorResponse
+      bodyMapper: Mappers.ErrorResponse,
+      headersMapper: Mappers.SubscriptionCreateSubscriptionInEnrollmentAccountHeaders
     }
   },
   serializer
@@ -367,7 +456,8 @@ const beginCreateSubscriptionOperationSpec: msRest.OperationSpec = {
       headersMapper: Mappers.SubscriptionCreateSubscriptionHeaders
     },
     default: {
-      bodyMapper: Mappers.ErrorResponse
+      bodyMapper: Mappers.ErrorResponse,
+      headersMapper: Mappers.SubscriptionCreateSubscriptionHeaders
     }
   },
   serializer
@@ -402,7 +492,43 @@ const beginCreateCspSubscriptionOperationSpec: msRest.OperationSpec = {
       headersMapper: Mappers.SubscriptionCreateCspSubscriptionHeaders
     },
     default: {
-      bodyMapper: Mappers.ErrorResponse
+      bodyMapper: Mappers.ErrorResponse,
+      headersMapper: Mappers.SubscriptionCreateCspSubscriptionHeaders
+    }
+  },
+  serializer
+};
+
+const beginPutSubscriptionOperationSpec: msRest.OperationSpec = {
+  httpMethod: "PUT",
+  path: "providers/Microsoft.Subscription/subscriptions/{subscriptionId}",
+  urlParameters: [
+    Parameters.subscriptionId
+  ],
+  queryParameters: [
+    Parameters.apiVersion1
+  ],
+  headerParameters: [
+    Parameters.acceptLanguage
+  ],
+  requestBody: {
+    parameterPath: "body",
+    mapper: {
+      ...Mappers.PutSubscriptionRequest,
+      required: true
+    }
+  },
+  responses: {
+    200: {
+      bodyMapper: Mappers.PutSubscriptionResponse,
+      headersMapper: Mappers.SubscriptionPutSubscriptionHeaders
+    },
+    202: {
+      headersMapper: Mappers.SubscriptionPutSubscriptionHeaders
+    },
+    default: {
+      bodyMapper: Mappers.ErrorResponse,
+      headersMapper: Mappers.SubscriptionPutSubscriptionHeaders
     }
   },
   serializer
