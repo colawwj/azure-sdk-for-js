@@ -410,7 +410,10 @@ export const LinkedStorageAccountsResource: msRest.CompositeMapper = {
           name: "Enum",
           allowedValues: [
             "CustomLogs",
-            "AzureWatson"
+            "AzureWatson",
+            "Query",
+            "Ingestion",
+            "Alerts"
           ]
         }
       },
