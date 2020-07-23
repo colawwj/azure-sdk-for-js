@@ -5733,28 +5733,6 @@ export interface WorkloadClassifier extends ProxyResource {
 }
 
 /**
- * Azure Active Directory administrator.
- */
-export interface ServerAzureADAdministrator extends ProxyResource {
-  /**
-   * Login name of the server administrator.
-   */
-  login: string;
-  /**
-   * SID (object ID) of the server administrator.
-   */
-  sid: string;
-  /**
-   * Tenant ID of the administrator.
-   */
-  tenantId?: string;
-  /**
-   * Azure Active Directory only Authentication enabled.
-   */
-  azureADOnlyAuthentication?: boolean;
-}
-
-/**
  * An interface representing UpsertManagedServerOperationParameters.
  */
 export interface UpsertManagedServerOperationParameters {
@@ -5894,6 +5872,29 @@ export interface ManagedInstanceOperation extends ProxyResource {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly operationSteps?: ManagedInstanceOperationSteps;
+}
+
+/**
+ * Azure Active Directory administrator.
+ */
+export interface ServerAzureADAdministrator extends ProxyResource {
+  /**
+   * Login name of the server administrator.
+   */
+  login: string;
+  /**
+   * SID (object ID) of the server administrator.
+   */
+  sid: string;
+  /**
+   * Tenant ID of the administrator.
+   */
+  tenantId?: string;
+  /**
+   * Azure Active Directory only Authentication enabled.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly azureADOnlyAuthentication?: boolean;
 }
 
 /**
@@ -6437,6 +6438,16 @@ export interface CompleteDatabaseRestoreDefinition {
    * The last backup name to apply
    */
   lastBackupName: string;
+}
+
+/**
+ * Azure Active Directory only authentication.
+ */
+export interface ServerAzureADOnlyAuthentication extends ProxyResource {
+  /**
+   * Azure Active Directory only Authentication enabled.
+   */
+  azureADOnlyAuthentication: boolean;
 }
 
 /**
@@ -7774,10 +7785,10 @@ export interface WorkloadClassifierListResult extends Array<WorkloadClassifier> 
 
 /**
  * @interface
- * A list of active directory administrators.
- * @extends Array<ServerAzureADAdministrator>
+ * The response to a list managed instance operations request
+ * @extends Array<ManagedInstanceOperation>
  */
-export interface AdministratorListResult extends Array<ServerAzureADAdministrator> {
+export interface ManagedInstanceOperationListResult extends Array<ManagedInstanceOperation> {
   /**
    * Link to retrieve next page of results.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -7787,10 +7798,10 @@ export interface AdministratorListResult extends Array<ServerAzureADAdministrato
 
 /**
  * @interface
- * The response to a list managed instance operations request
- * @extends Array<ManagedInstanceOperation>
+ * A list of active directory administrators.
+ * @extends Array<ServerAzureADAdministrator>
  */
-export interface ManagedInstanceOperationListResult extends Array<ManagedInstanceOperation> {
+export interface AdministratorListResult extends Array<ServerAzureADAdministrator> {
   /**
    * Link to retrieve next page of results.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -7869,6 +7880,19 @@ export interface SyncMemberListResult extends Array<SyncMember> {
  * @extends Array<ManagedDatabase>
  */
 export interface ManagedDatabaseListResult extends Array<ManagedDatabase> {
+  /**
+   * Link to retrieve next page of results.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly nextLink?: string;
+}
+
+/**
+ * @interface
+ * A list of active directory only authentications.
+ * @extends Array<ServerAzureADOnlyAuthentication>
+ */
+export interface AzureADOnlyAuthListResult extends Array<ServerAzureADOnlyAuthentication> {
   /**
    * Link to retrieve next page of results.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -16443,6 +16467,66 @@ export type WorkloadClassifiersListByWorkloadGroupNextResponse = WorkloadClassif
 };
 
 /**
+ * Contains response data for the listByManagedInstance operation.
+ */
+export type ManagedInstanceOperationsListByManagedInstanceResponse = ManagedInstanceOperationListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ManagedInstanceOperationListResult;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type ManagedInstanceOperationsGetResponse = ManagedInstanceOperation & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ManagedInstanceOperation;
+    };
+};
+
+/**
+ * Contains response data for the listByManagedInstanceNext operation.
+ */
+export type ManagedInstanceOperationsListByManagedInstanceNextResponse = ManagedInstanceOperationListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ManagedInstanceOperationListResult;
+    };
+};
+
+/**
  * Contains response data for the get operation.
  */
 export type ServerAzureADAdministratorsGetResponse = ServerAzureADAdministrator & {
@@ -16503,49 +16587,9 @@ export type ServerAzureADAdministratorsListByServerResponse = AdministratorListR
 };
 
 /**
- * Contains response data for the disableAzureADOnlyAuthentication operation.
- */
-export type ServerAzureADAdministratorsDisableAzureADOnlyAuthenticationResponse = ServerAzureADAdministrator & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ServerAzureADAdministrator;
-    };
-};
-
-/**
  * Contains response data for the beginCreateOrUpdate operation.
  */
 export type ServerAzureADAdministratorsBeginCreateOrUpdateResponse = ServerAzureADAdministrator & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ServerAzureADAdministrator;
-    };
-};
-
-/**
- * Contains response data for the beginDisableAzureADOnlyAuthentication operation.
- */
-export type ServerAzureADAdministratorsBeginDisableAzureADOnlyAuthenticationResponse = ServerAzureADAdministrator & {
   /**
    * The underlying HTTP response.
    */
@@ -16579,66 +16623,6 @@ export type ServerAzureADAdministratorsListByServerNextResponse = AdministratorL
        * The response body as parsed JSON or XML
        */
       parsedBody: AdministratorListResult;
-    };
-};
-
-/**
- * Contains response data for the listByManagedInstance operation.
- */
-export type ManagedInstanceOperationsListByManagedInstanceResponse = ManagedInstanceOperationListResult & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ManagedInstanceOperationListResult;
-    };
-};
-
-/**
- * Contains response data for the get operation.
- */
-export type ManagedInstanceOperationsGetResponse = ManagedInstanceOperation & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ManagedInstanceOperation;
-    };
-};
-
-/**
- * Contains response data for the listByManagedInstanceNext operation.
- */
-export type ManagedInstanceOperationsListByManagedInstanceNextResponse = ManagedInstanceOperationListResult & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ManagedInstanceOperationListResult;
     };
 };
 
@@ -17279,5 +17263,105 @@ export type ManagedDatabasesListInaccessibleByInstanceNextResponse = ManagedData
        * The response body as parsed JSON or XML
        */
       parsedBody: ManagedDatabaseListResult;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type ServerAzureADOnlyAuthenticationsGetResponse = ServerAzureADOnlyAuthentication & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ServerAzureADOnlyAuthentication;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdate operation.
+ */
+export type ServerAzureADOnlyAuthenticationsCreateOrUpdateResponse = ServerAzureADOnlyAuthentication & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ServerAzureADOnlyAuthentication;
+    };
+};
+
+/**
+ * Contains response data for the listByServer operation.
+ */
+export type ServerAzureADOnlyAuthenticationsListByServerResponse = AzureADOnlyAuthListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: AzureADOnlyAuthListResult;
+    };
+};
+
+/**
+ * Contains response data for the beginCreateOrUpdate operation.
+ */
+export type ServerAzureADOnlyAuthenticationsBeginCreateOrUpdateResponse = ServerAzureADOnlyAuthentication & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ServerAzureADOnlyAuthentication;
+    };
+};
+
+/**
+ * Contains response data for the listByServerNext operation.
+ */
+export type ServerAzureADOnlyAuthenticationsListByServerNextResponse = AzureADOnlyAuthListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: AzureADOnlyAuthListResult;
     };
 };

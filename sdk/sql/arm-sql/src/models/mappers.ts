@@ -8424,52 +8424,6 @@ export const WorkloadClassifier: msRest.CompositeMapper = {
   }
 };
 
-export const ServerAzureADAdministrator: msRest.CompositeMapper = {
-  serializedName: "ServerAzureADAdministrator",
-  type: {
-    name: "Composite",
-    className: "ServerAzureADAdministrator",
-    modelProperties: {
-      ...ProxyResource.type.modelProperties,
-      administratorType: {
-        required: true,
-        isConstant: true,
-        serializedName: "properties.administratorType",
-        defaultValue: 'ActiveDirectory',
-        type: {
-          name: "String"
-        }
-      },
-      login: {
-        required: true,
-        serializedName: "properties.login",
-        type: {
-          name: "String"
-        }
-      },
-      sid: {
-        required: true,
-        serializedName: "properties.sid",
-        type: {
-          name: "Uuid"
-        }
-      },
-      tenantId: {
-        serializedName: "properties.tenantId",
-        type: {
-          name: "Uuid"
-        }
-      },
-      azureADOnlyAuthentication: {
-        serializedName: "properties.azureADOnlyAuthentication",
-        type: {
-          name: "Boolean"
-        }
-      }
-    }
-  }
-};
-
 export const UpsertManagedServerOperationParameters: msRest.CompositeMapper = {
   serializedName: "UpsertManagedServerOperationParameters",
   type: {
@@ -8707,6 +8661,53 @@ export const ManagedInstanceOperation: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "ManagedInstanceOperationSteps"
+        }
+      }
+    }
+  }
+};
+
+export const ServerAzureADAdministrator: msRest.CompositeMapper = {
+  serializedName: "ServerAzureADAdministrator",
+  type: {
+    name: "Composite",
+    className: "ServerAzureADAdministrator",
+    modelProperties: {
+      ...ProxyResource.type.modelProperties,
+      administratorType: {
+        required: true,
+        isConstant: true,
+        serializedName: "properties.administratorType",
+        defaultValue: 'ActiveDirectory',
+        type: {
+          name: "String"
+        }
+      },
+      login: {
+        required: true,
+        serializedName: "properties.login",
+        type: {
+          name: "String"
+        }
+      },
+      sid: {
+        required: true,
+        serializedName: "properties.sid",
+        type: {
+          name: "Uuid"
+        }
+      },
+      tenantId: {
+        serializedName: "properties.tenantId",
+        type: {
+          name: "Uuid"
+        }
+      },
+      azureADOnlyAuthentication: {
+        readOnly: true,
+        serializedName: "properties.azureADOnlyAuthentication",
+        type: {
+          name: "Boolean"
         }
       }
     }
@@ -9495,6 +9496,24 @@ export const CompleteDatabaseRestoreDefinition: msRest.CompositeMapper = {
         serializedName: "lastBackupName",
         type: {
           name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const ServerAzureADOnlyAuthentication: msRest.CompositeMapper = {
+  serializedName: "ServerAzureADOnlyAuthentication",
+  type: {
+    name: "Composite",
+    className: "ServerAzureADOnlyAuthentication",
+    modelProperties: {
+      ...ProxyResource.type.modelProperties,
+      azureADOnlyAuthentication: {
+        required: true,
+        serializedName: "properties.azureADOnlyAuthentication",
+        type: {
+          name: "Boolean"
         }
       }
     }
@@ -11493,36 +11512,6 @@ export const WorkloadClassifierListResult: msRest.CompositeMapper = {
   }
 };
 
-export const AdministratorListResult: msRest.CompositeMapper = {
-  serializedName: "AdministratorListResult",
-  type: {
-    name: "Composite",
-    className: "AdministratorListResult",
-    modelProperties: {
-      value: {
-        readOnly: true,
-        serializedName: "",
-        type: {
-          name: "Sequence",
-          element: {
-            type: {
-              name: "Composite",
-              className: "ServerAzureADAdministrator"
-            }
-          }
-        }
-      },
-      nextLink: {
-        readOnly: true,
-        serializedName: "nextLink",
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
 export const ManagedInstanceOperationListResult: msRest.CompositeMapper = {
   serializedName: "ManagedInstanceOperationListResult",
   type: {
@@ -11538,6 +11527,36 @@ export const ManagedInstanceOperationListResult: msRest.CompositeMapper = {
             type: {
               name: "Composite",
               className: "ManagedInstanceOperation"
+            }
+          }
+        }
+      },
+      nextLink: {
+        readOnly: true,
+        serializedName: "nextLink",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const AdministratorListResult: msRest.CompositeMapper = {
+  serializedName: "AdministratorListResult",
+  type: {
+    name: "Composite",
+    className: "AdministratorListResult",
+    modelProperties: {
+      value: {
+        readOnly: true,
+        serializedName: "",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "ServerAzureADAdministrator"
             }
           }
         }
@@ -11718,6 +11737,36 @@ export const ManagedDatabaseListResult: msRest.CompositeMapper = {
             type: {
               name: "Composite",
               className: "ManagedDatabase"
+            }
+          }
+        }
+      },
+      nextLink: {
+        readOnly: true,
+        serializedName: "nextLink",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const AzureADOnlyAuthListResult: msRest.CompositeMapper = {
+  serializedName: "AzureADOnlyAuthListResult",
+  type: {
+    name: "Composite",
+    className: "AzureADOnlyAuthListResult",
+    modelProperties: {
+      value: {
+        readOnly: true,
+        serializedName: "",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "ServerAzureADOnlyAuthentication"
             }
           }
         }

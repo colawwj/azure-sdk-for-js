@@ -9,6 +9,7 @@
 export {
   AutomaticTuningOptions,
   AutomaticTuningServerOptions,
+  AzureADOnlyAuthListResult,
   BackupLongTermRetentionPolicy,
   BackupShortTermRetentionPolicy,
   BaseResource,
@@ -56,7 +57,6 @@ export {
   JobTargetGroup,
   JobVersion,
   LongTermRetentionBackup,
-  LongTermRetentionBackupListResult,
   ManagedBackupShortTermRetentionPolicy,
   ManagedDatabase,
   ManagedDatabaseRestoreDetailsResult,

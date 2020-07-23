@@ -11,16 +11,16 @@
 import * as msRest from "@azure/ms-rest-js";
 import * as msRestAzure from "@azure/ms-rest-azure-js";
 import * as Models from "../models";
-import * as Mappers from "../models/serverAzureADAdministratorsMappers";
+import * as Mappers from "../models/serverAzureADOnlyAuthenticationsMappers";
 import * as Parameters from "../models/parameters";
 import { SqlManagementClientContext } from "../sqlManagementClientContext";
 
-/** Class representing a ServerAzureADAdministrators. */
-export class ServerAzureADAdministrators {
+/** Class representing a ServerAzureADOnlyAuthentications. */
+export class ServerAzureADOnlyAuthentications {
   private readonly client: SqlManagementClientContext;
 
   /**
-   * Create a ServerAzureADAdministrators.
+   * Create a ServerAzureADOnlyAuthentications.
    * @param {SqlManagementClientContext} client Reference to the service client.
    */
   constructor(client: SqlManagementClientContext) {
@@ -28,21 +28,21 @@ export class ServerAzureADAdministrators {
   }
 
   /**
-   * Gets a Azure Active Directory administrator.
+   * Gets a specific Azure Active Directory only authentication property.
    * @param resourceGroupName The name of the resource group that contains the resource. You can
    * obtain this value from the Azure Resource Manager API or the portal.
    * @param serverName The name of the server.
    * @param [options] The optional parameters
-   * @returns Promise<Models.ServerAzureADAdministratorsGetResponse>
+   * @returns Promise<Models.ServerAzureADOnlyAuthenticationsGetResponse>
    */
-  get(resourceGroupName: string, serverName: string, options?: msRest.RequestOptionsBase): Promise<Models.ServerAzureADAdministratorsGetResponse>;
+  get(resourceGroupName: string, serverName: string, options?: msRest.RequestOptionsBase): Promise<Models.ServerAzureADOnlyAuthenticationsGetResponse>;
   /**
    * @param resourceGroupName The name of the resource group that contains the resource. You can
    * obtain this value from the Azure Resource Manager API or the portal.
    * @param serverName The name of the server.
    * @param callback The callback
    */
-  get(resourceGroupName: string, serverName: string, callback: msRest.ServiceCallback<Models.ServerAzureADAdministrator>): void;
+  get(resourceGroupName: string, serverName: string, callback: msRest.ServiceCallback<Models.ServerAzureADOnlyAuthentication>): void;
   /**
    * @param resourceGroupName The name of the resource group that contains the resource. You can
    * obtain this value from the Azure Resource Manager API or the portal.
@@ -50,8 +50,8 @@ export class ServerAzureADAdministrators {
    * @param options The optional parameters
    * @param callback The callback
    */
-  get(resourceGroupName: string, serverName: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.ServerAzureADAdministrator>): void;
-  get(resourceGroupName: string, serverName: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.ServerAzureADAdministrator>, callback?: msRest.ServiceCallback<Models.ServerAzureADAdministrator>): Promise<Models.ServerAzureADAdministratorsGetResponse> {
+  get(resourceGroupName: string, serverName: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.ServerAzureADOnlyAuthentication>): void;
+  get(resourceGroupName: string, serverName: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.ServerAzureADOnlyAuthentication>, callback?: msRest.ServiceCallback<Models.ServerAzureADOnlyAuthentication>): Promise<Models.ServerAzureADOnlyAuthenticationsGetResponse> {
     return this.client.sendOperationRequest(
       {
         resourceGroupName,
@@ -59,25 +59,27 @@ export class ServerAzureADAdministrators {
         options
       },
       getOperationSpec,
-      callback) as Promise<Models.ServerAzureADAdministratorsGetResponse>;
+      callback) as Promise<Models.ServerAzureADOnlyAuthenticationsGetResponse>;
   }
 
   /**
-   * Creates or updates an existing Azure Active Directory administrator.
+   * Sets Server Active Directory only authentication property or updates an existing server Active
+   * Directory only authentication property.
    * @param resourceGroupName The name of the resource group that contains the resource. You can
    * obtain this value from the Azure Resource Manager API or the portal.
    * @param serverName The name of the server.
-   * @param parameters The requested Azure Active Directory administrator Resource state.
+   * @param parameters The required parameters for creating or updating an Active Directory only
+   * authentication property.
    * @param [options] The optional parameters
-   * @returns Promise<Models.ServerAzureADAdministratorsCreateOrUpdateResponse>
+   * @returns Promise<Models.ServerAzureADOnlyAuthenticationsCreateOrUpdateResponse>
    */
-  createOrUpdate(resourceGroupName: string, serverName: string, parameters: Models.ServerAzureADAdministrator, options?: msRest.RequestOptionsBase): Promise<Models.ServerAzureADAdministratorsCreateOrUpdateResponse> {
+  createOrUpdate(resourceGroupName: string, serverName: string, parameters: Models.ServerAzureADOnlyAuthentication, options?: msRest.RequestOptionsBase): Promise<Models.ServerAzureADOnlyAuthenticationsCreateOrUpdateResponse> {
     return this.beginCreateOrUpdate(resourceGroupName,serverName,parameters,options)
-      .then(lroPoller => lroPoller.pollUntilFinished()) as Promise<Models.ServerAzureADAdministratorsCreateOrUpdateResponse>;
+      .then(lroPoller => lroPoller.pollUntilFinished()) as Promise<Models.ServerAzureADOnlyAuthenticationsCreateOrUpdateResponse>;
   }
 
   /**
-   * Deletes the Azure Active Directory administrator with the given name.
+   * Deletes an existing server Active Directory only authentication property.
    * @param resourceGroupName The name of the resource group that contains the resource. You can
    * obtain this value from the Azure Resource Manager API or the portal.
    * @param serverName The name of the server.
@@ -90,21 +92,21 @@ export class ServerAzureADAdministrators {
   }
 
   /**
-   * Gets a list of Azure Active Directory administrators in a server.
+   * Gets a list of server Azure Active Directory only authentications.
    * @param resourceGroupName The name of the resource group that contains the resource. You can
    * obtain this value from the Azure Resource Manager API or the portal.
    * @param serverName The name of the server.
    * @param [options] The optional parameters
-   * @returns Promise<Models.ServerAzureADAdministratorsListByServerResponse>
+   * @returns Promise<Models.ServerAzureADOnlyAuthenticationsListByServerResponse>
    */
-  listByServer(resourceGroupName: string, serverName: string, options?: msRest.RequestOptionsBase): Promise<Models.ServerAzureADAdministratorsListByServerResponse>;
+  listByServer(resourceGroupName: string, serverName: string, options?: msRest.RequestOptionsBase): Promise<Models.ServerAzureADOnlyAuthenticationsListByServerResponse>;
   /**
    * @param resourceGroupName The name of the resource group that contains the resource. You can
    * obtain this value from the Azure Resource Manager API or the portal.
    * @param serverName The name of the server.
    * @param callback The callback
    */
-  listByServer(resourceGroupName: string, serverName: string, callback: msRest.ServiceCallback<Models.AdministratorListResult>): void;
+  listByServer(resourceGroupName: string, serverName: string, callback: msRest.ServiceCallback<Models.AzureADOnlyAuthListResult>): void;
   /**
    * @param resourceGroupName The name of the resource group that contains the resource. You can
    * obtain this value from the Azure Resource Manager API or the portal.
@@ -112,8 +114,8 @@ export class ServerAzureADAdministrators {
    * @param options The optional parameters
    * @param callback The callback
    */
-  listByServer(resourceGroupName: string, serverName: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.AdministratorListResult>): void;
-  listByServer(resourceGroupName: string, serverName: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.AdministratorListResult>, callback?: msRest.ServiceCallback<Models.AdministratorListResult>): Promise<Models.ServerAzureADAdministratorsListByServerResponse> {
+  listByServer(resourceGroupName: string, serverName: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.AzureADOnlyAuthListResult>): void;
+  listByServer(resourceGroupName: string, serverName: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.AzureADOnlyAuthListResult>, callback?: msRest.ServiceCallback<Models.AzureADOnlyAuthListResult>): Promise<Models.ServerAzureADOnlyAuthenticationsListByServerResponse> {
     return this.client.sendOperationRequest(
       {
         resourceGroupName,
@@ -121,19 +123,21 @@ export class ServerAzureADAdministrators {
         options
       },
       listByServerOperationSpec,
-      callback) as Promise<Models.ServerAzureADAdministratorsListByServerResponse>;
+      callback) as Promise<Models.ServerAzureADOnlyAuthenticationsListByServerResponse>;
   }
 
   /**
-   * Creates or updates an existing Azure Active Directory administrator.
+   * Sets Server Active Directory only authentication property or updates an existing server Active
+   * Directory only authentication property.
    * @param resourceGroupName The name of the resource group that contains the resource. You can
    * obtain this value from the Azure Resource Manager API or the portal.
    * @param serverName The name of the server.
-   * @param parameters The requested Azure Active Directory administrator Resource state.
+   * @param parameters The required parameters for creating or updating an Active Directory only
+   * authentication property.
    * @param [options] The optional parameters
    * @returns Promise<msRestAzure.LROPoller>
    */
-  beginCreateOrUpdate(resourceGroupName: string, serverName: string, parameters: Models.ServerAzureADAdministrator, options?: msRest.RequestOptionsBase): Promise<msRestAzure.LROPoller> {
+  beginCreateOrUpdate(resourceGroupName: string, serverName: string, parameters: Models.ServerAzureADOnlyAuthentication, options?: msRest.RequestOptionsBase): Promise<msRestAzure.LROPoller> {
     return this.client.sendLRORequest(
       {
         resourceGroupName,
@@ -146,7 +150,7 @@ export class ServerAzureADAdministrators {
   }
 
   /**
-   * Deletes the Azure Active Directory administrator with the given name.
+   * Deletes an existing server Active Directory only authentication property.
    * @param resourceGroupName The name of the resource group that contains the resource. You can
    * obtain this value from the Azure Resource Manager API or the portal.
    * @param serverName The name of the server.
@@ -165,31 +169,31 @@ export class ServerAzureADAdministrators {
   }
 
   /**
-   * Gets a list of Azure Active Directory administrators in a server.
+   * Gets a list of server Azure Active Directory only authentications.
    * @param nextPageLink The NextLink from the previous successful call to List operation.
    * @param [options] The optional parameters
-   * @returns Promise<Models.ServerAzureADAdministratorsListByServerNextResponse>
+   * @returns Promise<Models.ServerAzureADOnlyAuthenticationsListByServerNextResponse>
    */
-  listByServerNext(nextPageLink: string, options?: msRest.RequestOptionsBase): Promise<Models.ServerAzureADAdministratorsListByServerNextResponse>;
+  listByServerNext(nextPageLink: string, options?: msRest.RequestOptionsBase): Promise<Models.ServerAzureADOnlyAuthenticationsListByServerNextResponse>;
   /**
    * @param nextPageLink The NextLink from the previous successful call to List operation.
    * @param callback The callback
    */
-  listByServerNext(nextPageLink: string, callback: msRest.ServiceCallback<Models.AdministratorListResult>): void;
+  listByServerNext(nextPageLink: string, callback: msRest.ServiceCallback<Models.AzureADOnlyAuthListResult>): void;
   /**
    * @param nextPageLink The NextLink from the previous successful call to List operation.
    * @param options The optional parameters
    * @param callback The callback
    */
-  listByServerNext(nextPageLink: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.AdministratorListResult>): void;
-  listByServerNext(nextPageLink: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.AdministratorListResult>, callback?: msRest.ServiceCallback<Models.AdministratorListResult>): Promise<Models.ServerAzureADAdministratorsListByServerNextResponse> {
+  listByServerNext(nextPageLink: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.AzureADOnlyAuthListResult>): void;
+  listByServerNext(nextPageLink: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.AzureADOnlyAuthListResult>, callback?: msRest.ServiceCallback<Models.AzureADOnlyAuthListResult>): Promise<Models.ServerAzureADOnlyAuthenticationsListByServerNextResponse> {
     return this.client.sendOperationRequest(
       {
         nextPageLink,
         options
       },
       listByServerNextOperationSpec,
-      callback) as Promise<Models.ServerAzureADAdministratorsListByServerNextResponse>;
+      callback) as Promise<Models.ServerAzureADOnlyAuthenticationsListByServerNextResponse>;
   }
 }
 
@@ -197,22 +201,22 @@ export class ServerAzureADAdministrators {
 const serializer = new msRest.Serializer(Mappers);
 const getOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
-  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/administrators/{administratorName}",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications/{authenticationName}",
   urlParameters: [
     Parameters.subscriptionId,
     Parameters.resourceGroupName0,
     Parameters.serverName,
-    Parameters.administratorName
+    Parameters.authenticationName
   ],
   queryParameters: [
-    Parameters.apiVersion6
+    Parameters.apiVersion8
   ],
   headerParameters: [
     Parameters.acceptLanguage
   ],
   responses: {
     200: {
-      bodyMapper: Mappers.ServerAzureADAdministrator
+      bodyMapper: Mappers.ServerAzureADOnlyAuthentication
     },
     default: {
       bodyMapper: Mappers.CloudError
@@ -223,21 +227,21 @@ const getOperationSpec: msRest.OperationSpec = {
 
 const listByServerOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
-  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/administrators",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications",
   urlParameters: [
     Parameters.subscriptionId,
     Parameters.resourceGroupName0,
     Parameters.serverName
   ],
   queryParameters: [
-    Parameters.apiVersion6
+    Parameters.apiVersion8
   ],
   headerParameters: [
     Parameters.acceptLanguage
   ],
   responses: {
     200: {
-      bodyMapper: Mappers.AdministratorListResult
+      bodyMapper: Mappers.AzureADOnlyAuthListResult
     },
     default: {
       bodyMapper: Mappers.CloudError
@@ -248,15 +252,15 @@ const listByServerOperationSpec: msRest.OperationSpec = {
 
 const beginCreateOrUpdateOperationSpec: msRest.OperationSpec = {
   httpMethod: "PUT",
-  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/administrators/{administratorName}",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications/{authenticationName}",
   urlParameters: [
     Parameters.subscriptionId,
     Parameters.resourceGroupName0,
     Parameters.serverName,
-    Parameters.administratorName
+    Parameters.authenticationName
   ],
   queryParameters: [
-    Parameters.apiVersion6
+    Parameters.apiVersion8
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -264,16 +268,16 @@ const beginCreateOrUpdateOperationSpec: msRest.OperationSpec = {
   requestBody: {
     parameterPath: "parameters",
     mapper: {
-      ...Mappers.ServerAzureADAdministrator,
+      ...Mappers.ServerAzureADOnlyAuthentication,
       required: true
     }
   },
   responses: {
     200: {
-      bodyMapper: Mappers.ServerAzureADAdministrator
+      bodyMapper: Mappers.ServerAzureADOnlyAuthentication
     },
     201: {
-      bodyMapper: Mappers.ServerAzureADAdministrator
+      bodyMapper: Mappers.ServerAzureADOnlyAuthentication
     },
     202: {},
     default: {
@@ -285,15 +289,15 @@ const beginCreateOrUpdateOperationSpec: msRest.OperationSpec = {
 
 const beginDeleteMethodOperationSpec: msRest.OperationSpec = {
   httpMethod: "DELETE",
-  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/administrators/{administratorName}",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications/{authenticationName}",
   urlParameters: [
     Parameters.subscriptionId,
     Parameters.resourceGroupName0,
     Parameters.serverName,
-    Parameters.administratorName
+    Parameters.authenticationName
   ],
   queryParameters: [
-    Parameters.apiVersion6
+    Parameters.apiVersion8
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -321,7 +325,7 @@ const listByServerNextOperationSpec: msRest.OperationSpec = {
   ],
   responses: {
     200: {
-      bodyMapper: Mappers.AdministratorListResult
+      bodyMapper: Mappers.AzureADOnlyAuthListResult
     },
     default: {
       bodyMapper: Mappers.CloudError
