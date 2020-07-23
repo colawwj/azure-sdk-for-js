@@ -19,7 +19,6 @@ export const Address: msRest.CompositeMapper = {
     className: "Address",
     modelProperties: {
       addressLine1: {
-        required: true,
         serializedName: "addressLine1",
         type: {
           name: "String"
@@ -38,21 +37,18 @@ export const Address: msRest.CompositeMapper = {
         }
       },
       postalCode: {
-        required: true,
         serializedName: "postalCode",
         type: {
           name: "String"
         }
       },
       city: {
-        required: true,
         serializedName: "city",
         type: {
           name: "String"
         }
       },
       state: {
-        required: true,
         serializedName: "state",
         type: {
           name: "String"
@@ -499,6 +495,28 @@ export const Sku: msRest.CompositeMapper = {
   }
 };
 
+export const ResourceMoveDetails: msRest.CompositeMapper = {
+  serializedName: "ResourceMoveDetails",
+  type: {
+    name: "Composite",
+    className: "ResourceMoveDetails",
+    modelProperties: {
+      operationInProgress: {
+        serializedName: "operationInProgress",
+        type: {
+          name: "String"
+        }
+      },
+      operationInProgressLockTimeoutInUTC: {
+        serializedName: "operationInProgressLockTimeoutInUTC",
+        type: {
+          name: "DateTime"
+        }
+      }
+    }
+  }
+};
+
 export const DataBoxEdgeDevice: msRest.CompositeMapper = {
   serializedName: "DataBoxEdgeDevice",
   type: {
@@ -533,6 +551,12 @@ export const DataBoxEdgeDevice: msRest.CompositeMapper = {
       },
       etag: {
         serializedName: "etag",
+        type: {
+          name: "String"
+        }
+      },
+      kind: {
+        serializedName: "kind",
         type: {
           name: "String"
         }
@@ -635,6 +659,14 @@ export const DataBoxEdgeDevice: msRest.CompositeMapper = {
         type: {
           name: "Number"
         }
+      },
+      resourceMoveDetails: {
+        readOnly: true,
+        serializedName: "properties.resourceMoveDetails",
+        type: {
+          name: "Composite",
+          className: "ResourceMoveDetails"
+        }
       }
     }
   }
@@ -685,6 +717,349 @@ export const DataBoxEdgeDevicePatch: msRest.CompositeMapper = {
               name: "String"
             }
           }
+        }
+      }
+    }
+  }
+};
+
+export const DataBoxEdgeMoveRequest: msRest.CompositeMapper = {
+  serializedName: "DataBoxEdgeMoveRequest",
+  type: {
+    name: "Composite",
+    className: "DataBoxEdgeMoveRequest",
+    modelProperties: {
+      targetResourceGroup: {
+        required: true,
+        serializedName: "targetResourceGroup",
+        type: {
+          name: "String"
+        }
+      },
+      resources: {
+        required: true,
+        serializedName: "resources",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const SkuLocationInfo: msRest.CompositeMapper = {
+  serializedName: "SkuLocationInfo",
+  type: {
+    name: "Composite",
+    className: "SkuLocationInfo",
+    modelProperties: {
+      location: {
+        readOnly: true,
+        serializedName: "location",
+        type: {
+          name: "String"
+        }
+      },
+      zones: {
+        readOnly: true,
+        serializedName: "zones",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      sites: {
+        readOnly: true,
+        serializedName: "sites",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const SkuCost: msRest.CompositeMapper = {
+  serializedName: "SkuCost",
+  type: {
+    name: "Composite",
+    className: "SkuCost",
+    modelProperties: {
+      meterId: {
+        readOnly: true,
+        serializedName: "meterId",
+        type: {
+          name: "String"
+        }
+      },
+      quantity: {
+        readOnly: true,
+        serializedName: "quantity",
+        type: {
+          name: "Number"
+        }
+      },
+      extendedUnit: {
+        readOnly: true,
+        serializedName: "extendedUnit",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const SkuRestrictionInfo: msRest.CompositeMapper = {
+  serializedName: "SkuRestrictionInfo",
+  type: {
+    name: "Composite",
+    className: "SkuRestrictionInfo",
+    modelProperties: {
+      locations: {
+        readOnly: true,
+        serializedName: "locations",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      zones: {
+        readOnly: true,
+        serializedName: "zones",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const SkuRestriction: msRest.CompositeMapper = {
+  serializedName: "SkuRestriction",
+  type: {
+    name: "Composite",
+    className: "SkuRestriction",
+    modelProperties: {
+      type: {
+        readOnly: true,
+        serializedName: "type",
+        type: {
+          name: "String"
+        }
+      },
+      values: {
+        readOnly: true,
+        serializedName: "values",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      reasonCode: {
+        readOnly: true,
+        serializedName: "reasonCode",
+        type: {
+          name: "String"
+        }
+      },
+      restrictionInfo: {
+        readOnly: true,
+        serializedName: "restrictionInfo",
+        type: {
+          name: "Composite",
+          className: "SkuRestrictionInfo"
+        }
+      }
+    }
+  }
+};
+
+export const DataBoxEdgeSku: msRest.CompositeMapper = {
+  serializedName: "DataBoxEdgeSku",
+  type: {
+    name: "Composite",
+    className: "DataBoxEdgeSku",
+    modelProperties: {
+      resourceType: {
+        readOnly: true,
+        serializedName: "resourceType",
+        type: {
+          name: "String"
+        }
+      },
+      name: {
+        readOnly: true,
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      kind: {
+        readOnly: true,
+        serializedName: "kind",
+        type: {
+          name: "String"
+        }
+      },
+      tier: {
+        readOnly: true,
+        serializedName: "tier",
+        type: {
+          name: "String"
+        }
+      },
+      size: {
+        readOnly: true,
+        serializedName: "size",
+        type: {
+          name: "String"
+        }
+      },
+      family: {
+        readOnly: true,
+        serializedName: "family",
+        type: {
+          name: "String"
+        }
+      },
+      locations: {
+        readOnly: true,
+        serializedName: "locations",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      apiVersions: {
+        readOnly: true,
+        serializedName: "apiVersions",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      locationInfo: {
+        readOnly: true,
+        serializedName: "locationInfo",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "SkuLocationInfo"
+            }
+          }
+        }
+      },
+      costs: {
+        readOnly: true,
+        serializedName: "costs",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "SkuCost"
+            }
+          }
+        }
+      },
+      restrictions: {
+        readOnly: true,
+        serializedName: "restrictions",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "SkuRestriction"
+            }
+          }
+        }
+      },
+      signupOption: {
+        readOnly: true,
+        serializedName: "signupOption",
+        type: {
+          name: "String"
+        }
+      },
+      version: {
+        readOnly: true,
+        serializedName: "version",
+        type: {
+          name: "String"
+        }
+      },
+      availability: {
+        readOnly: true,
+        serializedName: "availability",
+        type: {
+          name: "String"
+        }
+      },
+      shipmentTypes: {
+        readOnly: true,
+        serializedName: "shipmentTypes",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const DCAccessCode: msRest.CompositeMapper = {
+  serializedName: "DCAccessCode",
+  type: {
+    name: "Composite",
+    className: "DCAccessCode",
+    modelProperties: {
+      authCode: {
+        serializedName: "properties.authCode",
+        type: {
+          name: "String"
         }
       }
     }
@@ -783,6 +1158,37 @@ export const FileEventTrigger: msRest.CompositeMapper = {
   }
 };
 
+export const ImageRepositoryCredential: msRest.CompositeMapper = {
+  serializedName: "ImageRepositoryCredential",
+  type: {
+    name: "Composite",
+    className: "ImageRepositoryCredential",
+    modelProperties: {
+      imageRepositoryUrl: {
+        required: true,
+        serializedName: "imageRepositoryUrl",
+        type: {
+          name: "String"
+        }
+      },
+      userName: {
+        required: true,
+        serializedName: "userName",
+        type: {
+          name: "String"
+        }
+      },
+      password: {
+        serializedName: "password",
+        type: {
+          name: "Composite",
+          className: "AsymmetricEncryptedSecret"
+        }
+      }
+    }
+  }
+};
+
 export const IoTDeviceInfo: msRest.CompositeMapper = {
   serializedName: "IoTDeviceInfo",
   type: {
@@ -820,6 +1226,37 @@ export const IoTDeviceInfo: msRest.CompositeMapper = {
   }
 };
 
+export const IoTEdgeAgentInfo: msRest.CompositeMapper = {
+  serializedName: "IoTEdgeAgentInfo",
+  type: {
+    name: "Composite",
+    className: "IoTEdgeAgentInfo",
+    modelProperties: {
+      imageName: {
+        required: true,
+        serializedName: "imageName",
+        type: {
+          name: "String"
+        }
+      },
+      tag: {
+        required: true,
+        serializedName: "tag",
+        type: {
+          name: "String"
+        }
+      },
+      imageRepository: {
+        serializedName: "imageRepository",
+        type: {
+          name: "Composite",
+          className: "ImageRepositoryCredential"
+        }
+      }
+    }
+  }
+};
+
 export const MountPointMap: msRest.CompositeMapper = {
   serializedName: "MountPointMap",
   type: {
@@ -843,6 +1280,13 @@ export const MountPointMap: msRest.CompositeMapper = {
       mountPoint: {
         readOnly: true,
         serializedName: "mountPoint",
+        type: {
+          name: "String"
+        }
+      },
+      mountType: {
+        readOnly: true,
+        serializedName: "mountType",
         type: {
           name: "String"
         }
@@ -923,6 +1367,20 @@ export const IoTRole: msRest.CompositeMapper = {
               className: "MountPointMap"
             }
           }
+        }
+      },
+      ioTEdgeAgentInfo: {
+        serializedName: "properties.ioTEdgeAgentInfo",
+        type: {
+          name: "Composite",
+          className: "IoTEdgeAgentInfo"
+        }
+      },
+      hostPlatformType: {
+        readOnly: true,
+        serializedName: "properties.hostPlatformType",
+        type: {
+          name: "String"
         }
       },
       roleStatus: {
@@ -1719,48 +2177,6 @@ export const Operation: msRest.CompositeMapper = {
   }
 };
 
-export const OrderStatus: msRest.CompositeMapper = {
-  serializedName: "OrderStatus",
-  type: {
-    name: "Composite",
-    className: "OrderStatus",
-    modelProperties: {
-      status: {
-        required: true,
-        serializedName: "status",
-        type: {
-          name: "String"
-        }
-      },
-      updateDateTime: {
-        readOnly: true,
-        serializedName: "updateDateTime",
-        type: {
-          name: "DateTime"
-        }
-      },
-      comments: {
-        serializedName: "comments",
-        type: {
-          name: "String"
-        }
-      },
-      additionalOrderDetails: {
-        readOnly: true,
-        serializedName: "additionalOrderDetails",
-        type: {
-          name: "Dictionary",
-          value: {
-            type: {
-              name: "String"
-            }
-          }
-        }
-      }
-    }
-  }
-};
-
 export const TrackingInfo: msRest.CompositeMapper = {
   serializedName: "TrackingInfo",
   type: {
@@ -1795,6 +2211,56 @@ export const TrackingInfo: msRest.CompositeMapper = {
   }
 };
 
+export const OrderStatus: msRest.CompositeMapper = {
+  serializedName: "OrderStatus",
+  type: {
+    name: "Composite",
+    className: "OrderStatus",
+    modelProperties: {
+      status: {
+        required: true,
+        serializedName: "status",
+        type: {
+          name: "String"
+        }
+      },
+      updateDateTime: {
+        readOnly: true,
+        serializedName: "updateDateTime",
+        type: {
+          name: "DateTime"
+        }
+      },
+      comments: {
+        serializedName: "comments",
+        type: {
+          name: "String"
+        }
+      },
+      trackingInformation: {
+        readOnly: true,
+        serializedName: "trackingInformation",
+        type: {
+          name: "Composite",
+          className: "TrackingInfo"
+        }
+      },
+      additionalOrderDetails: {
+        readOnly: true,
+        serializedName: "additionalOrderDetails",
+        type: {
+          name: "Dictionary",
+          value: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
 export const Order: msRest.CompositeMapper = {
   serializedName: "Order",
   type: {
@@ -1811,7 +2277,6 @@ export const Order: msRest.CompositeMapper = {
         }
       },
       shippingAddress: {
-        required: true,
         serializedName: "properties.shippingAddress",
         type: {
           name: "Composite",
@@ -1869,6 +2334,12 @@ export const Order: msRest.CompositeMapper = {
               className: "TrackingInfo"
             }
           }
+        }
+      },
+      shipmentType: {
+        serializedName: "properties.shipmentType",
+        type: {
+          name: "String"
         }
       }
     }
@@ -1940,179 +2411,15 @@ export const PeriodicTimerEventTrigger: msRest.CompositeMapper = {
   }
 };
 
-export const SkuLocationInfo: msRest.CompositeMapper = {
-  serializedName: "SkuLocationInfo",
+export const SkuInformation: msRest.CompositeMapper = {
+  serializedName: "SkuInformation",
   type: {
     name: "Composite",
-    className: "SkuLocationInfo",
+    className: "SkuInformation",
     modelProperties: {
-      location: {
-        readOnly: true,
-        serializedName: "location",
-        type: {
-          name: "String"
-        }
-      },
-      zones: {
-        readOnly: true,
-        serializedName: "zones",
-        type: {
-          name: "Sequence",
-          element: {
-            type: {
-              name: "String"
-            }
-          }
-        }
-      },
-      sites: {
-        readOnly: true,
-        serializedName: "sites",
-        type: {
-          name: "Sequence",
-          element: {
-            type: {
-              name: "String"
-            }
-          }
-        }
-      }
-    }
-  }
-};
-
-export const SkuCost: msRest.CompositeMapper = {
-  serializedName: "SkuCost",
-  type: {
-    name: "Composite",
-    className: "SkuCost",
-    modelProperties: {
-      meterId: {
-        readOnly: true,
-        serializedName: "meterId",
-        type: {
-          name: "String"
-        }
-      },
-      quantity: {
-        readOnly: true,
-        serializedName: "quantity",
-        type: {
-          name: "Number"
-        }
-      },
-      extendedUnit: {
-        readOnly: true,
-        serializedName: "extendedUnit",
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const SkuRestrictionInfo: msRest.CompositeMapper = {
-  serializedName: "SkuRestrictionInfo",
-  type: {
-    name: "Composite",
-    className: "SkuRestrictionInfo",
-    modelProperties: {
-      locations: {
-        readOnly: true,
-        serializedName: "locations",
-        type: {
-          name: "Sequence",
-          element: {
-            type: {
-              name: "String"
-            }
-          }
-        }
-      },
-      zones: {
-        readOnly: true,
-        serializedName: "zones",
-        type: {
-          name: "Sequence",
-          element: {
-            type: {
-              name: "String"
-            }
-          }
-        }
-      }
-    }
-  }
-};
-
-export const SkuRestriction: msRest.CompositeMapper = {
-  serializedName: "SkuRestriction",
-  type: {
-    name: "Composite",
-    className: "SkuRestriction",
-    modelProperties: {
-      type: {
-        readOnly: true,
-        serializedName: "type",
-        type: {
-          name: "String"
-        }
-      },
-      values: {
-        readOnly: true,
-        serializedName: "values",
-        type: {
-          name: "Sequence",
-          element: {
-            type: {
-              name: "String"
-            }
-          }
-        }
-      },
-      reasonCode: {
-        readOnly: true,
-        serializedName: "reasonCode",
-        type: {
-          name: "String"
-        }
-      },
-      restrictionInfo: {
-        readOnly: true,
-        serializedName: "restrictionInfo",
-        type: {
-          name: "Composite",
-          className: "SkuRestrictionInfo"
-        }
-      }
-    }
-  }
-};
-
-export const ResourceTypeSku: msRest.CompositeMapper = {
-  serializedName: "ResourceTypeSku",
-  type: {
-    name: "Composite",
-    className: "ResourceTypeSku",
-    modelProperties: {
-      resourceType: {
-        readOnly: true,
-        serializedName: "resourceType",
-        type: {
-          name: "String"
-        }
-      },
       name: {
         readOnly: true,
         serializedName: "name",
-        type: {
-          name: "String"
-        }
-      },
-      kind: {
-        readOnly: true,
-        serializedName: "kind",
         type: {
           name: "String"
         }
@@ -2124,6 +2431,13 @@ export const ResourceTypeSku: msRest.CompositeMapper = {
           name: "String"
         }
       },
+      kind: {
+        readOnly: true,
+        serializedName: "kind",
+        type: {
+          name: "String"
+        }
+      },
       family: {
         readOnly: true,
         serializedName: "family",
@@ -2131,21 +2445,22 @@ export const ResourceTypeSku: msRest.CompositeMapper = {
           name: "String"
         }
       },
-      locations: {
+      costs: {
         readOnly: true,
-        serializedName: "locations",
+        serializedName: "costs",
         type: {
           name: "Sequence",
           element: {
             type: {
-              name: "String"
+              name: "Composite",
+              className: "SkuCost"
             }
           }
         }
       },
-      apiVersions: {
+      locations: {
         readOnly: true,
-        serializedName: "apiVersions",
+        serializedName: "locations",
         type: {
           name: "Sequence",
           element: {
@@ -2168,28 +2483,56 @@ export const ResourceTypeSku: msRest.CompositeMapper = {
           }
         }
       },
-      costs: {
+      requiredQuotaIds: {
         readOnly: true,
-        serializedName: "costs",
+        serializedName: "requiredQuotaIds",
         type: {
           name: "Sequence",
           element: {
             type: {
-              name: "Composite",
-              className: "SkuCost"
+              name: "String"
             }
           }
         }
       },
-      restrictions: {
+      requiredFeatures: {
         readOnly: true,
-        serializedName: "restrictions",
+        serializedName: "requiredFeatures",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const ResourceTypeSku: msRest.CompositeMapper = {
+  serializedName: "ResourceTypeSku",
+  type: {
+    name: "Composite",
+    className: "ResourceTypeSku",
+    modelProperties: {
+      resourceType: {
+        readOnly: true,
+        serializedName: "resourceType",
+        type: {
+          name: "String"
+        }
+      },
+      skus: {
+        readOnly: true,
+        serializedName: "skus",
         type: {
           name: "Sequence",
           element: {
             type: {
               name: "Composite",
-              className: "SkuRestriction"
+              className: "SkuInformation"
             }
           }
         }
@@ -2360,6 +2703,36 @@ export const ShareAccessRight: msRest.CompositeMapper = {
   }
 };
 
+export const SkuInformationList: msRest.CompositeMapper = {
+  serializedName: "SkuInformationList",
+  type: {
+    name: "Composite",
+    className: "SkuInformationList",
+    modelProperties: {
+      value: {
+        readOnly: true,
+        serializedName: "value",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "ResourceTypeSku"
+            }
+          }
+        }
+      },
+      nextLink: {
+        readOnly: true,
+        serializedName: "nextLink",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const StorageAccount: msRest.CompositeMapper = {
   serializedName: "StorageAccount",
   type: {
@@ -2380,6 +2753,7 @@ export const StorageAccount: msRest.CompositeMapper = {
         }
       },
       dataPolicy: {
+        required: true,
         serializedName: "properties.dataPolicy",
         type: {
           name: "String"
@@ -2706,6 +3080,7 @@ export const User: msRest.CompositeMapper = {
         }
       },
       shareAccessRights: {
+        readOnly: true,
         serializedName: "properties.shareAccessRights",
         type: {
           name: "Sequence",
@@ -2748,6 +3123,36 @@ export const OperationsList: msRest.CompositeMapper = {
         }
       },
       nextLink: {
+        serializedName: "nextLink",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const DataBoxEdgeSkuList: msRest.CompositeMapper = {
+  serializedName: "DataBoxEdgeSkuList",
+  type: {
+    name: "Composite",
+    className: "DataBoxEdgeSkuList",
+    modelProperties: {
+      value: {
+        readOnly: true,
+        serializedName: "",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "DataBoxEdgeSku"
+            }
+          }
+        }
+      },
+      nextLink: {
+        readOnly: true,
         serializedName: "nextLink",
         type: {
           name: "String"
@@ -2847,29 +3252,6 @@ export const BandwidthSchedulesList: msRest.CompositeMapper = {
   }
 };
 
-export const NodeList: msRest.CompositeMapper = {
-  serializedName: "NodeList",
-  type: {
-    name: "Composite",
-    className: "NodeList",
-    modelProperties: {
-      value: {
-        readOnly: true,
-        serializedName: "",
-        type: {
-          name: "Sequence",
-          element: {
-            type: {
-              name: "Composite",
-              className: "Node"
-            }
-          }
-        }
-      }
-    }
-  }
-};
-
 export const OrderList: msRest.CompositeMapper = {
   serializedName: "OrderList",
   type: {
@@ -2894,6 +3276,29 @@ export const OrderList: msRest.CompositeMapper = {
         serializedName: "nextLink",
         type: {
           name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const NodeList: msRest.CompositeMapper = {
+  serializedName: "NodeList",
+  type: {
+    name: "Composite",
+    className: "NodeList",
+    modelProperties: {
+      value: {
+        readOnly: true,
+        serializedName: "",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "Node"
+            }
+          }
         }
       }
     }
@@ -3104,29 +3509,6 @@ export const UserList: msRest.CompositeMapper = {
         serializedName: "nextLink",
         type: {
           name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const SkuInformationList: msRest.CompositeMapper = {
-  serializedName: "SkuInformationList",
-  type: {
-    name: "Composite",
-    className: "SkuInformationList",
-    modelProperties: {
-      value: {
-        readOnly: true,
-        serializedName: "",
-        type: {
-          name: "Sequence",
-          element: {
-            type: {
-              name: "Composite",
-              className: "ResourceTypeSku"
-            }
-          }
         }
       }
     }

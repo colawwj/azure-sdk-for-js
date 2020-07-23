@@ -28,7 +28,7 @@ export class StorageAccounts {
   }
 
   /**
-   * @summary Lists all the storage accounts in a Data Box Edge/Data Box Gateway device.
+   * @summary Lists all the StorageAccounts in a Data Box Edge/Data Box Gateway device.
    * @param deviceName The device name.
    * @param resourceGroupName The resource group name.
    * @param [options] The optional parameters
@@ -165,7 +165,7 @@ export class StorageAccounts {
   }
 
   /**
-   * @summary Lists all the storage accounts in a Data Box Edge/Data Box Gateway device.
+   * @summary Lists all the StorageAccounts in a Data Box Edge/Data Box Gateway device.
    * @param nextPageLink The NextLink from the previous successful call to List operation.
    * @param [options] The optional parameters
    * @returns Promise<Models.StorageAccountsListByDataBoxEdgeDeviceNextResponse>

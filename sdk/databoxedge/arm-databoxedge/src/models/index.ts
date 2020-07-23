@@ -18,7 +18,7 @@ export interface Address {
   /**
    * The address line1.
    */
-  addressLine1: string;
+  addressLine1?: string;
   /**
    * The address line2.
    */
@@ -30,15 +30,15 @@ export interface Address {
   /**
    * The postal code.
    */
-  postalCode: string;
+  postalCode?: string;
   /**
    * The city name.
    */
-  city: string;
+  city?: string;
   /**
    * The state name.
    */
-  state: string;
+  state?: string;
   /**
    * The country name.
    */
@@ -305,13 +305,29 @@ export interface Container extends ARMBaseModel {
 export interface Sku {
   /**
    * SKU name. Possible values include: 'Gateway', 'Edge', 'TEA_1Node', 'TEA_1Node_UPS',
-   * 'TEA_1Node_Heater', 'TEA_1Node_UPS_Heater', 'TEA_4Node_Heater', 'TEA_4Node_UPS_Heater', 'TMA'
+   * 'TEA_1Node_Heater', 'TEA_1Node_UPS_Heater', 'TEA_4Node_Heater', 'TEA_4Node_UPS_Heater', 'TMA',
+   * 'TDC', 'TCA_Large', 'TCA_Small', 'GPU'
    */
   name?: SkuName;
   /**
    * The SKU tier. This is based on the SKU name. Possible values include: 'Standard'
    */
   tier?: SkuTier;
+}
+
+/**
+ * Fields for tracking resource move
+ */
+export interface ResourceMoveDetails {
+  /**
+   * Denotes whether move operation is in progress. Possible values include: 'None',
+   * 'ResourceMoveInProgress', 'ResourceMoveFailed'
+   */
+  operationInProgress?: ResourceMoveStatus;
+  /**
+   * Denotes the timeout of the operation to finish
+   */
+  operationInProgressLockTimeoutInUTC?: Date;
 }
 
 /**
@@ -338,6 +354,11 @@ export interface DataBoxEdgeDevice extends ARMBaseModel {
    * The etag for the devices.
    */
   etag?: string;
+  /**
+   * The etag for the devices. Possible values include: 'AzureDataBoxGateway', 'AzureStackEdge',
+   * 'AzureStackHub'
+   */
+  kind?: DataBoxEdgeDeviceKind;
   /**
    * The status of the Data Box Edge/Gateway device. Possible values include: 'ReadyToSetup',
    * 'Online', 'Offline', 'NeedsAttention', 'Disconnected', 'PartiallyDisconnected', 'Maintenance'
@@ -405,6 +426,11 @@ export interface DataBoxEdgeDevice extends ARMBaseModel {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly nodeCount?: number;
+  /**
+   * The details of the move operation on this resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly resourceMoveDetails?: ResourceMoveDetails;
 }
 
 /**
@@ -434,6 +460,197 @@ export interface DataBoxEdgeDevicePatch {
    * The tags attached to the Data Box Edge/Gateway resource.
    */
   tags?: { [propertyName: string]: string };
+}
+
+/**
+ * Resource Move details
+ */
+export interface DataBoxEdgeMoveRequest {
+  /**
+   * Target resource group ARMId
+   */
+  targetResourceGroup: string;
+  /**
+   * List of resources to be moved
+   */
+  resources: string[];
+}
+
+/**
+ * The location info.
+ */
+export interface SkuLocationInfo {
+  /**
+   * The location.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly location?: string;
+  /**
+   * The zones.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly zones?: string[];
+  /**
+   * The sites.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly sites?: string[];
+}
+
+/**
+ * The metadata for retrieving price info.
+ */
+export interface SkuCost {
+  /**
+   * Used for querying price from commerce.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly meterId?: string;
+  /**
+   * The cost quantity.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly quantity?: number;
+  /**
+   * The extended unit.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly extendedUnit?: string;
+}
+
+/**
+ * The restriction info with locations and zones.
+ */
+export interface SkuRestrictionInfo {
+  /**
+   * The locations.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly locations?: string[];
+  /**
+   * The zones.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly zones?: string[];
+}
+
+/**
+ * The restrictions because of which SKU cannot be used.
+ */
+export interface SkuRestriction {
+  /**
+   * The type of the restriction.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * The locations where sku is restricted.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly values?: string[];
+  /**
+   * The SKU restriction reason. Possible values include: 'NotAvailableForSubscription', 'QuotaId'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly reasonCode?: SkuRestrictionReasonCode;
+  /**
+   * Restriction of the SKU for the location/zone.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly restrictionInfo?: SkuRestrictionInfo;
+}
+
+/**
+ * The Sku information.
+ */
+export interface DataBoxEdgeSku {
+  /**
+   * The type of the resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly resourceType?: string;
+  /**
+   * The Sku name. Possible values include: 'Gateway', 'Edge', 'TEA_1Node', 'TEA_1Node_UPS',
+   * 'TEA_1Node_Heater', 'TEA_1Node_UPS_Heater', 'TEA_4Node_Heater', 'TEA_4Node_UPS_Heater', 'TMA',
+   * 'TDC', 'TCA_Large', 'TCA_Small', 'GPU'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: SkuName;
+  /**
+   * The Sku kind.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly kind?: string;
+  /**
+   * The Sku tier. Possible values include: 'Standard'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly tier?: SkuTier;
+  /**
+   * The Sku kind.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly size?: string;
+  /**
+   * The Sku family.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly family?: string;
+  /**
+   * Availability of the Sku for the region.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly locations?: string[];
+  /**
+   * The API versions in which Sku is available.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly apiVersions?: string[];
+  /**
+   * Availability of the Sku for the location/zone/site.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly locationInfo?: SkuLocationInfo[];
+  /**
+   * The pricing info of the Sku.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly costs?: SkuCost[];
+  /**
+   * Restriction info of the SKU.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly restrictions?: SkuRestriction[];
+  /**
+   * Can the SKU be signed up. Possible values include: 'None', 'Available'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly signupOption?: SkuSignupOption;
+  /**
+   * Sku version. Possible values include: 'Stable', 'Preview'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly version?: SkuVersion;
+  /**
+   * Is SKU available. Possible values include: 'Available', 'Unavailable'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly availability?: SkuAvailability;
+  /**
+   * List of Shipment Types supported by this SKU
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly shipmentTypes?: ShipmentType[];
+}
+
+/**
+ * DC Access code in the case of Self Managed Shipping
+ */
+export interface DCAccessCode {
+  /**
+   * DCAccess Code for the device
+   */
+  authCode?: string;
 }
 
 /**
@@ -526,6 +743,24 @@ export interface FileEventTrigger {
 }
 
 /**
+ * Image repository credential.
+ */
+export interface ImageRepositoryCredential {
+  /**
+   * Image repository url (e.g.: mcr.microsoft.com).
+   */
+  imageRepositoryUrl: string;
+  /**
+   * Repository user name.
+   */
+  userName: string;
+  /**
+   * Repository user password.
+   */
+  password?: AsymmetricEncryptedSecret;
+}
+
+/**
  * Metadata of IoT device/IoT Edge device to be configured.
  */
 export interface IoTDeviceInfo {
@@ -542,9 +777,28 @@ export interface IoTDeviceInfo {
    */
   ioTHostHubId?: string;
   /**
-   * IoT device authentication info.
+   * Encrypted IoT device/IoT edge device connection string.
    */
   authentication?: Authentication;
+}
+
+/**
+ * IoT edge agent details is optional, this will be used for download system Agent module while
+ * bootstrapping IoT Role if specified.
+ */
+export interface IoTEdgeAgentInfo {
+  /**
+   * Name of the IoT edge agent image.
+   */
+  imageName: string;
+  /**
+   * Image Tag.
+   */
+  tag: string;
+  /**
+   * Image repository details.
+   */
+  imageRepository?: ImageRepositoryCredential;
 }
 
 /**
@@ -565,6 +819,11 @@ export interface MountPointMap {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly mountPoint?: string;
+  /**
+   * Mounting type. Possible values include: 'Volume', 'HostPath'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly mountType?: MountType;
   /**
    * Role type. Possible values include: 'IOT', 'ASA', 'Functions', 'Cognitive'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -641,6 +900,16 @@ export interface IoTRole {
    * Mount points of shares in role(s).
    */
   shareMappings?: MountPointMap[];
+  /**
+   * Iot edge agent details to download the agent and bootstrap iot runtime.
+   */
+  ioTEdgeAgentInfo?: IoTEdgeAgentInfo;
+  /**
+   * Platform where the Iot runtime is hosted. Possible values include: 'KubernetesCluster',
+   * 'LinuxVM'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly hostPlatformType?: HostPlatformType;
   /**
    * Role status. Possible values include: 'Enabled', 'Disabled'
    */
@@ -836,7 +1105,7 @@ export interface Job {
   readonly error?: JobErrorDetails;
   /**
    * The type of the job. Possible values include: 'Invalid', 'ScanForUpdates', 'DownloadUpdates',
-   * 'InstallUpdates', 'RefreshShare', 'RefreshContainer'
+   * 'InstallUpdates', 'RefreshShare', 'RefreshContainer', 'TriggerSupportPackage'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly jobType?: JobType;
@@ -1158,34 +1427,6 @@ export interface Operation {
 }
 
 /**
- * Represents a single status change.
- */
-export interface OrderStatus {
-  /**
-   * Status of the order as per the allowed status types. Possible values include: 'Untracked',
-   * 'AwaitingFulfilment', 'AwaitingPreparation', 'AwaitingShipment', 'Shipped', 'Arriving',
-   * 'Delivered', 'ReplacementRequested', 'LostDevice', 'Declined', 'ReturnInitiated',
-   * 'AwaitingReturnShipment', 'ShippedBack', 'CollectedAtMicrosoft'
-   */
-  status: OrderState;
-  /**
-   * Time of status update.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly updateDateTime?: Date;
-  /**
-   * Comments related to this status change.
-   */
-  comments?: string;
-  /**
-   * Dictionary to hold generic information which is not stored
-   * by the already existing properties
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly additionalOrderDetails?: { [propertyName: string]: string };
-}
-
-/**
  * Tracking courier information.
  */
 export interface TrackingInfo {
@@ -1208,6 +1449,40 @@ export interface TrackingInfo {
 }
 
 /**
+ * Represents a single status change.
+ */
+export interface OrderStatus {
+  /**
+   * Status of the order as per the allowed status types. Possible values include: 'Untracked',
+   * 'AwaitingFulfilment', 'AwaitingPreparation', 'AwaitingShipment', 'Shipped', 'Arriving',
+   * 'Delivered', 'ReplacementRequested', 'LostDevice', 'Declined', 'ReturnInitiated',
+   * 'AwaitingReturnShipment', 'ShippedBack', 'CollectedAtMicrosoft', 'AwaitingPickup',
+   * 'PickupCompleted', 'AwaitingDrop'
+   */
+  status: OrderState;
+  /**
+   * Time of status update.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly updateDateTime?: Date;
+  /**
+   * Comments related to this status change.
+   */
+  comments?: string;
+  /**
+   * Tracking information related to the state in the ordering flow
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly trackingInformation?: TrackingInfo;
+  /**
+   * Dictionary to hold generic information which is not stored
+   * by the already existing properties
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly additionalOrderDetails?: { [propertyName: string]: string };
+}
+
+/**
  * The order details.
  */
 export interface Order extends ARMBaseModel {
@@ -1218,7 +1493,7 @@ export interface Order extends ARMBaseModel {
   /**
    * The shipping address.
    */
-  shippingAddress: Address;
+  shippingAddress?: Address;
   /**
    * Current status of the order.
    */
@@ -1245,6 +1520,11 @@ export interface Order extends ARMBaseModel {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly returnTrackingInfo?: TrackingInfo[];
+  /**
+   * ShipmentType of the order. Possible values include: 'NotApplicable', 'ShippedToCustomer',
+   * 'SelfPickup'
+   */
+  shipmentType?: ShipmentType;
 }
 
 /**
@@ -1308,144 +1588,70 @@ export interface PeriodicTimerEventTrigger {
 }
 
 /**
- * The location info.
+ * Sku information
  */
-export interface SkuLocationInfo {
+export interface SkuInformation {
   /**
-   * The location.
+   * The sku name.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly location?: string;
+  readonly name?: string;
   /**
-   * The zones.
+   * The sku tier.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly zones?: string[];
+  readonly tier?: string;
   /**
-   * The sites.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly sites?: string[];
-}
-
-/**
- * The metadata for retrieving price info.
- */
-export interface SkuCost {
-  /**
-   * Used for querying price from commerce.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly meterId?: string;
-  /**
-   * The cost quantity.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly quantity?: number;
-  /**
-   * Restriction of the SKU for the location/zone
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly extendedUnit?: string;
-}
-
-/**
- * The restriction info with locations and zones.
- */
-export interface SkuRestrictionInfo {
-  /**
-   * The locations.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly locations?: string[];
-  /**
-   * The zones.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly zones?: string[];
-}
-
-/**
- * The restrictions because of which SKU cannot be used.
- */
-export interface SkuRestriction {
-  /**
-   * The type of the restriction.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * The locations where sku is restricted.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly values?: string[];
-  /**
-   * The SKU restriction reason. Possible values include: 'NotAvailableForSubscription', 'QuotaId'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly reasonCode?: SkuRestrictionReasonCode;
-  /**
-   * Restriction of the SKU for the location/zone
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly restrictionInfo?: SkuRestrictionInfo;
-}
-
-/**
- * SkuInformation object
- */
-export interface ResourceTypeSku {
-  /**
-   * The type of the resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly resourceType?: string;
-  /**
-   * The Sku name. Possible values include: 'Gateway', 'Edge', 'TEA_1Node', 'TEA_1Node_UPS',
-   * 'TEA_1Node_Heater', 'TEA_1Node_UPS_Heater', 'TEA_4Node_Heater', 'TEA_4Node_UPS_Heater', 'TMA'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: SkuName;
-  /**
-   * The Sku kind
+   * The sku kind.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly kind?: string;
   /**
-   * The Sku tier. Possible values include: 'Standard'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly tier?: SkuTier;
-  /**
-   * The Sku family
+   * The Sku family.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly family?: string;
-  /**
-   * Availability of the SKU for the region
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly locations?: string[];
-  /**
-   * The API versions in which SKU is available
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly apiVersions?: string[];
-  /**
-   * Availability of the SKU for the location/zone
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly locationInfo?: SkuLocationInfo[];
   /**
    * The pricing info of the Sku.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly costs?: SkuCost[];
   /**
-   * Restrictions of the SKU availability.
+   * The locations where Sku is available.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly restrictions?: SkuRestriction[];
+  readonly locations?: string[];
+  /**
+   * The locations where Sku is available with zones and sites info
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly locationInfo?: SkuLocationInfo[];
+  /**
+   * The required quotaIds for the sku to be available.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly requiredQuotaIds?: string[];
+  /**
+   * The required features for the sku to be available.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly requiredFeatures?: string[];
+}
+
+/**
+ * Resource type Sku object
+ */
+export interface ResourceTypeSku {
+  /**
+   * The resource type.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly resourceType?: string;
+  /**
+   * The skus.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly skus?: SkuInformation[];
 }
 
 /**
@@ -1539,6 +1745,22 @@ export interface ShareAccessRight {
 }
 
 /**
+ * List of SKU Information objects
+ */
+export interface SkuInformationList {
+  /**
+   * List of ResourceTypeSku objects
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly value?: ResourceTypeSku[];
+  /**
+   * Links to the next set of results
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly nextLink?: string;
+}
+
+/**
  * Represents a Storage Account on the  Data Box Edge/Gateway device.
  */
 export interface StorageAccount extends ARMBaseModel {
@@ -1554,7 +1776,7 @@ export interface StorageAccount extends ARMBaseModel {
   /**
    * Data policy of the storage Account. Possible values include: 'Cloud', 'Local'
    */
-  dataPolicy?: DataPolicy;
+  dataPolicy: DataPolicy;
   /**
    * Storage Account Credential Id
    */
@@ -1770,8 +1992,9 @@ export interface User extends ARMBaseModel {
   /**
    * List of shares that the user has rights on. This field should not be specified during user
    * creation.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  shareAccessRights?: ShareAccessRight[];
+  readonly shareAccessRights?: ShareAccessRight[];
   /**
    * Type of the user. Possible values include: 'Share', 'LocalManagement', 'ARM'
    */
@@ -1803,6 +2026,16 @@ export interface DevicesListByResourceGroupOptionalParams extends msRest.Request
 /**
  * Optional Parameters.
  */
+export interface SkusListOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Specify $filter='location eq <location>' to filter on location.
+   */
+  filter?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
 export interface TriggersListByDataBoxEdgeDeviceOptionalParams extends msRest.RequestOptionsBase {
   /**
    * Specify $filter='CustomContextTag eq <tag>' to filter on custom context tag property
@@ -1815,17 +2048,7 @@ export interface TriggersListByDataBoxEdgeDeviceOptionalParams extends msRest.Re
  */
 export interface UsersListByDataBoxEdgeDeviceOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * Specify $filter='UserType eq <type>' to filter on user type property
-   */
-  filter?: string;
-}
-
-/**
- * Optional Parameters.
- */
-export interface SkusListOptionalParams extends msRest.RequestOptionsBase {
-  /**
-   * Specify $filter='location eq <location>' to filter on location.
+   * Specify $filter='Type eq <type>' to filter on user type property
    */
   filter?: string;
 }
@@ -1847,6 +2070,19 @@ export interface OperationsList extends Array<Operation> {
    * Link to the next set of results.
    */
   nextLink?: string;
+}
+
+/**
+ * @interface
+ * List of SKU Information objects.
+ * @extends Array<DataBoxEdgeSku>
+ */
+export interface DataBoxEdgeSkuList extends Array<DataBoxEdgeSku> {
+  /**
+   * Links to the next set of results
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly nextLink?: string;
 }
 
 /**
@@ -1890,14 +2126,6 @@ export interface BandwidthSchedulesList extends Array<BandwidthSchedule> {
 
 /**
  * @interface
- * Collection of Nodes.
- * @extends Array<Node>
- */
-export interface NodeList extends Array<Node> {
-}
-
-/**
- * @interface
  * List of order entities.
  * @extends Array<Order>
  */
@@ -1907,6 +2135,14 @@ export interface OrderList extends Array<Order> {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly nextLink?: string;
+}
+
+/**
+ * @interface
+ * Collection of Nodes.
+ * @extends Array<Node>
+ */
+export interface NodeList extends Array<Node> {
 }
 
 /**
@@ -2001,19 +2237,6 @@ export interface UserList extends Array<User> {
 }
 
 /**
- * @interface
- * List of SKU Information objects
- * @extends Array<ResourceTypeSku>
- */
-export interface SkuInformationList extends Array<ResourceTypeSku> {
-  /**
-   * Links to the next set of results
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly nextLink?: string;
-}
-
-/**
  * Defines values for AlertSeverity.
  * Possible values include: 'Informational', 'Warning', 'Critical'
  * @readonly
@@ -2065,11 +2288,12 @@ export type ContainerStatus = 'OK' | 'Offline' | 'Unknown' | 'Updating' | 'Needs
 /**
  * Defines values for SkuName.
  * Possible values include: 'Gateway', 'Edge', 'TEA_1Node', 'TEA_1Node_UPS', 'TEA_1Node_Heater',
- * 'TEA_1Node_UPS_Heater', 'TEA_4Node_Heater', 'TEA_4Node_UPS_Heater', 'TMA'
+ * 'TEA_1Node_UPS_Heater', 'TEA_4Node_Heater', 'TEA_4Node_UPS_Heater', 'TMA', 'TDC', 'TCA_Large',
+ * 'TCA_Small', 'GPU'
  * @readonly
  * @enum {string}
  */
-export type SkuName = 'Gateway' | 'Edge' | 'TEA_1Node' | 'TEA_1Node_UPS' | 'TEA_1Node_Heater' | 'TEA_1Node_UPS_Heater' | 'TEA_4Node_Heater' | 'TEA_4Node_UPS_Heater' | 'TMA';
+export type SkuName = 'Gateway' | 'Edge' | 'TEA_1Node' | 'TEA_1Node_UPS' | 'TEA_1Node_Heater' | 'TEA_1Node_UPS_Heater' | 'TEA_4Node_Heater' | 'TEA_4Node_UPS_Heater' | 'TMA' | 'TDC' | 'TCA_Large' | 'TCA_Small' | 'GPU';
 
 /**
  * Defines values for SkuTier.
@@ -2078,6 +2302,14 @@ export type SkuName = 'Gateway' | 'Edge' | 'TEA_1Node' | 'TEA_1Node_UPS' | 'TEA_
  * @enum {string}
  */
 export type SkuTier = 'Standard';
+
+/**
+ * Defines values for DataBoxEdgeDeviceKind.
+ * Possible values include: 'AzureDataBoxGateway', 'AzureStackEdge', 'AzureStackHub'
+ * @readonly
+ * @enum {string}
+ */
+export type DataBoxEdgeDeviceKind = 'AzureDataBoxGateway' | 'AzureStackEdge' | 'AzureStackHub';
 
 /**
  * Defines values for DataBoxEdgeDeviceStatus.
@@ -2105,12 +2337,76 @@ export type DeviceType = 'DataBoxEdgeDevice';
 export type RoleTypes = 'IOT' | 'ASA' | 'Functions' | 'Cognitive';
 
 /**
+ * Defines values for ResourceMoveStatus.
+ * Possible values include: 'None', 'ResourceMoveInProgress', 'ResourceMoveFailed'
+ * @readonly
+ * @enum {string}
+ */
+export type ResourceMoveStatus = 'None' | 'ResourceMoveInProgress' | 'ResourceMoveFailed';
+
+/**
+ * Defines values for SkuRestrictionReasonCode.
+ * Possible values include: 'NotAvailableForSubscription', 'QuotaId'
+ * @readonly
+ * @enum {string}
+ */
+export type SkuRestrictionReasonCode = 'NotAvailableForSubscription' | 'QuotaId';
+
+/**
+ * Defines values for SkuSignupOption.
+ * Possible values include: 'None', 'Available'
+ * @readonly
+ * @enum {string}
+ */
+export type SkuSignupOption = 'None' | 'Available';
+
+/**
+ * Defines values for SkuVersion.
+ * Possible values include: 'Stable', 'Preview'
+ * @readonly
+ * @enum {string}
+ */
+export type SkuVersion = 'Stable' | 'Preview';
+
+/**
+ * Defines values for SkuAvailability.
+ * Possible values include: 'Available', 'Unavailable'
+ * @readonly
+ * @enum {string}
+ */
+export type SkuAvailability = 'Available' | 'Unavailable';
+
+/**
+ * Defines values for ShipmentType.
+ * Possible values include: 'NotApplicable', 'ShippedToCustomer', 'SelfPickup'
+ * @readonly
+ * @enum {string}
+ */
+export type ShipmentType = 'NotApplicable' | 'ShippedToCustomer' | 'SelfPickup';
+
+/**
  * Defines values for PlatformType.
  * Possible values include: 'Windows', 'Linux'
  * @readonly
  * @enum {string}
  */
 export type PlatformType = 'Windows' | 'Linux';
+
+/**
+ * Defines values for MountType.
+ * Possible values include: 'Volume', 'HostPath'
+ * @readonly
+ * @enum {string}
+ */
+export type MountType = 'Volume' | 'HostPath';
+
+/**
+ * Defines values for HostPlatformType.
+ * Possible values include: 'KubernetesCluster', 'LinuxVM'
+ * @readonly
+ * @enum {string}
+ */
+export type HostPlatformType = 'KubernetesCluster' | 'LinuxVM';
 
 /**
  * Defines values for RoleStatus.
@@ -2132,11 +2428,11 @@ export type JobStatus = 'Invalid' | 'Running' | 'Succeeded' | 'Failed' | 'Cancel
 /**
  * Defines values for JobType.
  * Possible values include: 'Invalid', 'ScanForUpdates', 'DownloadUpdates', 'InstallUpdates',
- * 'RefreshShare', 'RefreshContainer'
+ * 'RefreshShare', 'RefreshContainer', 'TriggerSupportPackage'
  * @readonly
  * @enum {string}
  */
-export type JobType = 'Invalid' | 'ScanForUpdates' | 'DownloadUpdates' | 'InstallUpdates' | 'RefreshShare' | 'RefreshContainer';
+export type JobType = 'Invalid' | 'ScanForUpdates' | 'DownloadUpdates' | 'InstallUpdates' | 'RefreshShare' | 'RefreshContainer' | 'TriggerSupportPackage';
 
 /**
  * Defines values for UpdateOperationStage.
@@ -2235,11 +2531,12 @@ export type NodeStatus = 'Unknown' | 'Up' | 'Down' | 'Rebooting' | 'ShuttingDown
  * Defines values for OrderState.
  * Possible values include: 'Untracked', 'AwaitingFulfilment', 'AwaitingPreparation',
  * 'AwaitingShipment', 'Shipped', 'Arriving', 'Delivered', 'ReplacementRequested', 'LostDevice',
- * 'Declined', 'ReturnInitiated', 'AwaitingReturnShipment', 'ShippedBack', 'CollectedAtMicrosoft'
+ * 'Declined', 'ReturnInitiated', 'AwaitingReturnShipment', 'ShippedBack', 'CollectedAtMicrosoft',
+ * 'AwaitingPickup', 'PickupCompleted', 'AwaitingDrop'
  * @readonly
  * @enum {string}
  */
-export type OrderState = 'Untracked' | 'AwaitingFulfilment' | 'AwaitingPreparation' | 'AwaitingShipment' | 'Shipped' | 'Arriving' | 'Delivered' | 'ReplacementRequested' | 'LostDevice' | 'Declined' | 'ReturnInitiated' | 'AwaitingReturnShipment' | 'ShippedBack' | 'CollectedAtMicrosoft';
+export type OrderState = 'Untracked' | 'AwaitingFulfilment' | 'AwaitingPreparation' | 'AwaitingShipment' | 'Shipped' | 'Arriving' | 'Delivered' | 'ReplacementRequested' | 'LostDevice' | 'Declined' | 'ReturnInitiated' | 'AwaitingReturnShipment' | 'ShippedBack' | 'CollectedAtMicrosoft' | 'AwaitingPickup' | 'PickupCompleted' | 'AwaitingDrop';
 
 /**
  * Defines values for AuthenticationType.
@@ -2248,14 +2545,6 @@ export type OrderState = 'Untracked' | 'AwaitingFulfilment' | 'AwaitingPreparati
  * @enum {string}
  */
 export type AuthenticationType = 'Invalid' | 'AzureActiveDirectory';
-
-/**
- * Defines values for SkuRestrictionReasonCode.
- * Possible values include: 'NotAvailableForSubscription', 'QuotaId'
- * @readonly
- * @enum {string}
- */
-export type SkuRestrictionReasonCode = 'NotAvailableForSubscription' | 'QuotaId';
 
 /**
  * Defines values for ShareStatus.
@@ -2382,6 +2671,46 @@ export type OperationsListNextResponse = OperationsList & {
        * The response body as parsed JSON or XML
        */
       parsedBody: OperationsList;
+    };
+};
+
+/**
+ * Contains response data for the list operation.
+ */
+export type AvailableSkusListResponse = DataBoxEdgeSkuList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: DataBoxEdgeSkuList;
+    };
+};
+
+/**
+ * Contains response data for the listNext operation.
+ */
+export type AvailableSkusListNextResponse = DataBoxEdgeSkuList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: DataBoxEdgeSkuList;
     };
 };
 
@@ -2626,6 +2955,26 @@ export type DevicesListByResourceGroupNextResponse = DataBoxEdgeDeviceList & {
 };
 
 /**
+ * Contains response data for the list operation.
+ */
+export type SkusListResponse = DataBoxEdgeSkuList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: DataBoxEdgeSkuList;
+    };
+};
+
+/**
  * Contains response data for the listByDataBoxEdgeDevice operation.
  */
 export type AlertsListByDataBoxEdgeDeviceResponse = AlertList & {
@@ -2806,9 +3155,9 @@ export type JobsGetResponse = Job & {
 };
 
 /**
- * Contains response data for the listByDataBoxEdgeDevice operation.
+ * Contains response data for the listDCAccessCode operation.
  */
-export type NodesListByDataBoxEdgeDeviceResponse = NodeList & {
+export type OrdersListDCAccessCodeResponse = DCAccessCode & {
   /**
    * The underlying HTTP response.
    */
@@ -2821,27 +3170,7 @@ export type NodesListByDataBoxEdgeDeviceResponse = NodeList & {
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: NodeList;
-    };
-};
-
-/**
- * Contains response data for the get operation.
- */
-export type OperationsStatusGetResponse = Job & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: Job;
+      parsedBody: DCAccessCode;
     };
 };
 
@@ -2942,6 +3271,46 @@ export type OrdersListByDataBoxEdgeDeviceNextResponse = OrderList & {
        * The response body as parsed JSON or XML
        */
       parsedBody: OrderList;
+    };
+};
+
+/**
+ * Contains response data for the listByDataBoxEdgeDevice operation.
+ */
+export type NodesListByDataBoxEdgeDeviceResponse = NodeList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: NodeList;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type OperationsStatusGetResponse = Job & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: Job;
     };
 };
 
@@ -3642,25 +4011,5 @@ export type UsersListByDataBoxEdgeDeviceNextResponse = UserList & {
        * The response body as parsed JSON or XML
        */
       parsedBody: UserList;
-    };
-};
-
-/**
- * Contains response data for the list operation.
- */
-export type SkusListResponse = SkuInformationList & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: SkuInformationList;
     };
 };

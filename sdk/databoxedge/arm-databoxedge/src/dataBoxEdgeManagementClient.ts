@@ -18,13 +18,15 @@ import { DataBoxEdgeManagementClientContext } from "./dataBoxEdgeManagementClien
 class DataBoxEdgeManagementClient extends DataBoxEdgeManagementClientContext {
   // Operation groups
   operations: operations.Operations;
+  availableSkus: operations.AvailableSkus;
   devices: operations.Devices;
+  skus: operations.Skus;
   alerts: operations.Alerts;
   bandwidthSchedules: operations.BandwidthSchedules;
   jobs: operations.Jobs;
+  orders: operations.Orders;
   nodes: operations.Nodes;
   operationsStatus: operations.OperationsStatus;
-  orders: operations.Orders;
   roles: operations.Roles;
   shares: operations.Shares;
   storageAccountCredentials: operations.StorageAccountCredentials;
@@ -32,7 +34,6 @@ class DataBoxEdgeManagementClient extends DataBoxEdgeManagementClientContext {
   containers: operations.Containers;
   triggers: operations.Triggers;
   users: operations.Users;
-  skus: operations.Skus;
 
   /**
    * Initializes a new instance of the DataBoxEdgeManagementClient class.
@@ -43,13 +44,15 @@ class DataBoxEdgeManagementClient extends DataBoxEdgeManagementClientContext {
   constructor(credentials: msRest.ServiceClientCredentials, subscriptionId: string, options?: Models.DataBoxEdgeManagementClientOptions) {
     super(credentials, subscriptionId, options);
     this.operations = new operations.Operations(this);
+    this.availableSkus = new operations.AvailableSkus(this);
     this.devices = new operations.Devices(this);
+    this.skus = new operations.Skus(this);
     this.alerts = new operations.Alerts(this);
     this.bandwidthSchedules = new operations.BandwidthSchedules(this);
     this.jobs = new operations.Jobs(this);
+    this.orders = new operations.Orders(this);
     this.nodes = new operations.Nodes(this);
     this.operationsStatus = new operations.OperationsStatus(this);
-    this.orders = new operations.Orders(this);
     this.roles = new operations.Roles(this);
     this.shares = new operations.Shares(this);
     this.storageAccountCredentials = new operations.StorageAccountCredentials(this);
@@ -57,7 +60,6 @@ class DataBoxEdgeManagementClient extends DataBoxEdgeManagementClientContext {
     this.containers = new operations.Containers(this);
     this.triggers = new operations.Triggers(this);
     this.users = new operations.Users(this);
-    this.skus = new operations.Skus(this);
   }
 }
 

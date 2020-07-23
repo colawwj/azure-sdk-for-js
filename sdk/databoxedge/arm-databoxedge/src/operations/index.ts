@@ -9,13 +9,15 @@
  */
 
 export * from "./operations";
+export * from "./availableSkus";
 export * from "./devices";
+export * from "./skus";
 export * from "./alerts";
 export * from "./bandwidthSchedules";
 export * from "./jobs";
+export * from "./orders";
 export * from "./nodes";
 export * from "./operationsStatus";
-export * from "./orders";
 export * from "./roles";
 export * from "./shares";
 export * from "./storageAccountCredentials";
@@ -23,4 +25,3 @@ export * from "./storageAccounts";
 export * from "./containers";
 export * from "./triggers";
 export * from "./users";
-export * from "./skus";

@@ -44,7 +44,7 @@ export class DataBoxEdgeManagementClientContext extends msRestAzure.AzureService
 
     super(credentials, options);
 
-    this.apiVersion = '2019-08-01';
+    this.apiVersion = '2020-07-01-preview';
     this.acceptLanguage = 'en-US';
     this.longRunningOperationRetryTimeout = 30;
     this.baseUri = options.baseUri || this.baseUri || "https://management.azure.com";

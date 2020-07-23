@@ -27,7 +27,7 @@ export class Skus {
   }
 
   /**
-   * @summary List all the available Skus in the region and information related to them
+   * @summary List all the available Skus and information related to them.
    * @param [options] The optional parameters
    * @returns Promise<Models.SkusListResponse>
    */
@@ -35,13 +35,13 @@ export class Skus {
   /**
    * @param callback The callback
    */
-  list(callback: msRest.ServiceCallback<Models.SkuInformationList>): void;
+  list(callback: msRest.ServiceCallback<Models.DataBoxEdgeSkuList>): void;
   /**
    * @param options The optional parameters
    * @param callback The callback
    */
-  list(options: Models.SkusListOptionalParams, callback: msRest.ServiceCallback<Models.SkuInformationList>): void;
-  list(options?: Models.SkusListOptionalParams | msRest.ServiceCallback<Models.SkuInformationList>, callback?: msRest.ServiceCallback<Models.SkuInformationList>): Promise<Models.SkusListResponse> {
+  list(options: Models.SkusListOptionalParams, callback: msRest.ServiceCallback<Models.DataBoxEdgeSkuList>): void;
+  list(options?: Models.SkusListOptionalParams | msRest.ServiceCallback<Models.DataBoxEdgeSkuList>, callback?: msRest.ServiceCallback<Models.DataBoxEdgeSkuList>): Promise<Models.SkusListResponse> {
     return this.client.sendOperationRequest(
       {
         options
@@ -68,7 +68,7 @@ const listOperationSpec: msRest.OperationSpec = {
   ],
   responses: {
     200: {
-      bodyMapper: Mappers.SkuInformationList
+      bodyMapper: Mappers.DataBoxEdgeSkuList
     },
     default: {
       bodyMapper: Mappers.CloudError

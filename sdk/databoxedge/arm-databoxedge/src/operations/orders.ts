@@ -28,6 +28,38 @@ export class Orders {
   }
 
   /**
+   * @summary Gets the DCAccess Code
+   * @param deviceName The device name
+   * @param resourceGroupName The resource group name.
+   * @param [options] The optional parameters
+   * @returns Promise<Models.OrdersListDCAccessCodeResponse>
+   */
+  listDCAccessCode(deviceName: string, resourceGroupName: string, options?: msRest.RequestOptionsBase): Promise<Models.OrdersListDCAccessCodeResponse>;
+  /**
+   * @param deviceName The device name
+   * @param resourceGroupName The resource group name.
+   * @param callback The callback
+   */
+  listDCAccessCode(deviceName: string, resourceGroupName: string, callback: msRest.ServiceCallback<Models.DCAccessCode>): void;
+  /**
+   * @param deviceName The device name
+   * @param resourceGroupName The resource group name.
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  listDCAccessCode(deviceName: string, resourceGroupName: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.DCAccessCode>): void;
+  listDCAccessCode(deviceName: string, resourceGroupName: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.DCAccessCode>, callback?: msRest.ServiceCallback<Models.DCAccessCode>): Promise<Models.OrdersListDCAccessCodeResponse> {
+    return this.client.sendOperationRequest(
+      {
+        deviceName,
+        resourceGroupName,
+        options
+      },
+      listDCAccessCodeOperationSpec,
+      callback) as Promise<Models.OrdersListDCAccessCodeResponse>;
+  }
+
+  /**
    * @summary Lists all the orders related to a Data Box Edge/Data Box Gateway device.
    * @param deviceName The device name.
    * @param resourceGroupName The resource group name.
@@ -185,6 +217,31 @@ export class Orders {
 
 // Operation Specifications
 const serializer = new msRest.Serializer(Mappers);
+const listDCAccessCodeOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/orders/default/listDCAccessCode",
+  urlParameters: [
+    Parameters.deviceName,
+    Parameters.subscriptionId,
+    Parameters.resourceGroupName
+  ],
+  queryParameters: [
+    Parameters.apiVersion
+  ],
+  headerParameters: [
+    Parameters.acceptLanguage
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.DCAccessCode
+    },
+    default: {
+      bodyMapper: Mappers.CloudError
+    }
+  },
+  serializer
+};
+
 const listByDataBoxEdgeDeviceOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
   path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/orders",
