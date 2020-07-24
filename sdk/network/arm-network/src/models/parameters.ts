@@ -26,7 +26,7 @@ export const apiVersion0: msRest.OperationQueryParameter = {
     required: true,
     isConstant: true,
     serializedName: "api-version",
-    defaultValue: '2020-05-01',
+    defaultValue: '2020-06-01',
     type: {
       name: "String"
     }
@@ -158,6 +158,16 @@ export const crossConnectionName: msRest.OperationURLParameter = {
     }
   }
 };
+export const customIpPrefixName: msRest.OperationURLParameter = {
+  parameterPath: "customIpPrefixName",
+  mapper: {
+    required: true,
+    serializedName: "customIpPrefixName",
+    type: {
+      name: "String"
+    }
+  }
+};
 export const ddosCustomPolicyName: msRest.OperationURLParameter = {
   parameterPath: "ddosCustomPolicyName",
   mapper: {
@@ -208,6 +218,16 @@ export const domainNameLabel: msRest.OperationQueryParameter = {
     }
   }
 };
+export const dscpConfigurationName: msRest.OperationURLParameter = {
+  parameterPath: "dscpConfigurationName",
+  mapper: {
+    required: true,
+    serializedName: "dscpConfigurationName",
+    type: {
+      name: "String"
+    }
+  }
+};
 export const expand: msRest.OperationQueryParameter = {
   parameterPath: [
     "options",
@@ -235,6 +255,28 @@ export const expressRoutePortName: msRest.OperationURLParameter = {
   mapper: {
     required: true,
     serializedName: "expressRoutePortName",
+    type: {
+      name: "String"
+    }
+  }
+};
+export const expressRouteProviderPortName: msRest.OperationURLParameter = {
+  parameterPath: "expressRouteProviderPortName",
+  mapper: {
+    required: true,
+    serializedName: "expressRouteProviderPortName",
+    type: {
+      name: "String"
+    }
+  }
+};
+export const filter: msRest.OperationQueryParameter = {
+  parameterPath: [
+    "options",
+    "filter"
+  ],
+  mapper: {
+    serializedName: "$filter",
     type: {
       name: "String"
     }
@@ -438,6 +480,16 @@ export const locationName: msRest.OperationURLParameter = {
     }
   }
 };
+export const masterCustomIpPrefixName: msRest.OperationURLParameter = {
+  parameterPath: "masterCustomIpPrefixName",
+  mapper: {
+    required: true,
+    serializedName: "masterCustomIpPrefixName",
+    type: {
+      name: "String"
+    }
+  }
+};
 export const natGatewayName: msRest.OperationURLParameter = {
   parameterPath: "natGatewayName",
   mapper: {
@@ -576,6 +628,19 @@ export const peeringName: msRest.OperationURLParameter = {
   mapper: {
     required: true,
     serializedName: "peeringName",
+    type: {
+      name: "String"
+    }
+  }
+};
+export const policyName: msRest.OperationURLParameter = {
+  parameterPath: "policyName",
+  mapper: {
+    required: true,
+    serializedName: "policyName",
+    constraints: {
+      MaxLength: 128
+    },
     type: {
       name: "String"
     }
@@ -906,6 +971,16 @@ export const virtualWANName1: msRest.OperationURLParameter = {
   mapper: {
     required: true,
     serializedName: "VirtualWANName",
+    type: {
+      name: "String"
+    }
+  }
+};
+export const vpnConnectionName: msRest.OperationURLParameter = {
+  parameterPath: "vpnConnectionName",
+  mapper: {
+    required: true,
+    serializedName: "vpnConnectionName",
     type: {
       name: "String"
     }
