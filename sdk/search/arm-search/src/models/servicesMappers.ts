@@ -7,6 +7,7 @@
  */
 
 export {
+  AzureEntityResource,
   BaseResource,
   CheckNameAvailabilityInput,
   CheckNameAvailabilityOutput,
@@ -18,10 +19,17 @@ export {
   PrivateEndpointConnectionProperties,
   PrivateEndpointConnectionPropertiesPrivateEndpoint,
   PrivateEndpointConnectionPropertiesPrivateLinkServiceConnectionState,
+  PrivateLinkResource,
+  PrivateLinkResourceProperties,
+  ProxyResource,
   Resource,
   SearchService,
   SearchServiceListResult,
+  SearchServiceUpdate,
+  ShareablePrivateLinkResourceProperties,
+  ShareablePrivateLinkResourceType,
   SharedPrivateLinkResource,
   SharedPrivateLinkResourceProperties,
-  Sku
+  Sku,
+  TrackedResource
 } from "../models/mappers";

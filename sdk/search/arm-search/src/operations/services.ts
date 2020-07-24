@@ -56,7 +56,7 @@ export class Services {
    * @param [options] The optional parameters
    * @returns Promise<Models.ServicesUpdateResponse>
    */
-  update(resourceGroupName: string, searchServiceName: string, service: Models.SearchService, options?: Models.ServicesUpdateOptionalParams): Promise<Models.ServicesUpdateResponse>;
+  update(resourceGroupName: string, searchServiceName: string, service: Models.SearchServiceUpdate, options?: Models.ServicesUpdateOptionalParams): Promise<Models.ServicesUpdateResponse>;
   /**
    * @param resourceGroupName The name of the resource group within the current subscription. You can
    * obtain this value from the Azure Resource Manager API or the portal.
@@ -64,7 +64,7 @@ export class Services {
    * @param service The definition of the Search service to update.
    * @param callback The callback
    */
-  update(resourceGroupName: string, searchServiceName: string, service: Models.SearchService, callback: msRest.ServiceCallback<Models.SearchService>): void;
+  update(resourceGroupName: string, searchServiceName: string, service: Models.SearchServiceUpdate, callback: msRest.ServiceCallback<Models.SearchService>): void;
   /**
    * @param resourceGroupName The name of the resource group within the current subscription. You can
    * obtain this value from the Azure Resource Manager API or the portal.
@@ -73,8 +73,8 @@ export class Services {
    * @param options The optional parameters
    * @param callback The callback
    */
-  update(resourceGroupName: string, searchServiceName: string, service: Models.SearchService, options: Models.ServicesUpdateOptionalParams, callback: msRest.ServiceCallback<Models.SearchService>): void;
-  update(resourceGroupName: string, searchServiceName: string, service: Models.SearchService, options?: Models.ServicesUpdateOptionalParams | msRest.ServiceCallback<Models.SearchService>, callback?: msRest.ServiceCallback<Models.SearchService>): Promise<Models.ServicesUpdateResponse> {
+  update(resourceGroupName: string, searchServiceName: string, service: Models.SearchServiceUpdate, options: Models.ServicesUpdateOptionalParams, callback: msRest.ServiceCallback<Models.SearchService>): void;
+  update(resourceGroupName: string, searchServiceName: string, service: Models.SearchServiceUpdate, options?: Models.ServicesUpdateOptionalParams | msRest.ServiceCallback<Models.SearchService>, callback?: msRest.ServiceCallback<Models.SearchService>): Promise<Models.ServicesUpdateResponse> {
     return this.client.sendOperationRequest(
       {
         resourceGroupName,
@@ -357,7 +357,7 @@ const updateOperationSpec: msRest.OperationSpec = {
   requestBody: {
     parameterPath: "service",
     mapper: {
-      ...Mappers.SearchService,
+      ...Mappers.SearchServiceUpdate,
       required: true
     }
   },

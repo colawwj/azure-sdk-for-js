@@ -7,10 +7,27 @@
  */
 
 export {
+  AzureEntityResource,
+  BaseResource,
   CloudError,
+  Identity,
+  IpRule,
+  NetworkRuleSet,
+  PrivateEndpointConnection,
+  PrivateEndpointConnectionProperties,
+  PrivateEndpointConnectionPropertiesPrivateEndpoint,
+  PrivateEndpointConnectionPropertiesPrivateLinkServiceConnectionState,
   PrivateLinkResource,
   PrivateLinkResourceProperties,
   PrivateLinkResourcesResult,
+  ProxyResource,
+  Resource,
+  SearchService,
+  SearchServiceUpdate,
   ShareablePrivateLinkResourceProperties,
-  ShareablePrivateLinkResourceType
+  ShareablePrivateLinkResourceType,
+  SharedPrivateLinkResource,
+  SharedPrivateLinkResourceProperties,
+  Sku,
+  TrackedResource
 } from "../models/mappers";

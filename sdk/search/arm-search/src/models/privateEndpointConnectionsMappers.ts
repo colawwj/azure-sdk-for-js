@@ -7,6 +7,7 @@
  */
 
 export {
+  AzureEntityResource,
   BaseResource,
   CloudError,
   Identity,
@@ -17,9 +18,16 @@ export {
   PrivateEndpointConnectionProperties,
   PrivateEndpointConnectionPropertiesPrivateEndpoint,
   PrivateEndpointConnectionPropertiesPrivateLinkServiceConnectionState,
+  PrivateLinkResource,
+  PrivateLinkResourceProperties,
+  ProxyResource,
   Resource,
   SearchService,
+  SearchServiceUpdate,
+  ShareablePrivateLinkResourceProperties,
+  ShareablePrivateLinkResourceType,
   SharedPrivateLinkResource,
   SharedPrivateLinkResourceProperties,
-  Sku
+  Sku,
+  TrackedResource
 } from "../models/mappers";
