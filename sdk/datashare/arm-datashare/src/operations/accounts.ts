@@ -28,6 +28,31 @@ export class Accounts {
   }
 
   /**
+   * List Accounts in Subscription
+   * @summary List Accounts in a subscription
+   * @param [options] The optional parameters
+   * @returns Promise<Models.AccountsListBySubscriptionResponse>
+   */
+  listBySubscription(options?: Models.AccountsListBySubscriptionOptionalParams): Promise<Models.AccountsListBySubscriptionResponse>;
+  /**
+   * @param callback The callback
+   */
+  listBySubscription(callback: msRest.ServiceCallback<Models.AccountList>): void;
+  /**
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  listBySubscription(options: Models.AccountsListBySubscriptionOptionalParams, callback: msRest.ServiceCallback<Models.AccountList>): void;
+  listBySubscription(options?: Models.AccountsListBySubscriptionOptionalParams | msRest.ServiceCallback<Models.AccountList>, callback?: msRest.ServiceCallback<Models.AccountList>): Promise<Models.AccountsListBySubscriptionResponse> {
+    return this.client.sendOperationRequest(
+      {
+        options
+      },
+      listBySubscriptionOperationSpec,
+      callback) as Promise<Models.AccountsListBySubscriptionResponse>;
+  }
+
+  /**
    * Get an account
    * @summary Get an account under a resource group
    * @param resourceGroupName The resource group name.
@@ -122,31 +147,6 @@ export class Accounts {
       },
       updateOperationSpec,
       callback) as Promise<Models.AccountsUpdateResponse>;
-  }
-
-  /**
-   * List Accounts in Subscription
-   * @summary List Accounts in a subscription
-   * @param [options] The optional parameters
-   * @returns Promise<Models.AccountsListBySubscriptionResponse>
-   */
-  listBySubscription(options?: Models.AccountsListBySubscriptionOptionalParams): Promise<Models.AccountsListBySubscriptionResponse>;
-  /**
-   * @param callback The callback
-   */
-  listBySubscription(callback: msRest.ServiceCallback<Models.AccountList>): void;
-  /**
-   * @param options The optional parameters
-   * @param callback The callback
-   */
-  listBySubscription(options: Models.AccountsListBySubscriptionOptionalParams, callback: msRest.ServiceCallback<Models.AccountList>): void;
-  listBySubscription(options?: Models.AccountsListBySubscriptionOptionalParams | msRest.ServiceCallback<Models.AccountList>, callback?: msRest.ServiceCallback<Models.AccountList>): Promise<Models.AccountsListBySubscriptionResponse> {
-    return this.client.sendOperationRequest(
-      {
-        options
-      },
-      listBySubscriptionOperationSpec,
-      callback) as Promise<Models.AccountsListBySubscriptionResponse>;
   }
 
   /**
@@ -279,6 +279,30 @@ export class Accounts {
 
 // Operation Specifications
 const serializer = new msRest.Serializer(Mappers);
+const listBySubscriptionOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "subscriptions/{subscriptionId}/providers/Microsoft.DataShare/accounts",
+  urlParameters: [
+    Parameters.subscriptionId
+  ],
+  queryParameters: [
+    Parameters.apiVersion,
+    Parameters.skipToken
+  ],
+  headerParameters: [
+    Parameters.acceptLanguage
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.AccountList
+    },
+    default: {
+      bodyMapper: Mappers.DataShareError
+    }
+  },
+  serializer
+};
+
 const getOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
   path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}",
@@ -328,30 +352,6 @@ const updateOperationSpec: msRest.OperationSpec = {
   responses: {
     200: {
       bodyMapper: Mappers.Account
-    },
-    default: {
-      bodyMapper: Mappers.DataShareError
-    }
-  },
-  serializer
-};
-
-const listBySubscriptionOperationSpec: msRest.OperationSpec = {
-  httpMethod: "GET",
-  path: "subscriptions/{subscriptionId}/providers/Microsoft.DataShare/accounts",
-  urlParameters: [
-    Parameters.subscriptionId
-  ],
-  queryParameters: [
-    Parameters.apiVersion,
-    Parameters.skipToken
-  ],
-  headerParameters: [
-    Parameters.acceptLanguage
-  ],
-  responses: {
-    200: {
-      bodyMapper: Mappers.AccountList
     },
     default: {
       bodyMapper: Mappers.DataShareError

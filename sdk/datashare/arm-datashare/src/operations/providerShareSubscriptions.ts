@@ -28,6 +28,62 @@ export class ProviderShareSubscriptions {
   }
 
   /**
+   * Reinstate share subscription in a provider share
+   * @summary Reinstate share subscription in a provider share.
+   * @param resourceGroupName The resource group name.
+   * @param accountName The name of the share account.
+   * @param shareName The name of the share.
+   * @param providerShareSubscriptionId To locate shareSubscription
+   * @param [options] The optional parameters
+   * @returns Promise<Models.ProviderShareSubscriptionsReinstateResponse>
+   */
+  reinstate(resourceGroupName: string, accountName: string, shareName: string, providerShareSubscriptionId: string, options?: msRest.RequestOptionsBase): Promise<Models.ProviderShareSubscriptionsReinstateResponse>;
+  /**
+   * @param resourceGroupName The resource group name.
+   * @param accountName The name of the share account.
+   * @param shareName The name of the share.
+   * @param providerShareSubscriptionId To locate shareSubscription
+   * @param callback The callback
+   */
+  reinstate(resourceGroupName: string, accountName: string, shareName: string, providerShareSubscriptionId: string, callback: msRest.ServiceCallback<Models.ProviderShareSubscription>): void;
+  /**
+   * @param resourceGroupName The resource group name.
+   * @param accountName The name of the share account.
+   * @param shareName The name of the share.
+   * @param providerShareSubscriptionId To locate shareSubscription
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  reinstate(resourceGroupName: string, accountName: string, shareName: string, providerShareSubscriptionId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.ProviderShareSubscription>): void;
+  reinstate(resourceGroupName: string, accountName: string, shareName: string, providerShareSubscriptionId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.ProviderShareSubscription>, callback?: msRest.ServiceCallback<Models.ProviderShareSubscription>): Promise<Models.ProviderShareSubscriptionsReinstateResponse> {
+    return this.client.sendOperationRequest(
+      {
+        resourceGroupName,
+        accountName,
+        shareName,
+        providerShareSubscriptionId,
+        options
+      },
+      reinstateOperationSpec,
+      callback) as Promise<Models.ProviderShareSubscriptionsReinstateResponse>;
+  }
+
+  /**
+   * Revoke share subscription in a provider share
+   * @summary Revoke share subscription in a provider share.
+   * @param resourceGroupName The resource group name.
+   * @param accountName The name of the share account.
+   * @param shareName The name of the share.
+   * @param providerShareSubscriptionId To locate shareSubscription
+   * @param [options] The optional parameters
+   * @returns Promise<Models.ProviderShareSubscriptionsRevokeResponse>
+   */
+  revoke(resourceGroupName: string, accountName: string, shareName: string, providerShareSubscriptionId: string, options?: msRest.RequestOptionsBase): Promise<Models.ProviderShareSubscriptionsRevokeResponse> {
+    return this.beginRevoke(resourceGroupName,accountName,shareName,providerShareSubscriptionId,options)
+      .then(lroPoller => lroPoller.pollUntilFinished()) as Promise<Models.ProviderShareSubscriptionsRevokeResponse>;
+  }
+
+  /**
    * Get share subscription in a provider share
    * @summary Get share subscription in a provider share.
    * @param resourceGroupName The resource group name.
@@ -113,62 +169,6 @@ export class ProviderShareSubscriptions {
    * @param shareName The name of the share.
    * @param providerShareSubscriptionId To locate shareSubscription
    * @param [options] The optional parameters
-   * @returns Promise<Models.ProviderShareSubscriptionsRevokeResponse>
-   */
-  revoke(resourceGroupName: string, accountName: string, shareName: string, providerShareSubscriptionId: string, options?: msRest.RequestOptionsBase): Promise<Models.ProviderShareSubscriptionsRevokeResponse> {
-    return this.beginRevoke(resourceGroupName,accountName,shareName,providerShareSubscriptionId,options)
-      .then(lroPoller => lroPoller.pollUntilFinished()) as Promise<Models.ProviderShareSubscriptionsRevokeResponse>;
-  }
-
-  /**
-   * Reinstate share subscription in a provider share
-   * @summary Reinstate share subscription in a provider share.
-   * @param resourceGroupName The resource group name.
-   * @param accountName The name of the share account.
-   * @param shareName The name of the share.
-   * @param providerShareSubscriptionId To locate shareSubscription
-   * @param [options] The optional parameters
-   * @returns Promise<Models.ProviderShareSubscriptionsReinstateResponse>
-   */
-  reinstate(resourceGroupName: string, accountName: string, shareName: string, providerShareSubscriptionId: string, options?: msRest.RequestOptionsBase): Promise<Models.ProviderShareSubscriptionsReinstateResponse>;
-  /**
-   * @param resourceGroupName The resource group name.
-   * @param accountName The name of the share account.
-   * @param shareName The name of the share.
-   * @param providerShareSubscriptionId To locate shareSubscription
-   * @param callback The callback
-   */
-  reinstate(resourceGroupName: string, accountName: string, shareName: string, providerShareSubscriptionId: string, callback: msRest.ServiceCallback<Models.ProviderShareSubscription>): void;
-  /**
-   * @param resourceGroupName The resource group name.
-   * @param accountName The name of the share account.
-   * @param shareName The name of the share.
-   * @param providerShareSubscriptionId To locate shareSubscription
-   * @param options The optional parameters
-   * @param callback The callback
-   */
-  reinstate(resourceGroupName: string, accountName: string, shareName: string, providerShareSubscriptionId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.ProviderShareSubscription>): void;
-  reinstate(resourceGroupName: string, accountName: string, shareName: string, providerShareSubscriptionId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.ProviderShareSubscription>, callback?: msRest.ServiceCallback<Models.ProviderShareSubscription>): Promise<Models.ProviderShareSubscriptionsReinstateResponse> {
-    return this.client.sendOperationRequest(
-      {
-        resourceGroupName,
-        accountName,
-        shareName,
-        providerShareSubscriptionId,
-        options
-      },
-      reinstateOperationSpec,
-      callback) as Promise<Models.ProviderShareSubscriptionsReinstateResponse>;
-  }
-
-  /**
-   * Revoke share subscription in a provider share
-   * @summary Revoke share subscription in a provider share.
-   * @param resourceGroupName The resource group name.
-   * @param accountName The name of the share account.
-   * @param shareName The name of the share.
-   * @param providerShareSubscriptionId To locate shareSubscription
-   * @param [options] The optional parameters
    * @returns Promise<msRestAzure.LROPoller>
    */
   beginRevoke(resourceGroupName: string, accountName: string, shareName: string, providerShareSubscriptionId: string, options?: msRest.RequestOptionsBase): Promise<msRestAzure.LROPoller> {
@@ -216,6 +216,33 @@ export class ProviderShareSubscriptions {
 
 // Operation Specifications
 const serializer = new msRest.Serializer(Mappers);
+const reinstateOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/providerShareSubscriptions/{providerShareSubscriptionId}/reinstate",
+  urlParameters: [
+    Parameters.subscriptionId,
+    Parameters.resourceGroupName,
+    Parameters.accountName,
+    Parameters.shareName,
+    Parameters.providerShareSubscriptionId
+  ],
+  queryParameters: [
+    Parameters.apiVersion
+  ],
+  headerParameters: [
+    Parameters.acceptLanguage
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.ProviderShareSubscription
+    },
+    default: {
+      bodyMapper: Mappers.DataShareError
+    }
+  },
+  serializer
+};
+
 const getByShareOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
   path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/providerShareSubscriptions/{providerShareSubscriptionId}",
@@ -262,33 +289,6 @@ const listByShareOperationSpec: msRest.OperationSpec = {
   responses: {
     200: {
       bodyMapper: Mappers.ProviderShareSubscriptionList
-    },
-    default: {
-      bodyMapper: Mappers.DataShareError
-    }
-  },
-  serializer
-};
-
-const reinstateOperationSpec: msRest.OperationSpec = {
-  httpMethod: "POST",
-  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/providerShareSubscriptions/{providerShareSubscriptionId}/reinstate",
-  urlParameters: [
-    Parameters.subscriptionId,
-    Parameters.resourceGroupName,
-    Parameters.accountName,
-    Parameters.shareName,
-    Parameters.providerShareSubscriptionId
-  ],
-  queryParameters: [
-    Parameters.apiVersion
-  ],
-  headerParameters: [
-    Parameters.acceptLanguage
-  ],
-  responses: {
-    200: {
-      bodyMapper: Mappers.ProviderShareSubscription
     },
     default: {
       bodyMapper: Mappers.DataShareError

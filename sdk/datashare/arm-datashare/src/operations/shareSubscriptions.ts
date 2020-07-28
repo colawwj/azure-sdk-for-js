@@ -28,6 +28,151 @@ export class ShareSubscriptions {
   }
 
   /**
+   * Request to cancel a synchronization.
+   * @summary Request cancellation of a data share snapshot
+   * @param resourceGroupName The resource group name.
+   * @param accountName The name of the share account.
+   * @param shareSubscriptionName The name of the shareSubscription.
+   * @param shareSubscriptionSynchronization Share Subscription Synchronization payload.
+   * @param [options] The optional parameters
+   * @returns Promise<Models.ShareSubscriptionsCancelSynchronizationResponse>
+   */
+  cancelSynchronization(resourceGroupName: string, accountName: string, shareSubscriptionName: string, shareSubscriptionSynchronization: Models.ShareSubscriptionSynchronization, options?: msRest.RequestOptionsBase): Promise<Models.ShareSubscriptionsCancelSynchronizationResponse> {
+    return this.beginCancelSynchronization(resourceGroupName,accountName,shareSubscriptionName,shareSubscriptionSynchronization,options)
+      .then(lroPoller => lroPoller.pollUntilFinished()) as Promise<Models.ShareSubscriptionsCancelSynchronizationResponse>;
+  }
+
+  /**
+   * Get synchronization settings set on a share
+   * @summary Get source share synchronization settings for a shareSubscription.
+   * @param resourceGroupName The resource group name.
+   * @param accountName The name of the share account.
+   * @param shareSubscriptionName The name of the shareSubscription.
+   * @param [options] The optional parameters
+   * @returns Promise<Models.ShareSubscriptionsListSourceShareSynchronizationSettingsResponse>
+   */
+  listSourceShareSynchronizationSettings(resourceGroupName: string, accountName: string, shareSubscriptionName: string, options?: Models.ShareSubscriptionsListSourceShareSynchronizationSettingsOptionalParams): Promise<Models.ShareSubscriptionsListSourceShareSynchronizationSettingsResponse>;
+  /**
+   * @param resourceGroupName The resource group name.
+   * @param accountName The name of the share account.
+   * @param shareSubscriptionName The name of the shareSubscription.
+   * @param callback The callback
+   */
+  listSourceShareSynchronizationSettings(resourceGroupName: string, accountName: string, shareSubscriptionName: string, callback: msRest.ServiceCallback<Models.SourceShareSynchronizationSettingList>): void;
+  /**
+   * @param resourceGroupName The resource group name.
+   * @param accountName The name of the share account.
+   * @param shareSubscriptionName The name of the shareSubscription.
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  listSourceShareSynchronizationSettings(resourceGroupName: string, accountName: string, shareSubscriptionName: string, options: Models.ShareSubscriptionsListSourceShareSynchronizationSettingsOptionalParams, callback: msRest.ServiceCallback<Models.SourceShareSynchronizationSettingList>): void;
+  listSourceShareSynchronizationSettings(resourceGroupName: string, accountName: string, shareSubscriptionName: string, options?: Models.ShareSubscriptionsListSourceShareSynchronizationSettingsOptionalParams | msRest.ServiceCallback<Models.SourceShareSynchronizationSettingList>, callback?: msRest.ServiceCallback<Models.SourceShareSynchronizationSettingList>): Promise<Models.ShareSubscriptionsListSourceShareSynchronizationSettingsResponse> {
+    return this.client.sendOperationRequest(
+      {
+        resourceGroupName,
+        accountName,
+        shareSubscriptionName,
+        options
+      },
+      listSourceShareSynchronizationSettingsOperationSpec,
+      callback) as Promise<Models.ShareSubscriptionsListSourceShareSynchronizationSettingsResponse>;
+  }
+
+  /**
+   * List synchronization details
+   * @summary List data set level details for a share subscription synchronization
+   * @param resourceGroupName The resource group name.
+   * @param accountName The name of the share account.
+   * @param shareSubscriptionName The name of the share subscription.
+   * @param shareSubscriptionSynchronization Share Subscription Synchronization payload.
+   * @param [options] The optional parameters
+   * @returns Promise<Models.ShareSubscriptionsListSynchronizationDetailsResponse>
+   */
+  listSynchronizationDetails(resourceGroupName: string, accountName: string, shareSubscriptionName: string, shareSubscriptionSynchronization: Models.ShareSubscriptionSynchronization, options?: Models.ShareSubscriptionsListSynchronizationDetailsOptionalParams): Promise<Models.ShareSubscriptionsListSynchronizationDetailsResponse>;
+  /**
+   * @param resourceGroupName The resource group name.
+   * @param accountName The name of the share account.
+   * @param shareSubscriptionName The name of the share subscription.
+   * @param shareSubscriptionSynchronization Share Subscription Synchronization payload.
+   * @param callback The callback
+   */
+  listSynchronizationDetails(resourceGroupName: string, accountName: string, shareSubscriptionName: string, shareSubscriptionSynchronization: Models.ShareSubscriptionSynchronization, callback: msRest.ServiceCallback<Models.SynchronizationDetailsList>): void;
+  /**
+   * @param resourceGroupName The resource group name.
+   * @param accountName The name of the share account.
+   * @param shareSubscriptionName The name of the share subscription.
+   * @param shareSubscriptionSynchronization Share Subscription Synchronization payload.
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  listSynchronizationDetails(resourceGroupName: string, accountName: string, shareSubscriptionName: string, shareSubscriptionSynchronization: Models.ShareSubscriptionSynchronization, options: Models.ShareSubscriptionsListSynchronizationDetailsOptionalParams, callback: msRest.ServiceCallback<Models.SynchronizationDetailsList>): void;
+  listSynchronizationDetails(resourceGroupName: string, accountName: string, shareSubscriptionName: string, shareSubscriptionSynchronization: Models.ShareSubscriptionSynchronization, options?: Models.ShareSubscriptionsListSynchronizationDetailsOptionalParams | msRest.ServiceCallback<Models.SynchronizationDetailsList>, callback?: msRest.ServiceCallback<Models.SynchronizationDetailsList>): Promise<Models.ShareSubscriptionsListSynchronizationDetailsResponse> {
+    return this.client.sendOperationRequest(
+      {
+        resourceGroupName,
+        accountName,
+        shareSubscriptionName,
+        shareSubscriptionSynchronization,
+        options
+      },
+      listSynchronizationDetailsOperationSpec,
+      callback) as Promise<Models.ShareSubscriptionsListSynchronizationDetailsResponse>;
+  }
+
+  /**
+   * List synchronizations of a share subscription
+   * @summary List Synchronizations in a share subscription.
+   * @param resourceGroupName The resource group name.
+   * @param accountName The name of the share account.
+   * @param shareSubscriptionName The name of the share subscription.
+   * @param [options] The optional parameters
+   * @returns Promise<Models.ShareSubscriptionsListSynchronizationsResponse>
+   */
+  listSynchronizations(resourceGroupName: string, accountName: string, shareSubscriptionName: string, options?: Models.ShareSubscriptionsListSynchronizationsOptionalParams): Promise<Models.ShareSubscriptionsListSynchronizationsResponse>;
+  /**
+   * @param resourceGroupName The resource group name.
+   * @param accountName The name of the share account.
+   * @param shareSubscriptionName The name of the share subscription.
+   * @param callback The callback
+   */
+  listSynchronizations(resourceGroupName: string, accountName: string, shareSubscriptionName: string, callback: msRest.ServiceCallback<Models.ShareSubscriptionSynchronizationList>): void;
+  /**
+   * @param resourceGroupName The resource group name.
+   * @param accountName The name of the share account.
+   * @param shareSubscriptionName The name of the share subscription.
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  listSynchronizations(resourceGroupName: string, accountName: string, shareSubscriptionName: string, options: Models.ShareSubscriptionsListSynchronizationsOptionalParams, callback: msRest.ServiceCallback<Models.ShareSubscriptionSynchronizationList>): void;
+  listSynchronizations(resourceGroupName: string, accountName: string, shareSubscriptionName: string, options?: Models.ShareSubscriptionsListSynchronizationsOptionalParams | msRest.ServiceCallback<Models.ShareSubscriptionSynchronizationList>, callback?: msRest.ServiceCallback<Models.ShareSubscriptionSynchronizationList>): Promise<Models.ShareSubscriptionsListSynchronizationsResponse> {
+    return this.client.sendOperationRequest(
+      {
+        resourceGroupName,
+        accountName,
+        shareSubscriptionName,
+        options
+      },
+      listSynchronizationsOperationSpec,
+      callback) as Promise<Models.ShareSubscriptionsListSynchronizationsResponse>;
+  }
+
+  /**
+   * Initiate a copy
+   * @summary Initiate an asynchronous data share job
+   * @param resourceGroupName The resource group name.
+   * @param accountName The name of the share account.
+   * @param shareSubscriptionName The name of share subscription
+   * @param synchronize Synchronize payload
+   * @param [options] The optional parameters
+   * @returns Promise<Models.ShareSubscriptionsSynchronizeMethodResponse>
+   */
+  synchronizeMethod(resourceGroupName: string, accountName: string, shareSubscriptionName: string, synchronize: Models.Synchronize, options?: msRest.RequestOptionsBase): Promise<Models.ShareSubscriptionsSynchronizeMethodResponse> {
+    return this.beginSynchronizeMethod(resourceGroupName,accountName,shareSubscriptionName,synchronize,options)
+      .then(lroPoller => lroPoller.pollUntilFinished()) as Promise<Models.ShareSubscriptionsSynchronizeMethodResponse>;
+  }
+
+  /**
    * Get a shareSubscription in an account
    * @summary Get shareSubscription in an account.
    * @param resourceGroupName The resource group name.
@@ -153,136 +298,6 @@ export class ShareSubscriptions {
   }
 
   /**
-   * Get synchronization settings set on a share
-   * @summary Get source share synchronization settings for a shareSubscription.
-   * @param resourceGroupName The resource group name.
-   * @param accountName The name of the share account.
-   * @param shareSubscriptionName The name of the shareSubscription.
-   * @param [options] The optional parameters
-   * @returns Promise<Models.ShareSubscriptionsListSourceShareSynchronizationSettingsResponse>
-   */
-  listSourceShareSynchronizationSettings(resourceGroupName: string, accountName: string, shareSubscriptionName: string, options?: Models.ShareSubscriptionsListSourceShareSynchronizationSettingsOptionalParams): Promise<Models.ShareSubscriptionsListSourceShareSynchronizationSettingsResponse>;
-  /**
-   * @param resourceGroupName The resource group name.
-   * @param accountName The name of the share account.
-   * @param shareSubscriptionName The name of the shareSubscription.
-   * @param callback The callback
-   */
-  listSourceShareSynchronizationSettings(resourceGroupName: string, accountName: string, shareSubscriptionName: string, callback: msRest.ServiceCallback<Models.SourceShareSynchronizationSettingList>): void;
-  /**
-   * @param resourceGroupName The resource group name.
-   * @param accountName The name of the share account.
-   * @param shareSubscriptionName The name of the shareSubscription.
-   * @param options The optional parameters
-   * @param callback The callback
-   */
-  listSourceShareSynchronizationSettings(resourceGroupName: string, accountName: string, shareSubscriptionName: string, options: Models.ShareSubscriptionsListSourceShareSynchronizationSettingsOptionalParams, callback: msRest.ServiceCallback<Models.SourceShareSynchronizationSettingList>): void;
-  listSourceShareSynchronizationSettings(resourceGroupName: string, accountName: string, shareSubscriptionName: string, options?: Models.ShareSubscriptionsListSourceShareSynchronizationSettingsOptionalParams | msRest.ServiceCallback<Models.SourceShareSynchronizationSettingList>, callback?: msRest.ServiceCallback<Models.SourceShareSynchronizationSettingList>): Promise<Models.ShareSubscriptionsListSourceShareSynchronizationSettingsResponse> {
-    return this.client.sendOperationRequest(
-      {
-        resourceGroupName,
-        accountName,
-        shareSubscriptionName,
-        options
-      },
-      listSourceShareSynchronizationSettingsOperationSpec,
-      callback) as Promise<Models.ShareSubscriptionsListSourceShareSynchronizationSettingsResponse>;
-  }
-
-  /**
-   * List synchronizations of a share subscription
-   * @summary List Synchronizations in a share subscription.
-   * @param resourceGroupName The resource group name.
-   * @param accountName The name of the share account.
-   * @param shareSubscriptionName The name of the share subscription.
-   * @param [options] The optional parameters
-   * @returns Promise<Models.ShareSubscriptionsListSynchronizationsResponse>
-   */
-  listSynchronizations(resourceGroupName: string, accountName: string, shareSubscriptionName: string, options?: Models.ShareSubscriptionsListSynchronizationsOptionalParams): Promise<Models.ShareSubscriptionsListSynchronizationsResponse>;
-  /**
-   * @param resourceGroupName The resource group name.
-   * @param accountName The name of the share account.
-   * @param shareSubscriptionName The name of the share subscription.
-   * @param callback The callback
-   */
-  listSynchronizations(resourceGroupName: string, accountName: string, shareSubscriptionName: string, callback: msRest.ServiceCallback<Models.ShareSubscriptionSynchronizationList>): void;
-  /**
-   * @param resourceGroupName The resource group name.
-   * @param accountName The name of the share account.
-   * @param shareSubscriptionName The name of the share subscription.
-   * @param options The optional parameters
-   * @param callback The callback
-   */
-  listSynchronizations(resourceGroupName: string, accountName: string, shareSubscriptionName: string, options: Models.ShareSubscriptionsListSynchronizationsOptionalParams, callback: msRest.ServiceCallback<Models.ShareSubscriptionSynchronizationList>): void;
-  listSynchronizations(resourceGroupName: string, accountName: string, shareSubscriptionName: string, options?: Models.ShareSubscriptionsListSynchronizationsOptionalParams | msRest.ServiceCallback<Models.ShareSubscriptionSynchronizationList>, callback?: msRest.ServiceCallback<Models.ShareSubscriptionSynchronizationList>): Promise<Models.ShareSubscriptionsListSynchronizationsResponse> {
-    return this.client.sendOperationRequest(
-      {
-        resourceGroupName,
-        accountName,
-        shareSubscriptionName,
-        options
-      },
-      listSynchronizationsOperationSpec,
-      callback) as Promise<Models.ShareSubscriptionsListSynchronizationsResponse>;
-  }
-
-  /**
-   * List synchronization details
-   * @summary List data set level details for a share subscription synchronization
-   * @param resourceGroupName The resource group name.
-   * @param accountName The name of the share account.
-   * @param shareSubscriptionName The name of the share subscription.
-   * @param shareSubscriptionSynchronization Share Subscription Synchronization payload.
-   * @param [options] The optional parameters
-   * @returns Promise<Models.ShareSubscriptionsListSynchronizationDetailsResponse>
-   */
-  listSynchronizationDetails(resourceGroupName: string, accountName: string, shareSubscriptionName: string, shareSubscriptionSynchronization: Models.ShareSubscriptionSynchronization, options?: Models.ShareSubscriptionsListSynchronizationDetailsOptionalParams): Promise<Models.ShareSubscriptionsListSynchronizationDetailsResponse>;
-  /**
-   * @param resourceGroupName The resource group name.
-   * @param accountName The name of the share account.
-   * @param shareSubscriptionName The name of the share subscription.
-   * @param shareSubscriptionSynchronization Share Subscription Synchronization payload.
-   * @param callback The callback
-   */
-  listSynchronizationDetails(resourceGroupName: string, accountName: string, shareSubscriptionName: string, shareSubscriptionSynchronization: Models.ShareSubscriptionSynchronization, callback: msRest.ServiceCallback<Models.SynchronizationDetailsList>): void;
-  /**
-   * @param resourceGroupName The resource group name.
-   * @param accountName The name of the share account.
-   * @param shareSubscriptionName The name of the share subscription.
-   * @param shareSubscriptionSynchronization Share Subscription Synchronization payload.
-   * @param options The optional parameters
-   * @param callback The callback
-   */
-  listSynchronizationDetails(resourceGroupName: string, accountName: string, shareSubscriptionName: string, shareSubscriptionSynchronization: Models.ShareSubscriptionSynchronization, options: Models.ShareSubscriptionsListSynchronizationDetailsOptionalParams, callback: msRest.ServiceCallback<Models.SynchronizationDetailsList>): void;
-  listSynchronizationDetails(resourceGroupName: string, accountName: string, shareSubscriptionName: string, shareSubscriptionSynchronization: Models.ShareSubscriptionSynchronization, options?: Models.ShareSubscriptionsListSynchronizationDetailsOptionalParams | msRest.ServiceCallback<Models.SynchronizationDetailsList>, callback?: msRest.ServiceCallback<Models.SynchronizationDetailsList>): Promise<Models.ShareSubscriptionsListSynchronizationDetailsResponse> {
-    return this.client.sendOperationRequest(
-      {
-        resourceGroupName,
-        accountName,
-        shareSubscriptionName,
-        shareSubscriptionSynchronization,
-        options
-      },
-      listSynchronizationDetailsOperationSpec,
-      callback) as Promise<Models.ShareSubscriptionsListSynchronizationDetailsResponse>;
-  }
-
-  /**
-   * Initiate a copy
-   * @summary Initiate an asynchronous data share job
-   * @param resourceGroupName The resource group name.
-   * @param accountName The name of the share account.
-   * @param shareSubscriptionName The name of share subscription
-   * @param synchronize Synchronize payload
-   * @param [options] The optional parameters
-   * @returns Promise<Models.ShareSubscriptionsSynchronizeMethodResponse>
-   */
-  synchronizeMethod(resourceGroupName: string, accountName: string, shareSubscriptionName: string, synchronize: Models.Synchronize, options?: msRest.RequestOptionsBase): Promise<Models.ShareSubscriptionsSynchronizeMethodResponse> {
-    return this.beginSynchronizeMethod(resourceGroupName,accountName,shareSubscriptionName,synchronize,options)
-      .then(lroPoller => lroPoller.pollUntilFinished()) as Promise<Models.ShareSubscriptionsSynchronizeMethodResponse>;
-  }
-
-  /**
    * Request to cancel a synchronization.
    * @summary Request cancellation of a data share snapshot
    * @param resourceGroupName The resource group name.
@@ -290,31 +305,18 @@ export class ShareSubscriptions {
    * @param shareSubscriptionName The name of the shareSubscription.
    * @param shareSubscriptionSynchronization Share Subscription Synchronization payload.
    * @param [options] The optional parameters
-   * @returns Promise<Models.ShareSubscriptionsCancelSynchronizationResponse>
-   */
-  cancelSynchronization(resourceGroupName: string, accountName: string, shareSubscriptionName: string, shareSubscriptionSynchronization: Models.ShareSubscriptionSynchronization, options?: msRest.RequestOptionsBase): Promise<Models.ShareSubscriptionsCancelSynchronizationResponse> {
-    return this.beginCancelSynchronization(resourceGroupName,accountName,shareSubscriptionName,shareSubscriptionSynchronization,options)
-      .then(lroPoller => lroPoller.pollUntilFinished()) as Promise<Models.ShareSubscriptionsCancelSynchronizationResponse>;
-  }
-
-  /**
-   * Delete a shareSubscription in an account
-   * @summary Delete shareSubscription in an account.
-   * @param resourceGroupName The resource group name.
-   * @param accountName The name of the share account.
-   * @param shareSubscriptionName The name of the shareSubscription.
-   * @param [options] The optional parameters
    * @returns Promise<msRestAzure.LROPoller>
    */
-  beginDeleteMethod(resourceGroupName: string, accountName: string, shareSubscriptionName: string, options?: msRest.RequestOptionsBase): Promise<msRestAzure.LROPoller> {
+  beginCancelSynchronization(resourceGroupName: string, accountName: string, shareSubscriptionName: string, shareSubscriptionSynchronization: Models.ShareSubscriptionSynchronization, options?: msRest.RequestOptionsBase): Promise<msRestAzure.LROPoller> {
     return this.client.sendLRORequest(
       {
         resourceGroupName,
         accountName,
         shareSubscriptionName,
+        shareSubscriptionSynchronization,
         options
       },
-      beginDeleteMethodOperationSpec,
+      beginCancelSynchronizationOperationSpec,
       options);
   }
 
@@ -342,55 +344,24 @@ export class ShareSubscriptions {
   }
 
   /**
-   * Request to cancel a synchronization.
-   * @summary Request cancellation of a data share snapshot
+   * Delete a shareSubscription in an account
+   * @summary Delete shareSubscription in an account.
    * @param resourceGroupName The resource group name.
    * @param accountName The name of the share account.
    * @param shareSubscriptionName The name of the shareSubscription.
-   * @param shareSubscriptionSynchronization Share Subscription Synchronization payload.
    * @param [options] The optional parameters
    * @returns Promise<msRestAzure.LROPoller>
    */
-  beginCancelSynchronization(resourceGroupName: string, accountName: string, shareSubscriptionName: string, shareSubscriptionSynchronization: Models.ShareSubscriptionSynchronization, options?: msRest.RequestOptionsBase): Promise<msRestAzure.LROPoller> {
+  beginDeleteMethod(resourceGroupName: string, accountName: string, shareSubscriptionName: string, options?: msRest.RequestOptionsBase): Promise<msRestAzure.LROPoller> {
     return this.client.sendLRORequest(
       {
         resourceGroupName,
         accountName,
         shareSubscriptionName,
-        shareSubscriptionSynchronization,
         options
       },
-      beginCancelSynchronizationOperationSpec,
+      beginDeleteMethodOperationSpec,
       options);
-  }
-
-  /**
-   * List share subscriptions in an account
-   * @summary List of available share subscriptions under an account.
-   * @param nextPageLink The NextLink from the previous successful call to List operation.
-   * @param [options] The optional parameters
-   * @returns Promise<Models.ShareSubscriptionsListByAccountNextResponse>
-   */
-  listByAccountNext(nextPageLink: string, options?: msRest.RequestOptionsBase): Promise<Models.ShareSubscriptionsListByAccountNextResponse>;
-  /**
-   * @param nextPageLink The NextLink from the previous successful call to List operation.
-   * @param callback The callback
-   */
-  listByAccountNext(nextPageLink: string, callback: msRest.ServiceCallback<Models.ShareSubscriptionList>): void;
-  /**
-   * @param nextPageLink The NextLink from the previous successful call to List operation.
-   * @param options The optional parameters
-   * @param callback The callback
-   */
-  listByAccountNext(nextPageLink: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.ShareSubscriptionList>): void;
-  listByAccountNext(nextPageLink: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.ShareSubscriptionList>, callback?: msRest.ServiceCallback<Models.ShareSubscriptionList>): Promise<Models.ShareSubscriptionsListByAccountNextResponse> {
-    return this.client.sendOperationRequest(
-      {
-        nextPageLink,
-        options
-      },
-      listByAccountNextOperationSpec,
-      callback) as Promise<Models.ShareSubscriptionsListByAccountNextResponse>;
   }
 
   /**
@@ -423,6 +394,35 @@ export class ShareSubscriptions {
   }
 
   /**
+   * List synchronization details
+   * @summary List data set level details for a share subscription synchronization
+   * @param nextPageLink The NextLink from the previous successful call to List operation.
+   * @param [options] The optional parameters
+   * @returns Promise<Models.ShareSubscriptionsListSynchronizationDetailsNextResponse>
+   */
+  listSynchronizationDetailsNext(nextPageLink: string, options?: msRest.RequestOptionsBase): Promise<Models.ShareSubscriptionsListSynchronizationDetailsNextResponse>;
+  /**
+   * @param nextPageLink The NextLink from the previous successful call to List operation.
+   * @param callback The callback
+   */
+  listSynchronizationDetailsNext(nextPageLink: string, callback: msRest.ServiceCallback<Models.SynchronizationDetailsList>): void;
+  /**
+   * @param nextPageLink The NextLink from the previous successful call to List operation.
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  listSynchronizationDetailsNext(nextPageLink: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.SynchronizationDetailsList>): void;
+  listSynchronizationDetailsNext(nextPageLink: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.SynchronizationDetailsList>, callback?: msRest.ServiceCallback<Models.SynchronizationDetailsList>): Promise<Models.ShareSubscriptionsListSynchronizationDetailsNextResponse> {
+    return this.client.sendOperationRequest(
+      {
+        nextPageLink,
+        options
+      },
+      listSynchronizationDetailsNextOperationSpec,
+      callback) as Promise<Models.ShareSubscriptionsListSynchronizationDetailsNextResponse>;
+  }
+
+  /**
    * List synchronizations of a share subscription
    * @summary List Synchronizations in a share subscription.
    * @param nextPageLink The NextLink from the previous successful call to List operation.
@@ -452,37 +452,129 @@ export class ShareSubscriptions {
   }
 
   /**
-   * List synchronization details
-   * @summary List data set level details for a share subscription synchronization
+   * List share subscriptions in an account
+   * @summary List of available share subscriptions under an account.
    * @param nextPageLink The NextLink from the previous successful call to List operation.
    * @param [options] The optional parameters
-   * @returns Promise<Models.ShareSubscriptionsListSynchronizationDetailsNextResponse>
+   * @returns Promise<Models.ShareSubscriptionsListByAccountNextResponse>
    */
-  listSynchronizationDetailsNext(nextPageLink: string, options?: msRest.RequestOptionsBase): Promise<Models.ShareSubscriptionsListSynchronizationDetailsNextResponse>;
+  listByAccountNext(nextPageLink: string, options?: msRest.RequestOptionsBase): Promise<Models.ShareSubscriptionsListByAccountNextResponse>;
   /**
    * @param nextPageLink The NextLink from the previous successful call to List operation.
    * @param callback The callback
    */
-  listSynchronizationDetailsNext(nextPageLink: string, callback: msRest.ServiceCallback<Models.SynchronizationDetailsList>): void;
+  listByAccountNext(nextPageLink: string, callback: msRest.ServiceCallback<Models.ShareSubscriptionList>): void;
   /**
    * @param nextPageLink The NextLink from the previous successful call to List operation.
    * @param options The optional parameters
    * @param callback The callback
    */
-  listSynchronizationDetailsNext(nextPageLink: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.SynchronizationDetailsList>): void;
-  listSynchronizationDetailsNext(nextPageLink: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.SynchronizationDetailsList>, callback?: msRest.ServiceCallback<Models.SynchronizationDetailsList>): Promise<Models.ShareSubscriptionsListSynchronizationDetailsNextResponse> {
+  listByAccountNext(nextPageLink: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.ShareSubscriptionList>): void;
+  listByAccountNext(nextPageLink: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.ShareSubscriptionList>, callback?: msRest.ServiceCallback<Models.ShareSubscriptionList>): Promise<Models.ShareSubscriptionsListByAccountNextResponse> {
     return this.client.sendOperationRequest(
       {
         nextPageLink,
         options
       },
-      listSynchronizationDetailsNextOperationSpec,
-      callback) as Promise<Models.ShareSubscriptionsListSynchronizationDetailsNextResponse>;
+      listByAccountNextOperationSpec,
+      callback) as Promise<Models.ShareSubscriptionsListByAccountNextResponse>;
   }
 }
 
 // Operation Specifications
 const serializer = new msRest.Serializer(Mappers);
+const listSourceShareSynchronizationSettingsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/listSourceShareSynchronizationSettings",
+  urlParameters: [
+    Parameters.subscriptionId,
+    Parameters.resourceGroupName,
+    Parameters.accountName,
+    Parameters.shareSubscriptionName
+  ],
+  queryParameters: [
+    Parameters.apiVersion,
+    Parameters.skipToken
+  ],
+  headerParameters: [
+    Parameters.acceptLanguage
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.SourceShareSynchronizationSettingList
+    },
+    default: {
+      bodyMapper: Mappers.DataShareError
+    }
+  },
+  serializer
+};
+
+const listSynchronizationDetailsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/listSynchronizationDetails",
+  urlParameters: [
+    Parameters.subscriptionId,
+    Parameters.resourceGroupName,
+    Parameters.accountName,
+    Parameters.shareSubscriptionName
+  ],
+  queryParameters: [
+    Parameters.apiVersion,
+    Parameters.skipToken,
+    Parameters.filter,
+    Parameters.orderby
+  ],
+  headerParameters: [
+    Parameters.acceptLanguage
+  ],
+  requestBody: {
+    parameterPath: "shareSubscriptionSynchronization",
+    mapper: {
+      ...Mappers.ShareSubscriptionSynchronization,
+      required: true
+    }
+  },
+  responses: {
+    200: {
+      bodyMapper: Mappers.SynchronizationDetailsList
+    },
+    default: {
+      bodyMapper: Mappers.DataShareError
+    }
+  },
+  serializer
+};
+
+const listSynchronizationsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/listSynchronizations",
+  urlParameters: [
+    Parameters.subscriptionId,
+    Parameters.resourceGroupName,
+    Parameters.accountName,
+    Parameters.shareSubscriptionName
+  ],
+  queryParameters: [
+    Parameters.apiVersion,
+    Parameters.skipToken,
+    Parameters.filter,
+    Parameters.orderby
+  ],
+  headerParameters: [
+    Parameters.acceptLanguage
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.ShareSubscriptionSynchronizationList
+    },
+    default: {
+      bodyMapper: Mappers.DataShareError
+    }
+  },
+  serializer
+};
+
 const getOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
   path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}",
@@ -573,9 +665,9 @@ const listByAccountOperationSpec: msRest.OperationSpec = {
   serializer
 };
 
-const listSourceShareSynchronizationSettingsOperationSpec: msRest.OperationSpec = {
+const beginCancelSynchronizationOperationSpec: msRest.OperationSpec = {
   httpMethod: "POST",
-  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/listSourceShareSynchronizationSettings",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/cancelSynchronization",
   urlParameters: [
     Parameters.subscriptionId,
     Parameters.resourceGroupName,
@@ -583,66 +675,7 @@ const listSourceShareSynchronizationSettingsOperationSpec: msRest.OperationSpec 
     Parameters.shareSubscriptionName
   ],
   queryParameters: [
-    Parameters.apiVersion,
-    Parameters.skipToken
-  ],
-  headerParameters: [
-    Parameters.acceptLanguage
-  ],
-  responses: {
-    200: {
-      bodyMapper: Mappers.SourceShareSynchronizationSettingList
-    },
-    default: {
-      bodyMapper: Mappers.DataShareError
-    }
-  },
-  serializer
-};
-
-const listSynchronizationsOperationSpec: msRest.OperationSpec = {
-  httpMethod: "POST",
-  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/listSynchronizations",
-  urlParameters: [
-    Parameters.subscriptionId,
-    Parameters.resourceGroupName,
-    Parameters.accountName,
-    Parameters.shareSubscriptionName
-  ],
-  queryParameters: [
-    Parameters.apiVersion,
-    Parameters.skipToken,
-    Parameters.filter,
-    Parameters.orderby
-  ],
-  headerParameters: [
-    Parameters.acceptLanguage
-  ],
-  responses: {
-    200: {
-      bodyMapper: Mappers.ShareSubscriptionSynchronizationList
-    },
-    default: {
-      bodyMapper: Mappers.DataShareError
-    }
-  },
-  serializer
-};
-
-const listSynchronizationDetailsOperationSpec: msRest.OperationSpec = {
-  httpMethod: "POST",
-  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/listSynchronizationDetails",
-  urlParameters: [
-    Parameters.subscriptionId,
-    Parameters.resourceGroupName,
-    Parameters.accountName,
-    Parameters.shareSubscriptionName
-  ],
-  queryParameters: [
-    Parameters.apiVersion,
-    Parameters.skipToken,
-    Parameters.filter,
-    Parameters.orderby
+    Parameters.apiVersion
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -656,36 +689,11 @@ const listSynchronizationDetailsOperationSpec: msRest.OperationSpec = {
   },
   responses: {
     200: {
-      bodyMapper: Mappers.SynchronizationDetailsList
+      bodyMapper: Mappers.ShareSubscriptionSynchronization
     },
-    default: {
-      bodyMapper: Mappers.DataShareError
-    }
-  },
-  serializer
-};
-
-const beginDeleteMethodOperationSpec: msRest.OperationSpec = {
-  httpMethod: "DELETE",
-  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}",
-  urlParameters: [
-    Parameters.subscriptionId,
-    Parameters.resourceGroupName,
-    Parameters.accountName,
-    Parameters.shareSubscriptionName
-  ],
-  queryParameters: [
-    Parameters.apiVersion
-  ],
-  headerParameters: [
-    Parameters.acceptLanguage
-  ],
-  responses: {
-    200: {
-      bodyMapper: Mappers.OperationResponse
+    202: {
+      bodyMapper: Mappers.ShareSubscriptionSynchronization
     },
-    202: {},
-    204: {},
     default: {
       bodyMapper: Mappers.DataShareError
     }
@@ -729,9 +737,9 @@ const beginSynchronizeMethodOperationSpec: msRest.OperationSpec = {
   serializer
 };
 
-const beginCancelSynchronizationOperationSpec: msRest.OperationSpec = {
-  httpMethod: "POST",
-  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/cancelSynchronization",
+const beginDeleteMethodOperationSpec: msRest.OperationSpec = {
+  httpMethod: "DELETE",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}",
   urlParameters: [
     Parameters.subscriptionId,
     Parameters.resourceGroupName,
@@ -744,41 +752,12 @@ const beginCancelSynchronizationOperationSpec: msRest.OperationSpec = {
   headerParameters: [
     Parameters.acceptLanguage
   ],
-  requestBody: {
-    parameterPath: "shareSubscriptionSynchronization",
-    mapper: {
-      ...Mappers.ShareSubscriptionSynchronization,
-      required: true
-    }
-  },
   responses: {
     200: {
-      bodyMapper: Mappers.ShareSubscriptionSynchronization
+      bodyMapper: Mappers.OperationResponse
     },
-    202: {
-      bodyMapper: Mappers.ShareSubscriptionSynchronization
-    },
-    default: {
-      bodyMapper: Mappers.DataShareError
-    }
-  },
-  serializer
-};
-
-const listByAccountNextOperationSpec: msRest.OperationSpec = {
-  httpMethod: "GET",
-  baseUrl: "https://management.azure.com",
-  path: "{nextLink}",
-  urlParameters: [
-    Parameters.nextPageLink
-  ],
-  headerParameters: [
-    Parameters.acceptLanguage
-  ],
-  responses: {
-    200: {
-      bodyMapper: Mappers.ShareSubscriptionList
-    },
+    202: {},
+    204: {},
     default: {
       bodyMapper: Mappers.DataShareError
     }
@@ -799,6 +778,27 @@ const listSourceShareSynchronizationSettingsNextOperationSpec: msRest.OperationS
   responses: {
     200: {
       bodyMapper: Mappers.SourceShareSynchronizationSettingList
+    },
+    default: {
+      bodyMapper: Mappers.DataShareError
+    }
+  },
+  serializer
+};
+
+const listSynchronizationDetailsNextOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  baseUrl: "https://management.azure.com",
+  path: "{nextLink}",
+  urlParameters: [
+    Parameters.nextPageLink
+  ],
+  headerParameters: [
+    Parameters.acceptLanguage
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.SynchronizationDetailsList
     },
     default: {
       bodyMapper: Mappers.DataShareError
@@ -828,8 +828,8 @@ const listSynchronizationsNextOperationSpec: msRest.OperationSpec = {
   serializer
 };
 
-const listSynchronizationDetailsNextOperationSpec: msRest.OperationSpec = {
-  httpMethod: "POST",
+const listByAccountNextOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
   baseUrl: "https://management.azure.com",
   path: "{nextLink}",
   urlParameters: [
@@ -840,7 +840,7 @@ const listSynchronizationDetailsNextOperationSpec: msRest.OperationSpec = {
   ],
   responses: {
     200: {
-      bodyMapper: Mappers.SynchronizationDetailsList
+      bodyMapper: Mappers.ShareSubscriptionList
     },
     default: {
       bodyMapper: Mappers.DataShareError

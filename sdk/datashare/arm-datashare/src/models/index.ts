@@ -92,38 +92,6 @@ export interface Account extends DefaultDto {
 }
 
 /**
- * The data share error body model.
- */
-export interface DataShareErrorInfo {
-  /**
-   * Code of the error
-   */
-  code: string;
-  /**
-   * Nested details of the error model
-   */
-  details?: DataShareErrorInfo[];
-  /**
-   * Message of the error
-   */
-  message: string;
-  /**
-   * Target of the error
-   */
-  target?: string;
-}
-
-/**
- * The data share error model.
- */
-export interface DataShareError {
-  /**
-   * The data share error body
-   */
-  error: DataShareErrorInfo;
-}
-
-/**
  * Update parameters for accounts
  */
 export interface AccountUpdateParameters {
@@ -131,29 +99,6 @@ export interface AccountUpdateParameters {
    * Tags on the azure resource.
    */
   tags?: { [propertyName: string]: string };
-}
-
-/**
- * Response for long running operation
- */
-export interface OperationResponse {
-  /**
-   * start time
-   */
-  endTime?: Date;
-  /**
-   * The error property when status is failed.
-   */
-  error?: DataShareErrorInfo;
-  /**
-   * start time
-   */
-  startTime?: Date;
-  /**
-   * Operation state of the long running operation. Possible values include: 'Accepted',
-   * 'InProgress', 'TransientFailure', 'Succeeded', 'Failed', 'Canceled'
-   */
-  status: Status;
 }
 
 /**
@@ -175,6 +120,814 @@ export interface ProxyDto extends BaseResource {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly type?: string;
+}
+
+/**
+ * Contains the possible cases for DataSet.
+ */
+export type DataSetUnion = DataSet | ADLSGen1FileDataSet | ADLSGen1FolderDataSet | ADLSGen2FileDataSet | ADLSGen2FileSystemDataSet | ADLSGen2FolderDataSet | BlobContainerDataSet | BlobDataSet | BlobFolderDataSet | KustoClusterDataSet | KustoDatabaseDataSet | SqlDBTableDataSet | SqlDWTableDataSet;
+
+/**
+ * A DataSet data transfer object.
+ */
+export interface DataSet {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "DataSet";
+  /**
+   * The resource id of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Type of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+}
+
+/**
+ * An ADLS Gen 1 file data set.
+ */
+export interface ADLSGen1FileDataSet {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "AdlsGen1File";
+  /**
+   * The resource id of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Type of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * The ADLS account name.
+   */
+  accountName: string;
+  /**
+   * Unique id for identifying a data set resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly dataSetId?: string;
+  /**
+   * The file name in the ADLS account.
+   */
+  fileName: string;
+  /**
+   * The folder path within the ADLS account.
+   */
+  folderPath: string;
+  /**
+   * Resource group of ADLS account.
+   */
+  resourceGroup: string;
+  /**
+   * Subscription id of ADLS account.
+   */
+  subscriptionId: string;
+}
+
+/**
+ * An ADLS Gen 1 folder data set.
+ */
+export interface ADLSGen1FolderDataSet {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "AdlsGen1Folder";
+  /**
+   * The resource id of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Type of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * The ADLS account name.
+   */
+  accountName: string;
+  /**
+   * Unique id for identifying a data set resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly dataSetId?: string;
+  /**
+   * The folder path within the ADLS account.
+   */
+  folderPath: string;
+  /**
+   * Resource group of ADLS account.
+   */
+  resourceGroup: string;
+  /**
+   * Subscription id of ADLS account.
+   */
+  subscriptionId: string;
+}
+
+/**
+ * An ADLS Gen 2 file data set.
+ */
+export interface ADLSGen2FileDataSet {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "AdlsGen2File";
+  /**
+   * The resource id of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Type of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * Unique id for identifying a data set resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly dataSetId?: string;
+  /**
+   * File path within the file system.
+   */
+  filePath: string;
+  /**
+   * File system to which the file belongs.
+   */
+  fileSystem: string;
+  /**
+   * Resource group of storage account
+   */
+  resourceGroup: string;
+  /**
+   * Storage account name of the source data set
+   */
+  storageAccountName: string;
+  /**
+   * Subscription id of storage account
+   */
+  subscriptionId: string;
+}
+
+/**
+ * Contains the possible cases for DataSetMapping.
+ */
+export type DataSetMappingUnion = DataSetMapping | ADLSGen2FileDataSetMapping | ADLSGen2FileSystemDataSetMapping | ADLSGen2FolderDataSetMapping | BlobContainerDataSetMapping | BlobDataSetMapping | BlobFolderDataSetMapping | KustoClusterDataSetMapping | KustoDatabaseDataSetMapping | SqlDBTableDataSetMapping | SqlDWTableDataSetMapping;
+
+/**
+ * A data set mapping data transfer object.
+ */
+export interface DataSetMapping {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "DataSetMapping";
+  /**
+   * The resource id of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Type of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+}
+
+/**
+ * An ADLS Gen2 file data set mapping.
+ */
+export interface ADLSGen2FileDataSetMapping {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "AdlsGen2File";
+  /**
+   * The resource id of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Type of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * The id of the source data set.
+   */
+  dataSetId: string;
+  /**
+   * Gets the status of the data set mapping. Possible values include: 'Ok', 'Broken'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly dataSetMappingStatus?: DataSetMappingStatus;
+  /**
+   * File path within the file system.
+   */
+  filePath: string;
+  /**
+   * File system to which the file belongs.
+   */
+  fileSystem: string;
+  /**
+   * Type of output file. Possible values include: 'Csv', 'Parquet'
+   */
+  outputType?: OutputType;
+  /**
+   * Provisioning state of the data set mapping. Possible values include: 'Succeeded', 'Creating',
+   * 'Deleting', 'Moving', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState;
+  /**
+   * Resource group of storage account.
+   */
+  resourceGroup: string;
+  /**
+   * Storage account name of the source data set.
+   */
+  storageAccountName: string;
+  /**
+   * Subscription id of storage account.
+   */
+  subscriptionId: string;
+}
+
+/**
+ * An ADLS Gen 2 file system data set.
+ */
+export interface ADLSGen2FileSystemDataSet {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "AdlsGen2FileSystem";
+  /**
+   * The resource id of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Type of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * Unique id for identifying a data set resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly dataSetId?: string;
+  /**
+   * The file system name.
+   */
+  fileSystem: string;
+  /**
+   * Resource group of storage account
+   */
+  resourceGroup: string;
+  /**
+   * Storage account name of the source data set
+   */
+  storageAccountName: string;
+  /**
+   * Subscription id of storage account
+   */
+  subscriptionId: string;
+}
+
+/**
+ * An ADLS Gen2 file system data set mapping.
+ */
+export interface ADLSGen2FileSystemDataSetMapping {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "AdlsGen2FileSystem";
+  /**
+   * The resource id of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Type of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * The id of the source data set.
+   */
+  dataSetId: string;
+  /**
+   * Gets the status of the data set mapping. Possible values include: 'Ok', 'Broken'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly dataSetMappingStatus?: DataSetMappingStatus;
+  /**
+   * The file system name.
+   */
+  fileSystem: string;
+  /**
+   * Provisioning state of the data set mapping. Possible values include: 'Succeeded', 'Creating',
+   * 'Deleting', 'Moving', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState;
+  /**
+   * Resource group of storage account.
+   */
+  resourceGroup: string;
+  /**
+   * Storage account name of the source data set.
+   */
+  storageAccountName: string;
+  /**
+   * Subscription id of storage account.
+   */
+  subscriptionId: string;
+}
+
+/**
+ * An ADLS Gen 2 folder data set.
+ */
+export interface ADLSGen2FolderDataSet {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "AdlsGen2Folder";
+  /**
+   * The resource id of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Type of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * Unique id for identifying a data set resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly dataSetId?: string;
+  /**
+   * File system to which the folder belongs.
+   */
+  fileSystem: string;
+  /**
+   * Folder path within the file system.
+   */
+  folderPath: string;
+  /**
+   * Resource group of storage account
+   */
+  resourceGroup: string;
+  /**
+   * Storage account name of the source data set
+   */
+  storageAccountName: string;
+  /**
+   * Subscription id of storage account
+   */
+  subscriptionId: string;
+}
+
+/**
+ * An ADLS Gen2 folder data set mapping.
+ */
+export interface ADLSGen2FolderDataSetMapping {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "AdlsGen2Folder";
+  /**
+   * The resource id of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Type of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * The id of the source data set.
+   */
+  dataSetId: string;
+  /**
+   * Gets the status of the data set mapping. Possible values include: 'Ok', 'Broken'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly dataSetMappingStatus?: DataSetMappingStatus;
+  /**
+   * File system to which the folder belongs.
+   */
+  fileSystem: string;
+  /**
+   * Folder path within the file system.
+   */
+  folderPath: string;
+  /**
+   * Provisioning state of the data set mapping. Possible values include: 'Succeeded', 'Creating',
+   * 'Deleting', 'Moving', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState;
+  /**
+   * Resource group of storage account.
+   */
+  resourceGroup: string;
+  /**
+   * Storage account name of the source data set.
+   */
+  storageAccountName: string;
+  /**
+   * Subscription id of storage account.
+   */
+  subscriptionId: string;
+}
+
+/**
+ * An Azure storage blob container data set.
+ */
+export interface BlobContainerDataSet {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "Container";
+  /**
+   * The resource id of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Type of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * BLOB Container name.
+   */
+  containerName: string;
+  /**
+   * Unique id for identifying a data set resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly dataSetId?: string;
+  /**
+   * Resource group of storage account
+   */
+  resourceGroup: string;
+  /**
+   * Storage account name of the source data set
+   */
+  storageAccountName: string;
+  /**
+   * Subscription id of storage account
+   */
+  subscriptionId: string;
+}
+
+/**
+ * A Blob container data set mapping.
+ */
+export interface BlobContainerDataSetMapping {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "Container";
+  /**
+   * The resource id of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Type of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * BLOB Container name.
+   */
+  containerName: string;
+  /**
+   * The id of the source data set.
+   */
+  dataSetId: string;
+  /**
+   * Gets the status of the data set mapping. Possible values include: 'Ok', 'Broken'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly dataSetMappingStatus?: DataSetMappingStatus;
+  /**
+   * Provisioning state of the data set mapping. Possible values include: 'Succeeded', 'Creating',
+   * 'Deleting', 'Moving', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState;
+  /**
+   * Resource group of storage account.
+   */
+  resourceGroup: string;
+  /**
+   * Storage account name of the source data set.
+   */
+  storageAccountName: string;
+  /**
+   * Subscription id of storage account.
+   */
+  subscriptionId: string;
+}
+
+/**
+ * An Azure storage blob data set.
+ */
+export interface BlobDataSet {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "Blob";
+  /**
+   * The resource id of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Type of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * Container that has the file path.
+   */
+  containerName: string;
+  /**
+   * Unique id for identifying a data set resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly dataSetId?: string;
+  /**
+   * File path within the source data set
+   */
+  filePath: string;
+  /**
+   * Resource group of storage account
+   */
+  resourceGroup: string;
+  /**
+   * Storage account name of the source data set
+   */
+  storageAccountName: string;
+  /**
+   * Subscription id of storage account
+   */
+  subscriptionId: string;
+}
+
+/**
+ * A Blob data set mapping.
+ */
+export interface BlobDataSetMapping {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "Blob";
+  /**
+   * The resource id of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Type of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * Container that has the file path.
+   */
+  containerName: string;
+  /**
+   * The id of the source data set.
+   */
+  dataSetId: string;
+  /**
+   * Gets the status of the data set mapping. Possible values include: 'Ok', 'Broken'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly dataSetMappingStatus?: DataSetMappingStatus;
+  /**
+   * File path within the source data set
+   */
+  filePath: string;
+  /**
+   * File output type. Possible values include: 'Csv', 'Parquet'
+   */
+  outputType?: OutputType;
+  /**
+   * Provisioning state of the data set mapping. Possible values include: 'Succeeded', 'Creating',
+   * 'Deleting', 'Moving', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState;
+  /**
+   * Resource group of storage account.
+   */
+  resourceGroup: string;
+  /**
+   * Storage account name of the source data set.
+   */
+  storageAccountName: string;
+  /**
+   * Subscription id of storage account.
+   */
+  subscriptionId: string;
+}
+
+/**
+ * An Azure storage blob folder data set.
+ */
+export interface BlobFolderDataSet {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "BlobFolder";
+  /**
+   * The resource id of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Type of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * Container that has the file path.
+   */
+  containerName: string;
+  /**
+   * Unique id for identifying a data set resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly dataSetId?: string;
+  /**
+   * Prefix for blob folder
+   */
+  prefix: string;
+  /**
+   * Resource group of storage account
+   */
+  resourceGroup: string;
+  /**
+   * Storage account name of the source data set
+   */
+  storageAccountName: string;
+  /**
+   * Subscription id of storage account
+   */
+  subscriptionId: string;
+}
+
+/**
+ * A Blob folder data set mapping.
+ */
+export interface BlobFolderDataSetMapping {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "BlobFolder";
+  /**
+   * The resource id of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Type of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * Container that has the file path.
+   */
+  containerName: string;
+  /**
+   * The id of the source data set.
+   */
+  dataSetId: string;
+  /**
+   * Gets the status of the data set mapping. Possible values include: 'Ok', 'Broken'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly dataSetMappingStatus?: DataSetMappingStatus;
+  /**
+   * Prefix for blob folder
+   */
+  prefix: string;
+  /**
+   * Provisioning state of the data set mapping. Possible values include: 'Succeeded', 'Creating',
+   * 'Deleting', 'Moving', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState;
+  /**
+   * Resource group of storage account.
+   */
+  resourceGroup: string;
+  /**
+   * Storage account name of the source data set.
+   */
+  storageAccountName: string;
+  /**
+   * Subscription id of storage account.
+   */
+  subscriptionId: string;
 }
 
 /**
@@ -254,63 +1007,82 @@ export interface ConsumerInvitation extends ProxyDto {
 }
 
 /**
- * Contains the possible cases for DataSet.
+ * A consumer side dataSet data transfer object.
  */
-export type DataSetUnion = DataSet | BlobDataSet | BlobFolderDataSet | BlobContainerDataSet | ADLSGen2FileDataSet | ADLSGen2FolderDataSet | ADLSGen2FileSystemDataSet | ADLSGen1FolderDataSet | ADLSGen1FileDataSet | KustoClusterDataSet | KustoDatabaseDataSet | SqlDWTableDataSet | SqlDBTableDataSet;
-
-/**
- * A DataSet data transfer object.
- */
-export interface DataSet {
+export interface ConsumerSourceDataSet extends ProxyDto {
   /**
-   * Polymorphic Discriminator
-   */
-  kind: "DataSet";
-  /**
-   * The resource id of the azure resource
+   * DataSet Id
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly id?: string;
+  readonly dataSetId?: string;
   /**
-   * Name of the azure resource
+   * Location of the data set.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly name?: string;
+  readonly dataSetLocation?: string;
   /**
-   * Type of the azure resource
+   * DataSet name
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly type?: string;
+  readonly dataSetName?: string;
+  /**
+   * DataSet path
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly dataSetPath?: string;
+  /**
+   * Type of data set. Possible values include: 'Blob', 'Container', 'BlobFolder',
+   * 'AdlsGen2FileSystem', 'AdlsGen2Folder', 'AdlsGen2File', 'AdlsGen1Folder', 'AdlsGen1File',
+   * 'KustoCluster', 'KustoDatabase', 'SqlDBTable', 'SqlDWTable'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly dataSetType?: DataSetType;
 }
 
 /**
- * Contains the possible cases for DataSetMapping.
+ * The data share error body model.
  */
-export type DataSetMappingUnion = DataSetMapping | BlobDataSetMapping | BlobFolderDataSetMapping | BlobContainerDataSetMapping | ADLSGen2FileDataSetMapping | ADLSGen2FolderDataSetMapping | ADLSGen2FileSystemDataSetMapping | KustoClusterDataSetMapping | KustoDatabaseDataSetMapping | SqlDWTableDataSetMapping | SqlDBTableDataSetMapping;
+export interface DataShareErrorInfo {
+  /**
+   * Code of the error
+   */
+  code: string;
+  /**
+   * Nested details of the error model
+   */
+  details?: DataShareErrorInfo[];
+  /**
+   * Message of the error
+   */
+  message: string;
+  /**
+   * Target of the error
+   */
+  target?: string;
+}
 
 /**
- * A data set mapping data transfer object.
+ * The data share error model.
  */
-export interface DataSetMapping {
+export interface DataShareError {
   /**
-   * Polymorphic Discriminator
+   * The data share error body
    */
-  kind: "DataSetMapping";
+  error: DataShareErrorInfo;
+}
+
+/**
+ * properties for dimension
+ */
+export interface DimensionProperties {
   /**
-   * The resource id of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   * localized display name of the dimension to customer
    */
-  readonly id?: string;
+  displayName?: string;
   /**
-   * Name of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   * dimension name
    */
-  readonly name?: string;
-  /**
-   * Type of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
+  name?: string;
 }
 
 /**
@@ -365,6 +1137,194 @@ export interface Invitation extends ProxyDto {
 }
 
 /**
+ * A kusto cluster data set.
+ */
+export interface KustoClusterDataSet {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "KustoCluster";
+  /**
+   * The resource id of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Type of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * Unique id for identifying a data set resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly dataSetId?: string;
+  /**
+   * Resource id of the kusto cluster.
+   */
+  kustoClusterResourceId: string;
+  /**
+   * Location of the kusto cluster.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly location?: string;
+  /**
+   * Provisioning state of the kusto cluster data set. Possible values include: 'Succeeded',
+   * 'Creating', 'Deleting', 'Moving', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState;
+}
+
+/**
+ * A Kusto cluster data set mapping
+ */
+export interface KustoClusterDataSetMapping {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "KustoCluster";
+  /**
+   * The resource id of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Type of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * The id of the source data set.
+   */
+  dataSetId: string;
+  /**
+   * Gets the status of the data set mapping. Possible values include: 'Ok', 'Broken'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly dataSetMappingStatus?: DataSetMappingStatus;
+  /**
+   * Resource id of the sink kusto cluster.
+   */
+  kustoClusterResourceId: string;
+  /**
+   * Location of the sink kusto cluster.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly location?: string;
+  /**
+   * Provisioning state of the data set mapping. Possible values include: 'Succeeded', 'Creating',
+   * 'Deleting', 'Moving', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState;
+}
+
+/**
+ * A kusto database data set.
+ */
+export interface KustoDatabaseDataSet {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "KustoDatabase";
+  /**
+   * The resource id of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Type of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * Unique id for identifying a data set resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly dataSetId?: string;
+  /**
+   * Resource id of the kusto database.
+   */
+  kustoDatabaseResourceId: string;
+  /**
+   * Location of the kusto cluster.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly location?: string;
+  /**
+   * Provisioning state of the kusto database data set. Possible values include: 'Succeeded',
+   * 'Creating', 'Deleting', 'Moving', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState;
+}
+
+/**
+ * A Kusto database data set mapping
+ */
+export interface KustoDatabaseDataSetMapping {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "KustoDatabase";
+  /**
+   * The resource id of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Type of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * The id of the source data set.
+   */
+  dataSetId: string;
+  /**
+   * Gets the status of the data set mapping. Possible values include: 'Ok', 'Broken'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly dataSetMappingStatus?: DataSetMappingStatus;
+  /**
+   * Resource id of the sink kusto cluster.
+   */
+  kustoClusterResourceId: string;
+  /**
+   * Location of the sink kusto cluster.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly location?: string;
+  /**
+   * Provisioning state of the data set mapping. Possible values include: 'Succeeded', 'Creating',
+   * 'Deleting', 'Moving', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState;
+}
+
+/**
  * Properties on operations
  */
 export interface OperationModelProperties {
@@ -400,20 +1360,6 @@ export interface OperationMetaLogSpecification {
   displayName?: string;
   /**
    * name of the log category
-   */
-  name?: string;
-}
-
-/**
- * properties for dimension
- */
-export interface DimensionProperties {
-  /**
-   * localized display name of the dimension to customer
-   */
-  displayName?: string;
-  /**
-   * dimension name
    */
   name?: string;
 }
@@ -505,6 +1451,282 @@ export interface OperationModel {
 }
 
 /**
+ * Response for long running operation
+ */
+export interface OperationResponse {
+  /**
+   * start time
+   */
+  endTime?: Date;
+  /**
+   * The error property when status is failed.
+   */
+  error?: DataShareErrorInfo;
+  /**
+   * start time
+   */
+  startTime?: Date;
+  /**
+   * Operation state of the long running operation. Possible values include: 'Accepted',
+   * 'InProgress', 'TransientFailure', 'Succeeded', 'Failed', 'Canceled'
+   */
+  status: Status;
+}
+
+/**
+ * A provider side share subscription data transfer object.
+ */
+export interface ProviderShareSubscription extends ProxyDto {
+  /**
+   * Email of the consumer who created the share subscription
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly consumerEmail?: string;
+  /**
+   * Name of the consumer who created the share subscription
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly consumerName?: string;
+  /**
+   * Tenant name of the consumer who created the share subscription
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly consumerTenantName?: string;
+  /**
+   * created at
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly createdAt?: Date;
+  /**
+   * Email of the provider who created the share
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly providerEmail?: string;
+  /**
+   * Name of the provider who created the share
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly providerName?: string;
+  /**
+   * Shared at
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly sharedAt?: Date;
+  /**
+   * share Subscription Object Id
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly shareSubscriptionObjectId?: string;
+  /**
+   * Gets the status of share subscription. Possible values include: 'Active', 'Revoked',
+   * 'SourceDeleted', 'Revoking'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly shareSubscriptionStatus?: ShareSubscriptionStatus;
+}
+
+/**
+ * Contains the possible cases for SourceShareSynchronizationSetting.
+ */
+export type SourceShareSynchronizationSettingUnion = SourceShareSynchronizationSetting | ScheduledSourceSynchronizationSetting;
+
+/**
+ * A view of synchronization setting added by the provider
+ */
+export interface SourceShareSynchronizationSetting {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "SourceShareSynchronizationSetting";
+}
+
+/**
+ * A type of synchronization setting based on schedule
+ */
+export interface ScheduledSourceSynchronizationSetting {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "ScheduleBased";
+  /**
+   * Recurrence Interval. Possible values include: 'Hour', 'Day'
+   */
+  recurrenceInterval?: RecurrenceInterval;
+  /**
+   * Synchronization time
+   */
+  synchronizationTime?: Date;
+}
+
+/**
+ * Contains the possible cases for SynchronizationSetting.
+ */
+export type SynchronizationSettingUnion = SynchronizationSetting | ScheduledSynchronizationSetting;
+
+/**
+ * A Synchronization Setting data transfer object.
+ */
+export interface SynchronizationSetting {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "SynchronizationSetting";
+  /**
+   * The resource id of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Type of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+}
+
+/**
+ * A type of synchronization setting based on schedule
+ */
+export interface ScheduledSynchronizationSetting {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "ScheduleBased";
+  /**
+   * The resource id of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Type of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * Time at which the synchronization setting was created.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly createdAt?: Date;
+  /**
+   * Gets or sets the provisioning state. Possible values include: 'Succeeded', 'Creating',
+   * 'Deleting', 'Moving', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState;
+  /**
+   * Recurrence Interval. Possible values include: 'Hour', 'Day'
+   */
+  recurrenceInterval: RecurrenceInterval;
+  /**
+   * Synchronization time
+   */
+  synchronizationTime: Date;
+  /**
+   * Name of the user who created the synchronization setting.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly userName?: string;
+}
+
+/**
+ * Contains the possible cases for Trigger.
+ */
+export type TriggerUnion = Trigger | ScheduledTrigger;
+
+/**
+ * A Trigger data transfer object.
+ */
+export interface Trigger {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "Trigger";
+  /**
+   * The resource id of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Type of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+}
+
+/**
+ * A type of trigger based on schedule
+ */
+export interface ScheduledTrigger {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "ScheduleBased";
+  /**
+   * The resource id of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Type of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * Time at which the trigger was created.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly createdAt?: Date;
+  /**
+   * Gets the provisioning state. Possible values include: 'Succeeded', 'Creating', 'Deleting',
+   * 'Moving', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState;
+  /**
+   * Recurrence Interval. Possible values include: 'Hour', 'Day'
+   */
+  recurrenceInterval: RecurrenceInterval;
+  /**
+   * Synchronization mode. Possible values include: 'Incremental', 'FullSync'
+   */
+  synchronizationMode?: SynchronizationMode;
+  /**
+   * Synchronization time
+   */
+  synchronizationTime: Date;
+  /**
+   * Gets the trigger state. Possible values include: 'Active', 'Inactive',
+   * 'SourceSynchronizationSettingDeleted'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly triggerStatus?: TriggerStatus;
+  /**
+   * Name of the user who created the trigger.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly userName?: string;
+}
+
+/**
  * A share data transfer object.
  */
 export interface Share extends ProxyDto {
@@ -541,6 +1763,122 @@ export interface Share extends ProxyDto {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly userName?: string;
+}
+
+/**
+ * A share subscription data transfer object.
+ */
+export interface ShareSubscription extends ProxyDto {
+  /**
+   * Time at which the share subscription was created.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly createdAt?: Date;
+  /**
+   * The invitation id.
+   */
+  invitationId: string;
+  /**
+   * Email of the provider who created the resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly providerEmail?: string;
+  /**
+   * Name of the provider who created the resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly providerName?: string;
+  /**
+   * Tenant name of the provider who created the resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly providerTenantName?: string;
+  /**
+   * Provisioning state of the share subscription. Possible values include: 'Succeeded',
+   * 'Creating', 'Deleting', 'Moving', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState;
+  /**
+   * Description of share
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly shareDescription?: string;
+  /**
+   * Kind of share. Possible values include: 'CopyBased', 'InPlace'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly shareKind?: ShareKind;
+  /**
+   * Name of the share
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly shareName?: string;
+  /**
+   * Gets the current status of share subscription. Possible values include: 'Active', 'Revoked',
+   * 'SourceDeleted', 'Revoking'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly shareSubscriptionStatus?: ShareSubscriptionStatus;
+  /**
+   * Terms of a share
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly shareTerms?: string;
+  /**
+   * Source share location.
+   */
+  sourceShareLocation: string;
+  /**
+   * Email of the user who created the resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly userEmail?: string;
+  /**
+   * Name of the user who created the resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly userName?: string;
+}
+
+/**
+ * A ShareSubscriptionSynchronization data transfer object.
+ */
+export interface ShareSubscriptionSynchronization {
+  /**
+   * Synchronization duration
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly durationMs?: number;
+  /**
+   * End time of synchronization
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly endTime?: Date;
+  /**
+   * message of Synchronization
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly message?: string;
+  /**
+   * start time of synchronization
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly startTime?: Date;
+  /**
+   * Raw Status
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly status?: string;
+  /**
+   * Synchronization id
+   */
+  synchronizationId: string;
+  /**
+   * Synchronization Mode. Possible values include: 'Incremental', 'FullSync'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly synchronizationMode?: SynchronizationMode;
 }
 
 /**
@@ -588,6 +1926,210 @@ export interface ShareSynchronization {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly synchronizationMode?: SynchronizationMode;
+}
+
+/**
+ * A SQL DB table data set.
+ */
+export interface SqlDBTableDataSet {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "SqlDBTable";
+  /**
+   * The resource id of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Type of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * Database name of the source data set
+   */
+  databaseName: string;
+  /**
+   * Unique id for identifying a data set resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly dataSetId?: string;
+  /**
+   * Schema of the table. Default value is dbo.
+   */
+  schemaName: string;
+  /**
+   * Resource id of SQL server
+   */
+  sqlServerResourceId: string;
+  /**
+   * SQL DB table name.
+   */
+  tableName: string;
+}
+
+/**
+ * A SQL DB Table data set mapping.
+ */
+export interface SqlDBTableDataSetMapping {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "SqlDBTable";
+  /**
+   * The resource id of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Type of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * DatabaseName name of the sink data set
+   */
+  databaseName: string;
+  /**
+   * The id of the source data set.
+   */
+  dataSetId: string;
+  /**
+   * Gets the status of the data set mapping. Possible values include: 'Ok', 'Broken'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly dataSetMappingStatus?: DataSetMappingStatus;
+  /**
+   * Provisioning state of the data set mapping. Possible values include: 'Succeeded', 'Creating',
+   * 'Deleting', 'Moving', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState;
+  /**
+   * Schema of the table. Default value is dbo.
+   */
+  schemaName: string;
+  /**
+   * Resource id of SQL server
+   */
+  sqlServerResourceId: string;
+  /**
+   * SQL DB table name.
+   */
+  tableName: string;
+}
+
+/**
+ * A SQL DW table data set.
+ */
+export interface SqlDWTableDataSet {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "SqlDWTable";
+  /**
+   * The resource id of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Type of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * Unique id for identifying a data set resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly dataSetId?: string;
+  /**
+   * DataWarehouse name of the source data set
+   */
+  dataWarehouseName: string;
+  /**
+   * Schema of the table. Default value is dbo.
+   */
+  schemaName: string;
+  /**
+   * Resource id of SQL server
+   */
+  sqlServerResourceId: string;
+  /**
+   * SQL DW table name.
+   */
+  tableName: string;
+}
+
+/**
+ * A SQL DW Table data set mapping.
+ */
+export interface SqlDWTableDataSetMapping {
+  /**
+   * Polymorphic Discriminator
+   */
+  kind: "SqlDWTable";
+  /**
+   * The resource id of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Name of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Type of the azure resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * The id of the source data set.
+   */
+  dataSetId: string;
+  /**
+   * Gets the status of the data set mapping. Possible values include: 'Ok', 'Broken'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly dataSetMappingStatus?: DataSetMappingStatus;
+  /**
+   * DataWarehouse name of the source data set
+   */
+  dataWarehouseName: string;
+  /**
+   * Provisioning state of the data set mapping. Possible values include: 'Succeeded', 'Creating',
+   * 'Deleting', 'Moving', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState;
+  /**
+   * Schema of the table. Default value is dbo.
+   */
+  schemaName: string;
+  /**
+   * Resource id of SQL server
+   */
+  sqlServerResourceId: string;
+  /**
+   * SQL DW table name.
+   */
+  tableName: string;
 }
 
 /**
@@ -674,222 +2216,6 @@ export interface SynchronizationDetails {
 }
 
 /**
- * A provider side share subscription data transfer object.
- */
-export interface ProviderShareSubscription extends ProxyDto {
-  /**
-   * Email of the consumer who created the share subscription
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly consumerEmail?: string;
-  /**
-   * Name of the consumer who created the share subscription
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly consumerName?: string;
-  /**
-   * Tenant name of the consumer who created the share subscription
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly consumerTenantName?: string;
-  /**
-   * created at
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly createdAt?: Date;
-  /**
-   * Email of the provider who created the share
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly providerEmail?: string;
-  /**
-   * Name of the provider who created the share
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly providerName?: string;
-  /**
-   * Shared at
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly sharedAt?: Date;
-  /**
-   * share Subscription Object Id
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly shareSubscriptionObjectId?: string;
-  /**
-   * Gets the status of share subscription. Possible values include: 'Active', 'Revoked',
-   * 'SourceDeleted', 'Revoking'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly shareSubscriptionStatus?: ShareSubscriptionStatus;
-}
-
-/**
- * A share subscription data transfer object.
- */
-export interface ShareSubscription extends ProxyDto {
-  /**
-   * Time at which the share subscription was created.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly createdAt?: Date;
-  /**
-   * The invitation id.
-   */
-  invitationId: string;
-  /**
-   * Email of the provider who created the resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly providerEmail?: string;
-  /**
-   * Name of the provider who created the resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly providerName?: string;
-  /**
-   * Tenant name of the provider who created the resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly providerTenantName?: string;
-  /**
-   * Provisioning state of the share subscription. Possible values include: 'Succeeded',
-   * 'Creating', 'Deleting', 'Moving', 'Failed'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly provisioningState?: ProvisioningState;
-  /**
-   * Description of share
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly shareDescription?: string;
-  /**
-   * Kind of share. Possible values include: 'CopyBased', 'InPlace'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly shareKind?: ShareKind;
-  /**
-   * Name of the share
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly shareName?: string;
-  /**
-   * Gets the current status of share subscription. Possible values include: 'Active', 'Revoked',
-   * 'SourceDeleted', 'Revoking'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly shareSubscriptionStatus?: ShareSubscriptionStatus;
-  /**
-   * Terms of a share
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly shareTerms?: string;
-  /**
-   * Source share location.
-   */
-  sourceShareLocation: string;
-  /**
-   * Email of the user who created the resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly userEmail?: string;
-  /**
-   * Name of the user who created the resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly userName?: string;
-}
-
-/**
- * A consumer side dataSet data transfer object.
- */
-export interface ConsumerSourceDataSet extends ProxyDto {
-  /**
-   * DataSet Id
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly dataSetId?: string;
-  /**
-   * Location of the data set.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly dataSetLocation?: string;
-  /**
-   * DataSet name
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly dataSetName?: string;
-  /**
-   * DataSet path
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly dataSetPath?: string;
-  /**
-   * Type of data set. Possible values include: 'Blob', 'Container', 'BlobFolder',
-   * 'AdlsGen2FileSystem', 'AdlsGen2Folder', 'AdlsGen2File', 'AdlsGen1Folder', 'AdlsGen1File',
-   * 'KustoCluster', 'KustoDatabase', 'SqlDBTable', 'SqlDWTable'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly dataSetType?: DataSetType;
-}
-
-/**
- * Contains the possible cases for SourceShareSynchronizationSetting.
- */
-export type SourceShareSynchronizationSettingUnion = SourceShareSynchronizationSetting | ScheduledSourceSynchronizationSetting;
-
-/**
- * A view of synchronization setting added by the provider
- */
-export interface SourceShareSynchronizationSetting {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "SourceShareSynchronizationSetting";
-}
-
-/**
- * A ShareSubscriptionSynchronization data transfer object.
- */
-export interface ShareSubscriptionSynchronization {
-  /**
-   * Synchronization duration
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly durationMs?: number;
-  /**
-   * End time of synchronization
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly endTime?: Date;
-  /**
-   * message of Synchronization
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly message?: string;
-  /**
-   * start time of synchronization
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly startTime?: Date;
-  /**
-   * Raw Status
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly status?: string;
-  /**
-   * Synchronization id
-   */
-  synchronizationId: string;
-  /**
-   * Synchronization Mode. Possible values include: 'Incremental', 'FullSync'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly synchronizationMode?: SynchronizationMode;
-}
-
-/**
  * Payload for the synchronizing the data.
  */
 export interface Synchronize {
@@ -898,1332 +2224,6 @@ export interface Synchronize {
    * values include: 'Incremental', 'FullSync'
    */
   synchronizationMode?: SynchronizationMode;
-}
-
-/**
- * Contains the possible cases for SynchronizationSetting.
- */
-export type SynchronizationSettingUnion = SynchronizationSetting | ScheduledSynchronizationSetting;
-
-/**
- * A Synchronization Setting data transfer object.
- */
-export interface SynchronizationSetting {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "SynchronizationSetting";
-  /**
-   * The resource id of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Name of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Type of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-}
-
-/**
- * Contains the possible cases for Trigger.
- */
-export type TriggerUnion = Trigger | ScheduledTrigger;
-
-/**
- * A Trigger data transfer object.
- */
-export interface Trigger {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "Trigger";
-  /**
-   * The resource id of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Name of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Type of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-}
-
-/**
- * A type of synchronization setting based on schedule
- */
-export interface ScheduledSynchronizationSetting {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "ScheduleBased";
-  /**
-   * The resource id of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Name of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Type of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * Time at which the synchronization setting was created.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly createdAt?: Date;
-  /**
-   * Gets or sets the provisioning state. Possible values include: 'Succeeded', 'Creating',
-   * 'Deleting', 'Moving', 'Failed'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly provisioningState?: ProvisioningState;
-  /**
-   * Recurrence Interval. Possible values include: 'Hour', 'Day'
-   */
-  recurrenceInterval: RecurrenceInterval;
-  /**
-   * Synchronization time
-   */
-  synchronizationTime: Date;
-  /**
-   * Name of the user who created the synchronization setting.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly userName?: string;
-}
-
-/**
- * A type of trigger based on schedule
- */
-export interface ScheduledTrigger {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "ScheduleBased";
-  /**
-   * The resource id of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Name of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Type of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * Time at which the trigger was created.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly createdAt?: Date;
-  /**
-   * Gets the provisioning state. Possible values include: 'Succeeded', 'Creating', 'Deleting',
-   * 'Moving', 'Failed'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly provisioningState?: ProvisioningState;
-  /**
-   * Recurrence Interval. Possible values include: 'Hour', 'Day'
-   */
-  recurrenceInterval: RecurrenceInterval;
-  /**
-   * Synchronization mode. Possible values include: 'Incremental', 'FullSync'
-   */
-  synchronizationMode?: SynchronizationMode;
-  /**
-   * Synchronization time
-   */
-  synchronizationTime: Date;
-  /**
-   * Gets the trigger state. Possible values include: 'Active', 'Inactive',
-   * 'SourceSynchronizationSettingDeleted'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly triggerStatus?: TriggerStatus;
-  /**
-   * Name of the user who created the trigger.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly userName?: string;
-}
-
-/**
- * An Azure storage blob data set.
- */
-export interface BlobDataSet {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "Blob";
-  /**
-   * The resource id of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Name of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Type of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * Container that has the file path.
-   */
-  containerName: string;
-  /**
-   * Unique id for identifying a data set resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly dataSetId?: string;
-  /**
-   * File path within the source data set
-   */
-  filePath: string;
-  /**
-   * Resource group of storage account
-   */
-  resourceGroup: string;
-  /**
-   * Storage account name of the source data set
-   */
-  storageAccountName: string;
-  /**
-   * Subscription id of storage account
-   */
-  subscriptionId: string;
-}
-
-/**
- * An Azure storage blob folder data set.
- */
-export interface BlobFolderDataSet {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "BlobFolder";
-  /**
-   * The resource id of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Name of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Type of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * Container that has the file path.
-   */
-  containerName: string;
-  /**
-   * Unique id for identifying a data set resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly dataSetId?: string;
-  /**
-   * Prefix for blob folder
-   */
-  prefix: string;
-  /**
-   * Resource group of storage account
-   */
-  resourceGroup: string;
-  /**
-   * Storage account name of the source data set
-   */
-  storageAccountName: string;
-  /**
-   * Subscription id of storage account
-   */
-  subscriptionId: string;
-}
-
-/**
- * An Azure storage blob container data set.
- */
-export interface BlobContainerDataSet {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "Container";
-  /**
-   * The resource id of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Name of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Type of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * BLOB Container name.
-   */
-  containerName: string;
-  /**
-   * Unique id for identifying a data set resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly dataSetId?: string;
-  /**
-   * Resource group of storage account
-   */
-  resourceGroup: string;
-  /**
-   * Storage account name of the source data set
-   */
-  storageAccountName: string;
-  /**
-   * Subscription id of storage account
-   */
-  subscriptionId: string;
-}
-
-/**
- * An ADLS Gen 2 file data set.
- */
-export interface ADLSGen2FileDataSet {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "AdlsGen2File";
-  /**
-   * The resource id of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Name of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Type of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * Unique id for identifying a data set resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly dataSetId?: string;
-  /**
-   * File path within the file system.
-   */
-  filePath: string;
-  /**
-   * File system to which the file belongs.
-   */
-  fileSystem: string;
-  /**
-   * Resource group of storage account
-   */
-  resourceGroup: string;
-  /**
-   * Storage account name of the source data set
-   */
-  storageAccountName: string;
-  /**
-   * Subscription id of storage account
-   */
-  subscriptionId: string;
-}
-
-/**
- * An ADLS Gen 2 folder data set.
- */
-export interface ADLSGen2FolderDataSet {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "AdlsGen2Folder";
-  /**
-   * The resource id of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Name of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Type of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * Unique id for identifying a data set resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly dataSetId?: string;
-  /**
-   * File system to which the folder belongs.
-   */
-  fileSystem: string;
-  /**
-   * Folder path within the file system.
-   */
-  folderPath: string;
-  /**
-   * Resource group of storage account
-   */
-  resourceGroup: string;
-  /**
-   * Storage account name of the source data set
-   */
-  storageAccountName: string;
-  /**
-   * Subscription id of storage account
-   */
-  subscriptionId: string;
-}
-
-/**
- * An ADLS Gen 2 file system data set.
- */
-export interface ADLSGen2FileSystemDataSet {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "AdlsGen2FileSystem";
-  /**
-   * The resource id of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Name of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Type of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * Unique id for identifying a data set resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly dataSetId?: string;
-  /**
-   * The file system name.
-   */
-  fileSystem: string;
-  /**
-   * Resource group of storage account
-   */
-  resourceGroup: string;
-  /**
-   * Storage account name of the source data set
-   */
-  storageAccountName: string;
-  /**
-   * Subscription id of storage account
-   */
-  subscriptionId: string;
-}
-
-/**
- * An ADLS Gen 1 folder data set.
- */
-export interface ADLSGen1FolderDataSet {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "AdlsGen1Folder";
-  /**
-   * The resource id of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Name of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Type of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * The ADLS account name.
-   */
-  accountName: string;
-  /**
-   * Unique id for identifying a data set resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly dataSetId?: string;
-  /**
-   * The folder path within the ADLS account.
-   */
-  folderPath: string;
-  /**
-   * Resource group of ADLS account.
-   */
-  resourceGroup: string;
-  /**
-   * Subscription id of ADLS account.
-   */
-  subscriptionId: string;
-}
-
-/**
- * An ADLS Gen 1 file data set.
- */
-export interface ADLSGen1FileDataSet {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "AdlsGen1File";
-  /**
-   * The resource id of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Name of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Type of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * The ADLS account name.
-   */
-  accountName: string;
-  /**
-   * Unique id for identifying a data set resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly dataSetId?: string;
-  /**
-   * The file name in the ADLS account.
-   */
-  fileName: string;
-  /**
-   * The folder path within the ADLS account.
-   */
-  folderPath: string;
-  /**
-   * Resource group of ADLS account.
-   */
-  resourceGroup: string;
-  /**
-   * Subscription id of ADLS account.
-   */
-  subscriptionId: string;
-}
-
-/**
- * A kusto cluster data set.
- */
-export interface KustoClusterDataSet {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "KustoCluster";
-  /**
-   * The resource id of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Name of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Type of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * Unique id for identifying a data set resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly dataSetId?: string;
-  /**
-   * Resource id of the kusto cluster.
-   */
-  kustoClusterResourceId: string;
-  /**
-   * Location of the kusto cluster.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly location?: string;
-  /**
-   * Provisioning state of the kusto cluster data set. Possible values include: 'Succeeded',
-   * 'Creating', 'Deleting', 'Moving', 'Failed'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly provisioningState?: ProvisioningState;
-}
-
-/**
- * A kusto database data set.
- */
-export interface KustoDatabaseDataSet {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "KustoDatabase";
-  /**
-   * The resource id of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Name of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Type of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * Unique id for identifying a data set resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly dataSetId?: string;
-  /**
-   * Resource id of the kusto database.
-   */
-  kustoDatabaseResourceId: string;
-  /**
-   * Location of the kusto cluster.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly location?: string;
-  /**
-   * Provisioning state of the kusto database data set. Possible values include: 'Succeeded',
-   * 'Creating', 'Deleting', 'Moving', 'Failed'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly provisioningState?: ProvisioningState;
-}
-
-/**
- * A SQL DW table data set.
- */
-export interface SqlDWTableDataSet {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "SqlDWTable";
-  /**
-   * The resource id of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Name of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Type of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * Unique id for identifying a data set resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly dataSetId?: string;
-  /**
-   * DataWarehouse name of the source data set
-   */
-  dataWarehouseName: string;
-  /**
-   * Schema of the table. Default value is dbo.
-   */
-  schemaName: string;
-  /**
-   * Resource id of SQL server
-   */
-  sqlServerResourceId: string;
-  /**
-   * SQL DW table name.
-   */
-  tableName: string;
-}
-
-/**
- * A SQL DB table data set.
- */
-export interface SqlDBTableDataSet {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "SqlDBTable";
-  /**
-   * The resource id of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Name of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Type of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * Database name of the source data set
-   */
-  databaseName: string;
-  /**
-   * Unique id for identifying a data set resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly dataSetId?: string;
-  /**
-   * Schema of the table. Default value is dbo.
-   */
-  schemaName: string;
-  /**
-   * Resource id of SQL server
-   */
-  sqlServerResourceId: string;
-  /**
-   * SQL DB table name.
-   */
-  tableName: string;
-}
-
-/**
- * A Blob data set mapping.
- */
-export interface BlobDataSetMapping {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "Blob";
-  /**
-   * The resource id of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Name of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Type of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * Container that has the file path.
-   */
-  containerName: string;
-  /**
-   * The id of the source data set.
-   */
-  dataSetId: string;
-  /**
-   * Gets the status of the data set mapping. Possible values include: 'Ok', 'Broken'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly dataSetMappingStatus?: DataSetMappingStatus;
-  /**
-   * File path within the source data set
-   */
-  filePath: string;
-  /**
-   * File output type. Possible values include: 'Csv', 'Parquet'
-   */
-  outputType?: OutputType;
-  /**
-   * Provisioning state of the data set mapping. Possible values include: 'Succeeded', 'Creating',
-   * 'Deleting', 'Moving', 'Failed'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly provisioningState?: ProvisioningState;
-  /**
-   * Resource group of storage account.
-   */
-  resourceGroup: string;
-  /**
-   * Storage account name of the source data set.
-   */
-  storageAccountName: string;
-  /**
-   * Subscription id of storage account.
-   */
-  subscriptionId: string;
-}
-
-/**
- * A Blob folder data set mapping.
- */
-export interface BlobFolderDataSetMapping {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "BlobFolder";
-  /**
-   * The resource id of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Name of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Type of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * Container that has the file path.
-   */
-  containerName: string;
-  /**
-   * The id of the source data set.
-   */
-  dataSetId: string;
-  /**
-   * Gets the status of the data set mapping. Possible values include: 'Ok', 'Broken'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly dataSetMappingStatus?: DataSetMappingStatus;
-  /**
-   * Prefix for blob folder
-   */
-  prefix: string;
-  /**
-   * Provisioning state of the data set mapping. Possible values include: 'Succeeded', 'Creating',
-   * 'Deleting', 'Moving', 'Failed'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly provisioningState?: ProvisioningState;
-  /**
-   * Resource group of storage account.
-   */
-  resourceGroup: string;
-  /**
-   * Storage account name of the source data set.
-   */
-  storageAccountName: string;
-  /**
-   * Subscription id of storage account.
-   */
-  subscriptionId: string;
-}
-
-/**
- * A Blob container data set mapping.
- */
-export interface BlobContainerDataSetMapping {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "Container";
-  /**
-   * The resource id of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Name of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Type of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * BLOB Container name.
-   */
-  containerName: string;
-  /**
-   * The id of the source data set.
-   */
-  dataSetId: string;
-  /**
-   * Gets the status of the data set mapping. Possible values include: 'Ok', 'Broken'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly dataSetMappingStatus?: DataSetMappingStatus;
-  /**
-   * Provisioning state of the data set mapping. Possible values include: 'Succeeded', 'Creating',
-   * 'Deleting', 'Moving', 'Failed'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly provisioningState?: ProvisioningState;
-  /**
-   * Resource group of storage account.
-   */
-  resourceGroup: string;
-  /**
-   * Storage account name of the source data set.
-   */
-  storageAccountName: string;
-  /**
-   * Subscription id of storage account.
-   */
-  subscriptionId: string;
-}
-
-/**
- * An ADLS Gen2 file data set mapping.
- */
-export interface ADLSGen2FileDataSetMapping {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "AdlsGen2File";
-  /**
-   * The resource id of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Name of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Type of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * The id of the source data set.
-   */
-  dataSetId: string;
-  /**
-   * Gets the status of the data set mapping. Possible values include: 'Ok', 'Broken'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly dataSetMappingStatus?: DataSetMappingStatus;
-  /**
-   * File path within the file system.
-   */
-  filePath: string;
-  /**
-   * File system to which the file belongs.
-   */
-  fileSystem: string;
-  /**
-   * Type of output file. Possible values include: 'Csv', 'Parquet'
-   */
-  outputType?: OutputType;
-  /**
-   * Provisioning state of the data set mapping. Possible values include: 'Succeeded', 'Creating',
-   * 'Deleting', 'Moving', 'Failed'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly provisioningState?: ProvisioningState;
-  /**
-   * Resource group of storage account.
-   */
-  resourceGroup: string;
-  /**
-   * Storage account name of the source data set.
-   */
-  storageAccountName: string;
-  /**
-   * Subscription id of storage account.
-   */
-  subscriptionId: string;
-}
-
-/**
- * An ADLS Gen2 folder data set mapping.
- */
-export interface ADLSGen2FolderDataSetMapping {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "AdlsGen2Folder";
-  /**
-   * The resource id of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Name of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Type of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * The id of the source data set.
-   */
-  dataSetId: string;
-  /**
-   * Gets the status of the data set mapping. Possible values include: 'Ok', 'Broken'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly dataSetMappingStatus?: DataSetMappingStatus;
-  /**
-   * File system to which the folder belongs.
-   */
-  fileSystem: string;
-  /**
-   * Folder path within the file system.
-   */
-  folderPath: string;
-  /**
-   * Provisioning state of the data set mapping. Possible values include: 'Succeeded', 'Creating',
-   * 'Deleting', 'Moving', 'Failed'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly provisioningState?: ProvisioningState;
-  /**
-   * Resource group of storage account.
-   */
-  resourceGroup: string;
-  /**
-   * Storage account name of the source data set.
-   */
-  storageAccountName: string;
-  /**
-   * Subscription id of storage account.
-   */
-  subscriptionId: string;
-}
-
-/**
- * An ADLS Gen2 file system data set mapping.
- */
-export interface ADLSGen2FileSystemDataSetMapping {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "AdlsGen2FileSystem";
-  /**
-   * The resource id of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Name of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Type of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * The id of the source data set.
-   */
-  dataSetId: string;
-  /**
-   * Gets the status of the data set mapping. Possible values include: 'Ok', 'Broken'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly dataSetMappingStatus?: DataSetMappingStatus;
-  /**
-   * The file system name.
-   */
-  fileSystem: string;
-  /**
-   * Provisioning state of the data set mapping. Possible values include: 'Succeeded', 'Creating',
-   * 'Deleting', 'Moving', 'Failed'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly provisioningState?: ProvisioningState;
-  /**
-   * Resource group of storage account.
-   */
-  resourceGroup: string;
-  /**
-   * Storage account name of the source data set.
-   */
-  storageAccountName: string;
-  /**
-   * Subscription id of storage account.
-   */
-  subscriptionId: string;
-}
-
-/**
- * A Kusto cluster data set mapping
- */
-export interface KustoClusterDataSetMapping {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "KustoCluster";
-  /**
-   * The resource id of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Name of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Type of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * The id of the source data set.
-   */
-  dataSetId: string;
-  /**
-   * Gets the status of the data set mapping. Possible values include: 'Ok', 'Broken'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly dataSetMappingStatus?: DataSetMappingStatus;
-  /**
-   * Resource id of the sink kusto cluster.
-   */
-  kustoClusterResourceId: string;
-  /**
-   * Location of the sink kusto cluster.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly location?: string;
-  /**
-   * Provisioning state of the data set mapping. Possible values include: 'Succeeded', 'Creating',
-   * 'Deleting', 'Moving', 'Failed'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly provisioningState?: ProvisioningState;
-}
-
-/**
- * A Kusto database data set mapping
- */
-export interface KustoDatabaseDataSetMapping {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "KustoDatabase";
-  /**
-   * The resource id of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Name of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Type of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * The id of the source data set.
-   */
-  dataSetId: string;
-  /**
-   * Gets the status of the data set mapping. Possible values include: 'Ok', 'Broken'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly dataSetMappingStatus?: DataSetMappingStatus;
-  /**
-   * Resource id of the sink kusto cluster.
-   */
-  kustoClusterResourceId: string;
-  /**
-   * Location of the sink kusto cluster.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly location?: string;
-  /**
-   * Provisioning state of the data set mapping. Possible values include: 'Succeeded', 'Creating',
-   * 'Deleting', 'Moving', 'Failed'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly provisioningState?: ProvisioningState;
-}
-
-/**
- * A SQL DW Table data set mapping.
- */
-export interface SqlDWTableDataSetMapping {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "SqlDWTable";
-  /**
-   * The resource id of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Name of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Type of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * The id of the source data set.
-   */
-  dataSetId: string;
-  /**
-   * Gets the status of the data set mapping. Possible values include: 'Ok', 'Broken'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly dataSetMappingStatus?: DataSetMappingStatus;
-  /**
-   * DataWarehouse name of the source data set
-   */
-  dataWarehouseName: string;
-  /**
-   * Provisioning state of the data set mapping. Possible values include: 'Succeeded', 'Creating',
-   * 'Deleting', 'Moving', 'Failed'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly provisioningState?: ProvisioningState;
-  /**
-   * Schema of the table. Default value is dbo.
-   */
-  schemaName: string;
-  /**
-   * Resource id of SQL server
-   */
-  sqlServerResourceId: string;
-  /**
-   * SQL DW table name.
-   */
-  tableName: string;
-}
-
-/**
- * A SQL DB Table data set mapping.
- */
-export interface SqlDBTableDataSetMapping {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "SqlDBTable";
-  /**
-   * The resource id of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Name of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Type of the azure resource
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * DatabaseName name of the sink data set
-   */
-  databaseName: string;
-  /**
-   * The id of the source data set.
-   */
-  dataSetId: string;
-  /**
-   * Gets the status of the data set mapping. Possible values include: 'Ok', 'Broken'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly dataSetMappingStatus?: DataSetMappingStatus;
-  /**
-   * Provisioning state of the data set mapping. Possible values include: 'Succeeded', 'Creating',
-   * 'Deleting', 'Moving', 'Failed'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly provisioningState?: ProvisioningState;
-  /**
-   * Schema of the table. Default value is dbo.
-   */
-  schemaName: string;
-  /**
-   * Resource id of SQL server
-   */
-  sqlServerResourceId: string;
-  /**
-   * SQL DB table name.
-   */
-  tableName: string;
-}
-
-/**
- * A type of synchronization setting based on schedule
- */
-export interface ScheduledSourceSynchronizationSetting {
-  /**
-   * Polymorphic Discriminator
-   */
-  kind: "ScheduleBased";
-  /**
-   * Recurrence Interval. Possible values include: 'Hour', 'Day'
-   */
-  recurrenceInterval?: RecurrenceInterval;
-  /**
-   * Synchronization time
-   */
-  synchronizationTime?: Date;
 }
 
 /**
@@ -2313,9 +2313,9 @@ export interface InvitationsListByShareOptionalParams extends msRest.RequestOpti
 /**
  * Optional Parameters.
  */
-export interface SharesListByAccountOptionalParams extends msRest.RequestOptionsBase {
+export interface SharesListSynchronizationDetailsOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * Continuation Token
+   * Continuation token
    */
   skipToken?: string;
   /**
@@ -2349,9 +2349,9 @@ export interface SharesListSynchronizationsOptionalParams extends msRest.Request
 /**
  * Optional Parameters.
  */
-export interface SharesListSynchronizationDetailsOptionalParams extends msRest.RequestOptionsBase {
+export interface SharesListByAccountOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * Continuation token
+   * Continuation Token
    */
   skipToken?: string;
   /**
@@ -2377,9 +2377,19 @@ export interface ProviderShareSubscriptionsListByShareOptionalParams extends msR
 /**
  * Optional Parameters.
  */
-export interface ShareSubscriptionsListByAccountOptionalParams extends msRest.RequestOptionsBase {
+export interface ShareSubscriptionsListSourceShareSynchronizationSettingsOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * Continuation Token
+   * Continuation token
+   */
+  skipToken?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface ShareSubscriptionsListSynchronizationDetailsOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Continuation token
    */
   skipToken?: string;
   /**
@@ -2390,16 +2400,6 @@ export interface ShareSubscriptionsListByAccountOptionalParams extends msRest.Re
    * Sorts the results using OData syntax.
    */
   orderby?: string;
-}
-
-/**
- * Optional Parameters.
- */
-export interface ShareSubscriptionsListSourceShareSynchronizationSettingsOptionalParams extends msRest.RequestOptionsBase {
-  /**
-   * Continuation token
-   */
-  skipToken?: string;
 }
 
 /**
@@ -2423,9 +2423,9 @@ export interface ShareSubscriptionsListSynchronizationsOptionalParams extends ms
 /**
  * Optional Parameters.
  */
-export interface ShareSubscriptionsListSynchronizationDetailsOptionalParams extends msRest.RequestOptionsBase {
+export interface ShareSubscriptionsListByAccountOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * Continuation token
+   * Continuation Token
    */
   skipToken?: string;
   /**
@@ -2549,10 +2549,10 @@ export interface OperationList extends Array<OperationModel> {
 
 /**
  * @interface
- * List response for get Shares.
- * @extends Array<Share>
+ * details of synchronization
+ * @extends Array<SynchronizationDetails>
  */
-export interface ShareList extends Array<Share> {
+export interface SynchronizationDetailsList extends Array<SynchronizationDetails> {
   /**
    * The Url of next result page.
    */
@@ -2573,10 +2573,10 @@ export interface ShareSynchronizationList extends Array<ShareSynchronization> {
 
 /**
  * @interface
- * details of synchronization
- * @extends Array<SynchronizationDetails>
+ * List response for get Shares.
+ * @extends Array<Share>
  */
-export interface SynchronizationDetailsList extends Array<SynchronizationDetails> {
+export interface ShareList extends Array<Share> {
   /**
    * The Url of next result page.
    */
@@ -2589,18 +2589,6 @@ export interface SynchronizationDetailsList extends Array<SynchronizationDetails
  * @extends Array<ProviderShareSubscription>
  */
 export interface ProviderShareSubscriptionList extends Array<ProviderShareSubscription> {
-  /**
-   * The Url of next result page.
-   */
-  nextLink?: string;
-}
-
-/**
- * @interface
- * List response for get ShareSubscription.
- * @extends Array<ShareSubscription>
- */
-export interface ShareSubscriptionList extends Array<ShareSubscription> {
   /**
    * The Url of next result page.
    */
@@ -2625,6 +2613,18 @@ export interface SourceShareSynchronizationSettingList extends Array<SourceShare
  * @extends Array<ShareSubscriptionSynchronization>
  */
 export interface ShareSubscriptionSynchronizationList extends Array<ShareSubscriptionSynchronization> {
+  /**
+   * The Url of next result page.
+   */
+  nextLink?: string;
+}
+
+/**
+ * @interface
+ * List response for get ShareSubscription.
+ * @extends Array<ShareSubscription>
+ */
+export interface ShareSubscriptionList extends Array<ShareSubscription> {
   /**
    * The Url of next result page.
    */
@@ -2684,13 +2684,20 @@ export type Type = 'SystemAssigned';
 export type ProvisioningState = 'Succeeded' | 'Creating' | 'Deleting' | 'Moving' | 'Failed';
 
 /**
- * Defines values for Status.
- * Possible values include: 'Accepted', 'InProgress', 'TransientFailure', 'Succeeded', 'Failed',
- * 'Canceled'
+ * Defines values for DataSetMappingStatus.
+ * Possible values include: 'Ok', 'Broken'
  * @readonly
  * @enum {string}
  */
-export type Status = 'Accepted' | 'InProgress' | 'TransientFailure' | 'Succeeded' | 'Failed' | 'Canceled';
+export type DataSetMappingStatus = 'Ok' | 'Broken';
+
+/**
+ * Defines values for OutputType.
+ * Possible values include: 'Csv', 'Parquet'
+ * @readonly
+ * @enum {string}
+ */
+export type OutputType = 'Csv' | 'Parquet';
 
 /**
  * Defines values for InvitationStatus.
@@ -2701,22 +2708,6 @@ export type Status = 'Accepted' | 'InProgress' | 'TransientFailure' | 'Succeeded
 export type InvitationStatus = 'Pending' | 'Accepted' | 'Rejected' | 'Withdrawn';
 
 /**
- * Defines values for ShareKind.
- * Possible values include: 'CopyBased', 'InPlace'
- * @readonly
- * @enum {string}
- */
-export type ShareKind = 'CopyBased' | 'InPlace';
-
-/**
- * Defines values for SynchronizationMode.
- * Possible values include: 'Incremental', 'FullSync'
- * @readonly
- * @enum {string}
- */
-export type SynchronizationMode = 'Incremental' | 'FullSync';
-
-/**
  * Defines values for DataSetType.
  * Possible values include: 'Blob', 'Container', 'BlobFolder', 'AdlsGen2FileSystem',
  * 'AdlsGen2Folder', 'AdlsGen2File', 'AdlsGen1Folder', 'AdlsGen1File', 'KustoCluster',
@@ -2725,6 +2716,15 @@ export type SynchronizationMode = 'Incremental' | 'FullSync';
  * @enum {string}
  */
 export type DataSetType = 'Blob' | 'Container' | 'BlobFolder' | 'AdlsGen2FileSystem' | 'AdlsGen2Folder' | 'AdlsGen2File' | 'AdlsGen1Folder' | 'AdlsGen1File' | 'KustoCluster' | 'KustoDatabase' | 'SqlDBTable' | 'SqlDWTable';
+
+/**
+ * Defines values for Status.
+ * Possible values include: 'Accepted', 'InProgress', 'TransientFailure', 'Succeeded', 'Failed',
+ * 'Canceled'
+ * @readonly
+ * @enum {string}
+ */
+export type Status = 'Accepted' | 'InProgress' | 'TransientFailure' | 'Succeeded' | 'Failed' | 'Canceled';
 
 /**
  * Defines values for ShareSubscriptionStatus.
@@ -2743,6 +2743,14 @@ export type ShareSubscriptionStatus = 'Active' | 'Revoked' | 'SourceDeleted' | '
 export type RecurrenceInterval = 'Hour' | 'Day';
 
 /**
+ * Defines values for SynchronizationMode.
+ * Possible values include: 'Incremental', 'FullSync'
+ * @readonly
+ * @enum {string}
+ */
+export type SynchronizationMode = 'Incremental' | 'FullSync';
+
+/**
  * Defines values for TriggerStatus.
  * Possible values include: 'Active', 'Inactive', 'SourceSynchronizationSettingDeleted'
  * @readonly
@@ -2751,20 +2759,32 @@ export type RecurrenceInterval = 'Hour' | 'Day';
 export type TriggerStatus = 'Active' | 'Inactive' | 'SourceSynchronizationSettingDeleted';
 
 /**
- * Defines values for DataSetMappingStatus.
- * Possible values include: 'Ok', 'Broken'
+ * Defines values for ShareKind.
+ * Possible values include: 'CopyBased', 'InPlace'
  * @readonly
  * @enum {string}
  */
-export type DataSetMappingStatus = 'Ok' | 'Broken';
+export type ShareKind = 'CopyBased' | 'InPlace';
 
 /**
- * Defines values for OutputType.
- * Possible values include: 'Csv', 'Parquet'
- * @readonly
- * @enum {string}
+ * Contains response data for the listBySubscription operation.
  */
-export type OutputType = 'Csv' | 'Parquet';
+export type AccountsListBySubscriptionResponse = AccountList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: AccountList;
+    };
+};
 
 /**
  * Contains response data for the get operation.
@@ -2843,26 +2863,6 @@ export type AccountsUpdateResponse = Account & {
        * The response body as parsed JSON or XML
        */
       parsedBody: Account;
-    };
-};
-
-/**
- * Contains response data for the listBySubscription operation.
- */
-export type AccountsListBySubscriptionResponse = AccountList & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: AccountList;
     };
 };
 
@@ -2967,9 +2967,9 @@ export type AccountsListByResourceGroupNextResponse = AccountList & {
 };
 
 /**
- * Contains response data for the rejectInvitation operation.
+ * Contains response data for the listInvitations operation.
  */
-export type ConsumerInvitationsRejectInvitationResponse = ConsumerInvitation & {
+export type ConsumerInvitationsListInvitationsResponse = ConsumerInvitationList & {
   /**
    * The underlying HTTP response.
    */
@@ -2982,7 +2982,7 @@ export type ConsumerInvitationsRejectInvitationResponse = ConsumerInvitation & {
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: ConsumerInvitation;
+      parsedBody: ConsumerInvitationList;
     };
 };
 
@@ -3007,9 +3007,9 @@ export type ConsumerInvitationsGetResponse = ConsumerInvitation & {
 };
 
 /**
- * Contains response data for the listInvitations operation.
+ * Contains response data for the rejectInvitation operation.
  */
-export type ConsumerInvitationsListInvitationsResponse = ConsumerInvitationList & {
+export type ConsumerInvitationsRejectInvitationResponse = ConsumerInvitation & {
   /**
    * The underlying HTTP response.
    */
@@ -3022,7 +3022,7 @@ export type ConsumerInvitationsListInvitationsResponse = ConsumerInvitationList 
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: ConsumerInvitationList;
+      parsedBody: ConsumerInvitation;
     };
 };
 
@@ -3327,6 +3327,46 @@ export type OperationsListNextResponse = OperationList & {
 };
 
 /**
+ * Contains response data for the listSynchronizationDetails operation.
+ */
+export type SharesListSynchronizationDetailsResponse = SynchronizationDetailsList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SynchronizationDetailsList;
+    };
+};
+
+/**
+ * Contains response data for the listSynchronizations operation.
+ */
+export type SharesListSynchronizationsResponse = ShareSynchronizationList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ShareSynchronizationList;
+    };
+};
+
+/**
  * Contains response data for the get operation.
  */
 export type SharesGetResponse = Share & {
@@ -3407,46 +3447,6 @@ export type SharesListByAccountResponse = ShareList & {
 };
 
 /**
- * Contains response data for the listSynchronizations operation.
- */
-export type SharesListSynchronizationsResponse = ShareSynchronizationList & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ShareSynchronizationList;
-    };
-};
-
-/**
- * Contains response data for the listSynchronizationDetails operation.
- */
-export type SharesListSynchronizationDetailsResponse = SynchronizationDetailsList & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: SynchronizationDetailsList;
-    };
-};
-
-/**
  * Contains response data for the beginDeleteMethod operation.
  */
 export type SharesBeginDeleteMethodResponse = OperationResponse & {
@@ -3467,9 +3467,9 @@ export type SharesBeginDeleteMethodResponse = OperationResponse & {
 };
 
 /**
- * Contains response data for the listByAccountNext operation.
+ * Contains response data for the listSynchronizationDetailsNext operation.
  */
-export type SharesListByAccountNextResponse = ShareList & {
+export type SharesListSynchronizationDetailsNextResponse = SynchronizationDetailsList & {
   /**
    * The underlying HTTP response.
    */
@@ -3482,7 +3482,7 @@ export type SharesListByAccountNextResponse = ShareList & {
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: ShareList;
+      parsedBody: SynchronizationDetailsList;
     };
 };
 
@@ -3507,9 +3507,9 @@ export type SharesListSynchronizationsNextResponse = ShareSynchronizationList & 
 };
 
 /**
- * Contains response data for the listSynchronizationDetailsNext operation.
+ * Contains response data for the listByAccountNext operation.
  */
-export type SharesListSynchronizationDetailsNextResponse = SynchronizationDetailsList & {
+export type SharesListByAccountNextResponse = ShareList & {
   /**
    * The underlying HTTP response.
    */
@@ -3522,7 +3522,47 @@ export type SharesListSynchronizationDetailsNextResponse = SynchronizationDetail
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: SynchronizationDetailsList;
+      parsedBody: ShareList;
+    };
+};
+
+/**
+ * Contains response data for the reinstate operation.
+ */
+export type ProviderShareSubscriptionsReinstateResponse = ProviderShareSubscription & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ProviderShareSubscription;
+    };
+};
+
+/**
+ * Contains response data for the revoke operation.
+ */
+export type ProviderShareSubscriptionsRevokeResponse = ProviderShareSubscription & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ProviderShareSubscription;
     };
 };
 
@@ -3567,46 +3607,6 @@ export type ProviderShareSubscriptionsListByShareResponse = ProviderShareSubscri
 };
 
 /**
- * Contains response data for the revoke operation.
- */
-export type ProviderShareSubscriptionsRevokeResponse = ProviderShareSubscription & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ProviderShareSubscription;
-    };
-};
-
-/**
- * Contains response data for the reinstate operation.
- */
-export type ProviderShareSubscriptionsReinstateResponse = ProviderShareSubscription & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ProviderShareSubscription;
-    };
-};
-
-/**
  * Contains response data for the beginRevoke operation.
  */
 export type ProviderShareSubscriptionsBeginRevokeResponse = ProviderShareSubscription & {
@@ -3643,6 +3643,106 @@ export type ProviderShareSubscriptionsListByShareNextResponse = ProviderShareSub
        * The response body as parsed JSON or XML
        */
       parsedBody: ProviderShareSubscriptionList;
+    };
+};
+
+/**
+ * Contains response data for the cancelSynchronization operation.
+ */
+export type ShareSubscriptionsCancelSynchronizationResponse = ShareSubscriptionSynchronization & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ShareSubscriptionSynchronization;
+    };
+};
+
+/**
+ * Contains response data for the listSourceShareSynchronizationSettings operation.
+ */
+export type ShareSubscriptionsListSourceShareSynchronizationSettingsResponse = SourceShareSynchronizationSettingList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SourceShareSynchronizationSettingList;
+    };
+};
+
+/**
+ * Contains response data for the listSynchronizationDetails operation.
+ */
+export type ShareSubscriptionsListSynchronizationDetailsResponse = SynchronizationDetailsList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SynchronizationDetailsList;
+    };
+};
+
+/**
+ * Contains response data for the listSynchronizations operation.
+ */
+export type ShareSubscriptionsListSynchronizationsResponse = ShareSubscriptionSynchronizationList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ShareSubscriptionSynchronizationList;
+    };
+};
+
+/**
+ * Contains response data for the synchronizeMethod operation.
+ */
+export type ShareSubscriptionsSynchronizeMethodResponse = ShareSubscriptionSynchronization & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ShareSubscriptionSynchronization;
     };
 };
 
@@ -3727,69 +3827,9 @@ export type ShareSubscriptionsListByAccountResponse = ShareSubscriptionList & {
 };
 
 /**
- * Contains response data for the listSourceShareSynchronizationSettings operation.
+ * Contains response data for the beginCancelSynchronization operation.
  */
-export type ShareSubscriptionsListSourceShareSynchronizationSettingsResponse = SourceShareSynchronizationSettingList & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: SourceShareSynchronizationSettingList;
-    };
-};
-
-/**
- * Contains response data for the listSynchronizations operation.
- */
-export type ShareSubscriptionsListSynchronizationsResponse = ShareSubscriptionSynchronizationList & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ShareSubscriptionSynchronizationList;
-    };
-};
-
-/**
- * Contains response data for the listSynchronizationDetails operation.
- */
-export type ShareSubscriptionsListSynchronizationDetailsResponse = SynchronizationDetailsList & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: SynchronizationDetailsList;
-    };
-};
-
-/**
- * Contains response data for the synchronizeMethod operation.
- */
-export type ShareSubscriptionsSynchronizeMethodResponse = ShareSubscriptionSynchronization & {
+export type ShareSubscriptionsBeginCancelSynchronizationResponse = ShareSubscriptionSynchronization & {
   /**
    * The underlying HTTP response.
    */
@@ -3807,9 +3847,9 @@ export type ShareSubscriptionsSynchronizeMethodResponse = ShareSubscriptionSynch
 };
 
 /**
- * Contains response data for the cancelSynchronization operation.
+ * Contains response data for the beginSynchronizeMethod operation.
  */
-export type ShareSubscriptionsCancelSynchronizationResponse = ShareSubscriptionSynchronization & {
+export type ShareSubscriptionsBeginSynchronizeMethodResponse = ShareSubscriptionSynchronization & {
   /**
    * The underlying HTTP response.
    */
@@ -3847,66 +3887,6 @@ export type ShareSubscriptionsBeginDeleteMethodResponse = OperationResponse & {
 };
 
 /**
- * Contains response data for the beginSynchronizeMethod operation.
- */
-export type ShareSubscriptionsBeginSynchronizeMethodResponse = ShareSubscriptionSynchronization & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ShareSubscriptionSynchronization;
-    };
-};
-
-/**
- * Contains response data for the beginCancelSynchronization operation.
- */
-export type ShareSubscriptionsBeginCancelSynchronizationResponse = ShareSubscriptionSynchronization & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ShareSubscriptionSynchronization;
-    };
-};
-
-/**
- * Contains response data for the listByAccountNext operation.
- */
-export type ShareSubscriptionsListByAccountNextResponse = ShareSubscriptionList & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ShareSubscriptionList;
-    };
-};
-
-/**
  * Contains response data for the listSourceShareSynchronizationSettingsNext operation.
  */
 export type ShareSubscriptionsListSourceShareSynchronizationSettingsNextResponse = SourceShareSynchronizationSettingList & {
@@ -3923,6 +3903,26 @@ export type ShareSubscriptionsListSourceShareSynchronizationSettingsNextResponse
        * The response body as parsed JSON or XML
        */
       parsedBody: SourceShareSynchronizationSettingList;
+    };
+};
+
+/**
+ * Contains response data for the listSynchronizationDetailsNext operation.
+ */
+export type ShareSubscriptionsListSynchronizationDetailsNextResponse = SynchronizationDetailsList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SynchronizationDetailsList;
     };
 };
 
@@ -3947,9 +3947,9 @@ export type ShareSubscriptionsListSynchronizationsNextResponse = ShareSubscripti
 };
 
 /**
- * Contains response data for the listSynchronizationDetailsNext operation.
+ * Contains response data for the listByAccountNext operation.
  */
-export type ShareSubscriptionsListSynchronizationDetailsNextResponse = SynchronizationDetailsList & {
+export type ShareSubscriptionsListByAccountNextResponse = ShareSubscriptionList & {
   /**
    * The underlying HTTP response.
    */
@@ -3962,7 +3962,7 @@ export type ShareSubscriptionsListSynchronizationDetailsNextResponse = Synchroni
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: SynchronizationDetailsList;
+      parsedBody: ShareSubscriptionList;
     };
 };
 

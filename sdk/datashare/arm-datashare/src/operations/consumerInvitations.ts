@@ -27,36 +27,28 @@ export class ConsumerInvitations {
   }
 
   /**
-   * Reject an invitation
-   * @summary Rejects the invitation identified by invitationId
-   * @param location Location of the invitation
-   * @param invitation An invitation payload
+   * Lists invitations
+   * @summary List the invitations
    * @param [options] The optional parameters
-   * @returns Promise<Models.ConsumerInvitationsRejectInvitationResponse>
+   * @returns Promise<Models.ConsumerInvitationsListInvitationsResponse>
    */
-  rejectInvitation(location: string, invitation: Models.ConsumerInvitation, options?: msRest.RequestOptionsBase): Promise<Models.ConsumerInvitationsRejectInvitationResponse>;
+  listInvitations(options?: Models.ConsumerInvitationsListInvitationsOptionalParams): Promise<Models.ConsumerInvitationsListInvitationsResponse>;
   /**
-   * @param location Location of the invitation
-   * @param invitation An invitation payload
    * @param callback The callback
    */
-  rejectInvitation(location: string, invitation: Models.ConsumerInvitation, callback: msRest.ServiceCallback<Models.ConsumerInvitation>): void;
+  listInvitations(callback: msRest.ServiceCallback<Models.ConsumerInvitationList>): void;
   /**
-   * @param location Location of the invitation
-   * @param invitation An invitation payload
    * @param options The optional parameters
    * @param callback The callback
    */
-  rejectInvitation(location: string, invitation: Models.ConsumerInvitation, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.ConsumerInvitation>): void;
-  rejectInvitation(location: string, invitation: Models.ConsumerInvitation, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.ConsumerInvitation>, callback?: msRest.ServiceCallback<Models.ConsumerInvitation>): Promise<Models.ConsumerInvitationsRejectInvitationResponse> {
+  listInvitations(options: Models.ConsumerInvitationsListInvitationsOptionalParams, callback: msRest.ServiceCallback<Models.ConsumerInvitationList>): void;
+  listInvitations(options?: Models.ConsumerInvitationsListInvitationsOptionalParams | msRest.ServiceCallback<Models.ConsumerInvitationList>, callback?: msRest.ServiceCallback<Models.ConsumerInvitationList>): Promise<Models.ConsumerInvitationsListInvitationsResponse> {
     return this.client.sendOperationRequest(
       {
-        location,
-        invitation,
         options
       },
-      rejectInvitationOperationSpec,
-      callback) as Promise<Models.ConsumerInvitationsRejectInvitationResponse>;
+      listInvitationsOperationSpec,
+      callback) as Promise<Models.ConsumerInvitationsListInvitationsResponse>;
   }
 
   /**
@@ -93,28 +85,36 @@ export class ConsumerInvitations {
   }
 
   /**
-   * Lists invitations
-   * @summary List the invitations
+   * Reject an invitation
+   * @summary Rejects the invitation identified by invitationId
+   * @param location Location of the invitation
+   * @param invitation An invitation payload
    * @param [options] The optional parameters
-   * @returns Promise<Models.ConsumerInvitationsListInvitationsResponse>
+   * @returns Promise<Models.ConsumerInvitationsRejectInvitationResponse>
    */
-  listInvitations(options?: Models.ConsumerInvitationsListInvitationsOptionalParams): Promise<Models.ConsumerInvitationsListInvitationsResponse>;
+  rejectInvitation(location: string, invitation: Models.ConsumerInvitation, options?: msRest.RequestOptionsBase): Promise<Models.ConsumerInvitationsRejectInvitationResponse>;
   /**
+   * @param location Location of the invitation
+   * @param invitation An invitation payload
    * @param callback The callback
    */
-  listInvitations(callback: msRest.ServiceCallback<Models.ConsumerInvitationList>): void;
+  rejectInvitation(location: string, invitation: Models.ConsumerInvitation, callback: msRest.ServiceCallback<Models.ConsumerInvitation>): void;
   /**
+   * @param location Location of the invitation
+   * @param invitation An invitation payload
    * @param options The optional parameters
    * @param callback The callback
    */
-  listInvitations(options: Models.ConsumerInvitationsListInvitationsOptionalParams, callback: msRest.ServiceCallback<Models.ConsumerInvitationList>): void;
-  listInvitations(options?: Models.ConsumerInvitationsListInvitationsOptionalParams | msRest.ServiceCallback<Models.ConsumerInvitationList>, callback?: msRest.ServiceCallback<Models.ConsumerInvitationList>): Promise<Models.ConsumerInvitationsListInvitationsResponse> {
+  rejectInvitation(location: string, invitation: Models.ConsumerInvitation, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.ConsumerInvitation>): void;
+  rejectInvitation(location: string, invitation: Models.ConsumerInvitation, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.ConsumerInvitation>, callback?: msRest.ServiceCallback<Models.ConsumerInvitation>): Promise<Models.ConsumerInvitationsRejectInvitationResponse> {
     return this.client.sendOperationRequest(
       {
+        location,
+        invitation,
         options
       },
-      listInvitationsOperationSpec,
-      callback) as Promise<Models.ConsumerInvitationsListInvitationsResponse>;
+      rejectInvitationOperationSpec,
+      callback) as Promise<Models.ConsumerInvitationsRejectInvitationResponse>;
   }
 
   /**
@@ -149,28 +149,19 @@ export class ConsumerInvitations {
 
 // Operation Specifications
 const serializer = new msRest.Serializer(Mappers);
-const rejectInvitationOperationSpec: msRest.OperationSpec = {
-  httpMethod: "POST",
-  path: "providers/Microsoft.DataShare/locations/{location}/RejectInvitation",
-  urlParameters: [
-    Parameters.location
-  ],
+const listInvitationsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  path: "providers/Microsoft.DataShare/ListInvitations",
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion,
+    Parameters.skipToken
   ],
   headerParameters: [
     Parameters.acceptLanguage
   ],
-  requestBody: {
-    parameterPath: "invitation",
-    mapper: {
-      ...Mappers.ConsumerInvitation,
-      required: true
-    }
-  },
   responses: {
     200: {
-      bodyMapper: Mappers.ConsumerInvitation
+      bodyMapper: Mappers.ConsumerInvitationList
     },
     default: {
       bodyMapper: Mappers.DataShareError
@@ -203,19 +194,28 @@ const getOperationSpec: msRest.OperationSpec = {
   serializer
 };
 
-const listInvitationsOperationSpec: msRest.OperationSpec = {
-  httpMethod: "GET",
-  path: "providers/Microsoft.DataShare/ListInvitations",
+const rejectInvitationOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "providers/Microsoft.DataShare/locations/{location}/RejectInvitation",
+  urlParameters: [
+    Parameters.location
+  ],
   queryParameters: [
-    Parameters.apiVersion,
-    Parameters.skipToken
+    Parameters.apiVersion
   ],
   headerParameters: [
     Parameters.acceptLanguage
   ],
+  requestBody: {
+    parameterPath: "invitation",
+    mapper: {
+      ...Mappers.ConsumerInvitation,
+      required: true
+    }
+  },
   responses: {
     200: {
-      bodyMapper: Mappers.ConsumerInvitationList
+      bodyMapper: Mappers.ConsumerInvitation
     },
     default: {
       bodyMapper: Mappers.DataShareError
