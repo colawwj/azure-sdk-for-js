@@ -88,11 +88,37 @@ export const containerServiceName: msRest.OperationURLParameter = {
     }
   }
 };
+export const format: msRest.OperationQueryParameter = {
+  parameterPath: [
+    "options",
+    "format"
+  ],
+  mapper: {
+    serializedName: "format",
+    defaultValue: 'azure',
+    type: {
+      name: "String"
+    }
+  }
+};
 export const location: msRest.OperationURLParameter = {
   parameterPath: "location",
   mapper: {
     required: true,
     serializedName: "location",
+    type: {
+      name: "String"
+    }
+  }
+};
+export const login: msRest.OperationQueryParameter = {
+  parameterPath: [
+    "options",
+    "login"
+  ],
+  mapper: {
+    serializedName: "login",
+    defaultValue: 'devicecode',
     type: {
       name: "String"
     }

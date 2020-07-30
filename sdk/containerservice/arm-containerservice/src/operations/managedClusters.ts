@@ -203,7 +203,7 @@ export class ManagedClusters {
    * @param [options] The optional parameters
    * @returns Promise<Models.ManagedClustersListClusterUserCredentialsResponse>
    */
-  listClusterUserCredentials(resourceGroupName: string, resourceName: string, options?: msRest.RequestOptionsBase): Promise<Models.ManagedClustersListClusterUserCredentialsResponse>;
+  listClusterUserCredentials(resourceGroupName: string, resourceName: string, options?: Models.ManagedClustersListClusterUserCredentialsOptionalParams): Promise<Models.ManagedClustersListClusterUserCredentialsResponse>;
   /**
    * @param resourceGroupName The name of the resource group.
    * @param resourceName The name of the managed cluster resource.
@@ -216,8 +216,8 @@ export class ManagedClusters {
    * @param options The optional parameters
    * @param callback The callback
    */
-  listClusterUserCredentials(resourceGroupName: string, resourceName: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.CredentialResults>): void;
-  listClusterUserCredentials(resourceGroupName: string, resourceName: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.CredentialResults>, callback?: msRest.ServiceCallback<Models.CredentialResults>): Promise<Models.ManagedClustersListClusterUserCredentialsResponse> {
+  listClusterUserCredentials(resourceGroupName: string, resourceName: string, options: Models.ManagedClustersListClusterUserCredentialsOptionalParams, callback: msRest.ServiceCallback<Models.CredentialResults>): void;
+  listClusterUserCredentials(resourceGroupName: string, resourceName: string, options?: Models.ManagedClustersListClusterUserCredentialsOptionalParams | msRest.ServiceCallback<Models.CredentialResults>, callback?: msRest.ServiceCallback<Models.CredentialResults>): Promise<Models.ManagedClustersListClusterUserCredentialsResponse> {
     return this.client.sendOperationRequest(
       {
         resourceGroupName,
@@ -698,7 +698,9 @@ const listClusterUserCredentialsOperationSpec: msRest.OperationSpec = {
     Parameters.resourceName1
   ],
   queryParameters: [
-    Parameters.apiVersion3
+    Parameters.apiVersion3,
+    Parameters.format,
+    Parameters.login
   ],
   headerParameters: [
     Parameters.acceptLanguage

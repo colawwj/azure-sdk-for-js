@@ -1819,6 +1819,22 @@ export interface ContainerServicesListOrchestratorsOptionalParams extends msRest
 }
 
 /**
+ * Optional Parameters.
+ */
+export interface ManagedClustersListClusterUserCredentialsOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Credential Format. Possible values: azure, exec. Possible values include: 'azure', 'exec'.
+   * Default value: 'azure'.
+   */
+  format?: Format;
+  /**
+   * Credential Format. Possible values: devicecode, spn, msi. Possible values include:
+   * 'devicecode', 'spn', 'msi'. Default value: 'devicecode'.
+   */
+  login?: Login;
+}
+
+/**
  * An interface representing ContainerServiceClientOptions.
  */
 export interface ContainerServiceClientOptions extends AzureServiceClientOptions {
@@ -2088,6 +2104,22 @@ export type PrivateEndpointConnectionProvisioningState = 'Succeeded' | 'Creating
  * @enum {string}
  */
 export type ConnectionStatus = 'Pending' | 'Approved' | 'Rejected' | 'Disconnected';
+
+/**
+ * Defines values for Format.
+ * Possible values include: 'azure', 'exec'
+ * @readonly
+ * @enum {string}
+ */
+export type Format = 'azure' | 'exec';
+
+/**
+ * Defines values for Login.
+ * Possible values include: 'devicecode', 'spn', 'msi'
+ * @readonly
+ * @enum {string}
+ */
+export type Login = 'devicecode' | 'spn' | 'msi';
 
 /**
  * Contains response data for the list operation.
