@@ -331,7 +331,7 @@ const getOperationSpec: msRest.OperationSpec = {
     Parameters.diskAccessName
   ],
   queryParameters: [
-    Parameters.apiVersion2
+    Parameters.apiVersion3
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -355,7 +355,7 @@ const listByResourceGroupOperationSpec: msRest.OperationSpec = {
     Parameters.resourceGroupName
   ],
   queryParameters: [
-    Parameters.apiVersion2
+    Parameters.apiVersion3
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -378,7 +378,7 @@ const listOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion2
+    Parameters.apiVersion3
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -403,7 +403,7 @@ const getPrivateLinkResourcesOperationSpec: msRest.OperationSpec = {
     Parameters.diskAccessName
   ],
   queryParameters: [
-    Parameters.apiVersion2
+    Parameters.apiVersion3
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -428,7 +428,7 @@ const beginCreateOrUpdateOperationSpec: msRest.OperationSpec = {
     Parameters.diskAccessName
   ],
   queryParameters: [
-    Parameters.apiVersion2
+    Parameters.apiVersion3
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -463,7 +463,7 @@ const beginUpdateOperationSpec: msRest.OperationSpec = {
     Parameters.diskAccessName
   ],
   queryParameters: [
-    Parameters.apiVersion2
+    Parameters.apiVersion3
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -498,7 +498,7 @@ const beginDeleteMethodOperationSpec: msRest.OperationSpec = {
     Parameters.diskAccessName
   ],
   queryParameters: [
-    Parameters.apiVersion2
+    Parameters.apiVersion3
   ],
   headerParameters: [
     Parameters.acceptLanguage
