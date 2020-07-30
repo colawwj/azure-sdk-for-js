@@ -134,6 +134,30 @@ export const apiVersion7: msRest.OperationQueryParameter = {
     }
   }
 };
+export const apiVersion8: msRest.OperationQueryParameter = {
+  parameterPath: "apiVersion",
+  mapper: {
+    required: true,
+    isConstant: true,
+    serializedName: "api-version",
+    defaultValue: '2020-02-02-preview',
+    type: {
+      name: "String"
+    }
+  }
+};
+export const authenticationName: msRest.OperationURLParameter = {
+  parameterPath: "authenticationName",
+  mapper: {
+    required: true,
+    isConstant: true,
+    serializedName: "authenticationName",
+    defaultValue: 'Default',
+    type: {
+      name: "String"
+    }
+  }
+};
 export const backupName: msRest.OperationURLParameter = {
   parameterPath: "backupName",
   mapper: {

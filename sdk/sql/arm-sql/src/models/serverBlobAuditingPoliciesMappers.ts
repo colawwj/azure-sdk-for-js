@@ -97,6 +97,7 @@ export {
   Server,
   ServerAutomaticTuning,
   ServerAzureADAdministrator,
+  ServerAzureADOnlyAuthentication,
   ServerBlobAuditingPolicy,
   ServerBlobAuditingPolicyListResult,
   ServerCommunicationLink,

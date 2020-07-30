@@ -102,12 +102,13 @@ class SqlManagementClient extends SqlManagementClientContext {
   managedInstanceLongTermRetentionPolicies: operations.ManagedInstanceLongTermRetentionPolicies;
   workloadGroups: operations.WorkloadGroups;
   workloadClassifiers: operations.WorkloadClassifiers;
-  serverAzureADAdministrators: operations.ServerAzureADAdministrators;
   managedInstanceOperations: operations.ManagedInstanceOperations;
+  serverAzureADAdministrators: operations.ServerAzureADAdministrators;
   syncGroups: operations.SyncGroups;
   syncMembers: operations.SyncMembers;
   managedDatabaseRestoreDetails: operations.ManagedDatabaseRestoreDetails;
   managedDatabases: operations.ManagedDatabases;
+  serverAzureADOnlyAuthentications: operations.ServerAzureADOnlyAuthentications;
 
   /**
    * Initializes a new instance of the SqlManagementClient class.
@@ -202,12 +203,13 @@ class SqlManagementClient extends SqlManagementClientContext {
     this.managedInstanceLongTermRetentionPolicies = new operations.ManagedInstanceLongTermRetentionPolicies(this);
     this.workloadGroups = new operations.WorkloadGroups(this);
     this.workloadClassifiers = new operations.WorkloadClassifiers(this);
-    this.serverAzureADAdministrators = new operations.ServerAzureADAdministrators(this);
     this.managedInstanceOperations = new operations.ManagedInstanceOperations(this);
+    this.serverAzureADAdministrators = new operations.ServerAzureADAdministrators(this);
     this.syncGroups = new operations.SyncGroups(this);
     this.syncMembers = new operations.SyncMembers(this);
     this.managedDatabaseRestoreDetails = new operations.ManagedDatabaseRestoreDetails(this);
     this.managedDatabases = new operations.ManagedDatabases(this);
+    this.serverAzureADOnlyAuthentications = new operations.ServerAzureADOnlyAuthentications(this);
   }
 }
 
