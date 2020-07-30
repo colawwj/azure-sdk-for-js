@@ -722,6 +722,11 @@ export interface VirtualMachineExtension extends Resource {
    */
   autoUpgradeMinorVersion?: boolean;
   /**
+   * Indicates whether the extension should be automatically upgraded by the platform if there is a
+   * newer version of the extension available.
+   */
+  enableAutomaticUpgrade?: boolean;
+  /**
    * Json formatted public settings for the extension.
    */
   settings?: any;
@@ -768,6 +773,11 @@ export interface VirtualMachineExtensionUpdate extends UpdateResource {
    * redeployed, even with this property set to true.
    */
   autoUpgradeMinorVersion?: boolean;
+  /**
+   * Indicates whether the extension should be automatically upgraded by the platform if there is a
+   * newer version of the extension available.
+   */
+  enableAutomaticUpgrade?: boolean;
   /**
    * Json formatted public settings for the extension.
    */
@@ -2073,6 +2083,17 @@ export interface MaintenanceRedeployStatus {
 }
 
 /**
+ * The health status of the VM.
+ */
+export interface VirtualMachineHealthStatus {
+  /**
+   * The health status information for the VM.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly status?: InstanceViewStatus;
+}
+
+/**
  * The instance view of a virtual machine.
  */
 export interface VirtualMachineInstanceView {
@@ -2121,6 +2142,11 @@ export interface VirtualMachineInstanceView {
    * The extensions information.
    */
   extensions?: VirtualMachineExtensionInstanceView[];
+  /**
+   * The health status for the VM.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly vmHealth?: VirtualMachineHealthStatus;
   /**
    * Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot
    * to diagnose VM status. <br><br> You can easily view the output of your console log. <br><br>
@@ -3333,6 +3359,11 @@ export interface VirtualMachineScaleSetExtension extends SubResourceReadOnly {
    */
   autoUpgradeMinorVersion?: boolean;
   /**
+   * Indicates whether the extension should be automatically upgraded by the platform if there is a
+   * newer version of the extension available.
+   */
+  enableAutomaticUpgrade?: boolean;
+  /**
    * Json formatted public settings for the extension.
    */
   settings?: any;
@@ -3389,6 +3420,11 @@ export interface VirtualMachineScaleSetExtensionUpdate extends SubResourceReadOn
    * redeployed, even with this property set to true.
    */
   autoUpgradeMinorVersion?: boolean;
+  /**
+   * Indicates whether the extension should be automatically upgraded by the platform if there is a
+   * newer version of the extension available.
+   */
+  enableAutomaticUpgrade?: boolean;
   /**
    * Json formatted public settings for the extension.
    */
@@ -4011,17 +4047,6 @@ export interface UpgradeOperationHistoricalStatusInfo {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly location?: string;
-}
-
-/**
- * The health status of the VM.
- */
-export interface VirtualMachineHealthStatus {
-  /**
-   * The health status information for the VM.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly status?: InstanceViewStatus;
 }
 
 /**
