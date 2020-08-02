@@ -368,6 +368,73 @@ export const IpFilterRule: msRest.CompositeMapper = {
   }
 };
 
+export const NetworkRuleSetIpRule: msRest.CompositeMapper = {
+  serializedName: "NetworkRuleSetIpRule",
+  type: {
+    name: "Composite",
+    className: "NetworkRuleSetIpRule",
+    modelProperties: {
+      filterName: {
+        required: true,
+        serializedName: "filterName",
+        type: {
+          name: "String"
+        }
+      },
+      ipMask: {
+        required: true,
+        serializedName: "ipMask",
+        type: {
+          name: "String"
+        }
+      },
+      action: {
+        serializedName: "action",
+        defaultValue: 'Allow',
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const NetworkRuleSetProperties: msRest.CompositeMapper = {
+  serializedName: "NetworkRuleSetProperties",
+  type: {
+    name: "Composite",
+    className: "NetworkRuleSetProperties",
+    modelProperties: {
+      defaultAction: {
+        serializedName: "defaultAction",
+        defaultValue: 'Deny',
+        type: {
+          name: "String"
+        }
+      },
+      applyToBuiltInEventHubEndpoint: {
+        serializedName: "applyToBuiltInEventHubEndpoint",
+        defaultValue: true,
+        type: {
+          name: "Boolean"
+        }
+      },
+      ipRules: {
+        serializedName: "ipRules",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "NetworkRuleSetIpRule"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
 export const PrivateEndpoint: msRest.CompositeMapper = {
   serializedName: "PrivateEndpoint",
   type: {
@@ -1255,6 +1322,13 @@ export const IotHubProperties: msRest.CompositeMapper = {
               className: "IpFilterRule"
             }
           }
+        }
+      },
+      networkRuleSets: {
+        serializedName: "networkRuleSets",
+        type: {
+          name: "Composite",
+          className: "NetworkRuleSetProperties"
         }
       },
       minTlsVersion: {

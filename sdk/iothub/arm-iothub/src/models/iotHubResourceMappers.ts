@@ -43,6 +43,8 @@ export {
   JobResponseListResult,
   MatchedRoute,
   MessagingEndpointProperties,
+  NetworkRuleSetIpRule,
+  NetworkRuleSetProperties,
   OperationInputs,
   PrivateEndpoint,
   PrivateEndpointConnection,
