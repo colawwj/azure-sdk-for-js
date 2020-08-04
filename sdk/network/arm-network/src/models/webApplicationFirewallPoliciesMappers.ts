@@ -167,7 +167,6 @@ export {
   IpTag,
   Ipv6CircuitConnectionConfig,
   Ipv6ExpressRouteCircuitPeeringConfig,
-  ListVirtualWANsResult,
   LoadBalancer,
   LoadBalancerBackendAddress,
   LoadBalancerSku,
@@ -249,7 +248,6 @@ export {
   StaticRoute,
   Subnet,
   SubResource,
-  TagsObject,
   TrafficAnalyticsConfigurationProperties,
   TrafficAnalyticsProperties,
   TrafficSelectorPolicy,
@@ -296,5 +294,6 @@ export {
   VpnSiteLink,
   VpnSiteLinkConnection,
   WebApplicationFirewallCustomRule,
-  WebApplicationFirewallPolicy
+  WebApplicationFirewallPolicy,
+  WebApplicationFirewallPolicyListResult
 } from "../models/mappers";
