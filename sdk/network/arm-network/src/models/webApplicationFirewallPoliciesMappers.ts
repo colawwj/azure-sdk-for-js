@@ -130,7 +130,6 @@ export {
   ExpressRouteGatewayPropertiesAutoScaleConfiguration,
   ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds,
   ExpressRouteLink,
-  ExpressRouteLinkListResult,
   ExpressRouteLinkMacSecConfig,
   ExpressRoutePort,
   ExpressRoutePortsLocation,
@@ -296,5 +295,6 @@ export {
   VpnSiteLink,
   VpnSiteLinkConnection,
   WebApplicationFirewallCustomRule,
-  WebApplicationFirewallPolicy
+  WebApplicationFirewallPolicy,
+  WebApplicationFirewallPolicyListResult
 } from "../models/mappers";
