@@ -10,16 +10,16 @@
 
 import * as msRest from "@azure/ms-rest-js";
 import * as Models from "../models";
-import * as Mappers from "../models/usagesMappers";
+import * as Mappers from "../models/usageOperationsMappers";
 import * as Parameters from "../models/parameters";
 import { StorageManagementClientContext } from "../storageManagementClientContext";
 
-/** Class representing a Usages. */
-export class Usages {
+/** Class representing a UsageOperations. */
+export class UsageOperations {
   private readonly client: StorageManagementClientContext;
 
   /**
-   * Create a Usages.
+   * Create a UsageOperations.
    * @param {StorageManagementClientContext} client Reference to the service client.
    */
   constructor(client: StorageManagementClientContext) {
@@ -27,43 +27,37 @@ export class Usages {
   }
 
   /**
-   * Gets the current usage count and the limit for the resources of the location under the
-   * subscription.
-   * @param location The location of the Azure Storage resource.
+   * Gets the current usage count and the limit for the resources under the subscription.
    * @param [options] The optional parameters
-   * @returns Promise<Models.UsagesListByLocationResponse>
+   * @returns Promise<Models.UsageListResponse>
    */
-  listByLocation(location: string, options?: msRest.RequestOptionsBase): Promise<Models.UsagesListByLocationResponse>;
+  list(options?: msRest.RequestOptionsBase): Promise<Models.UsageListResponse>;
   /**
-   * @param location The location of the Azure Storage resource.
    * @param callback The callback
    */
-  listByLocation(location: string, callback: msRest.ServiceCallback<Models.UsageListResult>): void;
+  list(callback: msRest.ServiceCallback<Models.UsageListResult>): void;
   /**
-   * @param location The location of the Azure Storage resource.
    * @param options The optional parameters
    * @param callback The callback
    */
-  listByLocation(location: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.UsageListResult>): void;
-  listByLocation(location: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.UsageListResult>, callback?: msRest.ServiceCallback<Models.UsageListResult>): Promise<Models.UsagesListByLocationResponse> {
+  list(options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.UsageListResult>): void;
+  list(options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.UsageListResult>, callback?: msRest.ServiceCallback<Models.UsageListResult>): Promise<Models.UsageListResponse> {
     return this.client.sendOperationRequest(
       {
-        location,
         options
       },
-      listByLocationOperationSpec,
-      callback) as Promise<Models.UsagesListByLocationResponse>;
+      listOperationSpec,
+      callback) as Promise<Models.UsageListResponse>;
   }
 }
 
 // Operation Specifications
 const serializer = new msRest.Serializer(Mappers);
-const listByLocationOperationSpec: msRest.OperationSpec = {
+const listOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
-  path: "subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/usages",
+  path: "subscriptions/{subscriptionId}/providers/Microsoft.Storage/usages",
   urlParameters: [
-    Parameters.subscriptionId,
-    Parameters.location
+    Parameters.subscriptionId
   ],
   queryParameters: [
     Parameters.apiVersion

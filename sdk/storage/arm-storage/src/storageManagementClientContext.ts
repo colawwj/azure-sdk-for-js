@@ -23,7 +23,8 @@ export class StorageManagementClientContext extends msRestAzure.AzureServiceClie
   /**
    * Initializes a new instance of the StorageManagementClient class.
    * @param credentials Credentials needed for the client to connect to Azure.
-   * @param subscriptionId The ID of the target subscription.
+   * @param subscriptionId Gets subscription credentials which uniquely identify the Microsoft Azure
+   * subscription. The subscription ID forms part of the URI for every service call.
    * @param [options] The parameter options
    */
   constructor(credentials: msRest.ServiceClientCredentials, subscriptionId: string, options?: Models.StorageManagementClientOptions) {
@@ -44,7 +45,7 @@ export class StorageManagementClientContext extends msRestAzure.AzureServiceClie
 
     super(credentials, options);
 
-    this.apiVersion = '2019-06-01';
+    this.apiVersion = '2017-10-01';
     this.acceptLanguage = 'en-US';
     this.longRunningOperationRetryTimeout = 30;
     this.baseUri = options.baseUri || this.baseUri || "https://management.azure.com";
