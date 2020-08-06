@@ -163,13 +163,13 @@ export interface ProductEntityBaseParameters {
    * automatically enabling developers to call the product’s APIs immediately after subscribing. If
    * true, administrators must manually approve the subscription before the developer can any of
    * the product’s APIs. Can be present only if subscriptionRequired property is present and has a
-   * value of true.
+   * value of false.
    */
   approvalRequired?: boolean;
   /**
    * Whether the number of subscriptions a user can have to this product at the same time. Set to
    * null or omit to allow unlimited per user subscriptions. Can be present only if
-   * subscriptionRequired property is present and has a value of true.
+   * subscriptionRequired property is present and has a value of false.
    */
   subscriptionsLimit?: number;
   /**
@@ -839,13 +839,13 @@ export interface ProductContract extends Resource {
    * automatically enabling developers to call the product’s APIs immediately after subscribing. If
    * true, administrators must manually approve the subscription before the developer can any of
    * the product’s APIs. Can be present only if subscriptionRequired property is present and has a
-   * value of true.
+   * value of false.
    */
   approvalRequired?: boolean;
   /**
    * Whether the number of subscriptions a user can have to this product at the same time. Set to
    * null or omit to allow unlimited per user subscriptions. Can be present only if
-   * subscriptionRequired property is present and has a value of true.
+   * subscriptionRequired property is present and has a value of false.
    */
   subscriptionsLimit?: number;
   /**
@@ -2039,6 +2039,42 @@ export interface CertificateCreateOrUpdateParameters {
 }
 
 /**
+ * Content type contract details.
+ */
+export interface ContentItemContract extends Resource {
+  /**
+   * Properties of the content item.
+   */
+  properties?: { [propertyName: string]: any };
+}
+
+/**
+ * Content type contract details.
+ */
+export interface ContentTypeContract extends Resource {
+  /**
+   * Content type identifier
+   */
+  contentTypeContractId?: string;
+  /**
+   * Content type name. Must be 1 to 250 characters long.
+   */
+  contentTypeContractName?: string;
+  /**
+   * Content type description.
+   */
+  description?: string;
+  /**
+   * Content type schema.
+   */
+  schema?: any;
+  /**
+   * Content type version.
+   */
+  version?: string;
+}
+
+/**
  * Describes an available API Management SKU.
  */
 export interface ResourceSku {
@@ -2233,6 +2269,10 @@ export interface AdditionalLocation {
    * SKU properties of the API Management service.
    */
   sku: ApiManagementServiceSkuProperties;
+  /**
+   * A list of availability zones denoting where the resource needs to come from.
+   */
+  zones?: string[];
   /**
    * Public Static Load Balanced IP addresses of the API Management service in the additional
    * location. Available only for Basic, Standard and Premium SKU.
@@ -2673,6 +2713,10 @@ export interface ApiManagementServiceResource extends ApimResource {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly etag?: string;
+  /**
+   * A list of availability zones denoting where the resource needs to come from.
+   */
+  zones?: string[];
 }
 
 /**
@@ -4083,13 +4127,13 @@ export interface ProductUpdateParameters {
    * automatically enabling developers to call the product’s APIs immediately after subscribing. If
    * true, administrators must manually approve the subscription before the developer can any of
    * the product’s APIs. Can be present only if subscriptionRequired property is present and has a
-   * value of true.
+   * value of false.
    */
   approvalRequired?: boolean;
   /**
    * Whether the number of subscriptions a user can have to this product at the same time. Set to
    * null or omit to allow unlimited per user subscriptions. Can be present only if
-   * subscriptionRequired property is present and has a value of true.
+   * subscriptionRequired property is present and has a value of false.
    */
   subscriptionsLimit?: number;
   /**
@@ -4808,74 +4852,6 @@ export interface QuotaCounterValueContract {
    * Data Transferred in KiloBytes.
    */
   kbTransferred?: number;
-}
-
-/**
- * Content type contract details.
- */
-export interface ContentTypeContract extends Resource {
-  /**
-   * Content type identifier
-   */
-  contentTypeContractId?: string;
-  /**
-   * Content type name. Must be 1 to 250 characters long.
-   */
-  contentTypeContractName?: string;
-  /**
-   * Content type description.
-   */
-  description?: string;
-  /**
-   * Content type schema.
-   */
-  schema?: any;
-  /**
-   * Content type version.
-   */
-  version?: string;
-}
-
-/**
- * Paged list of content types.
- */
-export interface ContentTypeCollection {
-  /**
-   * Collection of content types.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly value?: ContentTypeContract[];
-  /**
-   * Next page link, if any.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly nextLink?: string;
-}
-
-/**
- * Content type contract details.
- */
-export interface ContentItemContract extends Resource {
-  /**
-   * Properties of the content item.
-   */
-  properties?: { [propertyName: string]: any };
-}
-
-/**
- * Paged list of content items.
- */
-export interface ContentItemCollection {
-  /**
-   * Collection of content items.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly value?: ContentItemContract[];
-  /**
-   * Next page link, if any.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly nextLink?: string;
 }
 
 /**
@@ -7226,6 +7202,72 @@ export interface CertificateCreateOrUpdateHeaders {
 /**
  * Defines headers for GetEntityTag operation.
  */
+export interface ContentTypeGetEntityTagHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
+ * Defines headers for Get operation.
+ */
+export interface ContentTypesGetHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
+ * Defines headers for CreateOrUpdate operation.
+ */
+export interface ContentTypeCreateOrUpdateHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
+ * Defines headers for GetEntityTag operation.
+ */
+export interface ContentItemGetEntityTagHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
+ * Defines headers for Get operation.
+ */
+export interface ContentItemGetHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
+ * Defines headers for CreateOrUpdate operation.
+ */
+export interface ContentItemCreateOrUpdateHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
+ * Defines headers for GetEntityTag operation.
+ */
 export interface DiagnosticGetEntityTagHeaders {
   /**
    * Current entity state version. Should be treated as opaque and used to make conditional HTTP
@@ -8120,6 +8162,32 @@ export interface CertificateCollection extends Array<CertificateContract> {
    * Next page link if any.
    */
   nextLink?: string;
+}
+
+/**
+ * @interface
+ * Paged list of content types.
+ * @extends Array<ContentTypeContract>
+ */
+export interface ContentTypeCollection extends Array<ContentTypeContract> {
+  /**
+   * Next page link, if any.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly nextLink?: string;
+}
+
+/**
+ * @interface
+ * Paged list of content items.
+ * @extends Array<ContentItemContract>
+ */
+export interface ContentItemCollection extends Array<ContentItemContract> {
+  /**
+   * Next page link, if any.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly nextLink?: string;
 }
 
 /**
@@ -10941,6 +11009,216 @@ export type CertificateListByServiceNextResponse = CertificateCollection & {
        * The response body as parsed JSON or XML
        */
       parsedBody: CertificateCollection;
+    };
+};
+
+/**
+ * Contains response data for the listByService operation.
+ */
+export type ContentTypeListByServiceResponse = ContentTypeCollection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ContentTypeCollection;
+    };
+};
+
+/**
+ * Contains response data for the getEntityTag operation.
+ */
+export type ContentTypeGetEntityTagResponse = ContentTypeGetEntityTagHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: ContentTypeGetEntityTagHeaders;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdate operation.
+ */
+export type ContentTypeCreateOrUpdateResponse = ContentTypeContract & ContentTypeCreateOrUpdateHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: ContentTypeCreateOrUpdateHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ContentTypeContract;
+    };
+};
+
+/**
+ * Contains response data for the listByServiceNext operation.
+ */
+export type ContentTypeListByServiceNextResponse = ContentTypeCollection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ContentTypeCollection;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type ContentTypesGetResponse = ContentTypeContract & ContentTypesGetHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: ContentTypesGetHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ContentTypeContract;
+    };
+};
+
+/**
+ * Contains response data for the listByService operation.
+ */
+export type ContentItemListByServiceResponse = ContentItemCollection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ContentItemCollection;
+    };
+};
+
+/**
+ * Contains response data for the getEntityTag operation.
+ */
+export type ContentItemGetEntityTagResponse = ContentItemGetEntityTagHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: ContentItemGetEntityTagHeaders;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type ContentItemGetResponse = ContentItemContract & ContentItemGetHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: ContentItemGetHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ContentItemContract;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdate operation.
+ */
+export type ContentItemCreateOrUpdateResponse = ContentItemContract & ContentItemCreateOrUpdateHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: ContentItemCreateOrUpdateHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ContentItemContract;
+    };
+};
+
+/**
+ * Contains response data for the listByServiceNext operation.
+ */
+export type ContentItemListByServiceNextResponse = ContentItemCollection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ContentItemCollection;
     };
 };
 
