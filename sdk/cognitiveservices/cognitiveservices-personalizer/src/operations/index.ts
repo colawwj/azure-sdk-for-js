@@ -13,4 +13,6 @@ export * from "./policy";
 export * from "./evaluations";
 export * from "./events";
 export * from "./log";
+export * from "./learningMetrics";
 export * from "./model";
+export * from "./stagedModel";

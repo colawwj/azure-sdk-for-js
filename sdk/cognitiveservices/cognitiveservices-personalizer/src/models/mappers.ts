@@ -83,6 +83,32 @@ export const ServiceConfiguration: msRest.CompositeMapper = {
         type: {
           name: "Number"
         }
+      },
+      modelAutoPublish: {
+        serializedName: "modelAutoPublish",
+        defaultValue: true,
+        type: {
+          name: "Boolean"
+        }
+      },
+      stagedModelHistoryLength: {
+        serializedName: "stagedModelHistoryLength",
+        defaultValue: 10,
+        type: {
+          name: "Number"
+        }
+      },
+      lastConfigurationEditDate: {
+        serializedName: "lastConfigurationEditDate",
+        type: {
+          name: "DateTime"
+        }
+      },
+      learningMode: {
+        serializedName: "learningMode",
+        type: {
+          name: "String"
+        }
       }
     }
   }
@@ -538,6 +564,93 @@ export const LogsProperties: msRest.CompositeMapper = {
   }
 };
 
+export const Metric: msRest.CompositeMapper = {
+  serializedName: "Metric",
+  type: {
+    name: "Composite",
+    className: "Metric",
+    modelProperties: {
+      learningMode: {
+        required: true,
+        serializedName: "learningMode",
+        type: {
+          name: "String"
+        }
+      },
+      startDate: {
+        required: true,
+        serializedName: "startDate",
+        type: {
+          name: "DateTime"
+        }
+      },
+      endDate: {
+        required: true,
+        serializedName: "endDate",
+        type: {
+          name: "DateTime"
+        }
+      },
+      numberOfEvents: {
+        required: true,
+        serializedName: "numberOfEvents",
+        type: {
+          name: "Number"
+        }
+      },
+      sumOfRewards: {
+        required: true,
+        serializedName: "sumOfRewards",
+        type: {
+          name: "Number"
+        }
+      },
+      numberOfMatchedEvents: {
+        required: true,
+        serializedName: "numberOfMatchedEvents",
+        type: {
+          name: "Number"
+        }
+      },
+      sumOfImitatedRewards: {
+        required: true,
+        serializedName: "sumOfImitatedRewards",
+        type: {
+          name: "Number"
+        }
+      },
+      cumulativeNumberOfEvents: {
+        required: true,
+        serializedName: "cumulativeNumberOfEvents",
+        type: {
+          name: "Number"
+        }
+      },
+      cumulativeSumOfRewards: {
+        required: true,
+        serializedName: "cumulativeSumOfRewards",
+        type: {
+          name: "Number"
+        }
+      },
+      cumulativeNumberOfMatchedEvents: {
+        required: true,
+        serializedName: "cumulativeNumberOfMatchedEvents",
+        type: {
+          name: "Number"
+        }
+      },
+      cumulativeSumOfImitatedRewards: {
+        required: true,
+        serializedName: "cumulativeSumOfImitatedRewards",
+        type: {
+          name: "Number"
+        }
+      }
+    }
+  }
+};
+
 export const ModelProperties: msRest.CompositeMapper = {
   serializedName: "ModelProperties",
   type: {
@@ -562,6 +675,72 @@ export const ModelProperties: msRest.CompositeMapper = {
   }
 };
 
+export const ModelMetadata: msRest.CompositeMapper = {
+  serializedName: "ModelMetadata",
+  type: {
+    name: "Composite",
+    className: "ModelMetadata",
+    modelProperties: {
+      modelId: {
+        required: true,
+        serializedName: "modelId",
+        type: {
+          name: "String"
+        }
+      },
+      userDescription: {
+        required: true,
+        serializedName: "userDescription",
+        type: {
+          name: "String"
+        }
+      },
+      creationDate: {
+        required: true,
+        serializedName: "creationDate",
+        type: {
+          name: "DateTime"
+        }
+      },
+      lastConfigEditDate: {
+        required: true,
+        serializedName: "lastConfigEditDate",
+        type: {
+          name: "DateTime"
+        }
+      },
+      firstEventId: {
+        required: true,
+        serializedName: "firstEventId",
+        type: {
+          name: "String"
+        }
+      },
+      lastEventId: {
+        required: true,
+        serializedName: "lastEventId",
+        type: {
+          name: "String"
+        }
+      },
+      savedInHistory: {
+        required: true,
+        serializedName: "savedInHistory",
+        type: {
+          name: "Boolean"
+        }
+      },
+      numberOfEventsLearnedSinceLastExport: {
+        required: true,
+        serializedName: "numberOfEventsLearnedSinceLastExport",
+        type: {
+          name: "Number"
+        }
+      }
+    }
+  }
+};
+
 export const RankableAction: msRest.CompositeMapper = {
   serializedName: "RankableAction",
   type: {
@@ -572,7 +751,8 @@ export const RankableAction: msRest.CompositeMapper = {
         required: true,
         serializedName: "id",
         constraints: {
-          MaxLength: 256
+          MaxLength: 256,
+          MinLength: 1
         },
         type: {
           name: "String"

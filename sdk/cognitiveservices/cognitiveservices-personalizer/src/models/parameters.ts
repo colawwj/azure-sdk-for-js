@@ -10,6 +10,42 @@
 
 import * as msRest from "@azure/ms-rest-js";
 
+export const aggregationEventCount: msRest.OperationQueryParameter = {
+  parameterPath: [
+    "options",
+    "aggregationEventCount"
+  ],
+  mapper: {
+    serializedName: "AggregationEventCount",
+    type: {
+      name: "Number"
+    }
+  }
+};
+export const aggregationInterval: msRest.OperationQueryParameter = {
+  parameterPath: [
+    "options",
+    "aggregationInterval"
+  ],
+  mapper: {
+    serializedName: "AggregationInterval",
+    type: {
+      name: "String"
+    }
+  }
+};
+export const endDate: msRest.OperationQueryParameter = {
+  parameterPath: [
+    "options",
+    "endDate"
+  ],
+  mapper: {
+    serializedName: "EndDate",
+    type: {
+      name: "DateTime"
+    }
+  }
+};
 export const endpoint: msRest.OperationURLParameter = {
   parameterPath: "endpoint",
   mapper: {
@@ -45,6 +81,43 @@ export const eventId: msRest.OperationURLParameter = {
     },
     type: {
       name: "String"
+    }
+  }
+};
+export const id: msRest.OperationURLParameter = {
+  parameterPath: "id",
+  mapper: {
+    required: true,
+    serializedName: "id",
+    constraints: {
+      MaxLength: 256
+    },
+    type: {
+      name: "String"
+    }
+  }
+};
+export const numberOfRecentEvents: msRest.OperationQueryParameter = {
+  parameterPath: [
+    "options",
+    "numberOfRecentEvents"
+  ],
+  mapper: {
+    serializedName: "NumberOfRecentEvents",
+    type: {
+      name: "Number"
+    }
+  }
+};
+export const startDate: msRest.OperationQueryParameter = {
+  parameterPath: [
+    "options",
+    "startDate"
+  ],
+  mapper: {
+    serializedName: "StartDate",
+    type: {
+      name: "DateTime"
     }
   }
 };

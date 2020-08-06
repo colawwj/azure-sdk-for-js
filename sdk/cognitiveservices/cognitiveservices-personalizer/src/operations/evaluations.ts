@@ -218,7 +218,8 @@ const createOperationSpec: msRest.OperationSpec = {
       headersMapper: Mappers.EvaluationsCreateHeaders
     },
     default: {
-      bodyMapper: Mappers.ErrorResponse
+      bodyMapper: Mappers.ErrorResponse,
+      headersMapper: Mappers.EvaluationsCreateHeaders
     }
   },
   serializer

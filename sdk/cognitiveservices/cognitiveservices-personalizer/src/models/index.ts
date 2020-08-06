@@ -52,6 +52,26 @@ export interface ServiceConfiguration {
    * deleted.
    */
   logRetentionDays: number;
+  /**
+   * When auto-publish is enabled (= default), the trainer exports the model and override the
+   * "current" model.
+   * When auto-publish is disabled, the trainer exports models but does not override the "current"
+   * model (this is done by the user through API calls). Default value: true.
+   */
+  modelAutoPublish?: boolean;
+  /**
+   * Old models are automatically cleaned except the last N models. Default value: 10.
+   */
+  stagedModelHistoryLength?: number;
+  /**
+   * Last time model training configuration was updated
+   */
+  lastConfigurationEditDate?: Date;
+  /**
+   * Learning mode for Personalizer Microsoft.DecisionService.Common.LearningMode. Possible values
+   * include: 'Online', 'Apprentice', 'LoggingOnly'
+   */
+  learningMode?: LearningMode;
 }
 
 /**
@@ -73,12 +93,18 @@ export interface InternalError {
  */
 export interface PersonalizerError {
   /**
-   * High level error code. Possible values include: 'BadRequest', 'ResourceNotFound',
-   * 'InternalServerError', 'InvalidServiceConfiguration', 'InvalidPolicyConfiguration',
-   * 'InvalidPolicyContract', 'InvalidEvaluationContract', 'InvalidRewardRequest',
+   * High level error code. Possible values include: 'BadRequest', 'InvalidServiceConfiguration',
+   * 'InvalidLearningModeServiceConfiguration', 'InvalidPolicyConfiguration',
+   * 'InvalidPolicyContract', 'InvalidEvaluationContract', 'DuplicateCustomPolicyNames',
+   * 'NoLogsExistInDateRange', 'LogsSizeExceedAllowedLimit', 'InvalidRewardRequest',
    * 'InvalidEventIdToActivate', 'InvalidRankRequest', 'InvalidExportLogsRequest',
-   * 'InvalidContainer', 'FrontEndNotFound', 'EvaluationNotFound', 'LogsPropertiesNotFound',
-   * 'RankNullResponse', 'UpdateConfigurationFailed', 'ModelResetFailed'
+   * 'InvalidContainer', 'InvalidModelMetadata', 'ApprenticeModeNeverTurnedOn', 'MissingAppId',
+   * 'AggregationIntervalTooShort', 'AggregationIntervalInvalid', 'InvalidStartDateEndDate',
+   * 'AggregationEventCountTooSmall', 'AggregationEventCountInvalid', 'ModelFileAccessDenied',
+   * 'ResourceNotFound', 'FrontEndNotFound', 'EvaluationNotFound', 'LogsPropertiesNotFound',
+   * 'ModelRankingError', 'InternalServerError', 'RankNullResponse', 'UpdateConfigurationFailed',
+   * 'ModelResetFailed', 'ModelPublishFailed', 'ModelMetadataUpdateFailed', 'KeyVaultNotFound',
+   * 'None'
    */
   code: PersonalizerErrorCode;
   /**
@@ -114,11 +140,11 @@ export interface ErrorResponse {
  */
 export interface PolicyContract {
   /**
-   * Name of the Learning settings.
+   * Name of the learning settings.
    */
   name: string;
   /**
-   * Arguments of the Learning settings.
+   * Arguments of the learning settings.
    */
   argumentsProperty: string;
 }
@@ -211,7 +237,7 @@ export interface Evaluation {
    */
   readonly jobId?: string;
   /**
-   * Possible values include: 'completed', 'pending', 'failed', 'notSubmitted'
+   * Possible values include: 'completed', 'pending', 'failed', 'notSubmitted', 'timeout'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly status?: EvaluationJobStatus;
@@ -224,7 +250,7 @@ export interface Evaluation {
  */
 export interface EvaluationContract {
   /**
-   * True if the evaluation should explore for a more optimal Learning settings.
+   * True if the evaluation should explore for a more optimal learning settings.
    */
   enableOfflineExperimentation?: boolean;
   /**
@@ -240,7 +266,7 @@ export interface EvaluationContract {
    */
   endTime: Date;
   /**
-   * Additional Learning settings to evaluate.
+   * Additional learning settings to evaluate.
    */
   policies: PolicyContract[];
 }
@@ -286,6 +312,26 @@ export interface LogsProperties {
 }
 
 /**
+ * An interface representing Metric.
+ */
+export interface Metric {
+  /**
+   * Possible values include: 'Online', 'Apprentice', 'LoggingOnly'
+   */
+  learningMode: LearningMode;
+  startDate: Date;
+  endDate: Date;
+  numberOfEvents: number;
+  sumOfRewards: number;
+  numberOfMatchedEvents: number;
+  sumOfImitatedRewards: number;
+  cumulativeNumberOfEvents: number;
+  cumulativeSumOfRewards: number;
+  cumulativeNumberOfMatchedEvents: number;
+  cumulativeSumOfImitatedRewards: number;
+}
+
+/**
  * An interface representing ModelProperties.
  */
 export interface ModelProperties {
@@ -297,6 +343,20 @@ export interface ModelProperties {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly lastModifiedTime?: Date;
+}
+
+/**
+ * An interface representing ModelMetadata.
+ */
+export interface ModelMetadata {
+  modelId: string;
+  userDescription: string;
+  creationDate: Date;
+  lastConfigEditDate: Date;
+  firstEventId: string;
+  lastEventId: string;
+  savedInHistory: boolean;
+  numberOfEventsLearnedSinceLastExport: number;
 }
 
 /**
@@ -408,6 +468,32 @@ export interface ContainerStatus {
 }
 
 /**
+ * Optional Parameters.
+ */
+export interface LearningMetricsGetOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Start date to get the metrics for.
+   */
+  startDate?: Date;
+  /**
+   * End date to get the metrics for.
+   */
+  endDate?: Date;
+  /**
+   * Aggregation time period to aggregate the results for.
+   */
+  aggregationInterval?: string;
+  /**
+   * Number of recent events.
+   */
+  numberOfRecentEvents?: number;
+  /**
+   * Aggregation event window to aggregate the results for.
+   */
+  aggregationEventCount?: number;
+}
+
+/**
  * Defines headers for Create operation.
  */
 export interface EvaluationsCreateHeaders {
@@ -418,25 +504,39 @@ export interface EvaluationsCreateHeaders {
 }
 
 /**
- * Defines values for PersonalizerErrorCode.
- * Possible values include: 'BadRequest', 'ResourceNotFound', 'InternalServerError',
- * 'InvalidServiceConfiguration', 'InvalidPolicyConfiguration', 'InvalidPolicyContract',
- * 'InvalidEvaluationContract', 'InvalidRewardRequest', 'InvalidEventIdToActivate',
- * 'InvalidRankRequest', 'InvalidExportLogsRequest', 'InvalidContainer', 'FrontEndNotFound',
- * 'EvaluationNotFound', 'LogsPropertiesNotFound', 'RankNullResponse', 'UpdateConfigurationFailed',
- * 'ModelResetFailed'
+ * Defines values for LearningMode.
+ * Possible values include: 'Online', 'Apprentice', 'LoggingOnly'
  * @readonly
  * @enum {string}
  */
-export type PersonalizerErrorCode = 'BadRequest' | 'ResourceNotFound' | 'InternalServerError' | 'InvalidServiceConfiguration' | 'InvalidPolicyConfiguration' | 'InvalidPolicyContract' | 'InvalidEvaluationContract' | 'InvalidRewardRequest' | 'InvalidEventIdToActivate' | 'InvalidRankRequest' | 'InvalidExportLogsRequest' | 'InvalidContainer' | 'FrontEndNotFound' | 'EvaluationNotFound' | 'LogsPropertiesNotFound' | 'RankNullResponse' | 'UpdateConfigurationFailed' | 'ModelResetFailed';
+export type LearningMode = 'Online' | 'Apprentice' | 'LoggingOnly';
+
+/**
+ * Defines values for PersonalizerErrorCode.
+ * Possible values include: 'BadRequest', 'InvalidServiceConfiguration',
+ * 'InvalidLearningModeServiceConfiguration', 'InvalidPolicyConfiguration',
+ * 'InvalidPolicyContract', 'InvalidEvaluationContract', 'DuplicateCustomPolicyNames',
+ * 'NoLogsExistInDateRange', 'LogsSizeExceedAllowedLimit', 'InvalidRewardRequest',
+ * 'InvalidEventIdToActivate', 'InvalidRankRequest', 'InvalidExportLogsRequest',
+ * 'InvalidContainer', 'InvalidModelMetadata', 'ApprenticeModeNeverTurnedOn', 'MissingAppId',
+ * 'AggregationIntervalTooShort', 'AggregationIntervalInvalid', 'InvalidStartDateEndDate',
+ * 'AggregationEventCountTooSmall', 'AggregationEventCountInvalid', 'ModelFileAccessDenied',
+ * 'ResourceNotFound', 'FrontEndNotFound', 'EvaluationNotFound', 'LogsPropertiesNotFound',
+ * 'ModelRankingError', 'InternalServerError', 'RankNullResponse', 'UpdateConfigurationFailed',
+ * 'ModelResetFailed', 'ModelPublishFailed', 'ModelMetadataUpdateFailed', 'KeyVaultNotFound',
+ * 'None'
+ * @readonly
+ * @enum {string}
+ */
+export type PersonalizerErrorCode = 'BadRequest' | 'InvalidServiceConfiguration' | 'InvalidLearningModeServiceConfiguration' | 'InvalidPolicyConfiguration' | 'InvalidPolicyContract' | 'InvalidEvaluationContract' | 'DuplicateCustomPolicyNames' | 'NoLogsExistInDateRange' | 'LogsSizeExceedAllowedLimit' | 'InvalidRewardRequest' | 'InvalidEventIdToActivate' | 'InvalidRankRequest' | 'InvalidExportLogsRequest' | 'InvalidContainer' | 'InvalidModelMetadata' | 'ApprenticeModeNeverTurnedOn' | 'MissingAppId' | 'AggregationIntervalTooShort' | 'AggregationIntervalInvalid' | 'InvalidStartDateEndDate' | 'AggregationEventCountTooSmall' | 'AggregationEventCountInvalid' | 'ModelFileAccessDenied' | 'ResourceNotFound' | 'FrontEndNotFound' | 'EvaluationNotFound' | 'LogsPropertiesNotFound' | 'ModelRankingError' | 'InternalServerError' | 'RankNullResponse' | 'UpdateConfigurationFailed' | 'ModelResetFailed' | 'ModelPublishFailed' | 'ModelMetadataUpdateFailed' | 'KeyVaultNotFound' | 'None';
 
 /**
  * Defines values for EvaluationJobStatus.
- * Possible values include: 'completed', 'pending', 'failed', 'notSubmitted'
+ * Possible values include: 'completed', 'pending', 'failed', 'notSubmitted', 'timeout'
  * @readonly
  * @enum {string}
  */
-export type EvaluationJobStatus = 'completed' | 'pending' | 'failed' | 'notSubmitted';
+export type EvaluationJobStatus = 'completed' | 'pending' | 'failed' | 'notSubmitted' | 'timeout';
 
 /**
  * Contains response data for the get operation.
@@ -626,6 +726,26 @@ export type LogGetPropertiesResponse = LogsProperties & {
 /**
  * Contains response data for the get operation.
  */
+export type LearningMetricsGetResponse = Array<Metric[]> & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: Metric[][];
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
 export type ModelGetResponse = {
   /**
    * BROWSER ONLY
@@ -666,6 +786,72 @@ export type ModelGetPropertiesResponse = ModelProperties & {
        * The response body as parsed JSON or XML
        */
       parsedBody: ModelProperties;
+    };
+};
+
+/**
+ * Contains response data for the list operation.
+ */
+export type StagedModelListResponse = Array<ModelMetadata> & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ModelMetadata[];
+    };
+};
+
+/**
+ * Contains response data for the getById operation.
+ */
+export type StagedModelGetByIdResponse = {
+  /**
+   * BROWSER ONLY
+   *
+   * The response body as a browser Blob.
+   * Always undefined in node.js.
+   */
+  blobBody?: Promise<Blob>;
+
+  /**
+   * NODEJS ONLY
+   *
+   * The response body as a node.js Readable stream.
+   * Always undefined in the browser.
+   */
+  readableStreamBody?: NodeJS.ReadableStream;
+
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse;
+};
+
+/**
+ * Contains response data for the updateMetadataById operation.
+ */
+export type StagedModelUpdateMetadataByIdResponse = ModelMetadata & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ModelMetadata;
     };
 };
 

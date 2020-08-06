@@ -22,7 +22,9 @@ class PersonalizerClient extends PersonalizerClientContext {
   evaluations: operations.Evaluations;
   events: operations.Events;
   log: operations.Log;
+  learningMetrics: operations.LearningMetrics;
   model: operations.Model;
+  stagedModel: operations.StagedModel;
 
   /**
    * Initializes a new instance of the PersonalizerClient class.
@@ -37,7 +39,9 @@ class PersonalizerClient extends PersonalizerClientContext {
     this.evaluations = new operations.Evaluations(this);
     this.events = new operations.Events(this);
     this.log = new operations.Log(this);
+    this.learningMetrics = new operations.LearningMetrics(this);
     this.model = new operations.Model(this);
+    this.stagedModel = new operations.StagedModel(this);
   }
 
   /**

@@ -27,7 +27,7 @@ export class Policy {
   }
 
   /**
-   * Get the Learning settings currently used by the Personalizer service.
+   * Get the learning settings currently used by the Personalizer service.
    * @summary Get Policy.
    * @param [options] The optional parameters
    * @returns Promise<Models.PolicyGetResponse>
@@ -52,20 +52,20 @@ export class Policy {
   }
 
   /**
-   * Update the Learning settings that the Personalizer service will use to train models.
+   * Update the learning settings that the Personalizer service will use to train models.
    * @summary Update Policy.
-   * @param policy The Learning settings.
+   * @param policy The learning settings.
    * @param [options] The optional parameters
    * @returns Promise<Models.PolicyUpdateResponse>
    */
   update(policy: Models.PolicyContract, options?: msRest.RequestOptionsBase): Promise<Models.PolicyUpdateResponse>;
   /**
-   * @param policy The Learning settings.
+   * @param policy The learning settings.
    * @param callback The callback
    */
   update(policy: Models.PolicyContract, callback: msRest.ServiceCallback<Models.PolicyContract>): void;
   /**
-   * @param policy The Learning settings.
+   * @param policy The learning settings.
    * @param options The optional parameters
    * @param callback The callback
    */
@@ -81,7 +81,7 @@ export class Policy {
   }
 
   /**
-   * Resets the Learning settings of the Personalizer service to default.
+   * Resets the learning settings of the Personalizer service to default.
    * @summary Reset Policy.
    * @param [options] The optional parameters
    * @returns Promise<Models.PolicyResetResponse>
