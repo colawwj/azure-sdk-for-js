@@ -160,7 +160,6 @@ export {
   InboundNatRule,
   InboundSecurityRule,
   InboundSecurityRules,
-  IPAddressAvailabilityResult,
   IpAllocation,
   IPConfiguration,
   IPConfigurationBgpPeeringAddress,
@@ -251,7 +250,6 @@ export {
   StaticRoute,
   Subnet,
   SubResource,
-  TagsObject,
   TrafficAnalyticsConfigurationProperties,
   TrafficAnalyticsProperties,
   TrafficSelectorPolicy,
@@ -273,12 +271,8 @@ export {
   VirtualNetworkGatewayConnectionListEntity,
   VirtualNetworkGatewayIPConfiguration,
   VirtualNetworkGatewaySku,
-  VirtualNetworkListResult,
-  VirtualNetworkListUsageResult,
   VirtualNetworkPeering,
   VirtualNetworkTap,
-  VirtualNetworkUsage,
-  VirtualNetworkUsageName,
   VirtualRouter,
   VirtualRouterPeering,
   VirtualWAN,
@@ -302,5 +296,6 @@ export {
   VpnSiteLink,
   VpnSiteLinkConnection,
   WebApplicationFirewallCustomRule,
-  WebApplicationFirewallPolicy
+  WebApplicationFirewallPolicy,
+  WebApplicationFirewallPolicyListResult
 } from "../models/mappers";
