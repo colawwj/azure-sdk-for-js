@@ -61,6 +61,7 @@ class SecurityCenter extends SecurityCenterContext {
   secureScoreControlDefinitions: operations.SecureScoreControlDefinitions;
   securitySolutions: operations.SecuritySolutions;
   connectors: operations.Connectors;
+  iotDefenderSettings: operations.IotDefenderSettings;
 
   /**
    * Initializes a new instance of the SecurityCenter class.
@@ -116,6 +117,7 @@ class SecurityCenter extends SecurityCenterContext {
     this.secureScoreControlDefinitions = new operations.SecureScoreControlDefinitions(this);
     this.securitySolutions = new operations.SecuritySolutions(this);
     this.connectors = new operations.Connectors(this);
+    this.iotDefenderSettings = new operations.IotDefenderSettings(this);
   }
 }
 

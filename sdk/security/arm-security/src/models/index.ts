@@ -4515,6 +4515,37 @@ export interface GcpCredentialsDetailsProperties {
 }
 
 /**
+ * On-premise sensor properties
+ */
+export interface OnPremiseSensorProperties {
+  /**
+   * Name of the sensor
+   */
+  name?: string;
+}
+
+/**
+ * IoT Defender settings
+ */
+export interface IotDefenderSettingsModel extends Resource {
+  /**
+   * List of on-premise sensors
+   */
+  onPremiseSensors?: OnPremiseSensorProperties[];
+}
+
+/**
+ * List of IoT Defender settings
+ */
+export interface IotDefenderSettingsList {
+  /**
+   * List data
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly value?: IotDefenderSettingsModel[];
+}
+
+/**
  * Optional Parameters.
  */
 export interface AlertsListOptionalParams extends msRest.RequestOptionsBase {
@@ -9487,5 +9518,65 @@ export type ConnectorsListNextResponse = ConnectorSettingList & {
        * The response body as parsed JSON or XML
        */
       parsedBody: ConnectorSettingList;
+    };
+};
+
+/**
+ * Contains response data for the list operation.
+ */
+export type IotDefenderSettingsListResponse = IotDefenderSettingsList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: IotDefenderSettingsList;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type IotDefenderSettingsGetResponse = IotDefenderSettingsModel & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: IotDefenderSettingsModel;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdate operation.
+ */
+export type IotDefenderSettingsCreateOrUpdateResponse = IotDefenderSettingsModel & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: IotDefenderSettingsModel;
     };
 };

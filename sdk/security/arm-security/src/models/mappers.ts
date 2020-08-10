@@ -6309,6 +6309,68 @@ export const GcpCredentialsDetailsProperties: msRest.CompositeMapper = {
   }
 };
 
+export const OnPremiseSensorProperties: msRest.CompositeMapper = {
+  serializedName: "OnPremiseSensorProperties",
+  type: {
+    name: "Composite",
+    className: "OnPremiseSensorProperties",
+    modelProperties: {
+      name: {
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const IotDefenderSettingsModel: msRest.CompositeMapper = {
+  serializedName: "IotDefenderSettingsModel",
+  type: {
+    name: "Composite",
+    className: "IotDefenderSettingsModel",
+    modelProperties: {
+      ...Resource.type.modelProperties,
+      onPremiseSensors: {
+        serializedName: "properties.onPremiseSensors",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "OnPremiseSensorProperties"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const IotDefenderSettingsList: msRest.CompositeMapper = {
+  serializedName: "IotDefenderSettingsList",
+  type: {
+    name: "Composite",
+    className: "IotDefenderSettingsList",
+    modelProperties: {
+      value: {
+        readOnly: true,
+        serializedName: "value",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "IotDefenderSettingsModel"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
 export const ComplianceResultList: msRest.CompositeMapper = {
   serializedName: "ComplianceResultList",
   type: {

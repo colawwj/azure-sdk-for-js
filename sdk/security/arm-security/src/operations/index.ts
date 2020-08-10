@@ -52,3 +52,4 @@ export * from "./secureScoreControls";
 export * from "./secureScoreControlDefinitions";
 export * from "./securitySolutions";
 export * from "./connectors";
+export * from "./iotDefenderSettings";
