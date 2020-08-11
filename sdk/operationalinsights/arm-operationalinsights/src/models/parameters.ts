@@ -114,7 +114,6 @@ export const dataSourceType: msRest.OperationURLParameter = {
         "CustomLogs",
         "AzureWatson",
         "Query",
-        "Ingestion",
         "Alerts"
       ]
     }
