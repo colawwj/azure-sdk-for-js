@@ -3540,13 +3540,6 @@ export const DataFlowSink: msRest.CompositeMapper = {
           name: "Composite",
           className: "LinkedServiceReference"
         }
-      },
-      staging: {
-        serializedName: "staging",
-        type: {
-          name: "Composite",
-          className: "DataFlowStagingInfo"
-        }
       }
     }
   }
@@ -3578,13 +3571,6 @@ export const DataFlowSource: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "LinkedServiceReference"
-        }
-      },
-      staging: {
-        serializedName: "staging",
-        type: {
-          name: "Composite",
-          className: "DataFlowStagingInfo"
         }
       }
     }

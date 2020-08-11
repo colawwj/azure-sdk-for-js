@@ -2079,10 +2079,6 @@ export interface DataFlowSink extends Transformation {
    * Schema linked service reference.
    */
   schemaLinkedService?: LinkedServiceReference;
-  /**
-   * Staging info for execute data flow activity.
-   */
-  staging?: DataFlowStagingInfo;
 }
 
 /**
@@ -2101,10 +2097,6 @@ export interface DataFlowSource extends Transformation {
    * Schema linked service reference.
    */
   schemaLinkedService?: LinkedServiceReference;
-  /**
-   * Staging info for execute data flow activity.
-   */
-  staging?: DataFlowStagingInfo;
 }
 
 /**
