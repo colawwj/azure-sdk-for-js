@@ -325,7 +325,7 @@ export interface Workspace extends Resource {
 }
 
 /**
- * Sku of the resource
+ * Sku of the resource.
  */
 export interface Sku {
   /**
