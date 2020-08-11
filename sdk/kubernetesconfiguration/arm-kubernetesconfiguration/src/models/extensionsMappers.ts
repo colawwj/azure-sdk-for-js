@@ -15,6 +15,8 @@ export {
   ExtensionInstance,
   ExtensionInstanceForCreate,
   ExtensionInstanceForList,
+  ExtensionInstancesList,
+  ExtensionInstanceUpdate,
   ExtensionStatus,
   HelmOperatorProperties,
   ProxyResource,
@@ -23,6 +25,5 @@ export {
   ScopeCluster,
   ScopeNamespace,
   SourceControlConfiguration,
-  SourceControlConfigurationForCreate,
-  SourceControlConfigurationList
+  SourceControlConfigurationForCreate
 } from "../models/mappers";

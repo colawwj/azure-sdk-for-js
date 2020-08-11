@@ -10,3 +10,4 @@
 
 export * from "./sourceControlConfigurations";
 export * from "./operations";
+export * from "./extensions";

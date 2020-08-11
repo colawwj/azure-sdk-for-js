@@ -98,7 +98,7 @@ export class SourceControlConfigurations {
    * @param [options] The optional parameters
    * @returns Promise<Models.SourceControlConfigurationsCreateOrUpdateResponse>
    */
-  createOrUpdate(resourceGroupName: string, clusterRp: Models.ClusterRp1, clusterResourceName: Models.ClusterResourceName1, clusterName: string, sourceControlConfigurationName: string, sourceControlConfiguration: Models.SourceControlConfiguration, options?: msRest.RequestOptionsBase): Promise<Models.SourceControlConfigurationsCreateOrUpdateResponse>;
+  createOrUpdate(resourceGroupName: string, clusterRp: Models.ClusterRp1, clusterResourceName: Models.ClusterResourceName1, clusterName: string, sourceControlConfigurationName: string, sourceControlConfiguration: Models.SourceControlConfigurationForCreate, options?: msRest.RequestOptionsBase): Promise<Models.SourceControlConfigurationsCreateOrUpdateResponse>;
   /**
    * @param resourceGroupName The name of the resource group.
    * @param clusterRp The Kubernetes cluster RP - either Microsoft.ContainerService (for AKS
@@ -112,7 +112,7 @@ export class SourceControlConfigurations {
    * @param sourceControlConfiguration Properties necessary to Create KubernetesConfiguration.
    * @param callback The callback
    */
-  createOrUpdate(resourceGroupName: string, clusterRp: Models.ClusterRp1, clusterResourceName: Models.ClusterResourceName1, clusterName: string, sourceControlConfigurationName: string, sourceControlConfiguration: Models.SourceControlConfiguration, callback: msRest.ServiceCallback<Models.SourceControlConfiguration>): void;
+  createOrUpdate(resourceGroupName: string, clusterRp: Models.ClusterRp1, clusterResourceName: Models.ClusterResourceName1, clusterName: string, sourceControlConfigurationName: string, sourceControlConfiguration: Models.SourceControlConfigurationForCreate, callback: msRest.ServiceCallback<Models.SourceControlConfiguration>): void;
   /**
    * @param resourceGroupName The name of the resource group.
    * @param clusterRp The Kubernetes cluster RP - either Microsoft.ContainerService (for AKS
@@ -127,8 +127,8 @@ export class SourceControlConfigurations {
    * @param options The optional parameters
    * @param callback The callback
    */
-  createOrUpdate(resourceGroupName: string, clusterRp: Models.ClusterRp1, clusterResourceName: Models.ClusterResourceName1, clusterName: string, sourceControlConfigurationName: string, sourceControlConfiguration: Models.SourceControlConfiguration, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.SourceControlConfiguration>): void;
-  createOrUpdate(resourceGroupName: string, clusterRp: Models.ClusterRp1, clusterResourceName: Models.ClusterResourceName1, clusterName: string, sourceControlConfigurationName: string, sourceControlConfiguration: Models.SourceControlConfiguration, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.SourceControlConfiguration>, callback?: msRest.ServiceCallback<Models.SourceControlConfiguration>): Promise<Models.SourceControlConfigurationsCreateOrUpdateResponse> {
+  createOrUpdate(resourceGroupName: string, clusterRp: Models.ClusterRp1, clusterResourceName: Models.ClusterResourceName1, clusterName: string, sourceControlConfigurationName: string, sourceControlConfiguration: Models.SourceControlConfigurationForCreate, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.SourceControlConfiguration>): void;
+  createOrUpdate(resourceGroupName: string, clusterRp: Models.ClusterRp1, clusterResourceName: Models.ClusterResourceName1, clusterName: string, sourceControlConfigurationName: string, sourceControlConfiguration: Models.SourceControlConfigurationForCreate, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.SourceControlConfiguration>, callback?: msRest.ServiceCallback<Models.SourceControlConfiguration>): Promise<Models.SourceControlConfigurationsCreateOrUpdateResponse> {
     return this.client.sendOperationRequest(
       {
         resourceGroupName,
@@ -323,7 +323,7 @@ const createOrUpdateOperationSpec: msRest.OperationSpec = {
   requestBody: {
     parameterPath: "sourceControlConfiguration",
     mapper: {
-      ...Mappers.SourceControlConfiguration,
+      ...Mappers.SourceControlConfigurationForCreate,
       required: true
     }
   },

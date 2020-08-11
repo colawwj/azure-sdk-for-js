@@ -54,19 +54,12 @@ export interface Result {
 export interface ErrorDefinition {
   /**
    * Service specific error code which serves as the substatus for the HTTP error code.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly code?: string;
+  code: string;
   /**
    * Description of the error.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly message?: string;
-  /**
-   * Internal error details.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly details?: ErrorDefinition[];
+  message: string;
 }
 
 /**
@@ -88,7 +81,7 @@ export interface ComplianceStatus {
    * 'Noncompliant', 'Installed', 'Failed'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly complianceState?: ComplianceState;
+  readonly complianceState?: ComplianceStateType;
   /**
    * Datetime the configuration was last applied.
    */
@@ -100,7 +93,7 @@ export interface ComplianceStatus {
   /**
    * Level of the message. Possible values include: 'Error', 'Warning', 'Information'
    */
-  messageLevel?: MessageLevel;
+  messageLevel?: MessageLevelType;
 }
 
 /**
@@ -118,7 +111,7 @@ export interface HelmOperatorProperties {
 }
 
 /**
- * The SourceControl Configuration object.
+ * The SourceControl Configuration object returned in Get & Put response.
  */
 export interface SourceControlConfiguration extends ProxyResource {
   /**
@@ -146,7 +139,7 @@ export interface SourceControlConfiguration extends ProxyResource {
    * Scope at which the operator will be installed. Possible values include: 'cluster',
    * 'namespace'. Default value: 'cluster'.
    */
-  operatorScope?: OperatorScope;
+  operatorScope?: OperatorScopeType;
   /**
    * Public Key associated with this SourceControl configuration (either generated within the
    * cluster or provided by the user).
@@ -154,10 +147,9 @@ export interface SourceControlConfiguration extends ProxyResource {
    */
   readonly repositoryPublicKey?: string;
   /**
-   * Option to enable Helm Operator for this git configuration. Possible values include: 'true',
-   * 'false'
+   * Option to enable Helm Operator for this git configuration.
    */
-  enableHelmOperator?: EnableHelmOperator;
+  enableHelmOperator?: boolean;
   /**
    * Properties for Helm operator.
    */
@@ -167,12 +159,72 @@ export interface SourceControlConfiguration extends ProxyResource {
    * 'Deleting', 'Running', 'Succeeded', 'Failed'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly provisioningState?: ProvisioningState;
+  readonly provisioningState?: ProvisioningStateType;
   /**
    * Compliance Status of the Configuration
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly complianceStatus?: ComplianceStatus;
+  /**
+   * DateLiteral (per ISO8601) noting the time the resource was created by the client (user).
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly creationTime?: string;
+  /**
+   * DateLiteral (per ISO8601) noting the time the resource was modified by the client (user).
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly lastModifiedTime?: string;
+}
+
+/**
+ * The SourceControl Configuration object to create a new configuration.
+ */
+export interface SourceControlConfigurationForCreate extends ProxyResource {
+  /**
+   * Url of the SourceControl Repository.
+   */
+  repositoryUrl?: string;
+  /**
+   * The namespace to which this operator is installed to. Maximum of 253 lower case alphanumeric
+   * characters, hyphen and period only. Default value: 'default'.
+   */
+  operatorNamespace?: string;
+  /**
+   * Instance name of the operator - identifying the specific configuration.
+   */
+  operatorInstanceName?: string;
+  /**
+   * Type of the operator. Possible values include: 'Flux'
+   */
+  operatorType?: OperatorType;
+  /**
+   * Any Parameters for the Operator instance in string format.
+   */
+  operatorParams?: string;
+  /**
+   * Name-value pairs of protected configuration settings for the configuration
+   */
+  configurationProtectedSettings?: { [propertyName: string]: string };
+  /**
+   * Scope at which the operator will be installed. Possible values include: 'cluster',
+   * 'namespace'. Default value: 'cluster'.
+   */
+  operatorScope?: OperatorScopeType;
+  /**
+   * Public Key associated with this SourceControl configuration (either generated within the
+   * cluster or provided by the user).
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly repositoryPublicKey?: string;
+  /**
+   * Option to enable Helm Operator for this git configuration.
+   */
+  enableHelmOperator?: boolean;
+  /**
+   * Properties for Helm operator.
+   */
+  helmOperatorProperties?: HelmOperatorProperties;
 }
 
 /**
@@ -212,6 +264,276 @@ export interface ResourceProviderOperation {
 }
 
 /**
+ * Specifies that the scope of the extensionInstance is Cluster
+ */
+export interface ScopeCluster {
+  /**
+   * Namespace where the extension Release must be placed, for a Cluster scoped extensionInstance.
+   * If this namespace does not exist, it will be created
+   */
+  releaseNamespace?: string;
+}
+
+/**
+ * Specifies that the scope of the extensionInstance is Namespace
+ */
+export interface ScopeNamespace {
+  /**
+   * Namespace where the extensionInstance will be created for an Namespace scoped
+   * extensionInstance.  If this namespace does not exist, it will be created
+   */
+  targetNamespace?: string;
+}
+
+/**
+ * Scope of the extensionInstance. It can be either Cluster or Namespace; but not both.
+ */
+export interface Scope {
+  /**
+   * Specifies that the scope of the extensionInstance is Cluster
+   */
+  cluster?: ScopeCluster;
+  /**
+   * Specifies that the scope of the extensionInstance is Namespace
+   */
+  namespace?: ScopeNamespace;
+}
+
+/**
+ * Status from this instance of the extension.
+ */
+export interface ExtensionStatus {
+  /**
+   * Status code provided by the Extension
+   */
+  code?: string;
+  /**
+   * Short description of status of this instance of the extension.
+   */
+  displayStatus?: string;
+  /**
+   * Level of the status. Possible values include: 'Error', 'Warning', 'Information'. Default
+   * value: 'Information'.
+   */
+  level?: LevelType;
+  /**
+   * Detailed message of the status from the Extension instance.
+   */
+  message?: string;
+  /**
+   * DateLiteral (per ISO8601) noting the time of installation status.
+   */
+  time?: string;
+}
+
+/**
+ * Identity for the managed cluster.
+ */
+export interface ConfigurationIdentity {
+  /**
+   * The principal id of the system assigned identity which is used by the configuration.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly principalId?: string;
+  /**
+   * The tenant id of the system assigned identity which is used by the configuration.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly tenantId?: string;
+  /**
+   * The type of identity used for the configuration. Type 'SystemAssigned' will use an implicitly
+   * created identity. Type 'None' will not use Managed Identity for the configuration. Possible
+   * values include: 'SystemAssigned', 'None'
+   */
+  type?: ResourceIdentityType;
+}
+
+/**
+ * The Extension Instance object.
+ */
+export interface ExtensionInstance extends ProxyResource {
+  /**
+   * Type of the Extension, of which this resource is an instance of.  It must be one of the
+   * Extension Types registered with Microsoft.KubernetesConfiguration by the Extension publisher.
+   */
+  extensionType?: string;
+  /**
+   * Flag to note if this instance participates in auto upgrade of minor version, or not.
+   */
+  autoUpgradeMinorVersion?: boolean;
+  /**
+   * ReleaseTrain this extension instance participates in for auto-upgrade (e.g. Stable, Preview,
+   * etc.) - only if autoUpgradeMinorVersion is 'true'.
+   */
+  releaseTrain?: string;
+  /**
+   * Version of the extension for this extension instance, if it is 'pinned' to a specific version.
+   * autoUpgradeMinorVersion must be 'false'.
+   */
+  version?: string;
+  /**
+   * Scope at which the extension instance is installed.
+   */
+  scope?: Scope;
+  /**
+   * Configuration settings, as name-value pairs for configuring this instance of the extension.
+   */
+  configurationSettings?: { [propertyName: string]: string };
+  /**
+   * Status of installation of this instance of the extension. Possible values include: 'Pending',
+   * 'Installed', 'Failed'
+   */
+  installState?: InstallStateType;
+  /**
+   * Status from this instance of the extension.
+   */
+  statuses?: ExtensionStatus[];
+  /**
+   * DateLiteral (per ISO8601) noting the time the resource was created by the client (user).
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly creationTime?: string;
+  /**
+   * DateLiteral (per ISO8601) noting the time the resource was modified by the client (user).
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly lastModifiedTime?: string;
+  /**
+   * DateLiteral (per ISO8601) noting the time of last status from the agent.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly lastStatusTime?: string;
+  /**
+   * Error information from the Agent - e.g. errors during installation.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly errorInfo?: ErrorDefinition;
+  /**
+   * The identity of the configuration.
+   */
+  identity?: ConfigurationIdentity;
+}
+
+/**
+ * Object to create a new Extension Instance.
+ */
+export interface ExtensionInstanceForCreate extends ProxyResource {
+  /**
+   * Type of the Extension, of which this resource is an instance of.  It must be one of the
+   * Extension Types registered with Microsoft.KubernetesConfiguration by the Extension publisher.
+   */
+  extensionType?: string;
+  /**
+   * Flag to note if this instance participates in auto upgrade of minor version, or not.
+   */
+  autoUpgradeMinorVersion?: boolean;
+  /**
+   * ReleaseTrain this extension instance participates in for auto-upgrade (e.g. Stable, Preview,
+   * etc.) - only if autoUpgradeMinorVersion is 'true'.
+   */
+  releaseTrain?: string;
+  /**
+   * Version of the extension for this extension instance, if it is 'pinned' to a specific version.
+   * autoUpgradeMinorVersion must be 'false'.
+   */
+  version?: string;
+  /**
+   * Scope at which the extension instance is installed.
+   */
+  scope?: Scope;
+  /**
+   * Configuration settings, as name-value pairs for configuring this instance of the extension.
+   */
+  configurationSettings?: { [propertyName: string]: string };
+  /**
+   * Configuration settings that are sensitive, as name-value pairs for configuring this instance
+   * of the extension.
+   */
+  configurationProtectedSettings?: { [propertyName: string]: string };
+  /**
+   * The identity of the configuration.
+   */
+  identity?: ConfigurationIdentity;
+}
+
+/**
+ * The Extension Instance object.
+ */
+export interface ExtensionInstanceForList extends ProxyResource {
+  /**
+   * Type of the Extension, of which this resource is an instance of.  It must be one of the
+   * Extension Types registered with Microsoft.KubernetesConfiguration by the Extension publisher.
+   */
+  extensionType?: string;
+  /**
+   * Flag to note if this instance participates in auto upgrade of minor version, or not.
+   */
+  autoUpgradeMinorVersion?: boolean;
+  /**
+   * ReleaseTrain this extension instance participates in for auto-upgrade (e.g. Stable, Preview,
+   * etc.) - only if autoUpgradeMinorVersion is 'true'.
+   */
+  releaseTrain?: string;
+  /**
+   * Version of the extension for this extension instance, if it is 'pinned' to a specific version.
+   */
+  version?: string;
+  /**
+   * Scope at which the extension instance is installed.
+   */
+  scope?: Scope;
+  /**
+   * Status of installation of this instance of the extension. Possible values include: 'Pending',
+   * 'Installed', 'Failed'
+   */
+  installState?: InstallStateType;
+  /**
+   * DateLiteral (per ISO8601) noting the time the resource was created by the client (user).
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly creationTime?: string;
+  /**
+   * DateLiteral (per ISO8601) noting the time the resource was modified by the client (user).
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly lastModifiedTime?: string;
+  /**
+   * DateLiteral (per ISO8601) noting the time of last status from the agent.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly lastStatusTime?: string;
+  /**
+   * Error information from the Agent - e.g. errors during installation.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly errorInfo?: ErrorDefinition;
+  /**
+   * The identity of the configuration.
+   */
+  identity?: ConfigurationIdentity;
+}
+
+/**
+ * Update Extension Instance request object.
+ */
+export interface ExtensionInstanceUpdate {
+  /**
+   * Flag to note if this instance participates in Extension Lifecycle Management or not.
+   */
+  autoUpgradeMinorVersion?: boolean;
+  /**
+   * ReleaseTrain this extension instance participates in for auto-upgrade (e.g. Stable, Preview,
+   * etc.) - only if autoUpgradeMinorVersion is 'true'.
+   */
+  releaseTrain?: string;
+  /**
+   * Version number of extension, to 'pin' to a specific version.  autoUpgradeMinorVersion must be
+   * 'false'.
+   */
+  version?: string;
+}
+
+/**
  * An interface representing SourceControlConfigurationClientOptions.
  */
 export interface SourceControlConfigurationClientOptions extends AzureServiceClientOptions {
@@ -246,20 +568,34 @@ export interface ResourceProviderOperationList extends Array<ResourceProviderOpe
 }
 
 /**
- * Defines values for ComplianceState.
+ * @interface
+ * Result of the request to list Extension Instances.  It contains a list of ExtensionInstance
+ * objects and a URL link to get the next set of results.
+ * @extends Array<ExtensionInstanceForList>
+ */
+export interface ExtensionInstancesList extends Array<ExtensionInstanceForList> {
+  /**
+   * URL to get the next set of extension instance objects, if any.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly nextLink?: string;
+}
+
+/**
+ * Defines values for ComplianceStateType.
  * Possible values include: 'Pending', 'Compliant', 'Noncompliant', 'Installed', 'Failed'
  * @readonly
  * @enum {string}
  */
-export type ComplianceState = 'Pending' | 'Compliant' | 'Noncompliant' | 'Installed' | 'Failed';
+export type ComplianceStateType = 'Pending' | 'Compliant' | 'Noncompliant' | 'Installed' | 'Failed';
 
 /**
- * Defines values for MessageLevel.
+ * Defines values for MessageLevelType.
  * Possible values include: 'Error', 'Warning', 'Information'
  * @readonly
  * @enum {string}
  */
-export type MessageLevel = 'Error' | 'Warning' | 'Information';
+export type MessageLevelType = 'Error' | 'Warning' | 'Information';
 
 /**
  * Defines values for OperatorType.
@@ -270,28 +606,44 @@ export type MessageLevel = 'Error' | 'Warning' | 'Information';
 export type OperatorType = 'Flux';
 
 /**
- * Defines values for OperatorScope.
+ * Defines values for OperatorScopeType.
  * Possible values include: 'cluster', 'namespace'
  * @readonly
  * @enum {string}
  */
-export type OperatorScope = 'cluster' | 'namespace';
+export type OperatorScopeType = 'cluster' | 'namespace';
 
 /**
- * Defines values for EnableHelmOperator.
- * Possible values include: 'true', 'false'
- * @readonly
- * @enum {string}
- */
-export type EnableHelmOperator = 'true' | 'false';
-
-/**
- * Defines values for ProvisioningState.
+ * Defines values for ProvisioningStateType.
  * Possible values include: 'Accepted', 'Deleting', 'Running', 'Succeeded', 'Failed'
  * @readonly
  * @enum {string}
  */
-export type ProvisioningState = 'Accepted' | 'Deleting' | 'Running' | 'Succeeded' | 'Failed';
+export type ProvisioningStateType = 'Accepted' | 'Deleting' | 'Running' | 'Succeeded' | 'Failed';
+
+/**
+ * Defines values for InstallStateType.
+ * Possible values include: 'Pending', 'Installed', 'Failed'
+ * @readonly
+ * @enum {string}
+ */
+export type InstallStateType = 'Pending' | 'Installed' | 'Failed';
+
+/**
+ * Defines values for LevelType.
+ * Possible values include: 'Error', 'Warning', 'Information'
+ * @readonly
+ * @enum {string}
+ */
+export type LevelType = 'Error' | 'Warning' | 'Information';
+
+/**
+ * Defines values for ResourceIdentityType.
+ * Possible values include: 'SystemAssigned', 'None'
+ * @readonly
+ * @enum {string}
+ */
+export type ResourceIdentityType = 'SystemAssigned' | 'None';
 
 /**
  * Defines values for ClusterRp.
@@ -356,6 +708,86 @@ export type ClusterRp3 = 'Microsoft.ContainerService' | 'Microsoft.Kubernetes';
  * @enum {string}
  */
 export type ClusterResourceName3 = 'managedClusters' | 'connectedClusters';
+
+/**
+ * Defines values for ClusterRp4.
+ * Possible values include: 'Microsoft.ContainerService', 'Microsoft.Kubernetes'
+ * @readonly
+ * @enum {string}
+ */
+export type ClusterRp4 = 'Microsoft.ContainerService' | 'Microsoft.Kubernetes';
+
+/**
+ * Defines values for ClusterResourceName4.
+ * Possible values include: 'managedClusters', 'connectedClusters'
+ * @readonly
+ * @enum {string}
+ */
+export type ClusterResourceName4 = 'managedClusters' | 'connectedClusters';
+
+/**
+ * Defines values for ClusterRp5.
+ * Possible values include: 'Microsoft.ContainerService', 'Microsoft.Kubernetes'
+ * @readonly
+ * @enum {string}
+ */
+export type ClusterRp5 = 'Microsoft.ContainerService' | 'Microsoft.Kubernetes';
+
+/**
+ * Defines values for ClusterResourceName5.
+ * Possible values include: 'managedClusters', 'connectedClusters'
+ * @readonly
+ * @enum {string}
+ */
+export type ClusterResourceName5 = 'managedClusters' | 'connectedClusters';
+
+/**
+ * Defines values for ClusterRp6.
+ * Possible values include: 'Microsoft.ContainerService', 'Microsoft.Kubernetes'
+ * @readonly
+ * @enum {string}
+ */
+export type ClusterRp6 = 'Microsoft.ContainerService' | 'Microsoft.Kubernetes';
+
+/**
+ * Defines values for ClusterResourceName6.
+ * Possible values include: 'managedClusters', 'connectedClusters'
+ * @readonly
+ * @enum {string}
+ */
+export type ClusterResourceName6 = 'managedClusters' | 'connectedClusters';
+
+/**
+ * Defines values for ClusterRp7.
+ * Possible values include: 'Microsoft.ContainerService', 'Microsoft.Kubernetes'
+ * @readonly
+ * @enum {string}
+ */
+export type ClusterRp7 = 'Microsoft.ContainerService' | 'Microsoft.Kubernetes';
+
+/**
+ * Defines values for ClusterResourceName7.
+ * Possible values include: 'managedClusters', 'connectedClusters'
+ * @readonly
+ * @enum {string}
+ */
+export type ClusterResourceName7 = 'managedClusters' | 'connectedClusters';
+
+/**
+ * Defines values for ClusterRp8.
+ * Possible values include: 'Microsoft.ContainerService', 'Microsoft.Kubernetes'
+ * @readonly
+ * @enum {string}
+ */
+export type ClusterRp8 = 'Microsoft.ContainerService' | 'Microsoft.Kubernetes';
+
+/**
+ * Defines values for ClusterResourceName8.
+ * Possible values include: 'managedClusters', 'connectedClusters'
+ * @readonly
+ * @enum {string}
+ */
+export type ClusterResourceName8 = 'managedClusters' | 'connectedClusters';
 
 /**
  * Contains response data for the get operation.
@@ -474,5 +906,105 @@ export type OperationsListNextResponse = ResourceProviderOperationList & {
        * The response body as parsed JSON or XML
        */
       parsedBody: ResourceProviderOperationList;
+    };
+};
+
+/**
+ * Contains response data for the create operation.
+ */
+export type ExtensionsCreateResponse = ExtensionInstance & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ExtensionInstance;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type ExtensionsGetResponse = ExtensionInstance & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ExtensionInstance;
+    };
+};
+
+/**
+ * Contains response data for the update operation.
+ */
+export type ExtensionsUpdateResponse = ExtensionInstance & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ExtensionInstance;
+    };
+};
+
+/**
+ * Contains response data for the list operation.
+ */
+export type ExtensionsListResponse = ExtensionInstancesList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ExtensionInstancesList;
+    };
+};
+
+/**
+ * Contains response data for the listNext operation.
+ */
+export type ExtensionsListNextResponse = ExtensionInstancesList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ExtensionInstancesList;
     };
 };
