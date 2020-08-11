@@ -269,7 +269,8 @@ export interface LinkedService extends ProxyResource {
  */
 export interface LinkedStorageAccountsResource extends ProxyResource {
   /**
-   * Linked storage accounts type. Possible values include: 'CustomLogs', 'AzureWatson'
+   * Linked storage accounts type. Possible values include: 'CustomLogs', 'AzureWatson', 'Query',
+   * 'Ingestion', 'Alerts'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly dataSourceType?: DataSourceType;
@@ -1318,11 +1319,11 @@ export type LinkedServiceEntityStatus = 'Succeeded' | 'Deleting' | 'Provisioning
 
 /**
  * Defines values for DataSourceType.
- * Possible values include: 'CustomLogs', 'AzureWatson'
+ * Possible values include: 'CustomLogs', 'AzureWatson', 'Query', 'Ingestion', 'Alerts'
  * @readonly
  * @enum {string}
  */
-export type DataSourceType = 'CustomLogs' | 'AzureWatson';
+export type DataSourceType = 'CustomLogs' | 'AzureWatson' | 'Query' | 'Ingestion' | 'Alerts';
 
 /**
  * Defines values for WorkspaceSkuNameEnum.
