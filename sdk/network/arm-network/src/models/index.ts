@@ -6473,6 +6473,11 @@ export interface NetworkVirtualAppliance extends Resource {
    */
   readonly virtualApplianceSites?: SubResource[];
   /**
+   * List of references to InboundSecurityRules.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly inboundSecurityRules?: SubResource[];
+  /**
    * The provisioning state of the resource. Possible values include: 'Succeeded', 'Updating',
    * 'Deleting', 'Failed'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -6592,6 +6597,54 @@ export interface NetworkVirtualApplianceSku extends Resource {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly etag?: string;
+}
+
+/**
+ * Properties of the Inbound Security Rules resource.
+ */
+export interface InboundSecurityRules {
+  /**
+   * Protocol. This should be either TCP or UDP. Possible values include: 'TCP', 'UDP'
+   */
+  protocol?: InboundSecurityRulesProtocol;
+  /**
+   * The CIDR or source IP range. Only /30, /31 and /32 Ip ranges are allowed.
+   */
+  sourceAddressPrefix?: string;
+  /**
+   * NVA port ranges to be opened up. One needs to provide specific ports.
+   */
+  destinationPortRange?: number;
+}
+
+/**
+ * NVA Inbound Security Rule resource.
+ */
+export interface InboundSecurityRule extends SubResource {
+  /**
+   * List of allowed rules.
+   */
+  rules?: InboundSecurityRules[];
+  /**
+   * The provisioning state of the resource. Possible values include: 'Succeeded', 'Updating',
+   * 'Deleting', 'Failed'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: ProvisioningState;
+  /**
+   * Name of security rule collection.
+   */
+  name?: string;
+  /**
+   * A unique read-only string that changes whenever the resource is updated.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly etag?: string;
+  /**
+   * NVA inbound security rule type.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
 }
 
 /**
@@ -14603,6 +14656,14 @@ export type EffectiveRouteSource = 'Unknown' | 'User' | 'VirtualNetworkGateway' 
 export type EffectiveRouteState = 'Active' | 'Invalid';
 
 /**
+ * Defines values for InboundSecurityRulesProtocol.
+ * Possible values include: 'TCP', 'UDP'
+ * @readonly
+ * @enum {string}
+ */
+export type InboundSecurityRulesProtocol = 'TCP' | 'UDP';
+
+/**
  * Defines values for AssociationType.
  * Possible values include: 'Associated', 'Contains'
  * @readonly
@@ -21418,6 +21479,46 @@ export type VirtualApplianceSkusListNextResponse = NetworkVirtualApplianceSkuLis
        * The response body as parsed JSON or XML
        */
       parsedBody: NetworkVirtualApplianceSkuListResult;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdate operation.
+ */
+export type InboundSecurityRuleCreateOrUpdateResponse = InboundSecurityRule & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: InboundSecurityRule;
+    };
+};
+
+/**
+ * Contains response data for the beginCreateOrUpdate operation.
+ */
+export type InboundSecurityRuleBeginCreateOrUpdateResponse = InboundSecurityRule & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: InboundSecurityRule;
     };
 };
 

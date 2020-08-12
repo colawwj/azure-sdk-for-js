@@ -10877,6 +10877,19 @@ export const NetworkVirtualAppliance: msRest.CompositeMapper = {
           }
         }
       },
+      inboundSecurityRules: {
+        readOnly: true,
+        serializedName: "properties.inboundSecurityRules",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "SubResource"
+            }
+          }
+        }
+      },
       provisioningState: {
         readOnly: true,
         serializedName: "properties.provisioningState",
@@ -11063,6 +11076,88 @@ export const NetworkVirtualApplianceSku: msRest.CompositeMapper = {
       etag: {
         readOnly: true,
         serializedName: "etag",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const InboundSecurityRules: msRest.CompositeMapper = {
+  serializedName: "InboundSecurityRules",
+  type: {
+    name: "Composite",
+    className: "InboundSecurityRules",
+    modelProperties: {
+      protocol: {
+        serializedName: "protocol",
+        type: {
+          name: "String"
+        }
+      },
+      sourceAddressPrefix: {
+        serializedName: "sourceAddressPrefix",
+        type: {
+          name: "String"
+        }
+      },
+      destinationPortRange: {
+        serializedName: "destinationPortRange",
+        constraints: {
+          InclusiveMaximum: 65535,
+          InclusiveMinimum: 0
+        },
+        type: {
+          name: "Number"
+        }
+      }
+    }
+  }
+};
+
+export const InboundSecurityRule: msRest.CompositeMapper = {
+  serializedName: "InboundSecurityRule",
+  type: {
+    name: "Composite",
+    className: "InboundSecurityRule",
+    modelProperties: {
+      ...SubResource.type.modelProperties,
+      rules: {
+        serializedName: "properties.rules",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "InboundSecurityRules"
+            }
+          }
+        }
+      },
+      provisioningState: {
+        readOnly: true,
+        serializedName: "properties.provisioningState",
+        type: {
+          name: "String"
+        }
+      },
+      name: {
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      etag: {
+        readOnly: true,
+        serializedName: "etag",
+        type: {
+          name: "String"
+        }
+      },
+      type: {
+        readOnly: true,
+        serializedName: "type",
         type: {
           name: "String"
         }

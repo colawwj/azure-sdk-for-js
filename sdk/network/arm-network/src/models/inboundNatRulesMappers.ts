@@ -159,6 +159,8 @@ export {
   InboundNatPool,
   InboundNatRule,
   InboundNatRuleListResult,
+  InboundSecurityRule,
+  InboundSecurityRules,
   IpAllocation,
   IPConfiguration,
   IPConfigurationBgpPeeringAddress,

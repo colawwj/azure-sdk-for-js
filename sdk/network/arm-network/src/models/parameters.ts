@@ -724,6 +724,16 @@ export const ruleCollectionGroupName: msRest.OperationURLParameter = {
     }
   }
 };
+export const ruleCollectionName: msRest.OperationURLParameter = {
+  parameterPath: "ruleCollectionName",
+  mapper: {
+    required: true,
+    serializedName: "ruleCollectionName",
+    type: {
+      name: "String"
+    }
+  }
+};
 export const ruleName: msRest.OperationURLParameter = {
   parameterPath: "ruleName",
   mapper: {
