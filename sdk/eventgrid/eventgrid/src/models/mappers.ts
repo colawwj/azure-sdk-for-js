@@ -1268,6 +1268,85 @@ export const EventGridEvent: msRest.CompositeMapper = {
   }
 };
 
+export const CloudEventEvent: msRest.CompositeMapper = {
+  serializedName: "CloudEventEvent",
+  type: {
+    name: "Composite",
+    className: "CloudEventEvent",
+    modelProperties: {
+      id: {
+        required: true,
+        serializedName: "id",
+        type: {
+          name: "String"
+        }
+      },
+      source: {
+        required: true,
+        serializedName: "source",
+        type: {
+          name: "String"
+        }
+      },
+      data: {
+        serializedName: "data",
+        type: {
+          name: "Object"
+        }
+      },
+      dataBase64: {
+        serializedName: "data_base64",
+        type: {
+          name: "ByteArray"
+        }
+      },
+      type: {
+        required: true,
+        serializedName: "type",
+        type: {
+          name: "String"
+        }
+      },
+      time: {
+        serializedName: "time",
+        type: {
+          name: "DateTime"
+        }
+      },
+      specversion: {
+        required: true,
+        serializedName: "specversion",
+        type: {
+          name: "String"
+        }
+      },
+      dataschema: {
+        serializedName: "dataschema",
+        type: {
+          name: "String"
+        }
+      },
+      datacontenttype: {
+        serializedName: "datacontenttype",
+        type: {
+          name: "String"
+        }
+      },
+      subject: {
+        serializedName: "subject",
+        type: {
+          name: "String"
+        }
+      }
+    },
+    additionalProperties: {
+      type: {
+        name: "Object"
+      }
+    }
+  }
+};
+
 export const SubscriptionValidationEventData: msRest.CompositeMapper = {
   serializedName: "SubscriptionValidationEventData",
   type: {

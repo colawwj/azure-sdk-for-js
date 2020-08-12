@@ -57,6 +57,70 @@ class EventGridClient extends EventGridClientContext {
       publishEventsOperationSpec,
       callback);
   }
+
+  /**
+   * Publishes a batch of events to an Azure Event Grid topic.
+   * @param topicHostname The host name of the topic, e.g. topic1.westus2-1.eventgrid.azure.net
+   * @param events An array of events to be published to Event Grid.
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
+   */
+  publishCloudEventEvents(topicHostname: string, events: Models.CloudEventEvent[], options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param topicHostname The host name of the topic, e.g. topic1.westus2-1.eventgrid.azure.net
+   * @param events An array of events to be published to Event Grid.
+   * @param callback The callback
+   */
+  publishCloudEventEvents(topicHostname: string, events: Models.CloudEventEvent[], callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param topicHostname The host name of the topic, e.g. topic1.westus2-1.eventgrid.azure.net
+   * @param events An array of events to be published to Event Grid.
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  publishCloudEventEvents(topicHostname: string, events: Models.CloudEventEvent[], options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  publishCloudEventEvents(topicHostname: string, events: Models.CloudEventEvent[], options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        topicHostname,
+        events,
+        options
+      },
+      publishCloudEventEventsOperationSpec,
+      callback);
+  }
+
+  /**
+   * Publishes a batch of events to an Azure Event Grid topic.
+   * @param topicHostname The host name of the topic, e.g. topic1.westus2-1.eventgrid.azure.net
+   * @param events An array of events to be published to Event Grid.
+   * @param [options] The optional parameters
+   * @returns Promise<msRest.RestResponse>
+   */
+  publishCustomEventEvents(topicHostname: string, events: any[], options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  /**
+   * @param topicHostname The host name of the topic, e.g. topic1.westus2-1.eventgrid.azure.net
+   * @param events An array of events to be published to Event Grid.
+   * @param callback The callback
+   */
+  publishCustomEventEvents(topicHostname: string, events: any[], callback: msRest.ServiceCallback<void>): void;
+  /**
+   * @param topicHostname The host name of the topic, e.g. topic1.westus2-1.eventgrid.azure.net
+   * @param events An array of events to be published to Event Grid.
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  publishCustomEventEvents(topicHostname: string, events: any[], options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
+  publishCustomEventEvents(topicHostname: string, events: any[], options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+    return this.sendOperationRequest(
+      {
+        topicHostname,
+        events,
+        options
+      },
+      publishCustomEventEventsOperationSpec,
+      callback);
+  }
 }
 
 // Operation Specifications
@@ -84,6 +148,85 @@ const publishEventsOperationSpec: msRest.OperationSpec = {
           type: {
             name: "Composite",
             className: "EventGridEvent"
+          }
+        }
+      }
+    }
+  },
+  responses: {
+    200: {},
+    default: {
+      bodyMapper: Mappers.CloudError
+    }
+  },
+  serializer
+};
+
+const publishCloudEventEventsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "api/events",
+  urlParameters: [
+    Parameters.topicHostname
+  ],
+  queryParameters: [
+    Parameters.apiVersion
+  ],
+  headerParameters: [
+    Parameters.acceptLanguage
+  ],
+  requestBody: {
+    parameterPath: "events",
+    mapper: {
+      required: true,
+      serializedName: "events",
+      type: {
+        name: "Sequence",
+        element: {
+          type: {
+            name: "Composite",
+            className: "CloudEventEvent",
+            additionalProperties: {
+              type: {
+                name: "Object"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  contentType: "application/cloudevents-batch+json; charset=utf-8",
+  responses: {
+    200: {},
+    default: {
+      bodyMapper: Mappers.CloudError
+    }
+  },
+  serializer
+};
+
+const publishCustomEventEventsOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "api/events",
+  urlParameters: [
+    Parameters.topicHostname
+  ],
+  queryParameters: [
+    Parameters.apiVersion
+  ],
+  headerParameters: [
+    Parameters.acceptLanguage
+  ],
+  requestBody: {
+    parameterPath: "events",
+    mapper: {
+      required: true,
+      serializedName: "events",
+      type: {
+        name: "Sequence",
+        element: {
+          type: {
+            name: "Object"
           }
         }
       }
