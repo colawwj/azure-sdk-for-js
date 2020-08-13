@@ -5052,6 +5052,65 @@ export interface FunctionSecrets extends ProxyOnlyResource {
 }
 
 /**
+ * The GitHub action code configuration.
+ */
+export interface GitHubActionCodeConfiguration {
+  /**
+   * Runtime stack is used to determine the workflow file content for code base apps.
+   */
+  runtimeStack?: string;
+  /**
+   * Runtime version is used to determine what build version to set in the workflow file.
+   */
+  runtimeVersion?: string;
+}
+
+/**
+ * The GitHub action container configuration.
+ */
+export interface GitHubActionContainerConfiguration {
+  /**
+   * The server URL for the container registry where the build will be hosted.
+   */
+  serverUrl?: string;
+  /**
+   * The image name for the build.
+   */
+  imageName?: string;
+  /**
+   * The username used to upload the image to the container registry.
+   */
+  username?: string;
+  /**
+   * The password used to upload the image to the container registry.
+   */
+  password?: string;
+}
+
+/**
+ * The GitHub action configuration.
+ */
+export interface GitHubActionConfiguration {
+  /**
+   * GitHub Action code configuration.
+   */
+  codeConfiguration?: GitHubActionCodeConfiguration;
+  /**
+   * GitHub Action container configuration.
+   */
+  containerConfiguration?: GitHubActionContainerConfiguration;
+  /**
+   * This will help determine the workflow configuration to select.
+   */
+  isLinux?: boolean;
+  /**
+   * Workflow option to determine whether the workflow file should be generated and written to the
+   * repository.
+   */
+  generateWorkflowFile?: boolean;
+}
+
+/**
  * Functions host level keys.
  */
 export interface HostKeys {
@@ -6758,6 +6817,10 @@ export interface SiteSourceControl extends ProxyOnlyResource {
    */
   isManualIntegration?: boolean;
   /**
+   * <code>true</code> if this is deployed via GitHub action.
+   */
+  isGitHubAction?: boolean;
+  /**
    * <code>true</code> to enable deployment rollback; otherwise, <code>false</code>.
    */
   deploymentRollbackEnabled?: boolean;
@@ -6765,6 +6828,10 @@ export interface SiteSourceControl extends ProxyOnlyResource {
    * <code>true</code> for a Mercurial repository; <code>false</code> for a Git repository.
    */
   isMercurial?: boolean;
+  /**
+   * If GitHub Action is selected, than the associated configuration.
+   */
+  gitHubActionConfiguration?: GitHubActionConfiguration;
 }
 
 /**
@@ -8637,6 +8704,18 @@ export interface WebAppsRestartSlotOptionalParams extends msRest.RequestOptionsB
 /**
  * Optional Parameters.
  */
+export interface WebAppsDeleteSourceControlSlotOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Comma separated flags to be considered during delete operations. E.g.
+   * 'ScmGitHubActionSkipWorkflowDelete' will delete the GitHub Action workflow file from GitHub
+   * repo.
+   */
+  additionalFlags?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
 export interface WebAppsStartNetworkTraceSlotOptionalParams extends msRest.RequestOptionsBase {
   /**
    * The duration to keep capturing in seconds.
@@ -8663,6 +8742,18 @@ export interface WebAppsListUsagesSlotOptionalParams extends msRest.RequestOptio
    * duration'[Hour|Minute|Day]'.
    */
   filter?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface WebAppsDeleteSourceControlOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Comma separated flags to be considered during delete operations. E.g.
+   * 'ScmGitHubActionSkipWorkflowDelete' will delete the GitHub Action workflow file from GitHub
+   * repo.
+   */
+  additionalFlags?: string;
 }
 
 /**

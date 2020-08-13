@@ -11944,7 +11944,7 @@ export class WebApps {
    * @param [options] The optional parameters
    * @returns Promise<msRest.RestResponse>
    */
-  deleteSourceControlSlot(resourceGroupName: string, name: string, slot: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  deleteSourceControlSlot(resourceGroupName: string, name: string, slot: string, options?: Models.WebAppsDeleteSourceControlSlotOptionalParams): Promise<msRest.RestResponse>;
   /**
    * @param resourceGroupName Name of the resource group to which the resource belongs.
    * @param name Name of the app.
@@ -11961,8 +11961,8 @@ export class WebApps {
    * @param options The optional parameters
    * @param callback The callback
    */
-  deleteSourceControlSlot(resourceGroupName: string, name: string, slot: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  deleteSourceControlSlot(resourceGroupName: string, name: string, slot: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+  deleteSourceControlSlot(resourceGroupName: string, name: string, slot: string, options: Models.WebAppsDeleteSourceControlSlotOptionalParams, callback: msRest.ServiceCallback<void>): void;
+  deleteSourceControlSlot(resourceGroupName: string, name: string, slot: string, options?: Models.WebAppsDeleteSourceControlSlotOptionalParams | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
     return this.client.sendOperationRequest(
       {
         resourceGroupName,
@@ -13163,7 +13163,7 @@ export class WebApps {
    * @param [options] The optional parameters
    * @returns Promise<msRest.RestResponse>
    */
-  deleteSourceControl(resourceGroupName: string, name: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  deleteSourceControl(resourceGroupName: string, name: string, options?: Models.WebAppsDeleteSourceControlOptionalParams): Promise<msRest.RestResponse>;
   /**
    * @param resourceGroupName Name of the resource group to which the resource belongs.
    * @param name Name of the app.
@@ -13176,8 +13176,8 @@ export class WebApps {
    * @param options The optional parameters
    * @param callback The callback
    */
-  deleteSourceControl(resourceGroupName: string, name: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  deleteSourceControl(resourceGroupName: string, name: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+  deleteSourceControl(resourceGroupName: string, name: string, options: Models.WebAppsDeleteSourceControlOptionalParams, callback: msRest.ServiceCallback<void>): void;
+  deleteSourceControl(resourceGroupName: string, name: string, options?: Models.WebAppsDeleteSourceControlOptionalParams | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
     return this.client.sendOperationRequest(
       {
         resourceGroupName,
@@ -24614,6 +24614,7 @@ const deleteSourceControlSlotOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
+    Parameters.additionalFlags,
     Parameters.apiVersion
   ],
   headerParameters: [
@@ -25412,6 +25413,7 @@ const deleteSourceControlOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
+    Parameters.additionalFlags,
     Parameters.apiVersion
   ],
   headerParameters: [

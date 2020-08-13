@@ -20,6 +20,18 @@ export const acceptLanguage: msRest.OperationParameter = {
     }
   }
 };
+export const additionalFlags: msRest.OperationQueryParameter = {
+  parameterPath: [
+    "options",
+    "additionalFlags"
+  ],
+  mapper: {
+    serializedName: "additionalFlags",
+    type: {
+      name: "String"
+    }
+  }
+};
 export const analysisName: msRest.OperationURLParameter = {
   parameterPath: "analysisName",
   mapper: {
