@@ -306,6 +306,16 @@ export const connectorName: msRest.OperationURLParameter = {
     }
   }
 };
+export const deviceId: msRest.OperationURLParameter = {
+  parameterPath: "deviceId",
+  mapper: {
+    required: true,
+    serializedName: "deviceId",
+    type: {
+      name: "String"
+    }
+  }
+};
 export const deviceSecurityGroupName: msRest.OperationURLParameter = {
   parameterPath: "deviceSecurityGroupName",
   mapper: {

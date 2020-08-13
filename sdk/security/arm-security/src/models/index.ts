@@ -409,6 +409,243 @@ export interface AdvancedThreatProtectionSetting extends Resource {
 }
 
 /**
+ * IP Address information
+ */
+export interface IpAddress {
+  /**
+   * IPV4 address
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly v4Address?: string;
+  /**
+   * Detection time of the ip address.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly detectionTime?: Date;
+  /**
+   * Subnet Classless Inter-Domain Routing
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly subnetCidr?: string;
+  /**
+   * Fully qualified domain name
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly fqdn?: string;
+  /**
+   * FQDN last lookup time.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly fqdnLastLookupTime?: Date;
+}
+
+/**
+ * MAC Address information
+ */
+export interface MacAddress {
+  /**
+   * MAC address
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly address?: string;
+  /**
+   * Detection time of the mac address.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly detectionTime?: Date;
+  /**
+   * Indicates whether this is the primary secondary MAC address of the device. Possible values
+   * include: 'Primary', 'Secondary'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly significance?: MacSignificance;
+  /**
+   * Indicates whether the relation of the mac to the ip address is certain or a guess. Possible
+   * values include: 'Guess', 'Certain'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly relationToIpStatus?: RelationToIpStatus;
+}
+
+/**
+ * Network interface
+ */
+export interface NetworkInterface {
+  ipAddress?: IpAddress;
+  macAddress?: MacAddress;
+}
+
+/**
+ * Protocol data
+ */
+export interface Protocol1 {
+  /**
+   * Protocol name
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * list of protocol identifiers.
+   */
+  identifiers?: string;
+}
+
+/**
+ * Firmware information
+ */
+export interface Firmware {
+  /**
+   * Address of the specific module a firmware is related to
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly moduleAddress?: string;
+  /**
+   * Rack number of the module a firmware is related to.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly rack?: string;
+  /**
+   * Slot number in the rack of the module a firmware is related to
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly slot?: string;
+  /**
+   * Serial of the firmware
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly serial?: string;
+  /**
+   * Firmware model
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly model?: string;
+  /**
+   * Firmware version
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly version?: string;
+  /**
+   * A bag of fields which extends the firmware information.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly additionalData?: any;
+}
+
+/**
+ * Device model
+ */
+export interface Device extends Resource {
+  /**
+   * Device display name given by the collector
+   */
+  displayName?: string;
+  /**
+   * Device type.
+   */
+  deviceType?: string;
+  /**
+   * The source that created the device
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly sourceName?: string;
+  /**
+   * List of network interfaces.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly networkInterfaces?: NetworkInterface[];
+  /**
+   * Device vendor
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly vendor?: string;
+  /**
+   * Device operating system name.
+   */
+  osName?: string;
+  /**
+   * List of protocols.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly protocols?: Protocol1[];
+  /**
+   * last time the device was active in the network
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly lastActiveTime?: Date;
+  /**
+   * last time the device was updated
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly lastUpdateTime?: Date;
+  /**
+   * Managed state of the device. Possible values include: 'Managed', 'Unmanaged'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly managementState?: ManagementState;
+  /**
+   * Authorized state of the device. Possible values include: 'Authorized', 'Unauthorized'. Default
+   * value: 'Unauthorized'.
+   */
+  authorizationState?: AuthorizationState;
+  /**
+   * Device criticality. Possible values include: 'Important', 'Standard'. Default value:
+   * 'Standard'.
+   */
+  deviceCriticality?: DeviceCriticality;
+  /**
+   * Purdue level of the device. Possible values include: 'ProcessControl', 'Supervisory',
+   * 'Enterprise'. Default value: 'ProcessControl'.
+   */
+  purdueLevel?: PurdueLevel;
+  /**
+   * user notes for the device, up to 300 characters.
+   */
+  notes?: string;
+  /**
+   * List of device firmwares.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly firmwares?: Firmware[];
+  /**
+   * List of device vlans.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly vlans?: string[];
+  /**
+   * Discovered time of the device.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly discoveryTime?: Date;
+  /**
+   * Indicates whether this device is programming. Possible values include: 'ProgrammingDevice',
+   * 'NotProgrammingDevice'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly programmingState?: ProgrammingState;
+  /**
+   * last time the device was programming or programed.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly lastProgrammingTime?: Date;
+  /**
+   * Indicates whether the device is a scanner. Possible values include: 'ScannerDevice',
+   * 'NotScannerDevice'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly scanningFunctionality?: ScanningFunctionality;
+  /**
+   * last time the device was scanning.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly lastScanTime?: Date;
+  /**
+   * List of field names that their value was modified by the user.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly fieldsChangedByUser?: string[];
+}
+
+/**
  * Contains the possible cases for CustomAlertRule.
  */
 export type CustomAlertRuleUnion = CustomAlertRule | ThresholdCustomAlertRuleUnion | ListCustomAlertRuleUnion;
@@ -4613,6 +4850,20 @@ export interface AlertsListResourceGroupLevelAlertsByRegionOptionalParams extend
 /**
  * Optional Parameters.
  */
+export interface DevicesListOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Limit the number of items returned in a single page
+   */
+  limit?: number;
+  /**
+   * Skip token used for pagination
+   */
+  skipToken?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
 export interface IotSecuritySolutionListBySubscriptionOptionalParams extends msRest.RequestOptionsBase {
   /**
    * Filter the IoT Security solution with OData syntax. Supports filtering by iotHubs.
@@ -4849,6 +5100,23 @@ export interface AlertList extends Array<Alert> {
 export interface SettingsList extends Array<SettingUnion> {
   /**
    * The URI to fetch the next page.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly nextLink?: string;
+}
+
+/**
+ * @interface
+ * List of Devices
+ * @extends Array<Device>
+ */
+export interface DeviceList extends Array<Device> {
+  /**
+   * Total count of devices in all the pages.
+   */
+  totalCount: number;
+  /**
+   * When there are too many devices for one page, use this URI to fetch the next page.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly nextLink?: string;
@@ -5316,6 +5584,70 @@ export type PricingTier = 'Free' | 'Standard';
  * @enum {string}
  */
 export type ReportedSeverity = 'Informational' | 'Low' | 'Medium' | 'High';
+
+/**
+ * Defines values for MacSignificance.
+ * Possible values include: 'Primary', 'Secondary'
+ * @readonly
+ * @enum {string}
+ */
+export type MacSignificance = 'Primary' | 'Secondary';
+
+/**
+ * Defines values for RelationToIpStatus.
+ * Possible values include: 'Guess', 'Certain'
+ * @readonly
+ * @enum {string}
+ */
+export type RelationToIpStatus = 'Guess' | 'Certain';
+
+/**
+ * Defines values for ManagementState.
+ * Possible values include: 'Managed', 'Unmanaged'
+ * @readonly
+ * @enum {string}
+ */
+export type ManagementState = 'Managed' | 'Unmanaged';
+
+/**
+ * Defines values for AuthorizationState.
+ * Possible values include: 'Authorized', 'Unauthorized'
+ * @readonly
+ * @enum {string}
+ */
+export type AuthorizationState = 'Authorized' | 'Unauthorized';
+
+/**
+ * Defines values for DeviceCriticality.
+ * Possible values include: 'Important', 'Standard'
+ * @readonly
+ * @enum {string}
+ */
+export type DeviceCriticality = 'Important' | 'Standard';
+
+/**
+ * Defines values for PurdueLevel.
+ * Possible values include: 'ProcessControl', 'Supervisory', 'Enterprise'
+ * @readonly
+ * @enum {string}
+ */
+export type PurdueLevel = 'ProcessControl' | 'Supervisory' | 'Enterprise';
+
+/**
+ * Defines values for ProgrammingState.
+ * Possible values include: 'ProgrammingDevice', 'NotProgrammingDevice'
+ * @readonly
+ * @enum {string}
+ */
+export type ProgrammingState = 'ProgrammingDevice' | 'NotProgrammingDevice';
+
+/**
+ * Defines values for ScanningFunctionality.
+ * Possible values include: 'ScannerDevice', 'NotScannerDevice'
+ * @readonly
+ * @enum {string}
+ */
+export type ScanningFunctionality = 'ScannerDevice' | 'NotScannerDevice';
 
 /**
  * Defines values for ValueType.
@@ -6307,6 +6639,86 @@ export type AdvancedThreatProtectionCreateResponse = AdvancedThreatProtectionSet
        * The response body as parsed JSON or XML
        */
       parsedBody: AdvancedThreatProtectionSetting;
+    };
+};
+
+/**
+ * Contains response data for the list operation.
+ */
+export type DevicesListResponse = DeviceList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: DeviceList;
+    };
+};
+
+/**
+ * Contains response data for the listNext operation.
+ */
+export type DevicesListNextResponse = DeviceList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: DeviceList;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type DeviceGetResponse = Device & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: Device;
+    };
+};
+
+/**
+ * Contains response data for the update operation.
+ */
+export type DeviceUpdateResponse = Device & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: Device;
     };
 };
 

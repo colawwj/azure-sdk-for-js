@@ -571,6 +571,384 @@ export const AdvancedThreatProtectionSetting: msRest.CompositeMapper = {
   }
 };
 
+export const IpAddress: msRest.CompositeMapper = {
+  serializedName: "IpAddress",
+  type: {
+    name: "Composite",
+    className: "IpAddress",
+    modelProperties: {
+      v4Address: {
+        readOnly: true,
+        serializedName: "v4Address",
+        type: {
+          name: "String"
+        }
+      },
+      detectionTime: {
+        readOnly: true,
+        serializedName: "detectionTime",
+        type: {
+          name: "DateTime"
+        }
+      },
+      subnetCidr: {
+        readOnly: true,
+        serializedName: "subnetCidr",
+        type: {
+          name: "String"
+        }
+      },
+      fqdn: {
+        readOnly: true,
+        serializedName: "fqdn",
+        type: {
+          name: "String"
+        }
+      },
+      fqdnLastLookupTime: {
+        readOnly: true,
+        serializedName: "fqdnLastLookupTime",
+        type: {
+          name: "DateTime"
+        }
+      }
+    }
+  }
+};
+
+export const MacAddress: msRest.CompositeMapper = {
+  serializedName: "MacAddress",
+  type: {
+    name: "Composite",
+    className: "MacAddress",
+    modelProperties: {
+      address: {
+        readOnly: true,
+        serializedName: "address",
+        type: {
+          name: "String"
+        }
+      },
+      detectionTime: {
+        readOnly: true,
+        serializedName: "detectionTime",
+        type: {
+          name: "DateTime"
+        }
+      },
+      significance: {
+        readOnly: true,
+        serializedName: "significance",
+        type: {
+          name: "String"
+        }
+      },
+      relationToIpStatus: {
+        readOnly: true,
+        serializedName: "relationToIpStatus",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const NetworkInterface: msRest.CompositeMapper = {
+  serializedName: "NetworkInterface",
+  type: {
+    name: "Composite",
+    className: "NetworkInterface",
+    modelProperties: {
+      ipAddress: {
+        serializedName: "ipAddress",
+        type: {
+          name: "Composite",
+          className: "IpAddress"
+        }
+      },
+      macAddress: {
+        serializedName: "macAddress",
+        type: {
+          name: "Composite",
+          className: "MacAddress"
+        }
+      }
+    }
+  }
+};
+
+export const Protocol1: msRest.CompositeMapper = {
+  serializedName: "Protocol",
+  type: {
+    name: "Composite",
+    className: "Protocol1",
+    modelProperties: {
+      name: {
+        readOnly: true,
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      identifiers: {
+        serializedName: "identifiers",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const Firmware: msRest.CompositeMapper = {
+  serializedName: "Firmware",
+  type: {
+    name: "Composite",
+    className: "Firmware",
+    modelProperties: {
+      moduleAddress: {
+        readOnly: true,
+        serializedName: "moduleAddress",
+        type: {
+          name: "String"
+        }
+      },
+      rack: {
+        readOnly: true,
+        serializedName: "rack",
+        type: {
+          name: "String"
+        }
+      },
+      slot: {
+        readOnly: true,
+        serializedName: "slot",
+        type: {
+          name: "String"
+        }
+      },
+      serial: {
+        readOnly: true,
+        serializedName: "serial",
+        type: {
+          name: "String"
+        }
+      },
+      model: {
+        readOnly: true,
+        serializedName: "model",
+        type: {
+          name: "String"
+        }
+      },
+      version: {
+        readOnly: true,
+        serializedName: "version",
+        type: {
+          name: "String"
+        }
+      },
+      additionalData: {
+        readOnly: true,
+        serializedName: "additionalData",
+        type: {
+          name: "Object"
+        }
+      }
+    }
+  }
+};
+
+export const Device: msRest.CompositeMapper = {
+  serializedName: "Device",
+  type: {
+    name: "Composite",
+    className: "Device",
+    modelProperties: {
+      ...Resource.type.modelProperties,
+      displayName: {
+        serializedName: "properties.displayName",
+        type: {
+          name: "String"
+        }
+      },
+      deviceType: {
+        serializedName: "properties.deviceType",
+        type: {
+          name: "String"
+        }
+      },
+      sourceName: {
+        readOnly: true,
+        serializedName: "properties.sourceName",
+        type: {
+          name: "String"
+        }
+      },
+      networkInterfaces: {
+        readOnly: true,
+        serializedName: "properties.networkInterfaces",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "NetworkInterface"
+            }
+          }
+        }
+      },
+      vendor: {
+        readOnly: true,
+        serializedName: "properties.vendor",
+        type: {
+          name: "String"
+        }
+      },
+      osName: {
+        serializedName: "properties.osName",
+        type: {
+          name: "String"
+        }
+      },
+      protocols: {
+        readOnly: true,
+        serializedName: "properties.protocols",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "Protocol1"
+            }
+          }
+        }
+      },
+      lastActiveTime: {
+        readOnly: true,
+        serializedName: "properties.lastActiveTime",
+        type: {
+          name: "DateTime"
+        }
+      },
+      lastUpdateTime: {
+        readOnly: true,
+        serializedName: "properties.lastUpdateTime",
+        type: {
+          name: "DateTime"
+        }
+      },
+      managementState: {
+        readOnly: true,
+        serializedName: "properties.managementState",
+        type: {
+          name: "String"
+        }
+      },
+      authorizationState: {
+        serializedName: "properties.authorizationState",
+        defaultValue: 'Unauthorized',
+        type: {
+          name: "String"
+        }
+      },
+      deviceCriticality: {
+        serializedName: "properties.deviceCriticality",
+        defaultValue: 'Standard',
+        type: {
+          name: "String"
+        }
+      },
+      purdueLevel: {
+        serializedName: "properties.purdueLevel",
+        defaultValue: 'ProcessControl',
+        type: {
+          name: "String"
+        }
+      },
+      notes: {
+        serializedName: "properties.notes",
+        type: {
+          name: "String"
+        }
+      },
+      firmwares: {
+        readOnly: true,
+        serializedName: "properties.firmwares",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "Firmware"
+            }
+          }
+        }
+      },
+      vlans: {
+        readOnly: true,
+        serializedName: "properties.vlans",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      discoveryTime: {
+        readOnly: true,
+        serializedName: "properties.discoveryTime",
+        type: {
+          name: "DateTime"
+        }
+      },
+      programmingState: {
+        readOnly: true,
+        serializedName: "properties.programmingState",
+        type: {
+          name: "String"
+        }
+      },
+      lastProgrammingTime: {
+        readOnly: true,
+        serializedName: "properties.lastProgrammingTime",
+        type: {
+          name: "DateTime"
+        }
+      },
+      scanningFunctionality: {
+        readOnly: true,
+        serializedName: "properties.scanningFunctionality",
+        type: {
+          name: "String"
+        }
+      },
+      lastScanTime: {
+        readOnly: true,
+        serializedName: "properties.lastScanTime",
+        type: {
+          name: "DateTime"
+        }
+      },
+      fieldsChangedByUser: {
+        readOnly: true,
+        serializedName: "properties.fieldsChangedByUser",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
 export const CustomAlertRule: msRest.CompositeMapper = {
   serializedName: "CustomAlertRule",
   type: {
@@ -6382,6 +6760,43 @@ export const SettingsList: msRest.CompositeMapper = {
             type: {
               name: "Composite",
               className: "Setting"
+            }
+          }
+        }
+      },
+      nextLink: {
+        readOnly: true,
+        serializedName: "nextLink",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const DeviceList: msRest.CompositeMapper = {
+  serializedName: "DeviceList",
+  type: {
+    name: "Composite",
+    className: "DeviceList",
+    modelProperties: {
+      totalCount: {
+        required: true,
+        serializedName: "totalCount",
+        type: {
+          name: "Number"
+        }
+      },
+      value: {
+        required: true,
+        serializedName: "",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "Device"
             }
           }
         }

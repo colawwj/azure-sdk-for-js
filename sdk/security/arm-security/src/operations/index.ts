@@ -13,6 +13,8 @@ export * from "./pricings";
 export * from "./alerts";
 export * from "./settings";
 export * from "./advancedThreatProtection";
+export * from "./devices";
+export * from "./deviceOperations";
 export * from "./deviceSecurityGroups";
 export * from "./iotSecuritySolution";
 export * from "./iotSecuritySolutionAnalytics";

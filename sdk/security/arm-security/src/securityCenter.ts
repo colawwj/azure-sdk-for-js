@@ -22,6 +22,8 @@ class SecurityCenter extends SecurityCenterContext {
   alerts: operations.Alerts;
   settings: operations.Settings;
   advancedThreatProtection: operations.AdvancedThreatProtection;
+  devices: operations.Devices;
+  device: operations.DeviceOperations;
   deviceSecurityGroups: operations.DeviceSecurityGroups;
   iotSecuritySolution: operations.IotSecuritySolution;
   iotSecuritySolutionAnalytics: operations.IotSecuritySolutionAnalytics;
@@ -77,6 +79,8 @@ class SecurityCenter extends SecurityCenterContext {
     this.alerts = new operations.Alerts(this);
     this.settings = new operations.Settings(this);
     this.advancedThreatProtection = new operations.AdvancedThreatProtection(this);
+    this.devices = new operations.Devices(this);
+    this.device = new operations.DeviceOperations(this);
     this.deviceSecurityGroups = new operations.DeviceSecurityGroups(this);
     this.iotSecuritySolution = new operations.IotSecuritySolution(this);
     this.iotSecuritySolutionAnalytics = new operations.IotSecuritySolutionAnalytics(this);
