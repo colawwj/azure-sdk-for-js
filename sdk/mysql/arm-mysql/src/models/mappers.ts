@@ -1865,6 +1865,52 @@ export const ServerSecurityAlertPolicy: msRest.CompositeMapper = {
           ]
         }
       },
+      disabledAlerts: {
+        serializedName: "properties.disabledAlerts",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      emailAddresses: {
+        serializedName: "properties.emailAddresses",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      emailAccountAdmins: {
+        serializedName: "properties.emailAccountAdmins",
+        type: {
+          name: "Boolean"
+        }
+      },
+      storageEndpoint: {
+        serializedName: "properties.storageEndpoint",
+        type: {
+          name: "String"
+        }
+      },
+      storageAccountAccessKey: {
+        serializedName: "properties.storageAccountAccessKey",
+        type: {
+          name: "String"
+        }
+      },
+      retentionDays: {
+        serializedName: "properties.retentionDays",
+        type: {
+          name: "Number"
+        }
+      },
       systemData: {
         readOnly: true,
         serializedName: "systemData",
