@@ -1039,6 +1039,32 @@ export interface ServerSecurityAlertPolicy extends ProxyResource {
    */
   state: ServerSecurityAlertPolicyState;
   /**
+   * Specifies an array of alerts that are disabled. Allowed values are: Sql_Injection,
+   * Sql_Injection_Vulnerability, Access_Anomaly
+   */
+  disabledAlerts?: string[];
+  /**
+   * Specifies an array of e-mail addresses to which the alert is sent.
+   */
+  emailAddresses?: string[];
+  /**
+   * Specifies that the alert is sent to the account administrators.
+   */
+  emailAccountAdmins?: boolean;
+  /**
+   * Specifies the blob storage endpoint (e.g. https://MyAccount.blob.core.windows.net). This blob
+   * storage will hold all Threat Detection audit logs.
+   */
+  storageEndpoint?: string;
+  /**
+   * Specifies the identifier key of the Threat Detection audit storage account.
+   */
+  storageAccountAccessKey?: string;
+  /**
+   * Specifies the number of days to keep in the Threat Detection audit logs.
+   */
+  retentionDays?: number;
+  /**
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly systemData?: SystemData;
