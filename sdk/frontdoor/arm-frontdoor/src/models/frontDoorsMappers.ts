@@ -8,6 +8,7 @@
 
 export {
   discriminators,
+  AssignmentPathLink,
   Backend,
   BackendPool,
   BackendPoolsSettings,
@@ -22,6 +23,8 @@ export {
   ForwardingConfiguration,
   FrontDoor,
   FrontDoorListResult,
+  FrontDoorUpdateParametersWebApplicationFirewallPolicyLinksItem,
+  FrontDoorUpdateParametersWebApplicationFirewallPolicyLinksItemPatternsItem,
   FrontendEndpoint,
   FrontendEndpointLink,
   FrontendEndpointUpdateParametersWebApplicationFirewallPolicyLink,

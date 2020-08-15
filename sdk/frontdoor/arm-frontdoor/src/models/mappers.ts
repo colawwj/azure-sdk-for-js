@@ -796,6 +796,18 @@ export const FrontDoor: msRest.CompositeMapper = {
           name: "String"
         }
       },
+      webApplicationFirewallPolicyLinks: {
+        serializedName: "properties.webApplicationFirewallPolicyLinks",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "FrontDoorUpdateParametersWebApplicationFirewallPolicyLinksItem"
+            }
+          }
+        }
+      },
       resourceState: {
         serializedName: "properties.resourceState",
         type: {
@@ -1273,6 +1285,66 @@ export const BackendPoolsSettings: msRest.CompositeMapper = {
   }
 };
 
+export const FrontDoorUpdateParametersWebApplicationFirewallPolicyLinksItemPatternsItem: msRest.CompositeMapper = {
+  serializedName: "FrontDoorUpdateParameters_webApplicationFirewallPolicyLinksItem_patternsItem",
+  type: {
+    name: "Composite",
+    className: "FrontDoorUpdateParametersWebApplicationFirewallPolicyLinksItemPatternsItem",
+    modelProperties: {
+      domains: {
+        serializedName: "domains",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      paths: {
+        serializedName: "paths",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const FrontDoorUpdateParametersWebApplicationFirewallPolicyLinksItem: msRest.CompositeMapper = {
+  serializedName: "FrontDoorUpdateParameters_webApplicationFirewallPolicyLinksItem",
+  type: {
+    name: "Composite",
+    className: "FrontDoorUpdateParametersWebApplicationFirewallPolicyLinksItem",
+    modelProperties: {
+      id: {
+        serializedName: "id",
+        type: {
+          name: "String"
+        }
+      },
+      patterns: {
+        serializedName: "patterns",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "FrontDoorUpdateParametersWebApplicationFirewallPolicyLinksItemPatternsItem"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
 export const FrontDoorUpdateParameters: msRest.CompositeMapper = {
   serializedName: "FrontDoorUpdateParameters",
   type: {
@@ -1356,6 +1428,18 @@ export const FrontDoorUpdateParameters: msRest.CompositeMapper = {
         serializedName: "enabledState",
         type: {
           name: "String"
+        }
+      },
+      webApplicationFirewallPolicyLinks: {
+        serializedName: "webApplicationFirewallPolicyLinks",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "FrontDoorUpdateParametersWebApplicationFirewallPolicyLinksItem"
+            }
+          }
         }
       }
     }
@@ -2712,6 +2796,22 @@ export const RoutingRuleLink: msRest.CompositeMapper = {
   }
 };
 
+export const AssignmentPathLink: msRest.CompositeMapper = {
+  serializedName: "AssignmentPathLink",
+  type: {
+    name: "Composite",
+    className: "AssignmentPathLink",
+    modelProperties: {
+      id: {
+        serializedName: "id",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const WebApplicationFirewallPolicy: msRest.CompositeMapper = {
   serializedName: "WebApplicationFirewallPolicy",
   type: {
@@ -2762,6 +2862,19 @@ export const WebApplicationFirewallPolicy: msRest.CompositeMapper = {
             type: {
               name: "Composite",
               className: "RoutingRuleLink"
+            }
+          }
+        }
+      },
+      assignmentPathLinks: {
+        readOnly: true,
+        serializedName: "properties.assignmentPathLinks",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "AssignmentPathLink"
             }
           }
         }

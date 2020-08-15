@@ -465,6 +465,10 @@ export interface FrontDoor extends Resource {
    */
   enabledState?: FrontDoorEnabledState;
   /**
+   * Defines the Web Application Firewall links (if applicable)
+   */
+  webApplicationFirewallPolicyLinks?: FrontDoorUpdateParametersWebApplicationFirewallPolicyLinksItem[];
+  /**
    * Resource status of the Front Door. Possible values include: 'Creating', 'Enabling', 'Enabled',
    * 'Disabling', 'Disabled', 'Deleting'
    */
@@ -767,6 +771,34 @@ export interface BackendPoolsSettings {
 }
 
 /**
+ * Patterns to match.
+ */
+export interface FrontDoorUpdateParametersWebApplicationFirewallPolicyLinksItemPatternsItem {
+  /**
+   * Domains to match.
+   */
+  domains?: string[];
+  /**
+   * Paths to match.
+   */
+  paths?: string[];
+}
+
+/**
+ * Defines the Web Application Firewall link
+ */
+export interface FrontDoorUpdateParametersWebApplicationFirewallPolicyLinksItem {
+  /**
+   * Resource ID.
+   */
+  id?: string;
+  /**
+   * List of patterns to match.
+   */
+  patterns?: FrontDoorUpdateParametersWebApplicationFirewallPolicyLinksItemPatternsItem[];
+}
+
+/**
  * The properties needed to update a Front Door
  */
 export interface FrontDoorUpdateParameters {
@@ -803,6 +835,10 @@ export interface FrontDoorUpdateParameters {
    * 'Disabled'. Possible values include: 'Enabled', 'Disabled'
    */
   enabledState?: FrontDoorEnabledState;
+  /**
+   * Defines the Web Application Firewall links (if applicable)
+   */
+  webApplicationFirewallPolicyLinks?: FrontDoorUpdateParametersWebApplicationFirewallPolicyLinksItem[];
 }
 
 /**
@@ -1609,6 +1645,16 @@ export interface RoutingRuleLink {
 }
 
 /**
+ * Defines the Resource ID for an Assignment Path.
+ */
+export interface AssignmentPathLink {
+  /**
+   * Resource ID.
+   */
+  id?: string;
+}
+
+/**
  * Defines web application firewall policy.
  */
 export interface WebApplicationFirewallPolicy extends Resource {
@@ -1634,6 +1680,11 @@ export interface WebApplicationFirewallPolicy extends Resource {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly routingRuleLinks?: RoutingRuleLink[];
+  /**
+   * Describes paths associated with this Web Application Firewall policy.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly assignmentPathLinks?: AssignmentPathLink[];
   /**
    * Provisioning state of the policy.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
