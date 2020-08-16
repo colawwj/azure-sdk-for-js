@@ -6343,18 +6343,11 @@ export interface ManagedInstance extends TrackedResource {
    */
   minimalTlsVersion?: string;
   /**
-   * The backup storage redundancy used to store backups for this instance. The options are LRS
+   * The storage account type used to store backups for this instance. The options are LRS
    * (LocallyRedundantStorage), ZRS (ZoneRedundantStorage) and GRS (GeoRedundantStorage). Possible
    * values include: 'GRS', 'LRS', 'ZRS'
    */
-  backupStorageRedundancy?: StorageAccountType;
-  /**
-   * The current backup storage redundancy used to store backups for this instance. The options are
-   * LRS (LocallyRedundantStorage), ZRS (ZoneRedundantStorage) and GRS (GeoRedundantStorage).
-   * Possible values include: 'GRS', 'LRS', 'ZRS'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly currentBackupStorageRedundancy?: StorageAccountType;
+  storageAccountType?: StorageAccountType;
 }
 
 /**
@@ -6493,18 +6486,11 @@ export interface ManagedInstanceUpdate {
    */
   minimalTlsVersion?: string;
   /**
-   * The backup storage redundancy used to store backups for this instance. The options are LRS
+   * The storage account type used to store backups for this instance. The options are LRS
    * (LocallyRedundantStorage), ZRS (ZoneRedundantStorage) and GRS (GeoRedundantStorage). Possible
    * values include: 'GRS', 'LRS', 'ZRS'
    */
-  backupStorageRedundancy?: StorageAccountType;
-  /**
-   * The current backup storage redundancy used to store backups for this instance. The options are
-   * LRS (LocallyRedundantStorage), ZRS (ZoneRedundantStorage) and GRS (GeoRedundantStorage).
-   * Possible values include: 'GRS', 'LRS', 'ZRS'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly currentBackupStorageRedundancy?: StorageAccountType;
+  storageAccountType?: StorageAccountType;
   /**
    * Resource tags.
    */

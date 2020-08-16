@@ -9378,15 +9378,8 @@ export const ManagedInstance: msRest.CompositeMapper = {
           name: "String"
         }
       },
-      backupStorageRedundancy: {
-        serializedName: "properties.backupStorageRedundancy",
-        type: {
-          name: "String"
-        }
-      },
-      currentBackupStorageRedundancy: {
-        readOnly: true,
-        serializedName: "properties.currentBackupStorageRedundancy",
+      storageAccountType: {
+        serializedName: "properties.storageAccountType",
         type: {
           name: "String"
         }
@@ -9569,15 +9562,8 @@ export const ManagedInstanceUpdate: msRest.CompositeMapper = {
           name: "String"
         }
       },
-      backupStorageRedundancy: {
-        serializedName: "properties.backupStorageRedundancy",
-        type: {
-          name: "String"
-        }
-      },
-      currentBackupStorageRedundancy: {
-        readOnly: true,
-        serializedName: "properties.currentBackupStorageRedundancy",
+      storageAccountType: {
+        serializedName: "properties.storageAccountType",
         type: {
           name: "String"
         }
