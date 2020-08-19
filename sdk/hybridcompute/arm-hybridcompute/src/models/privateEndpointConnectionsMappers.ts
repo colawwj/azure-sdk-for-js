@@ -9,8 +9,11 @@
 export {
   AzureEntityResource,
   BaseResource,
-  CloudError,
+  ErrorAdditionalInfo,
   ErrorDetail,
+  ErrorResponseCommon,
+  ErrorResponseV2,
+  ErrorResponseV2Error,
   HybridComputePrivateLinkScope,
   Identity,
   LocationData,
@@ -19,14 +22,12 @@ export {
   MachineExtensionInstanceView,
   MachineExtensionInstanceViewStatus,
   MachineExtensionPropertiesInstanceView,
-  MachineExtensionsListResult,
-  MachineExtensionUpdate,
   MachineIdentity,
   MachinePropertiesOsProfile,
-  MachineUpdate,
   OSProfile,
   Plan,
   PrivateEndpointConnection,
+  PrivateEndpointConnectionListResult,
   PrivateEndpointProperty,
   PrivateLinkResource,
   PrivateLinkScopesResource,
@@ -39,6 +40,5 @@ export {
   ResourceModelWithAllowedPropertySetSku,
   ScopedResource,
   Sku,
-  TrackedResource,
-  UpdateResource
+  TrackedResource
 } from "../models/mappers";

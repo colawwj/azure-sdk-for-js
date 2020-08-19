@@ -827,6 +827,205 @@ export interface ErrorResponse {
 }
 
 /**
+ * An azure resource object
+ */
+export interface PrivateLinkScopesResource extends BaseResource {
+  /**
+   * Azure resource Id
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Azure resource name
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Azure resource type
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * Resource location
+   */
+  location: string;
+  /**
+   * Resource tags
+   */
+  tags?: { [propertyName: string]: string };
+}
+
+/**
+ * A container holding only the Tags for a resource, allowing the user to update the tags on a
+ * PrivateLinkScope instance.
+ */
+export interface TagsResource {
+  /**
+   * Resource tags
+   */
+  tags?: { [propertyName: string]: string };
+}
+
+/**
+ * Private endpoint which the connection belongs to.
+ */
+export interface PrivateEndpointProperty {
+  /**
+   * Resource id of the private endpoint.
+   */
+  id?: string;
+}
+
+/**
+ * State of the private endpoint connection.
+ */
+export interface PrivateLinkServiceConnectionStateProperty {
+  /**
+   * The private link service connection status.
+   */
+  status: string;
+  /**
+   * The private link service connection description.
+   */
+  description: string;
+  /**
+   * The actions required for private link service connection.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly actionsRequired?: string;
+}
+
+/**
+ * A private endpoint connection
+ */
+export interface PrivateEndpointConnection extends ProxyResource {
+  /**
+   * Private endpoint which the connection belongs to.
+   */
+  privateEndpoint?: PrivateEndpointProperty;
+  /**
+   * Connection state of the private endpoint connection.
+   */
+  privateLinkServiceConnectionState?: PrivateLinkServiceConnectionStateProperty;
+  /**
+   * State of the private endpoint connection.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: string;
+}
+
+/**
+ * An Azure Arc PrivateLinkScope definition.
+ */
+export interface HybridComputePrivateLinkScope extends PrivateLinkScopesResource {
+  /**
+   * Current state of this PrivateLinkScope: whether or not is has been provisioned within the
+   * resource group it is defined. Users cannot change this value but are able to read from it.
+   * Values will include Provisioning ,Succeeded, Canceled and Failed.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: string;
+  /**
+   * List of private endpoint connections.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly privateEndpointConnections?: PrivateEndpointConnection[];
+}
+
+/**
+ * A private link resource
+ */
+export interface PrivateLinkResource extends ProxyResource {
+  /**
+   * The private link resource group id.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly groupId?: string;
+  /**
+   * The private link resource required member names.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly requiredMembers?: string[];
+  /**
+   * Required DNS zone names of the the private link resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly requiredZoneNames?: string[];
+}
+
+/**
+ * A private link scoped resource
+ */
+export interface ScopedResource extends ProxyResource {
+  /**
+   * The resource id of the scoped Azure Arc resources.
+   */
+  linkedResources?: string[];
+  /**
+   * State of the private endpoint connection.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provisioningState?: string;
+}
+
+/**
+ * The resource management error response.
+ */
+export interface ErrorResponseV2 {
+  /**
+   * The error object.
+   */
+  error?: ErrorResponseV2Error;
+}
+
+/**
+ * The resource management error response.
+ */
+export interface ErrorResponseCommon extends ErrorResponseV2 {
+  /**
+   * The error details.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly details?: ErrorResponseCommon[];
+  /**
+   * The error additional info.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly additionalInfo?: ErrorAdditionalInfo[];
+}
+
+/**
+ * The error object.
+ */
+export interface ErrorResponseV2Error {
+  /**
+   * The error code.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly code?: string;
+  /**
+   * The error message.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly message?: string;
+  /**
+   * The error target.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly target?: string;
+  /**
+   * The error details.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly details?: ErrorResponseV2[];
+  /**
+   * The error additional info.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly additionalInfo?: ErrorAdditionalInfo[];
+}
+
+/**
  * Optional Parameters.
  */
 export interface MachinesGetOptionalParams extends msRest.RequestOptionsBase {
@@ -885,6 +1084,58 @@ export interface MachineExtensionsListResult extends Array<MachineExtension> {
  * @extends Array<OperationValue>
  */
 export interface OperationListResult extends Array<OperationValue> {
+}
+
+/**
+ * @interface
+ * Describes the list of Azure Arc PrivateLinkScope resources.
+ * @extends Array<HybridComputePrivateLinkScope>
+ */
+export interface HybridComputePrivateLinkScopeListResult extends Array<HybridComputePrivateLinkScope> {
+  /**
+   * The URI to get the next set of Azure Arc PrivateLinkScope definitions if too many
+   * PrivateLinkScopes where returned in the result set.
+   */
+  nextLink?: string;
+}
+
+/**
+ * @interface
+ * A list of private link resources
+ * @extends Array<PrivateLinkResource>
+ */
+export interface PrivateLinkResourceListResult extends Array<PrivateLinkResource> {
+  /**
+   * Link to retrieve next page of results.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly nextLink?: string;
+}
+
+/**
+ * @interface
+ * A list of private endpoint connections.
+ * @extends Array<PrivateEndpointConnection>
+ */
+export interface PrivateEndpointConnectionListResult extends Array<PrivateEndpointConnection> {
+  /**
+   * Link to retrieve next page of results.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly nextLink?: string;
+}
+
+/**
+ * @interface
+ * A list of scoped resources in a private link scope.
+ * @extends Array<ScopedResource>
+ */
+export interface ScopedResourceListResult extends Array<ScopedResource> {
+  /**
+   * Link to retrieve next page of results.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly nextLink?: string;
 }
 
 /**
@@ -1184,5 +1435,405 @@ export type OperationsListResponse = OperationListResult & {
        * The response body as parsed JSON or XML
        */
       parsedBody: OperationListResult;
+    };
+};
+
+/**
+ * Contains response data for the list operation.
+ */
+export type PrivateLinkScopesListResponse = HybridComputePrivateLinkScopeListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: HybridComputePrivateLinkScopeListResult;
+    };
+};
+
+/**
+ * Contains response data for the listByResourceGroup operation.
+ */
+export type PrivateLinkScopesListByResourceGroupResponse = HybridComputePrivateLinkScopeListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: HybridComputePrivateLinkScopeListResult;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type PrivateLinkScopesGetResponse = HybridComputePrivateLinkScope & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: HybridComputePrivateLinkScope;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdate operation.
+ */
+export type PrivateLinkScopesCreateOrUpdateResponse = HybridComputePrivateLinkScope & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: HybridComputePrivateLinkScope;
+    };
+};
+
+/**
+ * Contains response data for the updateTags operation.
+ */
+export type PrivateLinkScopesUpdateTagsResponse = HybridComputePrivateLinkScope & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: HybridComputePrivateLinkScope;
+    };
+};
+
+/**
+ * Contains response data for the listNext operation.
+ */
+export type PrivateLinkScopesListNextResponse = HybridComputePrivateLinkScopeListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: HybridComputePrivateLinkScopeListResult;
+    };
+};
+
+/**
+ * Contains response data for the listByResourceGroupNext operation.
+ */
+export type PrivateLinkScopesListByResourceGroupNextResponse = HybridComputePrivateLinkScopeListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: HybridComputePrivateLinkScopeListResult;
+    };
+};
+
+/**
+ * Contains response data for the listByPrivateLinkScope operation.
+ */
+export type PrivateLinkResourcesListByPrivateLinkScopeResponse = PrivateLinkResourceListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateLinkResourceListResult;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type PrivateLinkResourcesGetResponse = PrivateLinkResource & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateLinkResource;
+    };
+};
+
+/**
+ * Contains response data for the listByPrivateLinkScopeNext operation.
+ */
+export type PrivateLinkResourcesListByPrivateLinkScopeNextResponse = PrivateLinkResourceListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateLinkResourceListResult;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type PrivateEndpointConnectionsGetResponse = PrivateEndpointConnection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateEndpointConnection;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdate operation.
+ */
+export type PrivateEndpointConnectionsCreateOrUpdateResponse = PrivateEndpointConnection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateEndpointConnection;
+    };
+};
+
+/**
+ * Contains response data for the listByPrivateLinkScope operation.
+ */
+export type PrivateEndpointConnectionsListByPrivateLinkScopeResponse = PrivateEndpointConnectionListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateEndpointConnectionListResult;
+    };
+};
+
+/**
+ * Contains response data for the beginCreateOrUpdate operation.
+ */
+export type PrivateEndpointConnectionsBeginCreateOrUpdateResponse = PrivateEndpointConnection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateEndpointConnection;
+    };
+};
+
+/**
+ * Contains response data for the listByPrivateLinkScopeNext operation.
+ */
+export type PrivateEndpointConnectionsListByPrivateLinkScopeNextResponse = PrivateEndpointConnectionListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateEndpointConnectionListResult;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type PrivateLinkScopedResourcesGetResponse = ScopedResource & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ScopedResource;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdate operation.
+ */
+export type PrivateLinkScopedResourcesCreateOrUpdateResponse = ScopedResource & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ScopedResource;
+    };
+};
+
+/**
+ * Contains response data for the listByPrivateLinkScope operation.
+ */
+export type PrivateLinkScopedResourcesListByPrivateLinkScopeResponse = ScopedResourceListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ScopedResourceListResult;
+    };
+};
+
+/**
+ * Contains response data for the beginCreateOrUpdate operation.
+ */
+export type PrivateLinkScopedResourcesBeginCreateOrUpdateResponse = ScopedResource & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ScopedResource;
+    };
+};
+
+/**
+ * Contains response data for the listByPrivateLinkScopeNext operation.
+ */
+export type PrivateLinkScopedResourcesListByPrivateLinkScopeNextResponse = ScopedResourceListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ScopedResourceListResult;
     };
 };
