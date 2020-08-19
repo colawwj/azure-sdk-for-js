@@ -2322,6 +2322,16 @@ export interface VirtualMachineInstanceView {
 }
 
 /**
+ * ExtendedLocation complex type.
+ */
+export interface ExtendedLocation {
+  /**
+   * The name of the extended location.
+   */
+  name: string;
+}
+
+/**
  * Describes a Virtual Machine.
  */
 export interface VirtualMachine extends Resource {
@@ -2465,6 +2475,10 @@ export interface VirtualMachine extends Resource {
    * The virtual machine zones.
    */
   zones?: string[];
+  /**
+   * The extended location of the Virtual Machine.
+   */
+  extendedLocation?: ExtendedLocation;
 }
 
 /**
@@ -2816,6 +2830,10 @@ export interface Image extends Resource {
    * include: 'V1', 'V2'
    */
   hyperVGeneration?: HyperVGenerationTypes;
+  /**
+   * The extended location of the Image.
+   */
+  extendedLocation?: ExtendedLocation;
 }
 
 /**
@@ -3841,6 +3859,10 @@ export interface VirtualMachineScaleSet extends Resource {
    * the scale set
    */
   zones?: string[];
+  /**
+   * The extended location of the Virtual Machine Scale Set.
+   */
+  extendedLocation?: ExtendedLocation;
 }
 
 /**
@@ -7670,6 +7692,14 @@ export type RollingUpgradeStatusCode = 'RollingForward' | 'Cancelled' | 'Complet
  * @enum {string}
  */
 export type RollingUpgradeActionType = 'Start' | 'Cancel';
+
+/**
+ * Defines values for ExtendedLocationTypes.
+ * Possible values include: 'EdgeZone'
+ * @readonly
+ * @enum {string}
+ */
+export type ExtendedLocationTypes = 'EdgeZone';
 
 /**
  * Defines values for IntervalInMins.

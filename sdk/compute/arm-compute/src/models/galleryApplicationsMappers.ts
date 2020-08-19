@@ -62,6 +62,7 @@ export {
   EncryptionSetIdentity,
   EncryptionSettingsCollection,
   EncryptionSettingsElement,
+  ExtendedLocation,
   Gallery,
   GalleryApplication,
   GalleryApplicationList,

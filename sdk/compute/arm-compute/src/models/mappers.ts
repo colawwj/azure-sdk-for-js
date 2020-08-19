@@ -3438,6 +3438,32 @@ export const VirtualMachineInstanceView: msRest.CompositeMapper = {
   }
 };
 
+export const ExtendedLocation: msRest.CompositeMapper = {
+  serializedName: "ExtendedLocation",
+  type: {
+    name: "Composite",
+    className: "ExtendedLocation",
+    modelProperties: {
+      name: {
+        required: true,
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      type: {
+        required: true,
+        isConstant: true,
+        serializedName: "type",
+        defaultValue: 'EdgeZone',
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const VirtualMachine: msRest.CompositeMapper = {
   serializedName: "VirtualMachine",
   type: {
@@ -3618,6 +3644,13 @@ export const VirtualMachine: msRest.CompositeMapper = {
               name: "String"
             }
           }
+        }
+      },
+      extendedLocation: {
+        serializedName: "extendedLocation",
+        type: {
+          name: "Composite",
+          className: "ExtendedLocation"
         }
       }
     }
@@ -4099,6 +4132,13 @@ export const Image: msRest.CompositeMapper = {
         serializedName: "properties.hyperVGeneration",
         type: {
           name: "String"
+        }
+      },
+      extendedLocation: {
+        serializedName: "extendedLocation",
+        type: {
+          name: "Composite",
+          className: "ExtendedLocation"
         }
       }
     }
@@ -5689,6 +5729,13 @@ export const VirtualMachineScaleSet: msRest.CompositeMapper = {
               name: "String"
             }
           }
+        }
+      },
+      extendedLocation: {
+        serializedName: "extendedLocation",
+        type: {
+          name: "Composite",
+          className: "ExtendedLocation"
         }
       }
     }
