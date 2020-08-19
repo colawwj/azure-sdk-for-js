@@ -220,6 +220,21 @@ export interface ApiProperties {
 }
 
 /**
+ * Contains the possible cases for BackupPolicy.
+ */
+export type BackupPolicyUnion = BackupPolicy | PeriodicModeBackupPolicy | ContinuousModeBackupPolicy;
+
+/**
+ * The object representing the policy for taking backups on an account.
+ */
+export interface BackupPolicy {
+  /**
+   * Polymorphic Discriminator
+   */
+  type: "BackupPolicy";
+}
+
+/**
  * The CORS policy for the Cosmos DB database account.
  */
 export interface CorsPolicy {
@@ -384,6 +399,10 @@ export interface DatabaseAccountGetResults extends ARMResourceProperties {
    * Flag to indicate whether to enable storage analytics.
    */
   enableAnalyticalStorage?: boolean;
+  /**
+   * The object representing the policy for taking backups on an account.
+   */
+  backupPolicy?: BackupPolicyUnion;
   /**
    * The CORS policy for the Cosmos DB database account.
    */
@@ -1482,6 +1501,10 @@ export interface DatabaseAccountCreateUpdateParameters extends ARMResourceProper
    */
   enableAnalyticalStorage?: boolean;
   /**
+   * The object representing the policy for taking backups on an account.
+   */
+  backupPolicy?: BackupPolicyUnion;
+  /**
    * The CORS policy for the Cosmos DB database account.
    */
   cors?: CorsPolicy[];
@@ -1565,6 +1588,10 @@ export interface DatabaseAccountUpdateParameters {
    * Flag to indicate whether to enable storage analytics.
    */
   enableAnalyticalStorage?: boolean;
+  /**
+   * The object representing the policy for taking backups on an account.
+   */
+  backupPolicy?: BackupPolicyUnion;
   /**
    * The CORS policy for the Cosmos DB database account.
    */
@@ -2410,6 +2437,44 @@ export interface PartitionMetric extends Metric {
 }
 
 /**
+ * Configuration values for periodic mode backup
+ */
+export interface PeriodicModeProperties {
+  /**
+   * An integer representing the interval in minutes between two backups
+   */
+  backupIntervalInMinutes?: number;
+  /**
+   * An integer representing the time (in hours) that each backup is retained
+   */
+  backupRetentionIntervalInHours?: number;
+}
+
+/**
+ * The object representing periodic mode backup policy.
+ */
+export interface PeriodicModeBackupPolicy {
+  /**
+   * Polymorphic Discriminator
+   */
+  type: "Periodic";
+  /**
+   * Configuration values for periodic mode backup
+   */
+  periodicModeProperties?: PeriodicModeProperties;
+}
+
+/**
+ * The object representing continuous mode backup policy.
+ */
+export interface ContinuousModeBackupPolicy {
+  /**
+   * Polymorphic Discriminator
+   */
+  type: "Continuous";
+}
+
+/**
  * The resource model definition for a ARM tracked top level resource
  */
 export interface TrackedResource extends Resource {
@@ -2878,6 +2943,14 @@ export type UnitType = 'Count' | 'Bytes' | 'Seconds' | 'Percent' | 'CountPerSeco
  * @enum {string}
  */
 export type PrimaryAggregationType = 'None' | 'Average' | 'Total' | 'Minimum' | 'Maximum' | 'Last';
+
+/**
+ * Defines values for BackupPolicyType.
+ * Possible values include: 'Periodic', 'Continuous'
+ * @readonly
+ * @enum {string}
+ */
+export type BackupPolicyType = 'Periodic' | 'Continuous';
 
 /**
  * Contains response data for the get operation.

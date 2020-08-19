@@ -333,6 +333,28 @@ export const ApiProperties: msRest.CompositeMapper = {
   }
 };
 
+export const BackupPolicy: msRest.CompositeMapper = {
+  serializedName: "BackupPolicy",
+  type: {
+    name: "Composite",
+    polymorphicDiscriminator: {
+      serializedName: "type",
+      clientName: "type"
+    },
+    uberParent: "BackupPolicy",
+    className: "BackupPolicy",
+    modelProperties: {
+      type: {
+        required: true,
+        serializedName: "type",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const CorsPolicy: msRest.CompositeMapper = {
   serializedName: "CorsPolicy",
   type: {
@@ -636,6 +658,13 @@ export const DatabaseAccountGetResults: msRest.CompositeMapper = {
         serializedName: "properties.enableAnalyticalStorage",
         type: {
           name: "Boolean"
+        }
+      },
+      backupPolicy: {
+        serializedName: "properties.backupPolicy",
+        type: {
+          name: "Composite",
+          className: "BackupPolicy"
         }
       },
       cors: {
@@ -2573,6 +2602,13 @@ export const DatabaseAccountCreateUpdateParameters: msRest.CompositeMapper = {
           name: "Boolean"
         }
       },
+      backupPolicy: {
+        serializedName: "properties.backupPolicy",
+        type: {
+          name: "Composite",
+          className: "BackupPolicy"
+        }
+      },
       cors: {
         serializedName: "properties.cors",
         type: {
@@ -2732,6 +2768,13 @@ export const DatabaseAccountUpdateParameters: msRest.CompositeMapper = {
         serializedName: "properties.enableAnalyticalStorage",
         type: {
           name: "Boolean"
+        }
+      },
+      backupPolicy: {
+        serializedName: "properties.backupPolicy",
+        type: {
+          name: "Composite",
+          className: "BackupPolicy"
         }
       },
       cors: {
@@ -4116,6 +4159,67 @@ export const PartitionMetric: msRest.CompositeMapper = {
   }
 };
 
+export const PeriodicModeProperties: msRest.CompositeMapper = {
+  serializedName: "PeriodicModeProperties",
+  type: {
+    name: "Composite",
+    className: "PeriodicModeProperties",
+    modelProperties: {
+      backupIntervalInMinutes: {
+        serializedName: "backupIntervalInMinutes",
+        constraints: {
+          InclusiveMinimum: 0
+        },
+        type: {
+          name: "Number"
+        }
+      },
+      backupRetentionIntervalInHours: {
+        serializedName: "backupRetentionIntervalInHours",
+        constraints: {
+          InclusiveMinimum: 0
+        },
+        type: {
+          name: "Number"
+        }
+      }
+    }
+  }
+};
+
+export const PeriodicModeBackupPolicy: msRest.CompositeMapper = {
+  serializedName: "Periodic",
+  type: {
+    name: "Composite",
+    polymorphicDiscriminator: BackupPolicy.type.polymorphicDiscriminator,
+    uberParent: "BackupPolicy",
+    className: "PeriodicModeBackupPolicy",
+    modelProperties: {
+      ...BackupPolicy.type.modelProperties,
+      periodicModeProperties: {
+        serializedName: "periodicModeProperties",
+        type: {
+          name: "Composite",
+          className: "PeriodicModeProperties"
+        }
+      }
+    }
+  }
+};
+
+export const ContinuousModeBackupPolicy: msRest.CompositeMapper = {
+  serializedName: "Continuous",
+  type: {
+    name: "Composite",
+    polymorphicDiscriminator: BackupPolicy.type.polymorphicDiscriminator,
+    uberParent: "BackupPolicy",
+    className: "ContinuousModeBackupPolicy",
+    modelProperties: {
+      ...BackupPolicy.type.modelProperties
+    }
+  }
+};
+
 export const TrackedResource: msRest.CompositeMapper = {
   serializedName: "TrackedResource",
   type: {
@@ -4794,4 +4898,11 @@ export const PrivateEndpointConnectionListResult: msRest.CompositeMapper = {
       }
     }
   }
+};
+
+export const discriminators = {
+  'BackupPolicy' : BackupPolicy,
+  'BackupPolicy.Periodic' : PeriodicModeBackupPolicy,
+  'BackupPolicy.Continuous' : ContinuousModeBackupPolicy
+
 };
