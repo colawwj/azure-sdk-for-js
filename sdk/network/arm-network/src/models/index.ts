@@ -799,6 +799,10 @@ export interface PublicIPAddressSku {
    * Name of a public IP address SKU. Possible values include: 'Basic', 'Standard'
    */
   name?: PublicIPAddressSkuName;
+  /**
+   * Tier of a public IP address SKU. Possible values include: 'Regional', 'Global'
+   */
+  tier?: PublicIPAddressSkuTier;
 }
 
 /**
@@ -1333,6 +1337,10 @@ export interface LoadBalancerBackendAddress {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly networkInterfaceIPConfiguration?: SubResource;
+  /**
+   * Reference to the frontend ip address configuration defined in regional loadbalancer.
+   */
+  loadBalancerFrontendIPConfiguration?: SubResource;
   /**
    * Name of the backend address.
    */
@@ -5672,6 +5680,10 @@ export interface LoadBalancerSku {
    * Name of a load balancer SKU. Possible values include: 'Basic', 'Standard'
    */
   name?: LoadBalancerSkuName;
+  /**
+   * Tier of a load balancer SKU. Possible values include: 'Regional', 'Global'
+   */
+  tier?: LoadBalancerSkuTier;
 }
 
 /**
@@ -14121,6 +14133,14 @@ export type RouteNextHopType = 'VirtualNetworkGateway' | 'VnetLocal' | 'Internet
 export type PublicIPAddressSkuName = 'Basic' | 'Standard';
 
 /**
+ * Defines values for PublicIPAddressSkuTier.
+ * Possible values include: 'Regional', 'Global'
+ * @readonly
+ * @enum {string}
+ */
+export type PublicIPAddressSkuTier = 'Regional' | 'Global';
+
+/**
  * Defines values for DdosSettingsProtectionCoverage.
  * Possible values include: 'Basic', 'Standard'
  * @readonly
@@ -14521,6 +14541,14 @@ export type IpAllocationType = 'Undefined' | 'Hypernet';
  * @enum {string}
  */
 export type LoadBalancerSkuName = 'Basic' | 'Standard';
+
+/**
+ * Defines values for LoadBalancerSkuTier.
+ * Possible values include: 'Regional', 'Global'
+ * @readonly
+ * @enum {string}
+ */
+export type LoadBalancerSkuTier = 'Regional' | 'Global';
 
 /**
  * Defines values for LoadDistribution.
