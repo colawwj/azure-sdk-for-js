@@ -1321,6 +1321,12 @@ export const PublicIPAddressSku: msRest.CompositeMapper = {
         type: {
           name: "String"
         }
+      },
+      tier: {
+        serializedName: "tier",
+        type: {
+          name: "String"
+        }
       }
     }
   }
@@ -2216,6 +2222,13 @@ export const LoadBalancerBackendAddress: msRest.CompositeMapper = {
       networkInterfaceIPConfiguration: {
         readOnly: true,
         serializedName: "properties.networkInterfaceIPConfiguration",
+        type: {
+          name: "Composite",
+          className: "SubResource"
+        }
+      },
+      loadBalancerFrontendIPConfiguration: {
+        serializedName: "properties.loadBalancerFrontendIPConfiguration",
         type: {
           name: "Composite",
           className: "SubResource"
@@ -9537,6 +9550,12 @@ export const LoadBalancerSku: msRest.CompositeMapper = {
     modelProperties: {
       name: {
         serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      tier: {
+        serializedName: "tier",
         type: {
           name: "String"
         }
