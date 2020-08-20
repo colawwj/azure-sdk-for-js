@@ -34,19 +34,19 @@ export class ReservationOrder {
    * @param [options] The optional parameters
    * @returns Promise<Models.ReservationOrderCalculateResponse>
    */
-  calculate(body: Models.PurchaseRequest, options?: msRest.RequestOptionsBase): Promise<Models.ReservationOrderCalculateResponse>;
+  calculate(body: Models.CalculateRequest, options?: msRest.RequestOptionsBase): Promise<Models.ReservationOrderCalculateResponse>;
   /**
    * @param body Information needed for calculate or purchase reservation
    * @param callback The callback
    */
-  calculate(body: Models.PurchaseRequest, callback: msRest.ServiceCallback<Models.CalculatePriceResponse>): void;
+  calculate(body: Models.CalculateRequest, callback: msRest.ServiceCallback<Models.CalculatePriceResponse>): void;
   /**
    * @param body Information needed for calculate or purchase reservation
    * @param options The optional parameters
    * @param callback The callback
    */
-  calculate(body: Models.PurchaseRequest, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.CalculatePriceResponse>): void;
-  calculate(body: Models.PurchaseRequest, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.CalculatePriceResponse>, callback?: msRest.ServiceCallback<Models.CalculatePriceResponse>): Promise<Models.ReservationOrderCalculateResponse> {
+  calculate(body: Models.CalculateRequest, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.CalculatePriceResponse>): void;
+  calculate(body: Models.CalculateRequest, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.CalculatePriceResponse>, callback?: msRest.ServiceCallback<Models.CalculatePriceResponse>): Promise<Models.ReservationOrderCalculateResponse> {
     return this.client.sendOperationRequest(
       {
         body,
@@ -186,7 +186,7 @@ const calculateOperationSpec: msRest.OperationSpec = {
   requestBody: {
     parameterPath: "body",
     mapper: {
-      ...Mappers.PurchaseRequest,
+      ...Mappers.CalculateRequest,
       required: true
     }
   },

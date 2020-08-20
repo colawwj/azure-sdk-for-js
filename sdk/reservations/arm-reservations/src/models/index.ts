@@ -690,7 +690,7 @@ export interface ReservationMergeProperties {
 /**
  * Properties specific to each reserved resource type. Not required if not applicable.
  */
-export interface PurchaseRequestPropertiesReservedResourceProperties {
+export interface CalculateRequestPropertiesReservedResourceProperties {
   /**
    * Possible values include: 'On', 'Off'
    */
@@ -698,9 +698,9 @@ export interface PurchaseRequestPropertiesReservedResourceProperties {
 }
 
 /**
- * An interface representing PurchaseRequest.
+ * An interface representing CalculateRequest.
  */
-export interface PurchaseRequest {
+export interface CalculateRequest {
   sku?: SkuName;
   /**
    * The Azure Region where the reserved resource lives.
@@ -736,7 +736,7 @@ export interface PurchaseRequest {
   /**
    * Properties specific to each reserved resource type. Not required if not applicable.
    */
-  reservedResourceProperties?: PurchaseRequestPropertiesReservedResourceProperties;
+  reservedResourceProperties?: CalculateRequestPropertiesReservedResourceProperties;
 }
 
 /**
@@ -761,7 +761,7 @@ export interface RenewPropertiesResponseBillingCurrencyTotal {
  * An interface representing RenewPropertiesResponse.
  */
 export interface RenewPropertiesResponse {
-  purchaseProperties?: PurchaseRequest;
+  purchaseProperties?: CalculateRequest;
   /**
    * Amount that Microsoft uses for record. Used during refund for calculating refund limit. Tax is
    * not included. This is locked price 30 days before expiry.
@@ -989,6 +989,58 @@ export interface CalculatePriceResponse {
 }
 
 /**
+ * Properties specific to each reserved resource type. Not required if not applicable.
+ */
+export interface PurchaseRequestPropertiesReservedResourceProperties {
+  /**
+   * Possible values include: 'On', 'Off'
+   */
+  instanceFlexibility?: InstanceFlexibility;
+}
+
+/**
+ * An interface representing PurchaseRequest.
+ */
+export interface PurchaseRequest {
+  sku?: SkuName;
+  /**
+   * The Azure Region where the reserved resource lives.
+   */
+  location?: string;
+  /**
+   * Possible values include: 'VirtualMachines', 'SqlDatabases', 'SuseLinux', 'CosmosDb', 'RedHat',
+   * 'SqlDataWarehouse', 'VMwareCloudSimple', 'RedHatOsa', 'Databricks', 'AppService',
+   * 'ManagedDisk', 'BlockBlob', 'RedisCache', 'AzureDataExplorer', 'MySql', 'MariaDb',
+   * 'PostgreSql', 'DedicatedHost', 'SapHana', 'SqlAzureHybridBenefit'
+   */
+  reservedResourceType?: ReservedResourceType;
+  billingScopeId?: string;
+  /**
+   * Possible values include: 'P1Y', 'P3Y'
+   */
+  term?: ReservationTerm;
+  /**
+   * Possible values include: 'Upfront', 'Monthly'
+   */
+  billingPlan?: ReservationBillingPlan;
+  quantity?: string;
+  /**
+   * Friendly name of the Reservation
+   */
+  displayName?: string;
+  /**
+   * Possible values include: 'Single', 'Shared'
+   */
+  appliedScopeType?: AppliedScopeType;
+  appliedScopes?: string[];
+  renew?: boolean;
+  /**
+   * Properties specific to each reserved resource type. Not required if not applicable.
+   */
+  reservedResourceProperties?: PurchaseRequestPropertiesReservedResourceProperties;
+}
+
+/**
  * An interface representing PatchPropertiesRenewProperties.
  */
 export interface PatchPropertiesRenewProperties {
@@ -1150,6 +1202,20 @@ export interface SubscriptionScopeProperties {
  */
 export interface Properties {
   properties?: SubscriptionScopeProperties;
+}
+
+/**
+ * An interface representing ScopesProperties.
+ */
+export interface ScopesProperties {
+  scopes?: string[];
+}
+
+/**
+ * An interface representing Scopes.
+ */
+export interface Scopes {
+  properties?: ScopesProperties;
 }
 
 /**

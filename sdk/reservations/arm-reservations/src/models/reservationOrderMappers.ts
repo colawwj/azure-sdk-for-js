@@ -15,6 +15,8 @@ export {
   CalculatePriceResponseProperties,
   CalculatePriceResponsePropertiesBillingCurrencyTotal,
   CalculatePriceResponsePropertiesPricingCurrencyTotal,
+  CalculateRequest,
+  CalculateRequestPropertiesReservedResourceProperties,
   CurrentQuotaLimit,
   CurrentQuotaLimitBase,
   EmailAction,
