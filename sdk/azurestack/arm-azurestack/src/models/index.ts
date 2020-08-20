@@ -756,9 +756,9 @@ export type CompatibilityIssue = 'HigherDeviceVersionRequired' | 'LowerDeviceVer
 export type Category = 'AzureAD' | 'ADFS';
 
 /**
- * Contains response data for the list operation.
+ * Contains response data for the xXX operation.
  */
-export type OperationsListResponse = OperationList & {
+export type OperationsXXXResponse = OperationList & {
   /**
    * The underlying HTTP response.
    */
@@ -776,9 +776,9 @@ export type OperationsListResponse = OperationList & {
 };
 
 /**
- * Contains response data for the listNext operation.
+ * Contains response data for the xXXNext operation.
  */
-export type OperationsListNextResponse = OperationList & {
+export type OperationsXXXNextResponse = OperationList & {
   /**
    * The underlying HTTP response.
    */

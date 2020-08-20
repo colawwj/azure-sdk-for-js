@@ -29,59 +29,59 @@ export class Operations {
   /**
    * Returns the list of supported REST operations.
    * @param [options] The optional parameters
-   * @returns Promise<Models.OperationsListResponse>
+   * @returns Promise<Models.OperationsXXXResponse>
    */
-  list(options?: msRest.RequestOptionsBase): Promise<Models.OperationsListResponse>;
+  xXX(options?: msRest.RequestOptionsBase): Promise<Models.OperationsXXXResponse>;
   /**
    * @param callback The callback
    */
-  list(callback: msRest.ServiceCallback<Models.OperationList>): void;
+  xXX(callback: msRest.ServiceCallback<Models.OperationList>): void;
   /**
    * @param options The optional parameters
    * @param callback The callback
    */
-  list(options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.OperationList>): void;
-  list(options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.OperationList>, callback?: msRest.ServiceCallback<Models.OperationList>): Promise<Models.OperationsListResponse> {
+  xXX(options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.OperationList>): void;
+  xXX(options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.OperationList>, callback?: msRest.ServiceCallback<Models.OperationList>): Promise<Models.OperationsXXXResponse> {
     return this.client.sendOperationRequest(
       {
         options
       },
-      listOperationSpec,
-      callback) as Promise<Models.OperationsListResponse>;
+      xXXOperationSpec,
+      callback) as Promise<Models.OperationsXXXResponse>;
   }
 
   /**
    * Returns the list of supported REST operations.
    * @param nextPageLink The NextLink from the previous successful call to List operation.
    * @param [options] The optional parameters
-   * @returns Promise<Models.OperationsListNextResponse>
+   * @returns Promise<Models.OperationsXXXNextResponse>
    */
-  listNext(nextPageLink: string, options?: msRest.RequestOptionsBase): Promise<Models.OperationsListNextResponse>;
+  xXXNext(nextPageLink: string, options?: msRest.RequestOptionsBase): Promise<Models.OperationsXXXNextResponse>;
   /**
    * @param nextPageLink The NextLink from the previous successful call to List operation.
    * @param callback The callback
    */
-  listNext(nextPageLink: string, callback: msRest.ServiceCallback<Models.OperationList>): void;
+  xXXNext(nextPageLink: string, callback: msRest.ServiceCallback<Models.OperationList>): void;
   /**
    * @param nextPageLink The NextLink from the previous successful call to List operation.
    * @param options The optional parameters
    * @param callback The callback
    */
-  listNext(nextPageLink: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.OperationList>): void;
-  listNext(nextPageLink: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.OperationList>, callback?: msRest.ServiceCallback<Models.OperationList>): Promise<Models.OperationsListNextResponse> {
+  xXXNext(nextPageLink: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.OperationList>): void;
+  xXXNext(nextPageLink: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.OperationList>, callback?: msRest.ServiceCallback<Models.OperationList>): Promise<Models.OperationsXXXNextResponse> {
     return this.client.sendOperationRequest(
       {
         nextPageLink,
         options
       },
-      listNextOperationSpec,
-      callback) as Promise<Models.OperationsListNextResponse>;
+      xXXNextOperationSpec,
+      callback) as Promise<Models.OperationsXXXNextResponse>;
   }
 }
 
 // Operation Specifications
 const serializer = new msRest.Serializer(Mappers);
-const listOperationSpec: msRest.OperationSpec = {
+const xXXOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
   path: "providers/Microsoft.AzureStack/operations",
   queryParameters: [
@@ -101,7 +101,7 @@ const listOperationSpec: msRest.OperationSpec = {
   serializer
 };
 
-const listNextOperationSpec: msRest.OperationSpec = {
+const xXXNextOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
   baseUrl: "https://management.azure.com",
   path: "{nextLink}",
