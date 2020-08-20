@@ -179,7 +179,7 @@ const lastDetectOperationSpec: msRest.OperationSpec = {
 
 const changePointDetectOperationSpec: msRest.OperationSpec = {
   httpMethod: "POST",
-  path: "timeseries/changePoint/detect",
+  path: "timeseries/changepoint/detect",
   urlParameters: [
     Parameters.endpoint
   ],
