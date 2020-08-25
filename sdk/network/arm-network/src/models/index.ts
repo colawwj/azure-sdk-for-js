@@ -252,6 +252,16 @@ export interface SecurityRule extends SubResource {
 }
 
 /**
+ * ExtendedLocation complex type.
+ */
+export interface ExtendedLocation {
+  /**
+   * The name of the extended location.
+   */
+  name: string;
+}
+
+/**
  * A collection of information about the state of the connection between service consumer and
  * provider.
  */
@@ -411,6 +421,10 @@ export interface NetworkInterfaceDnsSettings {
  * A network interface in a resource group.
  */
 export interface NetworkInterface extends Resource {
+  /**
+   * The extended location of the network interface.
+   */
+  extendedLocation?: ExtendedLocation;
   /**
    * The reference to a virtual machine.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -862,6 +876,10 @@ export interface IpTag {
  * Public IP address resource.
  */
 export interface PublicIPAddress extends Resource {
+  /**
+   * The extended location of the public ip address.
+   */
+  extendedLocation?: ExtendedLocation;
   /**
    * The public IP address SKU.
    */
@@ -5943,6 +5961,10 @@ export interface OutboundRule extends SubResource {
  */
 export interface LoadBalancer extends Resource {
   /**
+   * The extended location of the load balancer.
+   */
+  extendedLocation?: ExtendedLocation;
+  /**
    * The load balancer SKU.
    */
   sku?: LoadBalancerSku;
@@ -8910,6 +8932,10 @@ export interface ReferencedPublicIpAddress {
  */
 export interface PublicIPPrefix extends Resource {
   /**
+   * The extended location of the public ip address.
+   */
+  extendedLocation?: ExtendedLocation;
+  /**
    * The public IP prefix SKU.
    */
   sku?: PublicIPPrefixSku;
@@ -9437,6 +9463,10 @@ export interface DhcpOptions {
  * Virtual Network resource.
  */
 export interface VirtualNetwork extends Resource {
+  /**
+   * The extended location of the virtual network.
+   */
+  extendedLocation?: ExtendedLocation;
   /**
    * The AddressSpace that contains an array of IP address ranges that can be used by subnets.
    */
@@ -14368,6 +14398,14 @@ export type ApplicationGatewayFirewallMode = 'Detection' | 'Prevention';
  * @enum {string}
  */
 export type ResourceIdentityType = 'SystemAssigned' | 'UserAssigned' | 'SystemAssigned, UserAssigned' | 'None';
+
+/**
+ * Defines values for ExtendedLocationTypes.
+ * Possible values include: 'EdgeZone'
+ * @readonly
+ * @enum {string}
+ */
+export type ExtendedLocationTypes = 'EdgeZone';
 
 /**
  * Defines values for AzureFirewallRCActionType.

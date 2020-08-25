@@ -396,6 +396,32 @@ export const SecurityRule: msRest.CompositeMapper = {
   }
 };
 
+export const ExtendedLocation: msRest.CompositeMapper = {
+  serializedName: "ExtendedLocation",
+  type: {
+    name: "Composite",
+    className: "ExtendedLocation",
+    modelProperties: {
+      name: {
+        required: true,
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      type: {
+        required: true,
+        isConstant: true,
+        serializedName: "type",
+        defaultValue: 'EdgeZone',
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const PrivateLinkServiceConnectionState: msRest.CompositeMapper = {
   serializedName: "PrivateLinkServiceConnectionState",
   type: {
@@ -660,6 +686,13 @@ export const NetworkInterface: msRest.CompositeMapper = {
     className: "NetworkInterface",
     modelProperties: {
       ...Resource.type.modelProperties,
+      extendedLocation: {
+        serializedName: "extendedLocation",
+        type: {
+          name: "Composite",
+          className: "ExtendedLocation"
+        }
+      },
       virtualMachine: {
         readOnly: true,
         serializedName: "properties.virtualMachine",
@@ -1412,6 +1445,13 @@ export const PublicIPAddress: msRest.CompositeMapper = {
     className: "PublicIPAddress",
     modelProperties: {
       ...Resource.type.modelProperties,
+      extendedLocation: {
+        serializedName: "extendedLocation",
+        type: {
+          name: "Composite",
+          className: "ExtendedLocation"
+        }
+      },
       sku: {
         serializedName: "sku",
         type: {
@@ -9919,6 +9959,13 @@ export const LoadBalancer: msRest.CompositeMapper = {
     className: "LoadBalancer",
     modelProperties: {
       ...Resource.type.modelProperties,
+      extendedLocation: {
+        serializedName: "extendedLocation",
+        type: {
+          name: "Composite",
+          className: "ExtendedLocation"
+        }
+      },
       sku: {
         serializedName: "sku",
         type: {
@@ -15105,6 +15152,13 @@ export const PublicIPPrefix: msRest.CompositeMapper = {
     className: "PublicIPPrefix",
     modelProperties: {
       ...Resource.type.modelProperties,
+      extendedLocation: {
+        serializedName: "extendedLocation",
+        type: {
+          name: "Composite",
+          className: "ExtendedLocation"
+        }
+      },
       sku: {
         serializedName: "sku",
         type: {
@@ -16024,6 +16078,13 @@ export const VirtualNetwork: msRest.CompositeMapper = {
     className: "VirtualNetwork",
     modelProperties: {
       ...Resource.type.modelProperties,
+      extendedLocation: {
+        serializedName: "extendedLocation",
+        type: {
+          name: "Composite",
+          className: "ExtendedLocation"
+        }
+      },
       addressSpace: {
         serializedName: "properties.addressSpace",
         type: {

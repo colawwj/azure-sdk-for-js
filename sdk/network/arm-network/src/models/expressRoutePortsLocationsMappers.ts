@@ -137,6 +137,7 @@ export {
   ExpressRoutePortsLocationListResult,
   ExpressRouteServiceProvider,
   ExpressRouteServiceProviderBandwidthsOffered,
+  ExtendedLocation,
   FirewallPolicy,
   FirewallPolicyFilterRuleCollection,
   FirewallPolicyFilterRuleCollectionAction,
