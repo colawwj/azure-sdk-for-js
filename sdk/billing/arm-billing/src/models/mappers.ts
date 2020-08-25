@@ -1492,6 +1492,42 @@ export const PaymentProperties: msRest.CompositeMapper = {
   }
 };
 
+export const RebillDetails: msRest.CompositeMapper = {
+  serializedName: "RebillDetails",
+  type: {
+    name: "Composite",
+    className: "RebillDetails",
+    modelProperties: {
+      creditNoteDocumentId: {
+        readOnly: true,
+        serializedName: "creditNoteDocumentId",
+        type: {
+          name: "String"
+        }
+      },
+      invoiceDocumentId: {
+        readOnly: true,
+        serializedName: "invoiceDocumentId",
+        type: {
+          name: "String"
+        }
+      },
+      rebillDetails: {
+        serializedName: "rebillDetails",
+        type: {
+          name: "Dictionary",
+          value: {
+            type: {
+              name: "Composite",
+              className: "RebillDetails"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
 export const Invoice: msRest.CompositeMapper = {
   serializedName: "Invoice",
   type: {
@@ -1657,6 +1693,40 @@ export const Invoice: msRest.CompositeMapper = {
               className: "PaymentProperties"
             }
           }
+        }
+      },
+      rebillDetails: {
+        readOnly: true,
+        serializedName: "properties.rebillDetails",
+        type: {
+          name: "Dictionary",
+          value: {
+            type: {
+              name: "Composite",
+              className: "RebillDetails"
+            }
+          }
+        }
+      },
+      documentType: {
+        readOnly: true,
+        serializedName: "properties.documentType",
+        type: {
+          name: "String"
+        }
+      },
+      billedDocumentId: {
+        readOnly: true,
+        serializedName: "properties.billedDocumentId",
+        type: {
+          name: "String"
+        }
+      },
+      creditForDocumentId: {
+        readOnly: true,
+        serializedName: "properties.creditForDocumentId",
+        type: {
+          name: "String"
         }
       },
       subscriptionId: {

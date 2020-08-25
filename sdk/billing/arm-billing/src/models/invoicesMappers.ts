@@ -45,6 +45,7 @@ export {
   PaymentProperties,
   Policy,
   Product,
+  RebillDetails,
   Reseller,
   Resource,
   Transaction

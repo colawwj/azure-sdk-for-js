@@ -43,6 +43,7 @@ export {
   Product,
   ProductsListResult,
   ProductsMoveHeaders,
+  RebillDetails,
   Reseller,
   Resource,
   Transaction,

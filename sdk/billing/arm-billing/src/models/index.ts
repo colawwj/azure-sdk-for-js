@@ -960,6 +960,26 @@ export interface PaymentProperties {
 }
 
 /**
+ * The rebill details of an invoice.
+ */
+export interface RebillDetails {
+  /**
+   * The ID of credit note.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly creditNoteDocumentId?: string;
+  /**
+   * The ID of invoice.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly invoiceDocumentId?: string;
+  /**
+   * Rebill details for an invoice.
+   */
+  rebillDetails?: { [propertyName: string]: RebillDetails };
+}
+
+/**
  * An invoice.
  */
 export interface Invoice extends Resource {
@@ -974,7 +994,7 @@ export interface Invoice extends Resource {
    */
   readonly invoiceDate?: Date;
   /**
-   * The current status of the invoice. Possible values include: 'Due', 'OverDue', 'Paid'
+   * The current status of the invoice. Possible values include: 'Due', 'OverDue', 'Paid', 'Void'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly status?: InvoiceStatus;
@@ -1070,6 +1090,28 @@ export interface Invoice extends Resource {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly payments?: PaymentProperties[];
+  /**
+   * Rebill details for an invoice.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly rebillDetails?: { [propertyName: string]: RebillDetails };
+  /**
+   * The type of the document. Possible values include: 'Invoice', 'CreditNote'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly documentType?: InvoiceDocumentType;
+  /**
+   * The Id of the active invoice which is originally billed after this invoice was voided. This
+   * field is applicable to the void invoices only.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly billedDocumentId?: string;
+  /**
+   * The Id of the invoice which got voided and this credit note was issued as a result. This field
+   * is applicable to the credit notes only.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly creditForDocumentId?: string;
   /**
    * The ID of the subscription for which the invoice is generated.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -2435,11 +2477,11 @@ export type SpendingLimitForBillingProfile = 'Off' | 'On';
 
 /**
  * Defines values for InvoiceStatus.
- * Possible values include: 'Due', 'OverDue', 'Paid'
+ * Possible values include: 'Due', 'OverDue', 'Paid', 'Void'
  * @readonly
  * @enum {string}
  */
-export type InvoiceStatus = 'Due' | 'OverDue' | 'Paid';
+export type InvoiceStatus = 'Due' | 'OverDue' | 'Paid' | 'Void';
 
 /**
  * Defines values for InvoiceType.
@@ -2472,6 +2514,14 @@ export type DocumentSource = 'DRS' | 'ENF';
  * @enum {string}
  */
 export type PaymentMethodFamily = 'Credits' | 'CheckWire' | 'CreditCard' | 'None';
+
+/**
+ * Defines values for InvoiceDocumentType.
+ * Possible values include: 'Invoice', 'CreditNote'
+ * @readonly
+ * @enum {string}
+ */
+export type InvoiceDocumentType = 'Invoice' | 'CreditNote';
 
 /**
  * Defines values for AutoRenew.
