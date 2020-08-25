@@ -19131,6 +19131,16 @@ export interface LogStorageSettings {
    */
   path?: any;
   /**
+   * Gets or sets the log level, support: Info, Warning. Type: string (or Expression with
+   * resultType string).
+   */
+  logLevel?: any;
+  /**
+   * Specifies whether to enable reliable logging. Type: boolean (or Expression with resultType
+   * boolean).
+   */
+  enableReliableLogging?: any;
+  /**
    * Describes unknown properties. The value of an unknown property can be of "any" type.
    */
   [property: string]: any;

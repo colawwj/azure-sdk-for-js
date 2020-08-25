@@ -18363,6 +18363,18 @@ export const LogStorageSettings: msRest.CompositeMapper = {
         type: {
           name: "Object"
         }
+      },
+      logLevel: {
+        serializedName: "logLevel",
+        type: {
+          name: "Object"
+        }
+      },
+      enableReliableLogging: {
+        serializedName: "enableReliableLogging",
+        type: {
+          name: "Object"
+        }
       }
     },
     additionalProperties: {
