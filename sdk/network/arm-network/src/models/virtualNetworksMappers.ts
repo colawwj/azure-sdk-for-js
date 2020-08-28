@@ -158,8 +158,6 @@ export {
   HubVirtualNetworkConnection,
   InboundNatPool,
   InboundNatRule,
-  InboundSecurityRule,
-  InboundSecurityRules,
   IPAddressAvailabilityResult,
   IpAllocation,
   IPConfiguration,

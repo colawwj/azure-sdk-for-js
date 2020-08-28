@@ -799,6 +799,10 @@ export interface PublicIPAddressSku {
    * Name of a public IP address SKU. Possible values include: 'Basic', 'Standard'
    */
   name?: PublicIPAddressSkuName;
+  /**
+   * Tier of a public IP address SKU. Possible values include: 'Regional', 'Global'
+   */
+  tier?: PublicIPAddressSkuTier;
 }
 
 /**
@@ -1333,6 +1337,10 @@ export interface LoadBalancerBackendAddress {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly networkInterfaceIPConfiguration?: SubResource;
+  /**
+   * Reference to the frontend ip address configuration defined in regional loadbalancer.
+   */
+  loadBalancerFrontendIPConfiguration?: SubResource;
   /**
    * Name of the backend address.
    */
@@ -5672,6 +5680,10 @@ export interface LoadBalancerSku {
    * Name of a load balancer SKU. Possible values include: 'Basic', 'Standard'
    */
   name?: LoadBalancerSkuName;
+  /**
+   * Tier of a load balancer SKU. Possible values include: 'Regional', 'Global'
+   */
+  tier?: LoadBalancerSkuTier;
 }
 
 /**
@@ -6473,11 +6485,6 @@ export interface NetworkVirtualAppliance extends Resource {
    */
   readonly virtualApplianceSites?: SubResource[];
   /**
-   * List of references to InboundSecurityRules.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly inboundSecurityRules?: SubResource[];
-  /**
    * The provisioning state of the resource. Possible values include: 'Succeeded', 'Updating',
    * 'Deleting', 'Failed'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -6597,54 +6604,6 @@ export interface NetworkVirtualApplianceSku extends Resource {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly etag?: string;
-}
-
-/**
- * Properties of the Inbound Security Rules resource.
- */
-export interface InboundSecurityRules {
-  /**
-   * Protocol. This should be either TCP or UDP. Possible values include: 'TCP', 'UDP'
-   */
-  protocol?: InboundSecurityRulesProtocol;
-  /**
-   * The CIDR or source IP range. Only /30, /31 and /32 Ip ranges are allowed.
-   */
-  sourceAddressPrefix?: string;
-  /**
-   * NVA port ranges to be opened up. One needs to provide specific ports.
-   */
-  destinationPortRange?: number;
-}
-
-/**
- * NVA Inbound Security Rule resource.
- */
-export interface InboundSecurityRule extends SubResource {
-  /**
-   * List of allowed rules.
-   */
-  rules?: InboundSecurityRules[];
-  /**
-   * The provisioning state of the resource. Possible values include: 'Succeeded', 'Updating',
-   * 'Deleting', 'Failed'
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly provisioningState?: ProvisioningState;
-  /**
-   * Name of security rule collection.
-   */
-  name?: string;
-  /**
-   * A unique read-only string that changes whenever the resource is updated.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly etag?: string;
-  /**
-   * NVA inbound security rule type.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
 }
 
 /**
@@ -7446,10 +7405,10 @@ export interface HopLink {
    */
   readonly issues?: ConnectivityIssue[];
   /**
-   * Provides additional context on the issue.
+   * Provides additional context on links.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly context?: { [propertyName: string]: string }[];
+  readonly context?: { [propertyName: string]: string };
   /**
    * Resource ID.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -11013,57 +10972,6 @@ export interface BgpConnection extends SubResource {
 }
 
 /**
- * Peer routing details.
- */
-export interface PeerRoute {
-  /**
-   * The peer's local address.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly localAddress?: string;
-  /**
-   * The route's network prefix.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly network?: string;
-  /**
-   * The route's next hop.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly nextHop?: string;
-  /**
-   * The peer this route was learned from.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly sourcePeer?: string;
-  /**
-   * The source this route was learned from.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly origin?: string;
-  /**
-   * The route's AS path sequence.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly asPath?: string;
-  /**
-   * The route's weight.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly weight?: number;
-}
-
-/**
- * List of virtual router peer routes.
- */
-export interface PeerRouteList {
-  /**
-   * List of peer routes.
-   */
-  value?: PeerRoute[];
-}
-
-/**
  * IpConfigurations.
  */
 export interface HubIpConfiguration extends SubResource {
@@ -14225,6 +14133,14 @@ export type RouteNextHopType = 'VirtualNetworkGateway' | 'VnetLocal' | 'Internet
 export type PublicIPAddressSkuName = 'Basic' | 'Standard';
 
 /**
+ * Defines values for PublicIPAddressSkuTier.
+ * Possible values include: 'Regional', 'Global'
+ * @readonly
+ * @enum {string}
+ */
+export type PublicIPAddressSkuTier = 'Regional' | 'Global';
+
+/**
  * Defines values for DdosSettingsProtectionCoverage.
  * Possible values include: 'Basic', 'Standard'
  * @readonly
@@ -14627,6 +14543,14 @@ export type IpAllocationType = 'Undefined' | 'Hypernet';
 export type LoadBalancerSkuName = 'Basic' | 'Standard';
 
 /**
+ * Defines values for LoadBalancerSkuTier.
+ * Possible values include: 'Regional', 'Global'
+ * @readonly
+ * @enum {string}
+ */
+export type LoadBalancerSkuTier = 'Regional' | 'Global';
+
+/**
  * Defines values for LoadDistribution.
  * Possible values include: 'Default', 'SourceIP', 'SourceIPProtocol'
  * @readonly
@@ -14705,14 +14629,6 @@ export type EffectiveRouteSource = 'Unknown' | 'User' | 'VirtualNetworkGateway' 
  * @enum {string}
  */
 export type EffectiveRouteState = 'Active' | 'Invalid';
-
-/**
- * Defines values for InboundSecurityRulesProtocol.
- * Possible values include: 'TCP', 'UDP'
- * @readonly
- * @enum {string}
- */
-export type InboundSecurityRulesProtocol = 'TCP' | 'UDP';
 
 /**
  * Defines values for AssociationType.
@@ -21530,46 +21446,6 @@ export type VirtualApplianceSkusListNextResponse = NetworkVirtualApplianceSkuLis
        * The response body as parsed JSON or XML
        */
       parsedBody: NetworkVirtualApplianceSkuListResult;
-    };
-};
-
-/**
- * Contains response data for the createOrUpdate operation.
- */
-export type InboundSecurityRuleCreateOrUpdateResponse = InboundSecurityRule & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: InboundSecurityRule;
-    };
-};
-
-/**
- * Contains response data for the beginCreateOrUpdate operation.
- */
-export type InboundSecurityRuleBeginCreateOrUpdateResponse = InboundSecurityRule & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: InboundSecurityRule;
     };
 };
 
@@ -28910,86 +28786,6 @@ export type VirtualHubBgpConnectionsListResponse = ListVirtualHubBgpConnectionRe
        * The response body as parsed JSON or XML
        */
       parsedBody: ListVirtualHubBgpConnectionResults;
-    };
-};
-
-/**
- * Contains response data for the listLearnedRoutes operation.
- */
-export type VirtualHubBgpConnectionsListLearnedRoutesResponse = PeerRouteList & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: PeerRouteList;
-    };
-};
-
-/**
- * Contains response data for the listAdvertisedRoutes operation.
- */
-export type VirtualHubBgpConnectionsListAdvertisedRoutesResponse = PeerRouteList & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: PeerRouteList;
-    };
-};
-
-/**
- * Contains response data for the beginListLearnedRoutes operation.
- */
-export type VirtualHubBgpConnectionsBeginListLearnedRoutesResponse = PeerRouteList & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: PeerRouteList;
-    };
-};
-
-/**
- * Contains response data for the beginListAdvertisedRoutes operation.
- */
-export type VirtualHubBgpConnectionsBeginListAdvertisedRoutesResponse = PeerRouteList & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: PeerRouteList;
     };
 };
 

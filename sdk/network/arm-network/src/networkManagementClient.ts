@@ -69,7 +69,6 @@ class NetworkManagementClient extends NetworkManagementClientContext {
   networkVirtualAppliances: operations.NetworkVirtualAppliances;
   virtualApplianceSites: operations.VirtualApplianceSites;
   virtualApplianceSkus: operations.VirtualApplianceSkus;
-  inboundSecurityRule: operations.InboundSecurityRuleOperations;
   networkWatchers: operations.NetworkWatchers;
   packetCaptures: operations.PacketCaptures;
   connectionMonitors: operations.ConnectionMonitors;
@@ -183,7 +182,6 @@ class NetworkManagementClient extends NetworkManagementClientContext {
     this.networkVirtualAppliances = new operations.NetworkVirtualAppliances(this);
     this.virtualApplianceSites = new operations.VirtualApplianceSites(this);
     this.virtualApplianceSkus = new operations.VirtualApplianceSkus(this);
-    this.inboundSecurityRule = new operations.InboundSecurityRuleOperations(this);
     this.networkWatchers = new operations.NetworkWatchers(this);
     this.packetCaptures = new operations.PacketCaptures(this);
     this.connectionMonitors = new operations.ConnectionMonitors(this);

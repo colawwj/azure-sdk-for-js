@@ -166,8 +166,6 @@ export {
   HubVirtualNetworkConnection,
   InboundNatPool,
   InboundNatRule,
-  InboundSecurityRule,
-  InboundSecurityRules,
   IpAllocation,
   IPConfiguration,
   IPConfigurationBgpPeeringAddress,
