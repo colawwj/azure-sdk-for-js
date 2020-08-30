@@ -60,6 +60,7 @@ export {
   LoggerGetEntityTagHeaders,
   LoggerGetHeaders,
   LoggerUpdateContract,
+  LoggerUpdateHeaders,
   NamedValueContract,
   NamedValueCreateContract,
   NotificationContract,

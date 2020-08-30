@@ -34,6 +34,7 @@ export {
   BackendReconnectContract,
   BackendServiceFabricClusterProperties,
   BackendTlsProperties,
+  BackendUpdateHeaders,
   BackendUpdateParameters,
   BaseResource,
   BodyDiagnosticSettings,

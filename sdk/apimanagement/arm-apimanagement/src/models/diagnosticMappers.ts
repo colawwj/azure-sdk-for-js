@@ -43,6 +43,7 @@ export {
   DiagnosticCreateOrUpdateHeaders,
   DiagnosticGetEntityTagHeaders,
   DiagnosticGetHeaders,
+  DiagnosticUpdateHeaders,
   EmailTemplateContract,
   EmailTemplateParametersContractProperties,
   ErrorFieldContract,

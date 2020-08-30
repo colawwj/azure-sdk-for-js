@@ -19,6 +19,7 @@ export {
   ApiReleaseCreateOrUpdateHeaders,
   ApiReleaseGetEntityTagHeaders,
   ApiReleaseGetHeaders,
+  ApiReleaseUpdateHeaders,
   ApiVersionConstraint,
   ApiVersionSetContract,
   ApiVersionSetContractDetails,

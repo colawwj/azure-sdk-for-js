@@ -25,6 +25,7 @@ export {
   ApiReleaseContract,
   ApiTagResourceContractProperties,
   ApiUpdateContract,
+  ApiUpdateHeaders,
   ApiVersionConstraint,
   ApiVersionSetContract,
   ApiVersionSetContractDetails,

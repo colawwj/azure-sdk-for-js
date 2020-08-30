@@ -99,6 +99,7 @@ export {
   UserIdentityProperties,
   UserTokenParameters,
   UserTokenResult,
+  UserUpdateHeaders,
   UserUpdateParameters,
   VirtualNetworkConfiguration,
   X509CertificateName

@@ -37,6 +37,8 @@ class ApiManagementClient extends ApiManagementClientContext {
   backend: operations.Backend;
   cache: operations.Cache;
   certificate: operations.Certificate;
+  contentType: operations.ContentType;
+  contentTypeContentItem: operations.ContentTypeContentItem;
   apiManagementOperations: operations.ApiManagementOperations;
   apiManagementServiceSkus: operations.ApiManagementServiceSkus;
   apiManagementService: operations.ApiManagementService;
@@ -111,6 +113,8 @@ class ApiManagementClient extends ApiManagementClientContext {
     this.backend = new operations.Backend(this);
     this.cache = new operations.Cache(this);
     this.certificate = new operations.Certificate(this);
+    this.contentType = new operations.ContentType(this);
+    this.contentTypeContentItem = new operations.ContentTypeContentItem(this);
     this.apiManagementOperations = new operations.ApiManagementOperations(this);
     this.apiManagementServiceSkus = new operations.ApiManagementServiceSkus(this);
     this.apiManagementService = new operations.ApiManagementService(this);

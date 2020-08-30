@@ -28,6 +28,8 @@ export * from "./authorizationServer";
 export * from "./backend";
 export * from "./cache";
 export * from "./certificate";
+export * from "./contentType";
+export * from "./contentTypeContentItem";
 export * from "./apiManagementOperations";
 export * from "./apiManagementServiceSkus";
 export * from "./apiManagementService";

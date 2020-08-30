@@ -56,6 +56,8 @@ export {
   IdentityProviderGetEntityTagHeaders,
   IdentityProviderGetHeaders,
   IdentityProviderList,
+  IdentityProviderListSecretsHeaders,
+  IdentityProviderUpdateHeaders,
   IdentityProviderUpdateParameters,
   IssueAttachmentContract,
   IssueCommentContract,

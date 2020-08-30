@@ -189,9 +189,9 @@ export class Gateway {
    * @param ifMatch ETag of the Entity. ETag should match the current entity state from the header
    * response of the GET request or it should be * for unconditional update.
    * @param [options] The optional parameters
-   * @returns Promise<msRest.RestResponse>
+   * @returns Promise<Models.GatewayUpdateResponse>
    */
-  update(resourceGroupName: string, serviceName: string, gatewayId: string, parameters: Models.GatewayContract, ifMatch: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  update(resourceGroupName: string, serviceName: string, gatewayId: string, parameters: Models.GatewayContract, ifMatch: string, options?: msRest.RequestOptionsBase): Promise<Models.GatewayUpdateResponse>;
   /**
    * @param resourceGroupName The name of the resource group.
    * @param serviceName The name of the API Management service.
@@ -202,7 +202,7 @@ export class Gateway {
    * response of the GET request or it should be * for unconditional update.
    * @param callback The callback
    */
-  update(resourceGroupName: string, serviceName: string, gatewayId: string, parameters: Models.GatewayContract, ifMatch: string, callback: msRest.ServiceCallback<void>): void;
+  update(resourceGroupName: string, serviceName: string, gatewayId: string, parameters: Models.GatewayContract, ifMatch: string, callback: msRest.ServiceCallback<Models.GatewayContract>): void;
   /**
    * @param resourceGroupName The name of the resource group.
    * @param serviceName The name of the API Management service.
@@ -214,8 +214,8 @@ export class Gateway {
    * @param options The optional parameters
    * @param callback The callback
    */
-  update(resourceGroupName: string, serviceName: string, gatewayId: string, parameters: Models.GatewayContract, ifMatch: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  update(resourceGroupName: string, serviceName: string, gatewayId: string, parameters: Models.GatewayContract, ifMatch: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
+  update(resourceGroupName: string, serviceName: string, gatewayId: string, parameters: Models.GatewayContract, ifMatch: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.GatewayContract>): void;
+  update(resourceGroupName: string, serviceName: string, gatewayId: string, parameters: Models.GatewayContract, ifMatch: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.GatewayContract>, callback?: msRest.ServiceCallback<Models.GatewayContract>): Promise<Models.GatewayUpdateResponse> {
     return this.client.sendOperationRequest(
       {
         resourceGroupName,
@@ -226,7 +226,7 @@ export class Gateway {
         options
       },
       updateOperationSpec,
-      callback);
+      callback) as Promise<Models.GatewayUpdateResponse>;
   }
 
   /**
@@ -440,6 +440,7 @@ const listByServiceOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
+    Parameters.filter0,
     Parameters.top,
     Parameters.skip,
     Parameters.apiVersion
@@ -577,9 +578,13 @@ const updateOperationSpec: msRest.OperationSpec = {
     }
   },
   responses: {
-    204: {},
+    200: {
+      bodyMapper: Mappers.GatewayContract,
+      headersMapper: Mappers.GatewayUpdateHeaders
+    },
     default: {
-      bodyMapper: Mappers.ErrorResponse
+      bodyMapper: Mappers.ErrorResponse,
+      headersMapper: Mappers.GatewayUpdateHeaders
     }
   },
   serializer

@@ -235,6 +235,7 @@ const listByServiceOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
+    Parameters.filter0,
     Parameters.top,
     Parameters.skip,
     Parameters.apiVersion

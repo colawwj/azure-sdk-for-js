@@ -52,6 +52,7 @@ export {
   GroupCreateParameters,
   GroupGetEntityTagHeaders,
   GroupGetHeaders,
+  GroupUpdateHeaders,
   GroupUpdateParameters,
   HostnameConfiguration,
   HttpMessageDiagnostic,

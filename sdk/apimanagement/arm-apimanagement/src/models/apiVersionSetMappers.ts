@@ -22,6 +22,7 @@ export {
   ApiVersionSetCreateOrUpdateHeaders,
   ApiVersionSetGetEntityTagHeaders,
   ApiVersionSetGetHeaders,
+  ApiVersionSetUpdateHeaders,
   ApiVersionSetUpdateParameters,
   AssociationContract,
   AuthenticationSettingsContract,

@@ -80,6 +80,7 @@ export {
   ProductGetEntityTagHeaders,
   ProductGetHeaders,
   ProductTagResourceContractProperties,
+  ProductUpdateHeaders,
   ProductUpdateParameters,
   RecipientEmailContract,
   RecipientsContractProperties,

@@ -54,6 +54,7 @@ export {
   GatewayListKeysHeaders,
   GatewayTokenContract,
   GatewayTokenRequestContract,
+  GatewayUpdateHeaders,
   GroupContract,
   GroupContractProperties,
   HostnameConfiguration,

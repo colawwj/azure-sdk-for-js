@@ -98,6 +98,7 @@ export {
   TagGetEntityStateByProductHeaders,
   TagGetEntityStateHeaders,
   TagGetHeaders,
+  TagUpdateHeaders,
   TermsOfServiceProperties,
   TokenBodyParameterContract,
   UserContract,

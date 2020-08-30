@@ -12,6 +12,7 @@ export {
   ApiDiagnosticCreateOrUpdateHeaders,
   ApiDiagnosticGetEntityTagHeaders,
   ApiDiagnosticGetHeaders,
+  ApiDiagnosticUpdateHeaders,
   ApiManagementServiceIdentity,
   ApiManagementServiceResource,
   ApiManagementServiceSkuProperties,

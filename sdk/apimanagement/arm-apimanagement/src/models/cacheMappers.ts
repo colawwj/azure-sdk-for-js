@@ -37,6 +37,7 @@ export {
   CacheCreateOrUpdateHeaders,
   CacheGetEntityTagHeaders,
   CacheGetHeaders,
+  CacheUpdateHeaders,
   CacheUpdateParameters,
   CertificateConfiguration,
   CertificateContract,

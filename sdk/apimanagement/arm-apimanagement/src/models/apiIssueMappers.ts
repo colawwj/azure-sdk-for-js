@@ -12,6 +12,7 @@ export {
   ApiIssueCreateOrUpdateHeaders,
   ApiIssueGetEntityTagHeaders,
   ApiIssueGetHeaders,
+  ApiIssueUpdateHeaders,
   ApiManagementServiceIdentity,
   ApiManagementServiceResource,
   ApiManagementServiceSkuProperties,
