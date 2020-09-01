@@ -36,6 +36,9 @@ export {
   CertificateConfiguration,
   CertificateContract,
   CertificateInformation,
+  ContentItemContract,
+  ContentTypeContract,
+  DeletedServiceContract,
   DiagnosticContract,
   EmailTemplateContract,
   EmailTemplateParametersContractProperties,
@@ -97,6 +100,7 @@ export {
   UserIdentityProperties,
   UserTokenParameters,
   UserTokenResult,
+  UserUpdateHeaders,
   UserUpdateParameters,
   VirtualNetworkConfiguration,
   X509CertificateName

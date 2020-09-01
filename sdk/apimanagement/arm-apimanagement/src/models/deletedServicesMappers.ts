@@ -8,7 +8,6 @@
 
 export {
   AdditionalLocation,
-  ApiCollection,
   ApiContract,
   ApiManagementServiceIdentity,
   ApiManagementServiceResource,
@@ -40,6 +39,7 @@ export {
   ContentItemContract,
   ContentTypeContract,
   DeletedServiceContract,
+  DeletedServicesCollection,
   DiagnosticContract,
   EmailTemplateContract,
   EmailTemplateParametersContractProperties,
