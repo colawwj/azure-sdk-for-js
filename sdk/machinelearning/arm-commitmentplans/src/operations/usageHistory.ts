@@ -109,7 +109,7 @@ const listOperationSpec: msRest.OperationSpec = {
       bodyMapper: Mappers.PlanUsageHistoryListResult
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -130,7 +130,7 @@ const listNextOperationSpec: msRest.OperationSpec = {
       bodyMapper: Mappers.PlanUsageHistoryListResult
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer

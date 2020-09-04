@@ -295,7 +295,7 @@ const getOperationSpec: msRest.OperationSpec = {
       bodyMapper: Mappers.CommitmentPlan
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -330,7 +330,7 @@ const createOrUpdateOperationSpec: msRest.OperationSpec = {
       bodyMapper: Mappers.CommitmentPlan
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -352,8 +352,9 @@ const removeOperationSpec: msRest.OperationSpec = {
   ],
   responses: {
     200: {},
+    204: {},
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -385,7 +386,7 @@ const patchOperationSpec: msRest.OperationSpec = {
       bodyMapper: Mappers.CommitmentPlan
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -409,7 +410,7 @@ const listOperationSpec: msRest.OperationSpec = {
       bodyMapper: Mappers.CommitmentPlanListResult
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -434,7 +435,7 @@ const listInResourceGroupOperationSpec: msRest.OperationSpec = {
       bodyMapper: Mappers.CommitmentPlanListResult
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -455,7 +456,7 @@ const listNextOperationSpec: msRest.OperationSpec = {
       bodyMapper: Mappers.CommitmentPlanListResult
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -476,7 +477,7 @@ const listInResourceGroupNextOperationSpec: msRest.OperationSpec = {
       bodyMapper: Mappers.CommitmentPlanListResult
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer

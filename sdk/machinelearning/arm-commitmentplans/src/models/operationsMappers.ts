@@ -7,15 +7,8 @@
  */
 
 export {
-  BaseResource,
-  CommitmentAssociation,
-  CommitmentAssociationProperties,
-  CommitmentPlan,
-  CommitmentPlanListResult,
-  CommitmentPlanPatchPayload,
-  CommitmentPlanProperties,
   ErrorResponse,
-  PlanQuantity,
-  Resource,
-  ResourceSku
+  OperationDisplayInfo,
+  OperationEntity,
+  OperationEntityListResult
 } from "../models/mappers";

@@ -185,7 +185,7 @@ const getOperationSpec: msRest.OperationSpec = {
       bodyMapper: Mappers.CommitmentAssociation
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -211,7 +211,7 @@ const listOperationSpec: msRest.OperationSpec = {
       bodyMapper: Mappers.CommitmentAssociationListResult
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -244,7 +244,7 @@ const moveOperationSpec: msRest.OperationSpec = {
       bodyMapper: Mappers.CommitmentAssociation
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -265,7 +265,7 @@ const listNextOperationSpec: msRest.OperationSpec = {
       bodyMapper: Mappers.CommitmentAssociationListResult
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer

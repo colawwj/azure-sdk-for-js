@@ -10,16 +10,16 @@
 
 import * as msRest from "@azure/ms-rest-js";
 import * as Models from "../models";
-import * as Mappers from "../models/skusMappers";
+import * as Mappers from "../models/operationsMappers";
 import * as Parameters from "../models/parameters";
 import { AzureMLCommitmentPlansManagementClientContext } from "../azureMLCommitmentPlansManagementClientContext";
 
-/** Class representing a Skus. */
-export class Skus {
+/** Class representing a Operations. */
+export class Operations {
   private readonly client: AzureMLCommitmentPlansManagementClientContext;
 
   /**
-   * Create a Skus.
+   * Create a Operations.
    * @param {AzureMLCommitmentPlansManagementClientContext} client Reference to the service client.
    */
   constructor(client: AzureMLCommitmentPlansManagementClientContext) {
@@ -27,27 +27,27 @@ export class Skus {
   }
 
   /**
-   * Lists the available commitment plan SKUs.
+   * Lists all of the available Azure Machine Learning Studio Commitment Plan RP REST API operations.
    * @param [options] The optional parameters
-   * @returns Promise<Models.SkusListResponse>
+   * @returns Promise<Models.OperationsListResponse>
    */
-  list(options?: msRest.RequestOptionsBase): Promise<Models.SkusListResponse>;
+  list(options?: msRest.RequestOptionsBase): Promise<Models.OperationsListResponse>;
   /**
    * @param callback The callback
    */
-  list(callback: msRest.ServiceCallback<Models.SkuListResult>): void;
+  list(callback: msRest.ServiceCallback<Models.OperationEntityListResult>): void;
   /**
    * @param options The optional parameters
    * @param callback The callback
    */
-  list(options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.SkuListResult>): void;
-  list(options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.SkuListResult>, callback?: msRest.ServiceCallback<Models.SkuListResult>): Promise<Models.SkusListResponse> {
+  list(options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.OperationEntityListResult>): void;
+  list(options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.OperationEntityListResult>, callback?: msRest.ServiceCallback<Models.OperationEntityListResult>): Promise<Models.OperationsListResponse> {
     return this.client.sendOperationRequest(
       {
         options
       },
       listOperationSpec,
-      callback) as Promise<Models.SkusListResponse>;
+      callback) as Promise<Models.OperationsListResponse>;
   }
 }
 
@@ -55,10 +55,7 @@ export class Skus {
 const serializer = new msRest.Serializer(Mappers);
 const listOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
-  path: "subscriptions/{subscriptionId}/providers/Microsoft.MachineLearning/skus",
-  urlParameters: [
-    Parameters.subscriptionId
-  ],
+  path: "providers/Microsoft.MachineLearning/operations",
   queryParameters: [
     Parameters.apiVersion
   ],
@@ -67,7 +64,7 @@ const listOperationSpec: msRest.OperationSpec = {
   ],
   responses: {
     200: {
-      bodyMapper: Mappers.SkuListResult
+      bodyMapper: Mappers.OperationEntityListResult
     },
     default: {
       bodyMapper: Mappers.ErrorResponse
