@@ -85,7 +85,7 @@ export class WebServices {
    * @param [options] The optional parameters
    * @returns Promise<Models.WebServicesPatchResponse>
    */
-  patch(resourceGroupName: string, webServiceName: string, patchPayload: Models.WebService, options?: msRest.RequestOptionsBase): Promise<Models.WebServicesPatchResponse> {
+  patch(resourceGroupName: string, webServiceName: string, patchPayload: Models.PatchedWebService, options?: msRest.RequestOptionsBase): Promise<Models.WebServicesPatchResponse> {
     return this.beginPatch(resourceGroupName,webServiceName,patchPayload,options)
       .then(lroPoller => lroPoller.pollUntilFinished()) as Promise<Models.WebServicesPatchResponse>;
   }
@@ -234,7 +234,7 @@ export class WebServices {
    * @param [options] The optional parameters
    * @returns Promise<msRestAzure.LROPoller>
    */
-  beginPatch(resourceGroupName: string, webServiceName: string, patchPayload: Models.WebService, options?: msRest.RequestOptionsBase): Promise<msRestAzure.LROPoller> {
+  beginPatch(resourceGroupName: string, webServiceName: string, patchPayload: Models.PatchedWebService, options?: msRest.RequestOptionsBase): Promise<msRestAzure.LROPoller> {
     return this.client.sendLRORequest(
       {
         resourceGroupName,
@@ -367,7 +367,7 @@ const getOperationSpec: msRest.OperationSpec = {
       bodyMapper: Mappers.WebService
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -392,7 +392,7 @@ const listKeysOperationSpec: msRest.OperationSpec = {
       bodyMapper: Mappers.WebServiceKeys
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -417,7 +417,7 @@ const listByResourceGroupOperationSpec: msRest.OperationSpec = {
       bodyMapper: Mappers.PaginatedWebServicesList
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -441,7 +441,7 @@ const listBySubscriptionIdOperationSpec: msRest.OperationSpec = {
       bodyMapper: Mappers.PaginatedWebServicesList
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -476,7 +476,7 @@ const beginCreateOrUpdateOperationSpec: msRest.OperationSpec = {
       bodyMapper: Mappers.WebService
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -499,7 +499,7 @@ const beginPatchOperationSpec: msRest.OperationSpec = {
   requestBody: {
     parameterPath: "patchPayload",
     mapper: {
-      ...Mappers.WebService,
+      ...Mappers.PatchedWebService,
       required: true
     }
   },
@@ -508,7 +508,7 @@ const beginPatchOperationSpec: msRest.OperationSpec = {
       bodyMapper: Mappers.WebService
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -529,10 +529,11 @@ const beginRemoveOperationSpec: msRest.OperationSpec = {
     Parameters.acceptLanguage
   ],
   responses: {
+    200: {},
     202: {},
     204: {},
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -540,7 +541,7 @@ const beginRemoveOperationSpec: msRest.OperationSpec = {
 
 const beginCreateRegionalPropertiesOperationSpec: msRest.OperationSpec = {
   httpMethod: "POST",
-  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearning/webServices/{webServiceName}/CreateRegionalBlob",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearning/webServices/{webServiceName}/createRegionalBlob",
   urlParameters: [
     Parameters.resourceGroupName,
     Parameters.webServiceName,
@@ -559,7 +560,7 @@ const beginCreateRegionalPropertiesOperationSpec: msRest.OperationSpec = {
     },
     202: {},
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -580,7 +581,7 @@ const listByResourceGroupNextOperationSpec: msRest.OperationSpec = {
       bodyMapper: Mappers.PaginatedWebServicesList
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
@@ -601,7 +602,7 @@ const listBySubscriptionIdNextOperationSpec: msRest.OperationSpec = {
       bodyMapper: Mappers.PaginatedWebServicesList
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.ErrorResponse
     }
   },
   serializer
