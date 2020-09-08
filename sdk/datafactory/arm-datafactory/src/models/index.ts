@@ -9752,7 +9752,7 @@ export interface AmazonMWSObjectDataset {
 /**
  * Contains the possible cases for DatasetCompression.
  */
-export type DatasetCompressionUnion = DatasetCompression | DatasetZipDeflateCompression | DatasetDeflateCompression | DatasetGZipCompression | DatasetBZip2Compression;
+export type DatasetCompressionUnion = DatasetCompression | DatasetTarGZipCompression | DatasetTarCompression | DatasetZipDeflateCompression | DatasetDeflateCompression | DatasetGZipCompression | DatasetBZip2Compression;
 
 /**
  * The compression method used on a dataset.
@@ -9766,6 +9766,30 @@ export interface DatasetCompression {
    * Describes unknown properties. The value of an unknown property can be of "any" type.
    */
   [property: string]: any;
+}
+
+/**
+ * The TarGZip compression method used on a dataset.
+ */
+export interface DatasetTarGZipCompression {
+  /**
+   * Polymorphic Discriminator
+   */
+  type: "TarGZip";
+  /**
+   * The TarGZip compression level.
+   */
+  level?: any;
+}
+
+/**
+ * The Tar archive method used on a dataset.
+ */
+export interface DatasetTarCompression {
+  /**
+   * Polymorphic Discriminator
+   */
+  type: "Tar";
 }
 
 /**
@@ -14090,7 +14114,7 @@ export interface AzureMLBatchExecutionActivity {
 /**
  * Contains the possible cases for CompressionReadSettings.
  */
-export type CompressionReadSettingsUnion = CompressionReadSettings | ZipDeflateReadSettings;
+export type CompressionReadSettingsUnion = CompressionReadSettings | TarGZipReadSettings | TarReadSettings | ZipDeflateReadSettings;
 
 /**
  * Compression read settings.
@@ -14104,6 +14128,36 @@ export interface CompressionReadSettings {
    * Describes unknown properties. The value of an unknown property can be of "any" type.
    */
   [property: string]: any;
+}
+
+/**
+ * The TarGZip compression read settings.
+ */
+export interface TarGZipReadSettings {
+  /**
+   * Polymorphic Discriminator
+   */
+  type: "TarGZipReadSettings";
+  /**
+   * Preserve the compression file name as folder path. Type: boolean (or Expression with
+   * resultType boolean).
+   */
+  preserveCompressionFileNameAsFolder?: any;
+}
+
+/**
+ * The Tar compression read settings.
+ */
+export interface TarReadSettings {
+  /**
+   * Polymorphic Discriminator
+   */
+  type: "TarReadSettings";
+  /**
+   * Preserve the compression file name as folder path. Type: boolean (or Expression with
+   * resultType boolean).
+   */
+  preserveCompressionFileNameAsFolder?: any;
 }
 
 /**

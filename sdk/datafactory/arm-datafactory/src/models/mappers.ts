@@ -10458,6 +10458,40 @@ export const DatasetCompression: msRest.CompositeMapper = {
   }
 };
 
+export const DatasetTarGZipCompression: msRest.CompositeMapper = {
+  serializedName: "TarGZip",
+  type: {
+    name: "Composite",
+    polymorphicDiscriminator: DatasetCompression.type.polymorphicDiscriminator,
+    uberParent: "DatasetCompression",
+    className: "DatasetTarGZipCompression",
+    modelProperties: {
+      ...DatasetCompression.type.modelProperties,
+      level: {
+        serializedName: "level",
+        type: {
+          name: "Object"
+        }
+      }
+    },
+    additionalProperties: DatasetCompression.type.additionalProperties
+  }
+};
+
+export const DatasetTarCompression: msRest.CompositeMapper = {
+  serializedName: "Tar",
+  type: {
+    name: "Composite",
+    polymorphicDiscriminator: DatasetCompression.type.polymorphicDiscriminator,
+    uberParent: "DatasetCompression",
+    className: "DatasetTarCompression",
+    modelProperties: {
+      ...DatasetCompression.type.modelProperties
+    },
+    additionalProperties: DatasetCompression.type.additionalProperties
+  }
+};
+
 export const DatasetZipDeflateCompression: msRest.CompositeMapper = {
   serializedName: "ZipDeflate",
   type: {
@@ -13941,6 +13975,46 @@ export const CompressionReadSettings: msRest.CompositeMapper = {
         name: "Object"
       }
     }
+  }
+};
+
+export const TarGZipReadSettings: msRest.CompositeMapper = {
+  serializedName: "TarGZipReadSettings",
+  type: {
+    name: "Composite",
+    polymorphicDiscriminator: CompressionReadSettings.type.polymorphicDiscriminator,
+    uberParent: "CompressionReadSettings",
+    className: "TarGZipReadSettings",
+    modelProperties: {
+      ...CompressionReadSettings.type.modelProperties,
+      preserveCompressionFileNameAsFolder: {
+        serializedName: "preserveCompressionFileNameAsFolder",
+        type: {
+          name: "Object"
+        }
+      }
+    },
+    additionalProperties: CompressionReadSettings.type.additionalProperties
+  }
+};
+
+export const TarReadSettings: msRest.CompositeMapper = {
+  serializedName: "TarReadSettings",
+  type: {
+    name: "Composite",
+    polymorphicDiscriminator: CompressionReadSettings.type.polymorphicDiscriminator,
+    uberParent: "CompressionReadSettings",
+    className: "TarReadSettings",
+    modelProperties: {
+      ...CompressionReadSettings.type.modelProperties,
+      preserveCompressionFileNameAsFolder: {
+        serializedName: "preserveCompressionFileNameAsFolder",
+        type: {
+          name: "Object"
+        }
+      }
+    },
+    additionalProperties: CompressionReadSettings.type.additionalProperties
   }
 };
 
@@ -24036,6 +24110,8 @@ export const discriminators = {
   'Dataset.ConcurObject' : ConcurObjectDataset,
   'Dataset.AzurePostgreSqlTable' : AzurePostgreSqlTableDataset,
   'Dataset.AmazonMWSObject' : AmazonMWSObjectDataset,
+  'DatasetCompression.TarGZip' : DatasetTarGZipCompression,
+  'DatasetCompression.Tar' : DatasetTarCompression,
   'DatasetCompression.ZipDeflate' : DatasetZipDeflateCompression,
   'DatasetCompression.Deflate' : DatasetDeflateCompression,
   'DatasetCompression.GZip' : DatasetGZipCompression,
@@ -24133,6 +24209,8 @@ export const discriminators = {
   'Activity.AzureMLExecutePipeline' : AzureMLExecutePipelineActivity,
   'Activity.AzureMLUpdateResource' : AzureMLUpdateResourceActivity,
   'Activity.AzureMLBatchExecution' : AzureMLBatchExecutionActivity,
+  'CompressionReadSettings.TarGZipReadSettings' : TarGZipReadSettings,
+  'CompressionReadSettings.TarReadSettings' : TarReadSettings,
   'CompressionReadSettings.ZipDeflateReadSettings' : ZipDeflateReadSettings,
   'CompressionReadSettings' : CompressionReadSettings,
   'FormatReadSettings.BinaryReadSettings' : BinaryReadSettings,
