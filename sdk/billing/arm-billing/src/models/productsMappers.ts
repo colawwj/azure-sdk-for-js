@@ -15,7 +15,6 @@ export {
   BaseResource,
   BillingAccount,
   BillingPeriod,
-  BillingPeriodsListResult,
   BillingPermissionsProperties,
   BillingProfile,
   BillingProfilesOnExpand,
@@ -45,10 +44,15 @@ export {
   PaymentProperties,
   Policy,
   Product,
+  ProductsListResult,
+  ProductsMoveHeaders,
   RebillDetails,
   RecipientTransferDetails,
   Reseller,
   Resource,
   Transaction,
-  TransferDetails
+  TransferDetails,
+  TransferProductRequestProperties,
+  ValidateProductTransferEligibilityError,
+  ValidateProductTransferEligibilityResult
 } from "../models/mappers";
