@@ -15,7 +15,6 @@ export {
   BaseResource,
   BillingAccount,
   BillingPeriod,
-  BillingPeriodsListResult,
   BillingPermissionsProperties,
   BillingProfile,
   BillingProfilesOnExpand,
@@ -36,6 +35,7 @@ export {
   ErrorModel,
   ErrorResponse,
   IndirectRelationshipInfo,
+  InitiateTransferRequest,
   Instruction,
   Invoice,
   InvoiceSection,
@@ -50,5 +50,8 @@ export {
   Reseller,
   Resource,
   Transaction,
-  TransferDetails
+  TransferBillingSubscriptionRequestProperties,
+  TransferDetails,
+  TransferDetailsListResult,
+  TransfersChangeInvoiceSectionHeaders
 } from "../models/mappers";

@@ -15,7 +15,6 @@ export {
   BaseResource,
   BillingAccount,
   BillingPeriod,
-  BillingPeriodsListResult,
   BillingPermissionsProperties,
   BillingProfile,
   BillingProfilesOnExpand,
@@ -50,5 +49,6 @@ export {
   Reseller,
   Resource,
   Transaction,
+  TransactionListResult,
   TransferDetails
 } from "../models/mappers";

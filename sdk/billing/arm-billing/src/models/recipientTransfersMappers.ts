@@ -7,6 +7,7 @@
  */
 
 export {
+  AcceptTransferRequest,
   AddressDetails,
   Agreement,
   Amount,
@@ -15,7 +16,6 @@ export {
   BaseResource,
   BillingAccount,
   BillingPeriod,
-  BillingPeriodsListResult,
   BillingPermissionsProperties,
   BillingProfile,
   BillingProfilesOnExpand,
@@ -45,10 +45,15 @@ export {
   PaymentProperties,
   Policy,
   Product,
+  ProductDetails,
   RebillDetails,
   RecipientTransferDetails,
+  RecipientTransferDetailsListResult,
   Reseller,
   Resource,
   Transaction,
-  TransferDetails
+  TransferDetails,
+  ValidateTransferListResponse,
+  ValidateTransferResponse,
+  ValidationResultProperties
 } from "../models/mappers";
