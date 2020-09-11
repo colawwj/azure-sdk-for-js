@@ -8,7 +8,6 @@
 
 export {
   AdditionalLocation,
-  ApiCollection,
   ApiContract,
   ApiManagementServiceIdentity,
   ApiManagementServiceResource,
@@ -37,7 +36,11 @@ export {
   CertificateConfiguration,
   CertificateContract,
   CertificateInformation,
+  ContentItemCollection,
   ContentItemContract,
+  ContentTypeContentItemCreateOrUpdateHeaders,
+  ContentTypeContentItemGetEntityTagHeaders,
+  ContentTypeContentItemGetHeaders,
   ContentTypeContract,
   DeletedServiceContract,
   DiagnosticContract,
