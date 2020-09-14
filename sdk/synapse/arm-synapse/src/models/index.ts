@@ -124,6 +124,10 @@ export interface BigDataPoolResourceInfo extends TrackedResource {
    */
   autoPause?: AutoPauseProperties;
   /**
+   * Whether compute isolation is required or not.
+   */
+  isComputeIsolationEnabled?: boolean;
+  /**
    * The Spark events folder
    */
   sparkEventsFolder?: string;
@@ -145,7 +149,7 @@ export interface BigDataPoolResourceInfo extends TrackedResource {
   defaultSparkLogFolder?: string;
   /**
    * The level of compute power that each node in the Big Data pool has. Possible values include:
-   * 'None', 'Small', 'Medium', 'Large'
+   * 'None', 'Small', 'Medium', 'Large', 'XLarge', 'XXLarge'
    */
   nodeSize?: NodeSize;
   /**
@@ -559,6 +563,11 @@ export interface Sku {
    * The SKU name
    */
   name?: string;
+  /**
+   * If the SKU supports scale out/in then the capacity integer should be included. If scale out/in
+   * is not possible for the resource this may be omitted.
+   */
+  capacity?: number;
 }
 
 /**
@@ -606,6 +615,12 @@ export interface SqlPool extends TrackedResource {
    * Date the SQL pool was created
    */
   creationDate?: Date;
+  /**
+   * The storage account type used to store data and backups for this sql pool. The supported
+   * options are GRS (Geo-Redundant Storage) and LRS (Locally Redundant Storage). Possible values
+   * include: 'GRS', 'LRS'
+   */
+  storageAccountType?: StorageAccountType;
 }
 
 /**
@@ -661,6 +676,12 @@ export interface SqlPoolPatchInfo {
    * Date the SQL pool was created
    */
   creationDate?: Date;
+  /**
+   * The storage account type used to store data and backups for this sql pool. The supported
+   * options are GRS (Geo-Redundant Storage) and LRS (Locally Redundant Storage). Possible values
+   * include: 'GRS', 'LRS'
+   */
+  storageAccountType?: StorageAccountType;
 }
 
 /**
@@ -1598,10 +1619,12 @@ export interface Workspace extends TrackedResource {
    */
   sqlAdministratorLoginPassword?: string;
   /**
-   * Workspace managed resource group
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   * Workspace managed resource group. The resource group name uniquely identifies the resource
+   * group within the user subscriptionId. The resource group name must be no longer than 90
+   * characters long, and must be alphanumeric characters (Char.IsLetterOrDigit()) and '-', '_',
+   * '(', ')' and'.'. Note that the name cannot end with '.'
    */
-  readonly managedResourceGroupName?: string;
+  managedResourceGroupName?: string;
   /**
    * Resource provisioning state
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -1628,6 +1651,11 @@ export interface Workspace extends TrackedResource {
    * Private endpoint connections to the workspace
    */
   privateEndpointConnections?: PrivateEndpointConnection[];
+  /**
+   * Workspace level configs and feature flags
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly extraProperties?: { [propertyName: string]: any };
   /**
    * Identity of the workspace
    */
@@ -1707,29 +1735,9 @@ export interface ManagedIdentitySqlControlSettingsModel extends ProxyResource {
 }
 
 /**
- * Azure Synapse nested resource, which belongs to a factory.
+ * Azure Synapse nested resource, which belongs to a workspace.
  */
-export interface SubResource extends BaseResource {
-  /**
-   * The resource identifier.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * The resource name.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * The resource type.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * Etag identifies change in the resource.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly etag?: string;
+export interface SubResource extends AzureEntityResource {
 }
 
 /**
@@ -3202,6 +3210,17 @@ export interface IntegrationRuntimesCreateOptionalParams extends msRest.RequestO
 /**
  * Optional Parameters.
  */
+export interface IntegrationRuntimesBeginCreateOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * ETag of the integration runtime entity. Should only be specified for update, for which it
+   * should match existing entity or can be * for unconditional update.
+   */
+  ifMatch?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
 export interface IntegrationRuntimeObjectMetadataGetOptionalParams extends msRest.RequestOptionsBase {
   /**
    * The parameters for getting a SSIS object metadata.
@@ -3448,11 +3467,11 @@ export interface PrivateLinkHubInfoListResult extends Array<PrivateLinkHub> {
 
 /**
  * Defines values for NodeSize.
- * Possible values include: 'None', 'Small', 'Medium', 'Large'
+ * Possible values include: 'None', 'Small', 'Medium', 'Large', 'XLarge', 'XXLarge'
  * @readonly
  * @enum {string}
  */
-export type NodeSize = 'None' | 'Small' | 'Medium' | 'Large';
+export type NodeSize = 'None' | 'Small' | 'Medium' | 'Large' | 'XLarge' | 'XXLarge';
 
 /**
  * Defines values for NodeSizeFamily.
@@ -3477,6 +3496,14 @@ export type ProvisioningState = 'Provisioning' | 'Succeeded' | 'Deleting' | 'Fai
  * @enum {string}
  */
 export type OperationStatus = 'InProgress' | 'Succeeded' | 'Failed' | 'Canceled';
+
+/**
+ * Defines values for StorageAccountType.
+ * Possible values include: 'GRS', 'LRS'
+ * @readonly
+ * @enum {string}
+ */
+export type StorageAccountType = 'GRS' | 'LRS';
 
 /**
  * Defines values for GeoBackupPolicyState.
@@ -5712,6 +5739,26 @@ export type IntegrationRuntimesStartResponse = IntegrationRuntimeStatusResponse 
        * The response body as parsed JSON or XML
        */
       parsedBody: IntegrationRuntimeStatusResponse;
+    };
+};
+
+/**
+ * Contains response data for the beginCreate operation.
+ */
+export type IntegrationRuntimesBeginCreateResponse = IntegrationRuntimeResource & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: IntegrationRuntimeResource;
     };
 };
 
