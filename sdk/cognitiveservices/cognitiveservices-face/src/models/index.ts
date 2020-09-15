@@ -814,7 +814,7 @@ export interface OperationStatus {
    * be included in this field, and for snapshot applying operation, the path to get the target
    * object will be returned in this field.
    */
-  resourceLocation?: string;
+  location?: string;
   /**
    * Show failure message when operation fails (omitted when operation succeeds).
    */

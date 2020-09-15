@@ -1707,8 +1707,8 @@ export const OperationStatus: msRest.CompositeMapper = {
           name: "DateTime"
         }
       },
-      resourceLocation: {
-        serializedName: "resourceLocation",
+      location: {
+        serializedName: "location",
         type: {
           name: "String"
         }
