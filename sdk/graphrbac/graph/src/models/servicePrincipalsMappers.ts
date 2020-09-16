@@ -11,6 +11,8 @@ export {
   ADGroup,
   Application,
   AppRole,
+  AppRoleAssignment,
+  AppRoleAssignmentListResult,
   DirectoryObject,
   DirectoryObjectListResult,
   GraphError,

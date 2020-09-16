@@ -12,6 +12,7 @@ export {
   ADGroup,
   Application,
   AppRole,
+  AppRoleAssignment,
   CheckGroupMembershipParameters,
   CheckGroupMembershipResult,
   DirectoryObject,

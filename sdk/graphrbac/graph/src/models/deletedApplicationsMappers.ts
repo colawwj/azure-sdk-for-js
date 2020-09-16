@@ -12,6 +12,7 @@ export {
   Application,
   ApplicationListResult,
   AppRole,
+  AppRoleAssignment,
   DirectoryObject,
   GraphError,
   InformationalUrl,

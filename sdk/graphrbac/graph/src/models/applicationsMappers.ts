@@ -16,6 +16,7 @@ export {
   ApplicationListResult,
   ApplicationUpdateParameters,
   AppRole,
+  AppRoleAssignment,
   DirectoryObject,
   DirectoryObjectListResult,
   GraphError,

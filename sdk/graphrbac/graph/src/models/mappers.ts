@@ -617,7 +617,7 @@ export const ApplicationBase: msRest.CompositeMapper = {
       groupMembershipClaims: {
         serializedName: "groupMembershipClaims",
         type: {
-          name: "Object"
+          name: "String"
         }
       },
       homepage: {
@@ -946,7 +946,7 @@ export const Application: msRest.CompositeMapper = {
       groupMembershipClaims: {
         serializedName: "groupMembershipClaims",
         type: {
-          name: "Object"
+          name: "String"
         }
       },
       homepage: {
@@ -1194,6 +1194,56 @@ export const AddOwnerParameters: msRest.CompositeMapper = {
         name: "Object"
       }
     }
+  }
+};
+
+export const AppRoleAssignment: msRest.CompositeMapper = {
+  serializedName: "AppRoleAssignment",
+  type: {
+    name: "Composite",
+    polymorphicDiscriminator: DirectoryObject.type.polymorphicDiscriminator,
+    uberParent: "DirectoryObject",
+    className: "AppRoleAssignment",
+    modelProperties: {
+      ...DirectoryObject.type.modelProperties,
+      id: {
+        serializedName: "id",
+        type: {
+          name: "String"
+        }
+      },
+      principalDisplayName: {
+        serializedName: "principalDisplayName",
+        type: {
+          name: "String"
+        }
+      },
+      principalId: {
+        serializedName: "principalId",
+        type: {
+          name: "String"
+        }
+      },
+      principalType: {
+        serializedName: "principalType",
+        type: {
+          name: "String"
+        }
+      },
+      resourceDisplayName: {
+        serializedName: "resourceDisplayName",
+        type: {
+          name: "String"
+        }
+      },
+      resourceId: {
+        serializedName: "resourceId",
+        type: {
+          name: "String"
+        }
+      }
+    },
+    additionalProperties: DirectoryObject.type.additionalProperties
   }
 };
 
@@ -2402,6 +2452,35 @@ export const ServicePrincipalListResult: msRest.CompositeMapper = {
   }
 };
 
+export const AppRoleAssignmentListResult: msRest.CompositeMapper = {
+  serializedName: "AppRoleAssignmentListResult",
+  type: {
+    name: "Composite",
+    className: "AppRoleAssignmentListResult",
+    modelProperties: {
+      value: {
+        serializedName: "",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "AppRoleAssignment",
+              additionalProperties: DirectoryObject.type.additionalProperties
+            }
+          }
+        }
+      },
+      odatanextLink: {
+        serializedName: "odata\\.nextLink",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const UserListResult: msRest.CompositeMapper = {
   serializedName: "UserListResult",
   type: {
@@ -2510,6 +2589,7 @@ export const OAuth2PermissionGrantListResult: msRest.CompositeMapper = {
 export const discriminators = {
   'DirectoryObject' : DirectoryObject,
   'DirectoryObject.Application' : Application,
+  'DirectoryObject.AppRoleAssignment' : AppRoleAssignment,
   'DirectoryObject.Group' : ADGroup,
   'DirectoryObject.ServicePrincipal' : ServicePrincipal,
   'DirectoryObject.User' : User
