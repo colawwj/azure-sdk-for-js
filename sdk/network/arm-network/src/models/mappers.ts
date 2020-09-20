@@ -11754,6 +11754,10 @@ export const PacketCaptureParameters: msRest.CompositeMapper = {
       bytesToCapturePerPacket: {
         serializedName: "bytesToCapturePerPacket",
         defaultValue: 0,
+        constraints: {
+          InclusiveMaximum: 4294967295,
+          InclusiveMinimum: 0
+        },
         type: {
           name: "Number"
         }
@@ -11761,6 +11765,10 @@ export const PacketCaptureParameters: msRest.CompositeMapper = {
       totalBytesPerSession: {
         serializedName: "totalBytesPerSession",
         defaultValue: 1073741824,
+        constraints: {
+          InclusiveMaximum: 4294967295,
+          InclusiveMinimum: 0
+        },
         type: {
           name: "Number"
         }
@@ -11768,6 +11776,10 @@ export const PacketCaptureParameters: msRest.CompositeMapper = {
       timeLimitInSeconds: {
         serializedName: "timeLimitInSeconds",
         defaultValue: 18000,
+        constraints: {
+          InclusiveMaximum: 18000,
+          InclusiveMinimum: 0
+        },
         type: {
           name: "Number"
         }
@@ -11812,6 +11824,10 @@ export const PacketCapture: msRest.CompositeMapper = {
       bytesToCapturePerPacket: {
         serializedName: "properties.bytesToCapturePerPacket",
         defaultValue: 0,
+        constraints: {
+          InclusiveMaximum: 4294967295,
+          InclusiveMinimum: 0
+        },
         type: {
           name: "Number"
         }
@@ -11819,6 +11835,10 @@ export const PacketCapture: msRest.CompositeMapper = {
       totalBytesPerSession: {
         serializedName: "properties.totalBytesPerSession",
         defaultValue: 1073741824,
+        constraints: {
+          InclusiveMaximum: 4294967295,
+          InclusiveMinimum: 0
+        },
         type: {
           name: "Number"
         }
@@ -11826,6 +11846,10 @@ export const PacketCapture: msRest.CompositeMapper = {
       timeLimitInSeconds: {
         serializedName: "properties.timeLimitInSeconds",
         defaultValue: 18000,
+        constraints: {
+          InclusiveMaximum: 18000,
+          InclusiveMinimum: 0
+        },
         type: {
           name: "Number"
         }
@@ -11891,6 +11915,10 @@ export const PacketCaptureResult: msRest.CompositeMapper = {
       bytesToCapturePerPacket: {
         serializedName: "properties.bytesToCapturePerPacket",
         defaultValue: 0,
+        constraints: {
+          InclusiveMaximum: 4294967295,
+          InclusiveMinimum: 0
+        },
         type: {
           name: "Number"
         }
@@ -11898,6 +11926,10 @@ export const PacketCaptureResult: msRest.CompositeMapper = {
       totalBytesPerSession: {
         serializedName: "properties.totalBytesPerSession",
         defaultValue: 1073741824,
+        constraints: {
+          InclusiveMaximum: 4294967295,
+          InclusiveMinimum: 0
+        },
         type: {
           name: "Number"
         }
@@ -11905,6 +11937,10 @@ export const PacketCaptureResult: msRest.CompositeMapper = {
       timeLimitInSeconds: {
         serializedName: "properties.timeLimitInSeconds",
         defaultValue: 18000,
+        constraints: {
+          InclusiveMaximum: 18000,
+          InclusiveMinimum: 0
+        },
         type: {
           name: "Number"
         }
@@ -12243,6 +12279,10 @@ export const ConnectivitySource: msRest.CompositeMapper = {
       },
       port: {
         serializedName: "port",
+        constraints: {
+          InclusiveMaximum: 65535,
+          InclusiveMinimum: 0
+        },
         type: {
           name: "Number"
         }
@@ -12271,6 +12311,10 @@ export const ConnectivityDestination: msRest.CompositeMapper = {
       },
       port: {
         serializedName: "port",
+        constraints: {
+          InclusiveMaximum: 65535,
+          InclusiveMinimum: 0
+        },
         type: {
           name: "Number"
         }
@@ -12473,6 +12517,10 @@ export const HopLink: msRest.CompositeMapper = {
       roundTripTimeMin: {
         readOnly: true,
         serializedName: "properties.roundTripTimeMin",
+        constraints: {
+          InclusiveMaximum: 4294967295,
+          InclusiveMinimum: 0
+        },
         type: {
           name: "Number"
         }
@@ -12480,6 +12528,10 @@ export const HopLink: msRest.CompositeMapper = {
       roundTripTimeAvg: {
         readOnly: true,
         serializedName: "properties.roundTripTimeAvg",
+        constraints: {
+          InclusiveMaximum: 4294967295,
+          InclusiveMinimum: 0
+        },
         type: {
           name: "Number"
         }
@@ -12487,6 +12539,10 @@ export const HopLink: msRest.CompositeMapper = {
       roundTripTimeMax: {
         readOnly: true,
         serializedName: "properties.roundTripTimeMax",
+        constraints: {
+          InclusiveMaximum: 4294967295,
+          InclusiveMinimum: 0
+        },
         type: {
           name: "Number"
         }
@@ -13323,6 +13379,10 @@ export const ConnectionMonitorSource: msRest.CompositeMapper = {
       },
       port: {
         serializedName: "port",
+        constraints: {
+          InclusiveMaximum: 65535,
+          InclusiveMinimum: 0
+        },
         type: {
           name: "Number"
         }
@@ -13351,6 +13411,10 @@ export const ConnectionMonitorDestination: msRest.CompositeMapper = {
       },
       port: {
         serializedName: "port",
+        constraints: {
+          InclusiveMaximum: 65535,
+          InclusiveMinimum: 0
+        },
         type: {
           name: "Number"
         }
@@ -13522,6 +13586,10 @@ export const ConnectionMonitorHttpConfiguration: msRest.CompositeMapper = {
     modelProperties: {
       port: {
         serializedName: "port",
+        constraints: {
+          InclusiveMaximum: 65535,
+          InclusiveMinimum: 0
+        },
         type: {
           name: "Number"
         }
@@ -13579,6 +13647,10 @@ export const ConnectionMonitorTcpConfiguration: msRest.CompositeMapper = {
     modelProperties: {
       port: {
         serializedName: "port",
+        constraints: {
+          InclusiveMaximum: 65535,
+          InclusiveMinimum: 0
+        },
         type: {
           name: "Number"
         }
@@ -13829,6 +13901,10 @@ export const ConnectionMonitorParameters: msRest.CompositeMapper = {
       monitoringIntervalInSeconds: {
         serializedName: "monitoringIntervalInSeconds",
         defaultValue: 60,
+        constraints: {
+          InclusiveMaximum: 1800,
+          InclusiveMinimum: 30
+        },
         type: {
           name: "Number"
         }
@@ -13938,6 +14014,10 @@ export const ConnectionMonitor: msRest.CompositeMapper = {
       monitoringIntervalInSeconds: {
         serializedName: "properties.monitoringIntervalInSeconds",
         defaultValue: 60,
+        constraints: {
+          InclusiveMaximum: 1800,
+          InclusiveMinimum: 30
+        },
         type: {
           name: "Number"
         }
@@ -14032,30 +14112,50 @@ export const ConnectionStateSnapshot: msRest.CompositeMapper = {
       },
       avgLatencyInMs: {
         serializedName: "avgLatencyInMs",
+        constraints: {
+          InclusiveMaximum: 4294967295,
+          InclusiveMinimum: 0
+        },
         type: {
           name: "Number"
         }
       },
       minLatencyInMs: {
         serializedName: "minLatencyInMs",
+        constraints: {
+          InclusiveMaximum: 4294967295,
+          InclusiveMinimum: 0
+        },
         type: {
           name: "Number"
         }
       },
       maxLatencyInMs: {
         serializedName: "maxLatencyInMs",
+        constraints: {
+          InclusiveMaximum: 4294967295,
+          InclusiveMinimum: 0
+        },
         type: {
           name: "Number"
         }
       },
       probesSent: {
         serializedName: "probesSent",
+        constraints: {
+          InclusiveMaximum: 4294967295,
+          InclusiveMinimum: 0
+        },
         type: {
           name: "Number"
         }
       },
       probesFailed: {
         serializedName: "probesFailed",
+        constraints: {
+          InclusiveMaximum: 4294967295,
+          InclusiveMinimum: 0
+        },
         type: {
           name: "Number"
         }
@@ -14152,6 +14252,10 @@ export const ConnectionMonitorResult: msRest.CompositeMapper = {
       monitoringIntervalInSeconds: {
         serializedName: "properties.monitoringIntervalInSeconds",
         defaultValue: 60,
+        constraints: {
+          InclusiveMaximum: 1800,
+          InclusiveMinimum: 30
+        },
         type: {
           name: "Number"
         }
