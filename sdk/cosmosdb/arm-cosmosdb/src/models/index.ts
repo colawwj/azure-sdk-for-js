@@ -407,13 +407,18 @@ export interface SqlDatabaseGetPropertiesResource {
    * A system generated property that denotes the last updated timestamp of the resource.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly _ts?: any;
+  readonly _ts?: number;
   /**
    * A system generated property representing the resource etag required for optimistic concurrency
    * control.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly _etag?: string;
+  /**
+   * A system generated property. It is the unique addressable URI for the resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly _self?: string;
   /**
    * A system generated property that specified the addressable path of the collections resource.
    */
@@ -665,13 +670,18 @@ export interface SqlContainerGetPropertiesResource {
    * A system generated property that denotes the last updated timestamp of the resource.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly _ts?: any;
+  readonly _ts?: number;
   /**
    * A system generated property representing the resource etag required for optimistic concurrency
    * control.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly _etag?: string;
+  /**
+   * A system generated property. It is the unique addressable URI for the resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly _self?: string;
 }
 
 /**
@@ -709,13 +719,18 @@ export interface SqlStoredProcedureGetPropertiesResource {
    * A system generated property that denotes the last updated timestamp of the resource.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly _ts?: any;
+  readonly _ts?: number;
   /**
    * A system generated property representing the resource etag required for optimistic concurrency
    * control.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly _etag?: string;
+  /**
+   * A system generated property. It is the unique addressable URI for the resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly _self?: string;
 }
 
 /**
@@ -746,13 +761,18 @@ export interface SqlUserDefinedFunctionGetPropertiesResource {
    * A system generated property that denotes the last updated timestamp of the resource.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly _ts?: any;
+  readonly _ts?: number;
   /**
    * A system generated property representing the resource etag required for optimistic concurrency
    * control.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly _etag?: string;
+  /**
+   * A system generated property. It is the unique addressable URI for the resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly _self?: string;
 }
 
 /**
@@ -792,13 +812,18 @@ export interface SqlTriggerGetPropertiesResource {
    * A system generated property that denotes the last updated timestamp of the resource.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly _ts?: any;
+  readonly _ts?: number;
   /**
    * A system generated property representing the resource etag required for optimistic concurrency
    * control.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly _etag?: string;
+  /**
+   * A system generated property. It is the unique addressable URI for the resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly _self?: string;
 }
 
 /**
@@ -825,13 +850,18 @@ export interface MongoDBDatabaseGetPropertiesResource {
    * A system generated property that denotes the last updated timestamp of the resource.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly _ts?: any;
+  readonly _ts?: number;
   /**
    * A system generated property representing the resource etag required for optimistic concurrency
    * control.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly _etag?: string;
+  /**
+   * A system generated property. It is the unique addressable URI for the resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly _self?: string;
 }
 
 /**
@@ -915,13 +945,18 @@ export interface MongoDBCollectionGetPropertiesResource {
    * A system generated property that denotes the last updated timestamp of the resource.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly _ts?: any;
+  readonly _ts?: number;
   /**
    * A system generated property representing the resource etag required for optimistic concurrency
    * control.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly _etag?: string;
+  /**
+   * A system generated property. It is the unique addressable URI for the resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly _self?: string;
 }
 
 /**
@@ -955,13 +990,18 @@ export interface TableGetPropertiesResource {
    * A system generated property that denotes the last updated timestamp of the resource.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly _ts?: any;
+  readonly _ts?: number;
   /**
    * A system generated property representing the resource etag required for optimistic concurrency
    * control.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly _etag?: string;
+  /**
+   * A system generated property. It is the unique addressable URI for the resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly _self?: string;
 }
 
 /**
@@ -995,13 +1035,18 @@ export interface CassandraKeyspaceGetPropertiesResource {
    * A system generated property that denotes the last updated timestamp of the resource.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly _ts?: any;
+  readonly _ts?: number;
   /**
    * A system generated property representing the resource etag required for optimistic concurrency
    * control.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly _etag?: string;
+  /**
+   * A system generated property. It is the unique addressable URI for the resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly _self?: string;
 }
 
 /**
@@ -1103,13 +1148,18 @@ export interface CassandraTableGetPropertiesResource {
    * A system generated property that denotes the last updated timestamp of the resource.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly _ts?: any;
+  readonly _ts?: number;
   /**
    * A system generated property representing the resource etag required for optimistic concurrency
    * control.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly _etag?: string;
+  /**
+   * A system generated property. It is the unique addressable URI for the resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly _self?: string;
 }
 
 /**
@@ -1143,13 +1193,18 @@ export interface GremlinDatabaseGetPropertiesResource {
    * A system generated property that denotes the last updated timestamp of the resource.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly _ts?: any;
+  readonly _ts?: number;
   /**
    * A system generated property representing the resource etag required for optimistic concurrency
    * control.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly _etag?: string;
+  /**
+   * A system generated property. It is the unique addressable URI for the resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly _self?: string;
 }
 
 /**
@@ -1206,13 +1261,18 @@ export interface GremlinGraphGetPropertiesResource {
    * A system generated property that denotes the last updated timestamp of the resource.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly _ts?: any;
+  readonly _ts?: number;
   /**
    * A system generated property representing the resource etag required for optimistic concurrency
    * control.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly _etag?: string;
+  /**
+   * A system generated property. It is the unique addressable URI for the resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly _self?: string;
 }
 
 /**
@@ -1299,13 +1359,18 @@ export interface ExtendedResourceProperties {
    * A system generated property that denotes the last updated timestamp of the resource.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly _ts?: any;
+  readonly _ts?: number;
   /**
    * A system generated property representing the resource etag required for optimistic concurrency
    * control.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly _etag?: string;
+  /**
+   * A system generated property. It is the unique addressable URI for the resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly _self?: string;
 }
 
 /**
@@ -1386,13 +1451,18 @@ export interface ThroughputSettingsGetPropertiesResource {
    * A system generated property that denotes the last updated timestamp of the resource.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  readonly _ts?: any;
+  readonly _ts?: number;
   /**
    * A system generated property representing the resource etag required for optimistic concurrency
    * control.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly _etag?: string;
+  /**
+   * A system generated property. It is the unique addressable URI for the resource.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly _self?: string;
 }
 
 /**

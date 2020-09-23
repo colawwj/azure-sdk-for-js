@@ -678,12 +678,19 @@ export const SqlDatabaseGetPropertiesResource: msRest.CompositeMapper = {
         readOnly: true,
         serializedName: "_ts",
         type: {
-          name: "Object"
+          name: "Number"
         }
       },
       _etag: {
         readOnly: true,
         serializedName: "_etag",
+        type: {
+          name: "String"
+        }
+      },
+      _self: {
+        readOnly: true,
+        serializedName: "_self",
         type: {
           name: "String"
         }
@@ -1136,12 +1143,19 @@ export const SqlContainerGetPropertiesResource: msRest.CompositeMapper = {
         readOnly: true,
         serializedName: "_ts",
         type: {
-          name: "Object"
+          name: "Number"
         }
       },
       _etag: {
         readOnly: true,
         serializedName: "_etag",
+        type: {
+          name: "String"
+        }
+      },
+      _self: {
+        readOnly: true,
+        serializedName: "_self",
         type: {
           name: "String"
         }
@@ -1216,12 +1230,19 @@ export const SqlStoredProcedureGetPropertiesResource: msRest.CompositeMapper = {
         readOnly: true,
         serializedName: "_ts",
         type: {
-          name: "Object"
+          name: "Number"
         }
       },
       _etag: {
         readOnly: true,
         serializedName: "_etag",
+        type: {
+          name: "String"
+        }
+      },
+      _self: {
+        readOnly: true,
+        serializedName: "_self",
         type: {
           name: "String"
         }
@@ -1278,12 +1299,19 @@ export const SqlUserDefinedFunctionGetPropertiesResource: msRest.CompositeMapper
         readOnly: true,
         serializedName: "_ts",
         type: {
-          name: "Object"
+          name: "Number"
         }
       },
       _etag: {
         readOnly: true,
         serializedName: "_etag",
+        type: {
+          name: "String"
+        }
+      },
+      _self: {
+        readOnly: true,
+        serializedName: "_self",
         type: {
           name: "String"
         }
@@ -1352,12 +1380,19 @@ export const SqlTriggerGetPropertiesResource: msRest.CompositeMapper = {
         readOnly: true,
         serializedName: "_ts",
         type: {
-          name: "Object"
+          name: "Number"
         }
       },
       _etag: {
         readOnly: true,
         serializedName: "_etag",
+        type: {
+          name: "String"
+        }
+      },
+      _self: {
+        readOnly: true,
+        serializedName: "_self",
         type: {
           name: "String"
         }
@@ -1408,12 +1443,19 @@ export const MongoDBDatabaseGetPropertiesResource: msRest.CompositeMapper = {
         readOnly: true,
         serializedName: "_ts",
         type: {
-          name: "Object"
+          name: "Number"
         }
       },
       _etag: {
         readOnly: true,
         serializedName: "_etag",
+        type: {
+          name: "String"
+        }
+      },
+      _self: {
+        readOnly: true,
+        serializedName: "_self",
         type: {
           name: "String"
         }
@@ -1578,12 +1620,19 @@ export const MongoDBCollectionGetPropertiesResource: msRest.CompositeMapper = {
         readOnly: true,
         serializedName: "_ts",
         type: {
-          name: "Object"
+          name: "Number"
         }
       },
       _etag: {
         readOnly: true,
         serializedName: "_etag",
+        type: {
+          name: "String"
+        }
+      },
+      _self: {
+        readOnly: true,
+        serializedName: "_self",
         type: {
           name: "String"
         }
@@ -1652,12 +1701,19 @@ export const TableGetPropertiesResource: msRest.CompositeMapper = {
         readOnly: true,
         serializedName: "_ts",
         type: {
-          name: "Object"
+          name: "Number"
         }
       },
       _etag: {
         readOnly: true,
         serializedName: "_etag",
+        type: {
+          name: "String"
+        }
+      },
+      _self: {
+        readOnly: true,
+        serializedName: "_self",
         type: {
           name: "String"
         }
@@ -1726,12 +1782,19 @@ export const CassandraKeyspaceGetPropertiesResource: msRest.CompositeMapper = {
         readOnly: true,
         serializedName: "_ts",
         type: {
-          name: "Object"
+          name: "Number"
         }
       },
       _etag: {
         readOnly: true,
         serializedName: "_etag",
+        type: {
+          name: "String"
+        }
+      },
+      _self: {
+        readOnly: true,
+        serializedName: "_self",
         type: {
           name: "String"
         }
@@ -1925,12 +1988,19 @@ export const CassandraTableGetPropertiesResource: msRest.CompositeMapper = {
         readOnly: true,
         serializedName: "_ts",
         type: {
-          name: "Object"
+          name: "Number"
         }
       },
       _etag: {
         readOnly: true,
         serializedName: "_etag",
+        type: {
+          name: "String"
+        }
+      },
+      _self: {
+        readOnly: true,
+        serializedName: "_self",
         type: {
           name: "String"
         }
@@ -1999,12 +2069,19 @@ export const GremlinDatabaseGetPropertiesResource: msRest.CompositeMapper = {
         readOnly: true,
         serializedName: "_ts",
         type: {
-          name: "Object"
+          name: "Number"
         }
       },
       _etag: {
         readOnly: true,
         serializedName: "_etag",
+        type: {
+          name: "String"
+        }
+      },
+      _self: {
+        readOnly: true,
+        serializedName: "_self",
         type: {
           name: "String"
         }
@@ -2107,12 +2184,19 @@ export const GremlinGraphGetPropertiesResource: msRest.CompositeMapper = {
         readOnly: true,
         serializedName: "_ts",
         type: {
-          name: "Object"
+          name: "Number"
         }
       },
       _etag: {
         readOnly: true,
         serializedName: "_etag",
+        type: {
+          name: "String"
+        }
+      },
+      _self: {
+        readOnly: true,
+        serializedName: "_self",
         type: {
           name: "String"
         }
@@ -2267,12 +2351,19 @@ export const ExtendedResourceProperties: msRest.CompositeMapper = {
         readOnly: true,
         serializedName: "_ts",
         type: {
-          name: "Object"
+          name: "Number"
         }
       },
       _etag: {
         readOnly: true,
         serializedName: "_etag",
+        type: {
+          name: "String"
+        }
+      },
+      _self: {
+        readOnly: true,
+        serializedName: "_self",
         type: {
           name: "String"
         }
@@ -2395,12 +2486,19 @@ export const ThroughputSettingsGetPropertiesResource: msRest.CompositeMapper = {
         readOnly: true,
         serializedName: "_ts",
         type: {
-          name: "Object"
+          name: "Number"
         }
       },
       _etag: {
         readOnly: true,
         serializedName: "_etag",
+        type: {
+          name: "String"
+        }
+      },
+      _self: {
+        readOnly: true,
+        serializedName: "_self",
         type: {
           name: "String"
         }
