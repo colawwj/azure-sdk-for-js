@@ -124,6 +124,10 @@ export interface BigDataPoolResourceInfo extends TrackedResource {
    */
   autoPause?: AutoPauseProperties;
   /**
+   * Whether compute isolation is required or not.
+   */
+  isComputeIsolationEnabled?: boolean;
+  /**
    * The Spark events folder
    */
   sparkEventsFolder?: string;
@@ -145,7 +149,7 @@ export interface BigDataPoolResourceInfo extends TrackedResource {
   defaultSparkLogFolder?: string;
   /**
    * The level of compute power that each node in the Big Data pool has. Possible values include:
-   * 'None', 'Small', 'Medium', 'Large'
+   * 'None', 'Small', 'Medium', 'Large', 'XLarge', 'XXLarge'
    */
   nodeSize?: NodeSize;
   /**
@@ -559,6 +563,11 @@ export interface Sku {
    * The SKU name
    */
   name?: string;
+  /**
+   * If the SKU supports scale out/in then the capacity integer should be included. If scale out/in
+   * is not possible for the resource this may be omitted.
+   */
+  capacity?: number;
 }
 
 /**
@@ -1491,6 +1500,68 @@ export interface CreateSqlPoolRestorePointDefinition {
 }
 
 /**
+ * Workload group operations for a SQL pool.
+ */
+export interface WorkloadGroup extends ProxyResource {
+  /**
+   * The workload group minimum percentage resource.
+   */
+  minResourcePercent: number;
+  /**
+   * The workload group cap percentage resource.
+   */
+  maxResourcePercent: number;
+  /**
+   * The workload group request minimum grant percentage.
+   */
+  minResourcePercentPerRequest: number;
+  /**
+   * The workload group request maximum grant percentage.
+   */
+  maxResourcePercentPerRequest?: number;
+  /**
+   * The workload group importance level. There are five levels of importance: low, below_normal,
+   * normal, above_normal, and high.
+   */
+  importance?: string;
+  /**
+   * The workload group query execution timeout in seconds.
+   */
+  queryExecutionTimeout?: number;
+}
+
+/**
+ * Workload classifier operations for a data warehouse
+ */
+export interface WorkloadClassifier extends ProxyResource {
+  /**
+   * The workload classifier member name.
+   */
+  memberName: string;
+  /**
+   * The workload classifier label.
+   */
+  label?: string;
+  /**
+   * The workload classifier context.
+   */
+  context?: string;
+  /**
+   * The workload classifier start time for classification.
+   */
+  startTime?: Date;
+  /**
+   * The workload classifier end time for classification.
+   */
+  endTime?: Date;
+  /**
+   * The workload classifier importance. There are five levels of importance: low, below_normal,
+   * normal, above_normal, and high.
+   */
+  importance?: string;
+}
+
+/**
  * Details of the data lake storage account associated with the workspace
  */
 export interface DataLakeStorageAccountDetails {
@@ -1598,10 +1669,12 @@ export interface Workspace extends TrackedResource {
    */
   sqlAdministratorLoginPassword?: string;
   /**
-   * Workspace managed resource group
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   * Workspace managed resource group. The resource group name uniquely identifies the resource
+   * group within the user subscriptionId. The resource group name must be no longer than 90
+   * characters long, and must be alphanumeric characters (Char.IsLetterOrDigit()) and '-', '_',
+   * '(', ')' and'.'. Note that the name cannot end with '.'
    */
-  readonly managedResourceGroupName?: string;
+  managedResourceGroupName?: string;
   /**
    * Resource provisioning state
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -1628,6 +1701,11 @@ export interface Workspace extends TrackedResource {
    * Private endpoint connections to the workspace
    */
   privateEndpointConnections?: PrivateEndpointConnection[];
+  /**
+   * Workspace level configs and feature flags
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly extraProperties?: { [propertyName: string]: any };
   /**
    * Identity of the workspace
    */
@@ -1707,29 +1785,9 @@ export interface ManagedIdentitySqlControlSettingsModel extends ProxyResource {
 }
 
 /**
- * Azure Synapse nested resource, which belongs to a factory.
+ * Azure Synapse nested resource, which belongs to a workspace.
  */
-export interface SubResource extends BaseResource {
-  /**
-   * The resource identifier.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * The resource name.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * The resource type.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
-  /**
-   * Etag identifies change in the resource.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly etag?: string;
+export interface SubResource extends AzureEntityResource {
 }
 
 /**
@@ -3202,6 +3260,17 @@ export interface IntegrationRuntimesCreateOptionalParams extends msRest.RequestO
 /**
  * Optional Parameters.
  */
+export interface IntegrationRuntimesBeginCreateOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * ETag of the integration runtime entity. Should only be specified for update, for which it
+   * should match existing entity or can be * for unconditional update.
+   */
+  ifMatch?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
 export interface IntegrationRuntimeObjectMetadataGetOptionalParams extends msRest.RequestOptionsBase {
   /**
    * The parameters for getting a SSIS object metadata.
@@ -3386,6 +3455,32 @@ export interface VulnerabilityAssessmentScanRecordListResult extends Array<Vulne
 
 /**
  * @interface
+ * A list of workload groups.
+ * @extends Array<WorkloadGroup>
+ */
+export interface WorkloadGroupListResult extends Array<WorkloadGroup> {
+  /**
+   * Link to retrieve next page of results.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly nextLink?: string;
+}
+
+/**
+ * @interface
+ * A list of workload classifiers for a workload group.
+ * @extends Array<WorkloadClassifier>
+ */
+export interface WorkloadClassifierListResult extends Array<WorkloadClassifier> {
+  /**
+   * Link to retrieve next page of results.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly nextLink?: string;
+}
+
+/**
+ * @interface
  * List of workspaces
  * @extends Array<Workspace>
  */
@@ -3448,11 +3543,11 @@ export interface PrivateLinkHubInfoListResult extends Array<PrivateLinkHub> {
 
 /**
  * Defines values for NodeSize.
- * Possible values include: 'None', 'Small', 'Medium', 'Large'
+ * Possible values include: 'None', 'Small', 'Medium', 'Large', 'XLarge', 'XXLarge'
  * @readonly
  * @enum {string}
  */
-export type NodeSize = 'None' | 'Small' | 'Medium' | 'Large';
+export type NodeSize = 'None' | 'Small' | 'Medium' | 'Large' | 'XLarge' | 'XXLarge';
 
 /**
  * Defines values for NodeSizeFamily.
@@ -5286,6 +5381,206 @@ export type SqlPoolVulnerabilityAssessmentRuleBaselinesCreateOrUpdateResponse = 
 };
 
 /**
+ * Contains response data for the get operation.
+ */
+export type SqlPoolWorkloadGroupsGetResponse = WorkloadGroup & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: WorkloadGroup;
+    };
+};
+
+/**
+ * Contains response data for the listBySqlPool operation.
+ */
+export type SqlPoolWorkloadGroupsListBySqlPoolResponse = WorkloadGroupListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: WorkloadGroupListResult;
+    };
+};
+
+/**
+ * Contains response data for the listBySqlPoolNext operation.
+ */
+export type SqlPoolWorkloadGroupsListBySqlPoolNextResponse = WorkloadGroupListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: WorkloadGroupListResult;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdate operation.
+ */
+export type WorkloadGroupsCreateOrUpdateResponse = WorkloadGroup & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: WorkloadGroup;
+    };
+};
+
+/**
+ * Contains response data for the beginCreateOrUpdate operation.
+ */
+export type WorkloadGroupsBeginCreateOrUpdateResponse = WorkloadGroup & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: WorkloadGroup;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type SqlPoolWorkloadClassifiersGetResponse = WorkloadClassifier & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: WorkloadClassifier;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdate operation.
+ */
+export type SqlPoolWorkloadClassifiersCreateOrUpdateResponse = WorkloadClassifier & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: WorkloadClassifier;
+    };
+};
+
+/**
+ * Contains response data for the listByWorkloadGroup operation.
+ */
+export type SqlPoolWorkloadClassifiersListByWorkloadGroupResponse = WorkloadClassifierListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: WorkloadClassifierListResult;
+    };
+};
+
+/**
+ * Contains response data for the beginCreateOrUpdate operation.
+ */
+export type SqlPoolWorkloadClassifiersBeginCreateOrUpdateResponse = WorkloadClassifier & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: WorkloadClassifier;
+    };
+};
+
+/**
+ * Contains response data for the listByWorkloadGroupNext operation.
+ */
+export type SqlPoolWorkloadClassifiersListByWorkloadGroupNextResponse = WorkloadClassifierListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: WorkloadClassifierListResult;
+    };
+};
+
+/**
  * Contains response data for the listByResourceGroup operation.
  */
 export type WorkspacesListByResourceGroupResponse = WorkspaceInfoListResult & {
@@ -5712,6 +6007,26 @@ export type IntegrationRuntimesStartResponse = IntegrationRuntimeStatusResponse 
        * The response body as parsed JSON or XML
        */
       parsedBody: IntegrationRuntimeStatusResponse;
+    };
+};
+
+/**
+ * Contains response data for the beginCreate operation.
+ */
+export type IntegrationRuntimesBeginCreateResponse = IntegrationRuntimeResource & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: IntegrationRuntimeResource;
     };
 };
 

@@ -55,7 +55,6 @@ export {
   SecureString,
   SelfHostedIntegrationRuntime,
   SensitivityLabel,
-  SensitivityLabelListResult,
   Sku,
   SqlPool,
   SqlPoolBlobAuditingPolicy,
@@ -78,6 +77,7 @@ export {
   VulnerabilityAssessmentScanRecord,
   WorkloadClassifier,
   WorkloadGroup,
+  WorkloadGroupListResult,
   Workspace,
   WorkspaceAadAdminInfo
 } from "../models/mappers";

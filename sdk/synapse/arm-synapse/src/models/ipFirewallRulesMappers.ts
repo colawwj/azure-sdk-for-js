@@ -82,6 +82,8 @@ export {
   VulnerabilityAssessmentRecurringScansProperties,
   VulnerabilityAssessmentScanError,
   VulnerabilityAssessmentScanRecord,
+  WorkloadClassifier,
+  WorkloadGroup,
   Workspace,
   WorkspaceAadAdminInfo
 } from "../models/mappers";

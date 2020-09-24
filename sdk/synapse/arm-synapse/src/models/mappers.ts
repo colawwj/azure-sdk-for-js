@@ -184,6 +184,12 @@ export const BigDataPoolResourceInfo: msRest.CompositeMapper = {
           className: "AutoPauseProperties"
         }
       },
+      isComputeIsolationEnabled: {
+        serializedName: "properties.isComputeIsolationEnabled",
+        type: {
+          name: "Boolean"
+        }
+      },
       sparkEventsFolder: {
         serializedName: "properties.sparkEventsFolder",
         type: {
@@ -882,6 +888,12 @@ export const Sku: msRest.CompositeMapper = {
         serializedName: "name",
         type: {
           name: "String"
+        }
+      },
+      capacity: {
+        serializedName: "capacity",
+        type: {
+          name: "Number"
         }
       }
     }
@@ -2263,6 +2275,104 @@ export const CreateSqlPoolRestorePointDefinition: msRest.CompositeMapper = {
   }
 };
 
+export const WorkloadGroup: msRest.CompositeMapper = {
+  serializedName: "WorkloadGroup",
+  type: {
+    name: "Composite",
+    className: "WorkloadGroup",
+    modelProperties: {
+      ...ProxyResource.type.modelProperties,
+      minResourcePercent: {
+        required: true,
+        serializedName: "properties.minResourcePercent",
+        type: {
+          name: "Number"
+        }
+      },
+      maxResourcePercent: {
+        required: true,
+        serializedName: "properties.maxResourcePercent",
+        type: {
+          name: "Number"
+        }
+      },
+      minResourcePercentPerRequest: {
+        required: true,
+        serializedName: "properties.minResourcePercentPerRequest",
+        type: {
+          name: "Number"
+        }
+      },
+      maxResourcePercentPerRequest: {
+        serializedName: "properties.maxResourcePercentPerRequest",
+        type: {
+          name: "Number"
+        }
+      },
+      importance: {
+        serializedName: "properties.importance",
+        type: {
+          name: "String"
+        }
+      },
+      queryExecutionTimeout: {
+        serializedName: "properties.queryExecutionTimeout",
+        type: {
+          name: "Number"
+        }
+      }
+    }
+  }
+};
+
+export const WorkloadClassifier: msRest.CompositeMapper = {
+  serializedName: "WorkloadClassifier",
+  type: {
+    name: "Composite",
+    className: "WorkloadClassifier",
+    modelProperties: {
+      ...ProxyResource.type.modelProperties,
+      memberName: {
+        required: true,
+        serializedName: "properties.memberName",
+        type: {
+          name: "String"
+        }
+      },
+      label: {
+        serializedName: "properties.label",
+        type: {
+          name: "String"
+        }
+      },
+      context: {
+        serializedName: "properties.context",
+        type: {
+          name: "String"
+        }
+      },
+      startTime: {
+        serializedName: "properties.startTime",
+        type: {
+          name: "DateTime"
+        }
+      },
+      endTime: {
+        serializedName: "properties.endTime",
+        type: {
+          name: "DateTime"
+        }
+      },
+      importance: {
+        serializedName: "properties.importance",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const DataLakeStorageAccountDetails: msRest.CompositeMapper = {
   serializedName: "DataLakeStorageAccountDetails",
   type: {
@@ -2434,7 +2544,6 @@ export const Workspace: msRest.CompositeMapper = {
         }
       },
       managedResourceGroupName: {
-        readOnly: true,
         serializedName: "properties.managedResourceGroupName",
         type: {
           name: "String"
@@ -2485,6 +2594,18 @@ export const Workspace: msRest.CompositeMapper = {
             type: {
               name: "Composite",
               className: "PrivateEndpointConnection"
+            }
+          }
+        }
+      },
+      extraProperties: {
+        readOnly: true,
+        serializedName: "properties.extraProperties",
+        type: {
+          name: "Dictionary",
+          value: {
+            type: {
+              name: "Object"
             }
           }
         }
@@ -2622,34 +2743,7 @@ export const SubResource: msRest.CompositeMapper = {
     name: "Composite",
     className: "SubResource",
     modelProperties: {
-      id: {
-        readOnly: true,
-        serializedName: "id",
-        type: {
-          name: "String"
-        }
-      },
-      name: {
-        readOnly: true,
-        serializedName: "name",
-        type: {
-          name: "String"
-        }
-      },
-      type: {
-        readOnly: true,
-        serializedName: "type",
-        type: {
-          name: "String"
-        }
-      },
-      etag: {
-        readOnly: true,
-        serializedName: "etag",
-        type: {
-          name: "String"
-        }
-      }
+      ...AzureEntityResource.type.modelProperties
     }
   }
 };
@@ -5105,6 +5199,66 @@ export const VulnerabilityAssessmentScanRecordListResult: msRest.CompositeMapper
             type: {
               name: "Composite",
               className: "VulnerabilityAssessmentScanRecord"
+            }
+          }
+        }
+      },
+      nextLink: {
+        readOnly: true,
+        serializedName: "nextLink",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const WorkloadGroupListResult: msRest.CompositeMapper = {
+  serializedName: "WorkloadGroupListResult",
+  type: {
+    name: "Composite",
+    className: "WorkloadGroupListResult",
+    modelProperties: {
+      value: {
+        readOnly: true,
+        serializedName: "",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "WorkloadGroup"
+            }
+          }
+        }
+      },
+      nextLink: {
+        readOnly: true,
+        serializedName: "nextLink",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const WorkloadClassifierListResult: msRest.CompositeMapper = {
+  serializedName: "WorkloadClassifierListResult",
+  type: {
+    name: "Composite",
+    className: "WorkloadClassifierListResult",
+    modelProperties: {
+      value: {
+        readOnly: true,
+        serializedName: "",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "WorkloadClassifier"
             }
           }
         }

@@ -55,7 +55,6 @@ export {
   SecureString,
   SelfHostedIntegrationRuntime,
   SensitivityLabel,
-  SensitivityLabelListResult,
   Sku,
   SqlPool,
   SqlPoolBlobAuditingPolicy,
@@ -77,6 +76,7 @@ export {
   VulnerabilityAssessmentScanError,
   VulnerabilityAssessmentScanRecord,
   WorkloadClassifier,
+  WorkloadClassifierListResult,
   WorkloadGroup,
   Workspace,
   WorkspaceAadAdminInfo

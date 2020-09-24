@@ -407,6 +407,26 @@ export const vulnerabilityAssessmentName: msRest.OperationURLParameter = {
     }
   }
 };
+export const workloadClassifierName: msRest.OperationURLParameter = {
+  parameterPath: "workloadClassifierName",
+  mapper: {
+    required: true,
+    serializedName: "workloadClassifierName",
+    type: {
+      name: "String"
+    }
+  }
+};
+export const workloadGroupName: msRest.OperationURLParameter = {
+  parameterPath: "workloadGroupName",
+  mapper: {
+    required: true,
+    serializedName: "workloadGroupName",
+    type: {
+      name: "String"
+    }
+  }
+};
 export const workspaceName: msRest.OperationURLParameter = {
   parameterPath: "workspaceName",
   mapper: {
