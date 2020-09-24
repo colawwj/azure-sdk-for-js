@@ -34,6 +34,7 @@ class DataFactoryManagementClient extends DataFactoryManagementClientContext {
   dataFlowDebugSession: operations.DataFlowDebugSession;
   managedVirtualNetworks: operations.ManagedVirtualNetworks;
   managedPrivateEndpoints: operations.ManagedPrivateEndpoints;
+  credentialOperations: operations.CredentialOperations;
 
   /**
    * Initializes a new instance of the DataFactoryManagementClient class.
@@ -60,6 +61,7 @@ class DataFactoryManagementClient extends DataFactoryManagementClientContext {
     this.dataFlowDebugSession = new operations.DataFlowDebugSession(this);
     this.managedVirtualNetworks = new operations.ManagedVirtualNetworks(this);
     this.managedPrivateEndpoints = new operations.ManagedPrivateEndpoints(this);
+    this.credentialOperations = new operations.CredentialOperations(this);
   }
 }
 

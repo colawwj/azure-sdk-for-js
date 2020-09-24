@@ -30,6 +30,21 @@ export const apiVersion: msRest.OperationQueryParameter = {
     }
   }
 };
+export const credentialName: msRest.OperationURLParameter = {
+  parameterPath: "credentialName",
+  mapper: {
+    required: true,
+    serializedName: "credentialName",
+    constraints: {
+      MaxLength: 127,
+      MinLength: 1,
+      Pattern: /^[A-Za-z0-9_][^<>*#.%&:\\+?\/]*$/
+    },
+    type: {
+      name: "String"
+    }
+  }
+};
 export const dataFlowName: msRest.OperationURLParameter = {
   parameterPath: "dataFlowName",
   mapper: {
