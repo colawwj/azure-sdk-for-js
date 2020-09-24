@@ -3731,6 +3731,22 @@ export interface AzureFirewallFqdnTag extends Resource {
 }
 
 /**
+ * Azure Web Category Resource.
+ */
+export interface AzureWebCategory extends Resource {
+  /**
+   * The name of the group that the category belongs to.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly group?: string;
+  /**
+   * A unique read-only string that changes whenever the resource is updated.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly etag?: string;
+}
+
+/**
  * IP configuration of an Bastion Host.
  */
 export interface BastionHostIPConfiguration extends SubResource {
@@ -13038,6 +13054,18 @@ export interface AzureFirewallFqdnTagListResult extends Array<AzureFirewallFqdnT
 
 /**
  * @interface
+ * Response for ListAzureWebCategories API service call.
+ * @extends Array<AzureWebCategory>
+ */
+export interface AzureWebCategoryListResult extends Array<AzureWebCategory> {
+  /**
+   * URL to get the next set of results.
+   */
+  nextLink?: string;
+}
+
+/**
+ * @interface
  * Response for ListBastionHosts API service call.
  * @extends Array<BastionHost>
  */
@@ -16349,6 +16377,46 @@ export type AzureFirewallFqdnTagsListAllNextResponse = AzureFirewallFqdnTagListR
        * The response body as parsed JSON or XML
        */
       parsedBody: AzureFirewallFqdnTagListResult;
+    };
+};
+
+/**
+ * Contains response data for the listAll operation.
+ */
+export type AzureWebCategoriesListAllResponse = AzureWebCategoryListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: AzureWebCategoryListResult;
+    };
+};
+
+/**
+ * Contains response data for the listAllNext operation.
+ */
+export type AzureWebCategoriesListAllNextResponse = AzureWebCategoryListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: AzureWebCategoryListResult;
     };
 };
 

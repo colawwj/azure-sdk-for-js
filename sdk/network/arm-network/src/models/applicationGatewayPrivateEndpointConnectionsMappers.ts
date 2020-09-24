@@ -71,6 +71,7 @@ export {
   AzureFirewallPublicIPAddress,
   AzureFirewallRCAction,
   AzureFirewallSku,
+  AzureWebCategory,
   BackendAddressPool,
   BaseResource,
   BastionHost,

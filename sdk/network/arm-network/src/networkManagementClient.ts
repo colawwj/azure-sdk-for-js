@@ -28,6 +28,7 @@ class NetworkManagementClient extends NetworkManagementClientContext {
   availableServiceAliases: operations.AvailableServiceAliases;
   azureFirewalls: operations.AzureFirewalls;
   azureFirewallFqdnTags: operations.AzureFirewallFqdnTags;
+  azureWebCategories: operations.AzureWebCategories;
   bastionHosts: operations.BastionHosts;
   customIPPrefixes: operations.CustomIPPrefixes;
   ddosCustomPolicies: operations.DdosCustomPolicies;
@@ -142,6 +143,7 @@ class NetworkManagementClient extends NetworkManagementClientContext {
     this.availableServiceAliases = new operations.AvailableServiceAliases(this);
     this.azureFirewalls = new operations.AzureFirewalls(this);
     this.azureFirewallFqdnTags = new operations.AzureFirewallFqdnTags(this);
+    this.azureWebCategories = new operations.AzureWebCategories(this);
     this.bastionHosts = new operations.BastionHosts(this);
     this.customIPPrefixes = new operations.CustomIPPrefixes(this);
     this.ddosCustomPolicies = new operations.DdosCustomPolicies(this);

@@ -6373,6 +6373,31 @@ export const AzureFirewallFqdnTag: msRest.CompositeMapper = {
   }
 };
 
+export const AzureWebCategory: msRest.CompositeMapper = {
+  serializedName: "AzureWebCategory",
+  type: {
+    name: "Composite",
+    className: "AzureWebCategory",
+    modelProperties: {
+      ...Resource.type.modelProperties,
+      group: {
+        readOnly: true,
+        serializedName: "properties.group",
+        type: {
+          name: "String"
+        }
+      },
+      etag: {
+        readOnly: true,
+        serializedName: "etag",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const BastionHostIPConfiguration: msRest.CompositeMapper = {
   serializedName: "BastionHostIPConfiguration",
   type: {
@@ -21342,6 +21367,34 @@ export const AzureFirewallFqdnTagListResult: msRest.CompositeMapper = {
             type: {
               name: "Composite",
               className: "AzureFirewallFqdnTag"
+            }
+          }
+        }
+      },
+      nextLink: {
+        serializedName: "nextLink",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const AzureWebCategoryListResult: msRest.CompositeMapper = {
+  serializedName: "AzureWebCategoryListResult",
+  type: {
+    name: "Composite",
+    className: "AzureWebCategoryListResult",
+    modelProperties: {
+      value: {
+        serializedName: "",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "AzureWebCategory"
             }
           }
         }

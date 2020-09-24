@@ -17,6 +17,7 @@ export * from "./availableResourceGroupDelegations";
 export * from "./availableServiceAliases";
 export * from "./azureFirewalls";
 export * from "./azureFirewallFqdnTags";
+export * from "./azureWebCategories";
 export * from "./bastionHosts";
 export * from "./customIPPrefixes";
 export * from "./ddosCustomPolicies";

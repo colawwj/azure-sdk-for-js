@@ -80,6 +80,7 @@ export {
   AzureReachabilityReportLatencyInfo,
   AzureReachabilityReportLocation,
   AzureReachabilityReportParameters,
+  AzureWebCategory,
   BackendAddressPool,
   BaseResource,
   BastionHost,
