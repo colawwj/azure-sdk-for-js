@@ -1321,6 +1321,12 @@ export const PublicIPAddressSku: msRest.CompositeMapper = {
         type: {
           name: "String"
         }
+      },
+      tier: {
+        serializedName: "tier",
+        type: {
+          name: "String"
+        }
       }
     }
   }
@@ -2216,6 +2222,13 @@ export const LoadBalancerBackendAddress: msRest.CompositeMapper = {
       networkInterfaceIPConfiguration: {
         readOnly: true,
         serializedName: "properties.networkInterfaceIPConfiguration",
+        type: {
+          name: "Composite",
+          className: "SubResource"
+        }
+      },
+      loadBalancerFrontendIPConfiguration: {
+        serializedName: "properties.loadBalancerFrontendIPConfiguration",
         type: {
           name: "Composite",
           className: "SubResource"
@@ -8808,6 +8821,207 @@ export const DnsSettings: msRest.CompositeMapper = {
   }
 };
 
+export const FirewallPolicyIntrusionDetectionSignatureSpecification: msRest.CompositeMapper = {
+  serializedName: "FirewallPolicyIntrusionDetectionSignatureSpecification",
+  type: {
+    name: "Composite",
+    className: "FirewallPolicyIntrusionDetectionSignatureSpecification",
+    modelProperties: {
+      id: {
+        serializedName: "id",
+        type: {
+          name: "String"
+        }
+      },
+      mode: {
+        serializedName: "mode",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const FirewallPolicyIntrusionDetectionBypassTrafficSpecifications: msRest.CompositeMapper = {
+  serializedName: "FirewallPolicyIntrusionDetectionBypassTrafficSpecifications",
+  type: {
+    name: "Composite",
+    className: "FirewallPolicyIntrusionDetectionBypassTrafficSpecifications",
+    modelProperties: {
+      name: {
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      description: {
+        serializedName: "description",
+        type: {
+          name: "String"
+        }
+      },
+      protocol: {
+        serializedName: "protocol",
+        type: {
+          name: "String"
+        }
+      },
+      sourceAddresses: {
+        serializedName: "sourceAddresses",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      destinationAddresses: {
+        serializedName: "destinationAddresses",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      destinationPorts: {
+        serializedName: "destinationPorts",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      sourceIpGroups: {
+        serializedName: "sourceIpGroups",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      destinationIpGroups: {
+        serializedName: "destinationIpGroups",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const FirewallPolicyIntrusionDetectionConfiguration: msRest.CompositeMapper = {
+  serializedName: "FirewallPolicyIntrusionDetectionConfiguration",
+  type: {
+    name: "Composite",
+    className: "FirewallPolicyIntrusionDetectionConfiguration",
+    modelProperties: {
+      signatureOverrides: {
+        serializedName: "signatureOverrides",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "FirewallPolicyIntrusionDetectionSignatureSpecification"
+            }
+          }
+        }
+      },
+      bypassTrafficSettings: {
+        serializedName: "bypassTrafficSettings",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "FirewallPolicyIntrusionDetectionBypassTrafficSpecifications"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const FirewallPolicyIntrusionDetection: msRest.CompositeMapper = {
+  serializedName: "FirewallPolicyIntrusionDetection",
+  type: {
+    name: "Composite",
+    className: "FirewallPolicyIntrusionDetection",
+    modelProperties: {
+      mode: {
+        serializedName: "mode",
+        type: {
+          name: "String"
+        }
+      },
+      configuration: {
+        serializedName: "configuration",
+        type: {
+          name: "Composite",
+          className: "FirewallPolicyIntrusionDetectionConfiguration"
+        }
+      }
+    }
+  }
+};
+
+export const FirewallPolicyCertificateAuthority: msRest.CompositeMapper = {
+  serializedName: "FirewallPolicyCertificateAuthority",
+  type: {
+    name: "Composite",
+    className: "FirewallPolicyCertificateAuthority",
+    modelProperties: {
+      keyVaultSecretId: {
+        serializedName: "keyVaultSecretId",
+        type: {
+          name: "String"
+        }
+      },
+      name: {
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const FirewallPolicyTransportSecurity: msRest.CompositeMapper = {
+  serializedName: "FirewallPolicyTransportSecurity",
+  type: {
+    name: "Composite",
+    className: "FirewallPolicyTransportSecurity",
+    modelProperties: {
+      certificateAuthority: {
+        serializedName: "certificateAuthority",
+        type: {
+          name: "Composite",
+          className: "FirewallPolicyCertificateAuthority"
+        }
+      }
+    }
+  }
+};
+
 export const FirewallPolicy: msRest.CompositeMapper = {
   serializedName: "FirewallPolicy",
   type: {
@@ -8888,11 +9102,32 @@ export const FirewallPolicy: msRest.CompositeMapper = {
           className: "DnsSettings"
         }
       },
+      intrusionDetection: {
+        serializedName: "properties.intrusionDetection",
+        type: {
+          name: "Composite",
+          className: "FirewallPolicyIntrusionDetection"
+        }
+      },
+      transportSecurity: {
+        serializedName: "properties.transportSecurity",
+        type: {
+          name: "Composite",
+          className: "FirewallPolicyTransportSecurity"
+        }
+      },
       etag: {
         readOnly: true,
         serializedName: "etag",
         type: {
           name: "String"
+        }
+      },
+      identity: {
+        serializedName: "identity",
+        type: {
+          name: "Composite",
+          className: "ManagedServiceIdentity"
         }
       }
     }
@@ -9207,6 +9442,17 @@ export const ApplicationRule: msRest.CompositeMapper = {
           }
         }
       },
+      targetUrls: {
+        serializedName: "targetUrls",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
       fqdnTags: {
         serializedName: "fqdnTags",
         type: {
@@ -9227,6 +9473,12 @@ export const ApplicationRule: msRest.CompositeMapper = {
               name: "String"
             }
           }
+        }
+      },
+      terminateTLS: {
+        serializedName: "terminateTLS",
+        type: {
+          name: "Boolean"
         }
       }
     }
@@ -9537,6 +9789,12 @@ export const LoadBalancerSku: msRest.CompositeMapper = {
     modelProperties: {
       name: {
         serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      tier: {
+        serializedName: "tier",
         type: {
           name: "String"
         }
@@ -10877,19 +11135,6 @@ export const NetworkVirtualAppliance: msRest.CompositeMapper = {
           }
         }
       },
-      inboundSecurityRules: {
-        readOnly: true,
-        serializedName: "properties.inboundSecurityRules",
-        type: {
-          name: "Sequence",
-          element: {
-            type: {
-              name: "Composite",
-              className: "SubResource"
-            }
-          }
-        }
-      },
       provisioningState: {
         readOnly: true,
         serializedName: "properties.provisioningState",
@@ -11076,88 +11321,6 @@ export const NetworkVirtualApplianceSku: msRest.CompositeMapper = {
       etag: {
         readOnly: true,
         serializedName: "etag",
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const InboundSecurityRules: msRest.CompositeMapper = {
-  serializedName: "InboundSecurityRules",
-  type: {
-    name: "Composite",
-    className: "InboundSecurityRules",
-    modelProperties: {
-      protocol: {
-        serializedName: "protocol",
-        type: {
-          name: "String"
-        }
-      },
-      sourceAddressPrefix: {
-        serializedName: "sourceAddressPrefix",
-        type: {
-          name: "String"
-        }
-      },
-      destinationPortRange: {
-        serializedName: "destinationPortRange",
-        constraints: {
-          InclusiveMaximum: 65535,
-          InclusiveMinimum: 0
-        },
-        type: {
-          name: "Number"
-        }
-      }
-    }
-  }
-};
-
-export const InboundSecurityRule: msRest.CompositeMapper = {
-  serializedName: "InboundSecurityRule",
-  type: {
-    name: "Composite",
-    className: "InboundSecurityRule",
-    modelProperties: {
-      ...SubResource.type.modelProperties,
-      rules: {
-        serializedName: "properties.rules",
-        type: {
-          name: "Sequence",
-          element: {
-            type: {
-              name: "Composite",
-              className: "InboundSecurityRules"
-            }
-          }
-        }
-      },
-      provisioningState: {
-        readOnly: true,
-        serializedName: "properties.provisioningState",
-        type: {
-          name: "String"
-        }
-      },
-      name: {
-        serializedName: "name",
-        type: {
-          name: "String"
-        }
-      },
-      etag: {
-        readOnly: true,
-        serializedName: "etag",
-        type: {
-          name: "String"
-        }
-      },
-      type: {
-        readOnly: true,
-        serializedName: "type",
         type: {
           name: "String"
         }
@@ -15072,6 +15235,12 @@ export const PublicIPPrefixSku: msRest.CompositeMapper = {
         type: {
           name: "String"
         }
+      },
+      tier: {
+        serializedName: "tier",
+        type: {
+          name: "String"
+        }
       }
     }
   }
@@ -18615,87 +18784,6 @@ export const BgpConnection: msRest.CompositeMapper = {
         serializedName: "type",
         type: {
           name: "String"
-        }
-      }
-    }
-  }
-};
-
-export const PeerRoute: msRest.CompositeMapper = {
-  serializedName: "PeerRoute",
-  type: {
-    name: "Composite",
-    className: "PeerRoute",
-    modelProperties: {
-      localAddress: {
-        readOnly: true,
-        serializedName: "localAddress",
-        type: {
-          name: "String"
-        }
-      },
-      network: {
-        readOnly: true,
-        serializedName: "network",
-        type: {
-          name: "String"
-        }
-      },
-      nextHop: {
-        readOnly: true,
-        serializedName: "nextHop",
-        type: {
-          name: "String"
-        }
-      },
-      sourcePeer: {
-        readOnly: true,
-        serializedName: "sourcePeer",
-        type: {
-          name: "String"
-        }
-      },
-      origin: {
-        readOnly: true,
-        serializedName: "origin",
-        type: {
-          name: "String"
-        }
-      },
-      asPath: {
-        readOnly: true,
-        serializedName: "asPath",
-        type: {
-          name: "String"
-        }
-      },
-      weight: {
-        readOnly: true,
-        serializedName: "weight",
-        type: {
-          name: "Number"
-        }
-      }
-    }
-  }
-};
-
-export const PeerRouteList: msRest.CompositeMapper = {
-  serializedName: "PeerRouteList",
-  type: {
-    name: "Composite",
-    className: "PeerRouteList",
-    modelProperties: {
-      value: {
-        serializedName: "value",
-        type: {
-          name: "Sequence",
-          element: {
-            type: {
-              name: "Composite",
-              className: "PeerRoute"
-            }
-          }
         }
       }
     }

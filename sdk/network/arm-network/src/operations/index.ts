@@ -58,7 +58,6 @@ export * from "./defaultSecurityRules";
 export * from "./networkVirtualAppliances";
 export * from "./virtualApplianceSites";
 export * from "./virtualApplianceSkus";
-export * from "./inboundSecurityRuleOperations";
 export * from "./networkWatchers";
 export * from "./packetCaptures";
 export * from "./connectionMonitors";
