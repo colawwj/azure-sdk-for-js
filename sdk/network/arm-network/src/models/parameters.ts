@@ -26,7 +26,7 @@ export const apiVersion0: msRest.OperationQueryParameter = {
     required: true,
     isConstant: true,
     serializedName: "api-version",
-    defaultValue: '2020-06-01',
+    defaultValue: '2020-07-01',
     type: {
       name: "String"
     }
@@ -307,16 +307,6 @@ export const gatewayVip: msRest.OperationQueryParameter = {
   ],
   mapper: {
     serializedName: "gatewayVip",
-    type: {
-      name: "String"
-    }
-  }
-};
-export const hubName: msRest.OperationURLParameter = {
-  parameterPath: "hubName",
-  mapper: {
-    required: true,
-    serializedName: "hubName",
     type: {
       name: "String"
     }
@@ -729,16 +719,6 @@ export const ruleCollectionGroupName: msRest.OperationURLParameter = {
   mapper: {
     required: true,
     serializedName: "ruleCollectionGroupName",
-    type: {
-      name: "String"
-    }
-  }
-};
-export const ruleCollectionName: msRest.OperationURLParameter = {
-  parameterPath: "ruleCollectionName",
-  mapper: {
-    required: true,
-    serializedName: "ruleCollectionName",
     type: {
       name: "String"
     }
