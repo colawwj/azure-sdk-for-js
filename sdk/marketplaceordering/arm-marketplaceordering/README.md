@@ -1,6 +1,6 @@
-## Azure MarketplaceOrderingAgreements SDK for JavaScript
+## Azure MicrosoftMarketplaceOrderingAgreements SDK for JavaScript
 
-This package contains an isomorphic SDK for MarketplaceOrderingAgreements.
+This package contains an isomorphic SDK for MicrosoftMarketplaceOrderingAgreements.
 
 ### Currently supported environments
 
@@ -15,7 +15,7 @@ npm install @azure/arm-marketplaceordering
 
 ### How to use
 
-#### nodejs - Authentication, client creation and get marketplaceAgreements as an example written in TypeScript.
+#### nodejs - Authentication, client creation and getAgreement agreement as an example written in TypeScript.
 
 ##### Install @azure/ms-rest-nodeauth
 
@@ -30,15 +30,17 @@ npm install @azure/ms-rest-nodeauth@"^3.0.0"
 import * as msRest from "@azure/ms-rest-js";
 import * as msRestAzure from "@azure/ms-rest-azure-js";
 import * as msRestNodeAuth from "@azure/ms-rest-nodeauth";
-import { MarketplaceOrderingAgreements, MarketplaceOrderingAgreementsModels, MarketplaceOrderingAgreementsMappers } from "@azure/arm-marketplaceordering";
+import { MicrosoftMarketplaceOrderingAgreements, MicrosoftMarketplaceOrderingAgreementsModels, MicrosoftMarketplaceOrderingAgreementsMappers } from "@azure/arm-marketplaceordering";
 const subscriptionId = process.env["AZURE_SUBSCRIPTION_ID"];
 
 msRestNodeAuth.interactiveLogin().then((creds) => {
-  const client = new MarketplaceOrderingAgreements(creds, subscriptionId);
+  const client = new MicrosoftMarketplaceOrderingAgreements(creds, subscriptionId);
+  const subscriptionId = ec7b1657-199d-4d8a-bbb2-89a11a42e02a;
   const publisherId = "testpublisherId";
   const offerId = "testofferId";
   const planId = "testplanId";
-  client.marketplaceAgreements.get(publisherId, offerId, planId).then((result) => {
+  const apiVersion = "testapiVersion";
+  client.agreement.getAgreement(subscriptionId, publisherId, offerId, planId, apiVersion).then((result) => {
     console.log("The result is:");
     console.log(result);
   });
@@ -47,7 +49,7 @@ msRestNodeAuth.interactiveLogin().then((creds) => {
 });
 ```
 
-#### browser - Authentication, client creation and get marketplaceAgreements as an example written in JavaScript.
+#### browser - Authentication, client creation and getAgreement agreement as an example written in JavaScript.
 
 ##### Install @azure/ms-rest-browserauth
 
@@ -80,11 +82,13 @@ See https://github.com/Azure/ms-rest-browserauth to learn how to authenticate to
           // may cause redirects
           authManager.login();
         }
-        const client = new Azure.ArmMarketplaceordering.MarketplaceOrderingAgreements(res.creds, subscriptionId);
+        const client = new Azure.ArmMarketplaceordering.MicrosoftMarketplaceOrderingAgreements(res.creds, subscriptionId);
+        const subscriptionId = ec7b1657-199d-4d8a-bbb2-89a11a42e02a;
         const publisherId = "testpublisherId";
         const offerId = "testofferId";
         const planId = "testplanId";
-        client.marketplaceAgreements.get(publisherId, offerId, planId).then((result) => {
+        const apiVersion = "testapiVersion";
+        client.agreement.getAgreement(subscriptionId, publisherId, offerId, planId, apiVersion).then((result) => {
           console.log("The result is:");
           console.log(result);
         }).catch((err) => {

@@ -12,76 +12,80 @@ import * as msRest from "@azure/ms-rest-js";
 import * as Models from "../models";
 import * as Mappers from "../models/operationsMappers";
 import * as Parameters from "../models/parameters";
-import { MarketplaceOrderingAgreementsContext } from "../marketplaceOrderingAgreementsContext";
+import { MicrosoftMarketplaceOrderingAgreementsContext } from "../microsoftMarketplaceOrderingAgreementsContext";
 
 /** Class representing a Operations. */
 export class Operations {
-  private readonly client: MarketplaceOrderingAgreementsContext;
+  private readonly client: MicrosoftMarketplaceOrderingAgreementsContext;
 
   /**
    * Create a Operations.
-   * @param {MarketplaceOrderingAgreementsContext} client Reference to the service client.
+   * @param {MicrosoftMarketplaceOrderingAgreementsContext} client Reference to the service client.
    */
-  constructor(client: MarketplaceOrderingAgreementsContext) {
+  constructor(client: MicrosoftMarketplaceOrderingAgreementsContext) {
     this.client = client;
   }
 
   /**
    * Lists all of the available Microsoft.MarketplaceOrdering REST API operations.
+   * @param apiVersion
    * @param [options] The optional parameters
-   * @returns Promise<Models.OperationsListResponse>
+   * @returns Promise<Models.OperationsGetOperationsResponse>
    */
-  list(options?: msRest.RequestOptionsBase): Promise<Models.OperationsListResponse>;
+  getOperations(apiVersion: string, options?: msRest.RequestOptionsBase): Promise<Models.OperationsGetOperationsResponse>;
   /**
+   * @param apiVersion
    * @param callback The callback
    */
-  list(callback: msRest.ServiceCallback<Models.OperationListResult>): void;
+  getOperations(apiVersion: string, callback: msRest.ServiceCallback<any>): void;
   /**
+   * @param apiVersion
    * @param options The optional parameters
    * @param callback The callback
    */
-  list(options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.OperationListResult>): void;
-  list(options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.OperationListResult>, callback?: msRest.ServiceCallback<Models.OperationListResult>): Promise<Models.OperationsListResponse> {
+  getOperations(apiVersion: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<any>): void;
+  getOperations(apiVersion: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<any>, callback?: msRest.ServiceCallback<any>): Promise<Models.OperationsGetOperationsResponse> {
     return this.client.sendOperationRequest(
       {
+        apiVersion,
         options
       },
-      listOperationSpec,
-      callback) as Promise<Models.OperationsListResponse>;
+      getOperationsOperationSpec,
+      callback) as Promise<Models.OperationsGetOperationsResponse>;
   }
 
   /**
    * Lists all of the available Microsoft.MarketplaceOrdering REST API operations.
    * @param nextPageLink The NextLink from the previous successful call to List operation.
    * @param [options] The optional parameters
-   * @returns Promise<Models.OperationsListNextResponse>
+   * @returns Promise<Models.OperationsGetOperationsNextResponse>
    */
-  listNext(nextPageLink: string, options?: msRest.RequestOptionsBase): Promise<Models.OperationsListNextResponse>;
+  getOperationsNext(nextPageLink: string, options?: msRest.RequestOptionsBase): Promise<Models.OperationsGetOperationsNextResponse>;
   /**
    * @param nextPageLink The NextLink from the previous successful call to List operation.
    * @param callback The callback
    */
-  listNext(nextPageLink: string, callback: msRest.ServiceCallback<Models.OperationListResult>): void;
+  getOperationsNext(nextPageLink: string, callback: msRest.ServiceCallback<any>): void;
   /**
    * @param nextPageLink The NextLink from the previous successful call to List operation.
    * @param options The optional parameters
    * @param callback The callback
    */
-  listNext(nextPageLink: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.OperationListResult>): void;
-  listNext(nextPageLink: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.OperationListResult>, callback?: msRest.ServiceCallback<Models.OperationListResult>): Promise<Models.OperationsListNextResponse> {
+  getOperationsNext(nextPageLink: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<any>): void;
+  getOperationsNext(nextPageLink: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<any>, callback?: msRest.ServiceCallback<any>): Promise<Models.OperationsGetOperationsNextResponse> {
     return this.client.sendOperationRequest(
       {
         nextPageLink,
         options
       },
-      listNextOperationSpec,
-      callback) as Promise<Models.OperationsListNextResponse>;
+      getOperationsNextOperationSpec,
+      callback) as Promise<Models.OperationsGetOperationsNextResponse>;
   }
 }
 
 // Operation Specifications
 const serializer = new msRest.Serializer(Mappers);
-const listOperationSpec: msRest.OperationSpec = {
+const getOperationsOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
   path: "providers/Microsoft.MarketplaceOrdering/operations",
   queryParameters: [
@@ -92,7 +96,12 @@ const listOperationSpec: msRest.OperationSpec = {
   ],
   responses: {
     200: {
-      bodyMapper: Mappers.OperationListResult
+      bodyMapper: {
+        serializedName: "parsedResponse",
+        type: {
+          name: "Object"
+        }
+      }
     },
     default: {
       bodyMapper: Mappers.ErrorResponse
@@ -101,7 +110,7 @@ const listOperationSpec: msRest.OperationSpec = {
   serializer
 };
 
-const listNextOperationSpec: msRest.OperationSpec = {
+const getOperationsNextOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
   baseUrl: "https://management.azure.com",
   path: "{nextLink}",
@@ -113,7 +122,12 @@ const listNextOperationSpec: msRest.OperationSpec = {
   ],
   responses: {
     200: {
-      bodyMapper: Mappers.OperationListResult
+      bodyMapper: {
+        serializedName: "parsedResponse",
+        type: {
+          name: "Object"
+        }
+      }
     },
     default: {
       bodyMapper: Mappers.ErrorResponse

@@ -8,5 +8,6 @@
  * regenerated.
  */
 
-export * from "./marketplaceAgreements";
+export * from "./agreement";
+export * from "./offerAgreement";
 export * from "./operations";

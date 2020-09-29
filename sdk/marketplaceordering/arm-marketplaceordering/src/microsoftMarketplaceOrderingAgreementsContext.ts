@@ -15,23 +15,17 @@ import * as msRestAzure from "@azure/ms-rest-azure-js";
 const packageName = "@azure/arm-marketplaceordering";
 const packageVersion = "2.0.0";
 
-export class MarketplaceOrderingAgreementsContext extends msRestAzure.AzureServiceClient {
+export class MicrosoftMarketplaceOrderingAgreementsContext extends msRestAzure.AzureServiceClient {
   credentials: msRest.ServiceClientCredentials;
-  subscriptionId: string;
-  apiVersion?: string;
 
   /**
-   * Initializes a new instance of the MarketplaceOrderingAgreements class.
+   * Initializes a new instance of the MicrosoftMarketplaceOrderingAgreements class.
    * @param credentials Credentials needed for the client to connect to Azure.
-   * @param subscriptionId The subscription ID that identifies an Azure subscription.
    * @param [options] The parameter options
    */
-  constructor(credentials: msRest.ServiceClientCredentials, subscriptionId: string, options?: Models.MarketplaceOrderingAgreementsOptions) {
+  constructor(credentials: msRest.ServiceClientCredentials, options?: Models.MicrosoftMarketplaceOrderingAgreementsOptions) {
     if (credentials == undefined) {
       throw new Error('\'credentials\' cannot be null.');
-    }
-    if (subscriptionId == undefined) {
-      throw new Error('\'subscriptionId\' cannot be null.');
     }
 
     if (!options) {
@@ -44,13 +38,11 @@ export class MarketplaceOrderingAgreementsContext extends msRestAzure.AzureServi
 
     super(credentials, options);
 
-    this.apiVersion = '2015-06-01';
     this.acceptLanguage = 'en-US';
     this.longRunningOperationRetryTimeout = 30;
     this.baseUri = options.baseUri || this.baseUri || "https://management.azure.com";
     this.requestContentType = "application/json; charset=utf-8";
     this.credentials = credentials;
-    this.subscriptionId = subscriptionId;
 
     if(options.acceptLanguage !== null && options.acceptLanguage !== undefined) {
       this.acceptLanguage = options.acceptLanguage;

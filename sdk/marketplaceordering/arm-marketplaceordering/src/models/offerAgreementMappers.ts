@@ -7,10 +7,8 @@
  */
 
 export {
-  AgreementTerms,
-  BaseResource,
-  CloudError,
+  AgreementDefinition,
+  AgreementProperties,
   ErrorResponse,
-  ErrorResponseError,
-  Resource
+  ErrorResponseError
 } from "../models/mappers";

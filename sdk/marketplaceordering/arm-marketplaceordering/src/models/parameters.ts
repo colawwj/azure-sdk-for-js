@@ -25,6 +25,19 @@ export const apiVersion: msRest.OperationQueryParameter = {
   mapper: {
     required: true,
     serializedName: "api-version",
+    defaultValue: '2015-06-01',
+    type: {
+      name: "String"
+    }
+  }
+};
+export const market: msRest.OperationQueryParameter = {
+  parameterPath: [
+    "options",
+    "market"
+  ],
+  mapper: {
+    serializedName: "market",
     type: {
       name: "String"
     }
@@ -51,13 +64,21 @@ export const offerId: msRest.OperationURLParameter = {
     }
   }
 };
-export const offerType: msRest.OperationURLParameter = {
+export const offerType0: msRest.OperationURLParameter = {
   parameterPath: "offerType",
   mapper: {
     required: true,
-    isConstant: true,
     serializedName: "offerType",
-    defaultValue: 'virtualmachine',
+    type: {
+      name: "Number"
+    }
+  }
+};
+export const offerType1: msRest.OperationURLParameter = {
+  parameterPath: "offerType",
+  mapper: {
+    required: true,
+    serializedName: "offerType",
     type: {
       name: "String"
     }
@@ -89,7 +110,7 @@ export const subscriptionId: msRest.OperationURLParameter = {
     required: true,
     serializedName: "subscriptionId",
     type: {
-      name: "String"
+      name: "Uuid"
     }
   }
 };

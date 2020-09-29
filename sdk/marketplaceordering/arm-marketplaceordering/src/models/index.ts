@@ -12,62 +12,27 @@ import * as msRest from "@azure/ms-rest-js";
 export { BaseResource, CloudError };
 
 /**
- * ARM resource.
+ * An interface representing AgreementProperties.
  */
-export interface Resource extends BaseResource {
-  /**
-   * Resource ID.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly id?: string;
-  /**
-   * Resource name.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly name?: string;
-  /**
-   * Resource type.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly type?: string;
+export interface AgreementProperties {
+  publisher?: string;
+  product?: string;
+  plan?: string;
+  licenseTextLink?: string;
+  privacyPolicyLink?: string;
+  retrieveDatetime?: Date;
+  signature?: string;
+  accepted?: boolean;
 }
 
 /**
- * Terms properties for provided Publisher/Offer/Plan tuple
+ * An interface representing AgreementDefinition.
  */
-export interface AgreementTerms extends Resource {
-  /**
-   * Publisher identifier string of image being deployed.
-   */
-  publisher?: string;
-  /**
-   * Offer identifier string of image being deployed.
-   */
-  product?: string;
-  /**
-   * Plan identifier string of image being deployed.
-   */
-  plan?: string;
-  /**
-   * Link to HTML with Microsoft and Publisher terms.
-   */
-  licenseTextLink?: string;
-  /**
-   * Link to the privacy policy of the publisher.
-   */
-  privacyPolicyLink?: string;
-  /**
-   * Date and time in UTC of when the terms were accepted. This is empty if Accepted is false.
-   */
-  retrieveDatetime?: string;
-  /**
-   * Terms signature.
-   */
-  signature?: string;
-  /**
-   * If any version of the terms have been accepted, otherwise false.
-   */
-  accepted?: boolean;
+export interface AgreementDefinition {
+  id?: string;
+  name?: string;
+  type?: string;
+  properties?: AgreementProperties;
 }
 
 /**
@@ -98,102 +63,42 @@ export interface ErrorResponse {
 }
 
 /**
- * The object that represents the operation.
+ * Optional Parameters.
  */
-export interface OperationDisplay {
-  /**
-   * Service provider: Microsoft.MarketplaceOrdering
-   */
-  provider?: string;
-  /**
-   * Resource on which the operation is performed: Agreement, virtualmachine, etc.
-   */
-  resource?: string;
-  /**
-   * Operation type: Get Agreement, Sign Agreement, Cancel Agreement etc.
-   */
-  operation?: string;
+export interface AgreementGetAgreementTenantOptionalParams extends msRest.RequestOptionsBase {
+  market?: string;
 }
 
 /**
- * Microsoft.MarketplaceOrdering REST API operation
+ * Optional Parameters.
  */
-export interface Operation {
-  /**
-   * Operation name: {provider}/{resource}/{operation}
-   */
-  name?: string;
-  /**
-   * The object that represents the operation.
-   */
-  display?: OperationDisplay;
+export interface AgreementSignAgreementTenantOptionalParams extends msRest.RequestOptionsBase {
+  market?: string;
 }
 
 /**
- * An interface representing MarketplaceOrderingAgreementsOptions.
+ * Optional Parameters.
  */
-export interface MarketplaceOrderingAgreementsOptions extends AzureServiceClientOptions {
+export interface AgreementCancelAgreementTenantOptionalParams extends msRest.RequestOptionsBase {
+  market?: string;
+}
+
+/**
+ * An interface representing MicrosoftMarketplaceOrderingAgreementsOptions.
+ */
+export interface MicrosoftMarketplaceOrderingAgreementsOptions extends AzureServiceClientOptions {
   baseUri?: string;
 }
 
 /**
- * @interface
- * Result of the request to list MarketplaceOrdering operations. It contains a list of operations
- * and a URL link to get the next set of results.
- * @extends Array<Operation>
- */
-export interface OperationListResult extends Array<Operation> {
-  /**
-   * URL to get the next set of operation list results if there are any.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly nextLink?: string;
-}
-
-/**
- * Contains response data for the get operation.
- */
-export type MarketplaceAgreementsGetResponse = AgreementTerms & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: AgreementTerms;
-    };
-};
-
-/**
- * Contains response data for the create operation.
- */
-export type MarketplaceAgreementsCreateResponse = AgreementTerms & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: AgreementTerms;
-    };
-};
-
-/**
  * Contains response data for the sign operation.
  */
-export type MarketplaceAgreementsSignResponse = AgreementTerms & {
+export type AgreementSignResponse = {
+  /**
+   * The parsed response body.
+   */
+  body: any;
+
   /**
    * The underlying HTTP response.
    */
@@ -206,14 +111,19 @@ export type MarketplaceAgreementsSignResponse = AgreementTerms & {
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: AgreementTerms;
+      parsedBody: any;
     };
 };
 
 /**
  * Contains response data for the cancel operation.
  */
-export type MarketplaceAgreementsCancelResponse = AgreementTerms & {
+export type AgreementCancelResponse = {
+  /**
+   * The parsed response body.
+   */
+  body: any;
+
   /**
    * The underlying HTTP response.
    */
@@ -226,14 +136,19 @@ export type MarketplaceAgreementsCancelResponse = AgreementTerms & {
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: AgreementTerms;
+      parsedBody: any;
     };
 };
 
 /**
  * Contains response data for the getAgreement operation.
  */
-export type MarketplaceAgreementsGetAgreementResponse = AgreementTerms & {
+export type AgreementGetAgreementResponse = {
+  /**
+   * The parsed response body.
+   */
+  body: any;
+
   /**
    * The underlying HTTP response.
    */
@@ -246,14 +161,19 @@ export type MarketplaceAgreementsGetAgreementResponse = AgreementTerms & {
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: AgreementTerms;
+      parsedBody: any;
     };
 };
 
 /**
- * Contains response data for the list operation.
+ * Contains response data for the getAgreementTenant operation.
  */
-export type MarketplaceAgreementsListResponse = Array<AgreementTerms> & {
+export type AgreementGetAgreementTenantResponse = {
+  /**
+   * The parsed response body.
+   */
+  body: any;
+
   /**
    * The underlying HTTP response.
    */
@@ -266,14 +186,19 @@ export type MarketplaceAgreementsListResponse = Array<AgreementTerms> & {
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: AgreementTerms[];
+      parsedBody: any;
     };
 };
 
 /**
- * Contains response data for the list operation.
+ * Contains response data for the signAgreementTenant operation.
  */
-export type OperationsListResponse = OperationListResult & {
+export type AgreementSignAgreementTenantResponse = {
+  /**
+   * The parsed response body.
+   */
+  body: any;
+
   /**
    * The underlying HTTP response.
    */
@@ -286,14 +211,19 @@ export type OperationsListResponse = OperationListResult & {
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: OperationListResult;
+      parsedBody: any;
     };
 };
 
 /**
- * Contains response data for the listNext operation.
+ * Contains response data for the cancelAgreementTenant operation.
  */
-export type OperationsListNextResponse = OperationListResult & {
+export type AgreementCancelAgreementTenantResponse = {
+  /**
+   * The parsed response body.
+   */
+  body: any;
+
   /**
    * The underlying HTTP response.
    */
@@ -306,6 +236,131 @@ export type OperationsListNextResponse = OperationListResult & {
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: OperationListResult;
+      parsedBody: any;
+    };
+};
+
+/**
+ * Contains response data for the getAgreements operation.
+ */
+export type AgreementGetAgreementsResponse = {
+  /**
+   * The parsed response body.
+   */
+  body: any;
+
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: any;
+    };
+};
+
+/**
+ * Contains response data for the getAgreement operation.
+ */
+export type OfferAgreementGetAgreementResponse = {
+  /**
+   * The parsed response body.
+   */
+  body: any;
+
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: any;
+    };
+};
+
+/**
+ * Contains response data for the setAgreement operation.
+ */
+export type OfferAgreementSetAgreementResponse = {
+  /**
+   * The parsed response body.
+   */
+  body: any;
+
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: any;
+    };
+};
+
+/**
+ * Contains response data for the getOperations operation.
+ */
+export type OperationsGetOperationsResponse = {
+  /**
+   * The parsed response body.
+   */
+  body: any;
+
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: any;
+    };
+};
+
+/**
+ * Contains response data for the getOperationsNext operation.
+ */
+export type OperationsGetOperationsNextResponse = {
+  /**
+   * The parsed response body.
+   */
+  body: any;
+
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: any;
     };
 };
