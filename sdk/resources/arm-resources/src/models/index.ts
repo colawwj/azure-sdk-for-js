@@ -1325,6 +1325,10 @@ export interface WhatIfOperationResult {
    */
   status?: string;
   /**
+   * The correlation ID of the What-If operation.
+   */
+  correlationId?: string;
+  /**
    * List of resource changes predicted by What-If operation.
    */
   changes?: WhatIfChange[];

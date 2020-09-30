@@ -2204,6 +2204,12 @@ export const WhatIfOperationResult: msRest.CompositeMapper = {
           name: "String"
         }
       },
+      correlationId: {
+        serializedName: "properties.correlationId",
+        type: {
+          name: "String"
+        }
+      },
       changes: {
         serializedName: "properties.changes",
         type: {
