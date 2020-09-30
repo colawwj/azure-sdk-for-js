@@ -29,7 +29,6 @@ export {
   Document,
   Enrollment,
   EnrollmentAccount,
-  EnrollmentAccountListResult,
   EnrollmentAccountSummary,
   EnrollmentPolicies,
   ErrorDetails,
@@ -37,6 +36,7 @@ export {
   ErrorResponse,
   ErrorSubDetailsItem,
   IndirectRelationshipInfo,
+  InitiateTransferRequest,
   Instruction,
   Invoice,
   InvoiceSection,
@@ -51,5 +51,6 @@ export {
   Reseller,
   Resource,
   Transaction,
-  TransferDetails
+  TransferDetails,
+  TransferDetailsListResult
 } from "../models/mappers";

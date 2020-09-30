@@ -29,7 +29,6 @@ export {
   Document,
   Enrollment,
   EnrollmentAccount,
-  EnrollmentAccountListResult,
   EnrollmentAccountSummary,
   EnrollmentPolicies,
   ErrorDetails,
@@ -51,5 +50,6 @@ export {
   Reseller,
   Resource,
   Transaction,
+  TransactionListResult,
   TransferDetails
 } from "../models/mappers";

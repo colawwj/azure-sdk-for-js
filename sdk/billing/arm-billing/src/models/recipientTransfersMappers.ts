@@ -7,6 +7,7 @@
  */
 
 export {
+  AcceptTransferRequest,
   AddressDetails,
   Agreement,
   Amount,
@@ -29,7 +30,6 @@ export {
   Document,
   Enrollment,
   EnrollmentAccount,
-  EnrollmentAccountListResult,
   EnrollmentAccountSummary,
   EnrollmentPolicies,
   ErrorDetails,
@@ -46,10 +46,15 @@ export {
   PaymentProperties,
   Policy,
   Product,
+  ProductDetails,
   RebillDetails,
   RecipientTransferDetails,
+  RecipientTransferDetailsListResult,
   Reseller,
   Resource,
   Transaction,
-  TransferDetails
+  TransferDetails,
+  ValidateTransferListResponse,
+  ValidateTransferResponse,
+  ValidationResultProperties
 } from "../models/mappers";
