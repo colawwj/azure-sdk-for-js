@@ -583,6 +583,7 @@ export const DedicatedHostGroup: msRest.CompositeMapper = {
         required: true,
         serializedName: "properties.platformFaultDomainCount",
         constraints: {
+          InclusiveMaximum: 3,
           InclusiveMinimum: 1
         },
         type: {
@@ -642,6 +643,7 @@ export const DedicatedHostGroupUpdate: msRest.CompositeMapper = {
         required: true,
         serializedName: "properties.platformFaultDomainCount",
         constraints: {
+          InclusiveMaximum: 3,
           InclusiveMinimum: 1
         },
         type: {
@@ -744,6 +746,7 @@ export const DedicatedHost: msRest.CompositeMapper = {
       platformFaultDomain: {
         serializedName: "properties.platformFaultDomain",
         constraints: {
+          InclusiveMaximum: 2,
           InclusiveMinimum: 0
         },
         type: {
@@ -831,6 +834,7 @@ export const DedicatedHostUpdate: msRest.CompositeMapper = {
       platformFaultDomain: {
         serializedName: "properties.platformFaultDomain",
         constraints: {
+          InclusiveMaximum: 2,
           InclusiveMinimum: 0
         },
         type: {
