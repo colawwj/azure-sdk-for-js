@@ -251,6 +251,7 @@ export {
   StaticRoute,
   Subnet,
   SubResource,
+  TagsObject,
   TrafficAnalyticsConfigurationProperties,
   TrafficAnalyticsProperties,
   TrafficSelectorPolicy,

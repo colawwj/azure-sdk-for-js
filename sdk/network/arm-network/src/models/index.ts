@@ -28714,6 +28714,26 @@ export type ExpressRouteGatewaysCreateOrUpdateResponse = ExpressRouteGateway & {
 };
 
 /**
+ * Contains response data for the updateTags operation.
+ */
+export type ExpressRouteGatewaysUpdateTagsResponse = ExpressRouteGateway & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ExpressRouteGateway;
+    };
+};
+
+/**
  * Contains response data for the get operation.
  */
 export type ExpressRouteGatewaysGetResponse = ExpressRouteGateway & {
@@ -28737,6 +28757,26 @@ export type ExpressRouteGatewaysGetResponse = ExpressRouteGateway & {
  * Contains response data for the beginCreateOrUpdate operation.
  */
 export type ExpressRouteGatewaysBeginCreateOrUpdateResponse = ExpressRouteGateway & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ExpressRouteGateway;
+    };
+};
+
+/**
+ * Contains response data for the beginUpdateTags operation.
+ */
+export type ExpressRouteGatewaysBeginUpdateTagsResponse = ExpressRouteGateway & {
   /**
    * The underlying HTTP response.
    */
