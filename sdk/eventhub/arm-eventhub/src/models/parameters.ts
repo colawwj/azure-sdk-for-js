@@ -57,6 +57,20 @@ export const authorizationRuleName: msRest.OperationURLParameter = {
     }
   }
 };
+export const clusterName: msRest.OperationURLParameter = {
+  parameterPath: "clusterName",
+  mapper: {
+    required: true,
+    serializedName: "clusterName",
+    constraints: {
+      MaxLength: 50,
+      MinLength: 6
+    },
+    type: {
+      name: "String"
+    }
+  }
+};
 export const consumerGroupName: msRest.OperationURLParameter = {
   parameterPath: "consumerGroupName",
   mapper: {
@@ -76,6 +90,20 @@ export const eventHubName: msRest.OperationURLParameter = {
   mapper: {
     required: true,
     serializedName: "eventHubName",
+    constraints: {
+      MaxLength: 256,
+      MinLength: 1
+    },
+    type: {
+      name: "String"
+    }
+  }
+};
+export const ipFilterRuleName: msRest.OperationURLParameter = {
+  parameterPath: "ipFilterRuleName",
+  mapper: {
+    required: true,
+    serializedName: "ipFilterRuleName",
     constraints: {
       MinLength: 1
     },
@@ -108,6 +136,16 @@ export const nextPageLink: msRest.OperationURLParameter = {
     }
   },
   skipEncoding: true
+};
+export const privateEndpointConnectionName: msRest.OperationURLParameter = {
+  parameterPath: "privateEndpointConnectionName",
+  mapper: {
+    required: true,
+    serializedName: "privateEndpointConnectionName",
+    type: {
+      name: "String"
+    }
+  }
 };
 export const resourceGroupName: msRest.OperationURLParameter = {
   parameterPath: "resourceGroupName",
@@ -176,6 +214,19 @@ export const top: msRest.OperationQueryParameter = {
     },
     type: {
       name: "Number"
+    }
+  }
+};
+export const virtualNetworkRuleName: msRest.OperationURLParameter = {
+  parameterPath: "virtualNetworkRuleName",
+  mapper: {
+    required: true,
+    serializedName: "virtualNetworkRuleName",
+    constraints: {
+      MinLength: 1
+    },
+    type: {
+      name: "String"
     }
   }
 };
