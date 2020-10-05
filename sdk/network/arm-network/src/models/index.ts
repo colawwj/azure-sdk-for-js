@@ -5499,6 +5499,10 @@ export interface ApplicationRule {
    * List of source IpGroups for this rule.
    */
   sourceIpGroups?: string[];
+  /**
+   * List of destination azure web categories.
+   */
+  webCategories?: string[];
 }
 
 /**

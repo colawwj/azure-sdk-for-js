@@ -567,7 +567,7 @@ const listVirtualMachineScaleSetPublicIPAddressesOperationSpec: msRest.Operation
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion1
+    Parameters.apiVersion2
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -595,7 +595,7 @@ const listVirtualMachineScaleSetVMPublicIPAddressesOperationSpec: msRest.Operati
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion1
+    Parameters.apiVersion2
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -624,7 +624,7 @@ const getVirtualMachineScaleSetPublicIPAddressOperationSpec: msRest.OperationSpe
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion1,
+    Parameters.apiVersion2,
     Parameters.expand
   ],
   headerParameters: [

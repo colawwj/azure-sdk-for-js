@@ -9228,6 +9228,17 @@ export const ApplicationRule: msRest.CompositeMapper = {
             }
           }
         }
+      },
+      webCategories: {
+        serializedName: "webCategories",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
       }
     }
   }
