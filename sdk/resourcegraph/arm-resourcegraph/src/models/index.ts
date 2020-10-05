@@ -12,6 +12,245 @@ import * as msRest from "@azure/ms-rest-js";
 export { BaseResource, CloudError };
 
 /**
+ * An interval in time specifying the date and time for the inclusive start and exclusive end, i.e.
+ * `[start, end)`.
+ */
+export interface DateTimeInterval {
+  /**
+   * A datetime indicating the inclusive/closed start of the time interval, i.e. `[`**`start`**`,
+   * end)`. Specifying a `start` that occurs chronologically after `end` will result in an error.
+   */
+  start: Date;
+  /**
+   * A datetime indicating the exclusive/open end of the time interval, i.e. `[start,
+   * `**`end`**`)`. Specifying an `end` that occurs chronologically before `start` will result in
+   * an error.
+   */
+  end: Date;
+}
+
+/**
+ * Specifies the date and time interval for a changes request.
+ */
+export interface ResourceChangesRequestParametersInterval extends DateTimeInterval {
+}
+
+/**
+ * The parameters for a specific changes request.
+ */
+export interface ResourceChangesRequestParameters {
+  /**
+   * Specifies the list of resources for a changes request.
+   */
+  resourceIds?: string[];
+  /**
+   * The subscription id of resources to query the changes from.
+   */
+  subscriptionId?: string;
+  /**
+   * Specifies the date and time interval for a changes request.
+   */
+  interval: ResourceChangesRequestParametersInterval;
+  /**
+   * Acts as the continuation token for paged responses.
+   */
+  skipToken?: string;
+  /**
+   * The maximum number of changes the client can accept in a paged response.
+   */
+  top?: number;
+  /**
+   * The table name to query resources from.
+   */
+  table?: string;
+  /**
+   * The flag if set to true will fetch property changes
+   */
+  fetchPropertyChanges?: boolean;
+  /**
+   * The flag if set to true will fetch change snapshots
+   */
+  fetchSnapshots?: boolean;
+}
+
+/**
+ * Data on a specific resource snapshot.
+ */
+export interface ResourceSnapshotData {
+  /**
+   * The time when the snapshot was created.
+   * The snapshot timestamp provides an approximation as to when a modification to a resource was
+   * detected.  There can be a difference between the actual modification time and the detection
+   * time.  This is due to differences in how operations that modify a resource are processed,
+   * versus how operation that record resource snapshots are processed.
+   */
+  timestamp: Date;
+  /**
+   * The resource snapshot content (in resourceChangeDetails response only).
+   */
+  content?: any;
+}
+
+/**
+ * The snapshot before the change.
+ */
+export interface ResourceChangeDataBeforeSnapshot extends ResourceSnapshotData {
+}
+
+/**
+ * The snapshot after the change.
+ */
+export interface ResourceChangeDataAfterSnapshot extends ResourceSnapshotData {
+}
+
+/**
+ * The resource property change
+ */
+export interface ResourcePropertyChange {
+  /**
+   * The property name
+   */
+  propertyName: string;
+  /**
+   * The property value in before snapshot
+   */
+  beforeValue?: string;
+  /**
+   * The property value in after snapshot
+   */
+  afterValue?: string;
+  /**
+   * The change category. Possible values include: 'User', 'System'
+   */
+  changeCategory: ChangeCategory;
+  /**
+   * The property change Type. Possible values include: 'Insert', 'Update', 'Remove'
+   */
+  propertyChangeType: PropertyChangeType;
+}
+
+/**
+ * Data on a specific change, represented by a pair of before and after resource snapshots.
+ */
+export interface ResourceChangeData {
+  /**
+   * The resource for a change.
+   */
+  resourceId?: string;
+  /**
+   * The change ID. Valid and unique within the specified resource only.
+   */
+  changeId: string;
+  /**
+   * The snapshot before the change.
+   */
+  beforeSnapshot: ResourceChangeDataBeforeSnapshot;
+  /**
+   * The snapshot after the change.
+   */
+  afterSnapshot: ResourceChangeDataAfterSnapshot;
+  /**
+   * The change type for snapshot. PropertyChanges will be provided in case of Update change type.
+   * Possible values include: 'Create', 'Update', 'Delete'
+   */
+  changeType?: ChangeType;
+  /**
+   * An array of resource property change
+   */
+  propertyChanges?: ResourcePropertyChange[];
+}
+
+/**
+ * A list of changes associated with a resource over a specific time interval.
+ */
+export interface ResourceChangeList {
+  /**
+   * The pageable value returned by the operation, i.e. a list of changes to the resource.
+   *
+   * - The list is ordered from the most recent changes to the least recent changes.
+   * - This list will be empty if there were no changes during the requested interval.
+   * - The `Before` snapshot timestamp value of the oldest change can be outside of the specified
+   * time interval.
+   */
+  changes?: ResourceChangeData[];
+  /**
+   * Skip token that encodes the skip information while executing the current request
+   */
+  skipToken?: any;
+}
+
+/**
+ * The parameters for a specific change details request.
+ */
+export interface ResourceChangeDetailsRequestParameters {
+  /**
+   * Specifies the list of resources for a change details request.
+   */
+  resourceIds: string[];
+  /**
+   * Specifies the list of change IDs for a change details request.
+   */
+  changeIds: string[];
+}
+
+/**
+ * The resource management error additional info.
+ */
+export interface ErrorAdditionalInfo {
+  /**
+   * The additional info type.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * The additional info.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly info?: any;
+}
+
+/**
+ * The error object.
+ */
+export interface ErrorResponseError {
+  /**
+   * The error code.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly code?: string;
+  /**
+   * The error message.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly message?: string;
+  /**
+   * The error target.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly target?: string;
+  /**
+   * The error details.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly details?: ErrorResponse[];
+  /**
+   * The error additional info.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly additionalInfo?: ErrorAdditionalInfo[];
+}
+
+/**
+ * The resource management error response.
+ */
+export interface ErrorResponse {
+  /**
+   * The error object.
+   */
+  error?: ErrorResponseError;
+}
+
+/**
  * The options for query evaluation
  */
 export interface QueryRequestOptions {
@@ -81,7 +320,11 @@ export interface QueryRequest {
   /**
    * Azure subscriptions against which to execute the query.
    */
-  subscriptions: string[];
+  subscriptions?: string[];
+  /**
+   * The management group identifier.
+   */
+  managementGroupId?: string;
   /**
    * The resources query.
    */
@@ -203,25 +446,6 @@ export interface FacetResult {
 }
 
 /**
- * An interface representing ErrorDetails.
- * @summary Error details.
- */
-export interface ErrorDetails {
-  /**
-   * Error code identifying the specific error.
-   */
-  code: string;
-  /**
-   * A human readable error message.
-   */
-  message: string;
-  /**
-   * Describes unknown properties. The value of an unknown property can be of "any" type.
-   */
-  [property: string]: any;
-}
-
-/**
  * A facet whose execution resulted in an error.
  */
 export interface FacetError {
@@ -236,37 +460,7 @@ export interface FacetError {
   /**
    * An array containing detected facet errors with details.
    */
-  errors: ErrorDetails[];
-}
-
-/**
- * Error details.
- * @summary Error info.
- */
-export interface ErrorModel {
-  /**
-   * Error code identifying the specific error.
-   */
-  code: string;
-  /**
-   * A human readable error message.
-   */
-  message: string;
-  /**
-   * Error details
-   */
-  details?: ErrorDetails[];
-}
-
-/**
- * An error response from the API.
- * @summary Error response.
- */
-export interface ErrorResponse {
-  /**
-   * Error information.
-   */
-  error: ErrorModel;
+  errors: ErrorResponse[];
 }
 
 /**
@@ -310,6 +504,124 @@ export interface Operation {
 }
 
 /**
+ * An azure resource object
+ */
+export interface Resource extends BaseResource {
+  /**
+   * Azure resource Id
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Azure resource name. This is GUID value. The display name should be assigned within properties
+   * field.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * The location of the resource
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly location?: string;
+  /**
+   * Azure resource type
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+}
+
+/**
+ * Metadata pertaining to creation and last modification of the resource.
+ */
+export interface SystemData {
+  /**
+   * The identity that created the resource.
+   */
+  createdBy?: string;
+  /**
+   * The type of identity that created the resource. Possible values include: 'User',
+   * 'Application', 'ManagedIdentity', 'Key'
+   */
+  createdByType?: CreatedByType;
+  /**
+   * The timestamp of resource creation (UTC).
+   */
+  createdAt?: Date;
+  /**
+   * The identity that last modified the resource.
+   */
+  lastModifiedBy?: string;
+  /**
+   * The type of identity that last modified the resource. Possible values include: 'User',
+   * 'Application', 'ManagedIdentity', 'Key'
+   */
+  lastModifiedByType?: CreatedByType;
+  /**
+   * The type of identity that last modified the resource.
+   */
+  lastModifiedAt?: Date;
+}
+
+/**
+ * Graph Query entity definition.
+ */
+export interface GraphQueryResource extends Resource {
+  /**
+   * Date and time in UTC of the last modification that was made to this graph query definition.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly timeModified?: Date;
+  /**
+   * The description of a graph query.
+   */
+  description?: string;
+  /**
+   * KQL query that will be graph.
+   */
+  query: string;
+  /**
+   * Enum indicating a type of graph query. Possible values include: 'basic'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly resultKind?: ResultKind;
+  /**
+   * Resource tags
+   */
+  tags?: { [propertyName: string]: string };
+  /**
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly systemData?: SystemData;
+  /**
+   * This will be used to handle Optimistic Concurrency.
+   */
+  eTag?: string;
+}
+
+/**
+ * The parameters that can be provided when updating workbook properties properties.
+ */
+export interface GraphQueryUpdateParameters {
+  /**
+   * Resource tags
+   */
+  tags?: { [propertyName: string]: string };
+  /**
+   * This will be used to handle Optimistic Concurrency. If not present, it will always overwrite
+   * the existing resource without checking conflict.
+   */
+  eTag?: string;
+  /**
+   * The description of a graph query.
+   */
+  description?: string;
+  /**
+   * KQL query that will be graph.
+   */
+  query?: string;
+}
+
+/**
  * An interface representing ResourceGraphClientOptions.
  */
 export interface ResourceGraphClientOptions extends AzureServiceClientOptions {
@@ -324,6 +636,42 @@ export interface ResourceGraphClientOptions extends AzureServiceClientOptions {
  */
 export interface OperationListResult extends Array<Operation> {
 }
+
+/**
+ * @interface
+ * Graph query list result.
+ * @extends Array<GraphQueryResource>
+ */
+export interface GraphQueryListResult extends Array<GraphQueryResource> {
+  /**
+   * URL to fetch the next set of queries.
+   */
+  nextLink?: string;
+}
+
+/**
+ * Defines values for ChangeType.
+ * Possible values include: 'Create', 'Update', 'Delete'
+ * @readonly
+ * @enum {string}
+ */
+export type ChangeType = 'Create' | 'Update' | 'Delete';
+
+/**
+ * Defines values for ChangeCategory.
+ * Possible values include: 'User', 'System'
+ * @readonly
+ * @enum {string}
+ */
+export type ChangeCategory = 'User' | 'System';
+
+/**
+ * Defines values for PropertyChangeType.
+ * Possible values include: 'Insert', 'Update', 'Remove'
+ * @readonly
+ * @enum {string}
+ */
+export type PropertyChangeType = 'Insert' | 'Update' | 'Remove';
 
 /**
  * Defines values for ResultFormat.
@@ -356,6 +704,62 @@ export type ResultTruncated = 'true' | 'false';
  * @enum {string}
  */
 export type ColumnDataType = 'string' | 'integer' | 'number' | 'boolean' | 'object';
+
+/**
+ * Defines values for ResultKind.
+ * Possible values include: 'basic'
+ * @readonly
+ * @enum {string}
+ */
+export type ResultKind = 'basic';
+
+/**
+ * Defines values for CreatedByType.
+ * Possible values include: 'User', 'Application', 'ManagedIdentity', 'Key'
+ * @readonly
+ * @enum {string}
+ */
+export type CreatedByType = 'User' | 'Application' | 'ManagedIdentity' | 'Key';
+
+/**
+ * Contains response data for the resourceChanges operation.
+ */
+export type ResourceChangesResponse = ResourceChangeList & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ResourceChangeList;
+    };
+};
+
+/**
+ * Contains response data for the resourceChangeDetails operation.
+ */
+export type ResourceChangeDetailsResponse = ResourceChangeData & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ResourceChangeData;
+    };
+};
 
 /**
  * Contains response data for the resources operation.
@@ -394,5 +798,105 @@ export type OperationsListResponse = OperationListResult & {
        * The response body as parsed JSON or XML
        */
       parsedBody: OperationListResult;
+    };
+};
+
+/**
+ * Contains response data for the list operation.
+ */
+export type GraphQueryListResponse = GraphQueryListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: GraphQueryListResult;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type GraphQueryGetResponse = GraphQueryResource & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: GraphQueryResource;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdate operation.
+ */
+export type GraphQueryCreateOrUpdateResponse = GraphQueryResource & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: GraphQueryResource;
+    };
+};
+
+/**
+ * Contains response data for the update operation.
+ */
+export type GraphQueryUpdateResponse = GraphQueryResource & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: GraphQueryResource;
+    };
+};
+
+/**
+ * Contains response data for the listNext operation.
+ */
+export type GraphQueryListNextResponse = GraphQueryListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: GraphQueryListResult;
     };
 };
