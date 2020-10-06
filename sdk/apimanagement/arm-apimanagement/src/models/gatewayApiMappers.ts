@@ -7,6 +7,7 @@
  */
 
 export {
+  AccessInformationContract,
   AdditionalLocation,
   ApiCollection,
   ApiContract,
@@ -37,6 +38,9 @@ export {
   CertificateConfiguration,
   CertificateContract,
   CertificateInformation,
+  ContentItemContract,
+  ContentTypeContract,
+  DeletedServiceContract,
   DiagnosticContract,
   EmailTemplateContract,
   EmailTemplateParametersContractProperties,
@@ -54,6 +58,9 @@ export {
   IssueAttachmentContract,
   IssueCommentContract,
   IssueContract,
+  KeyVaultContractCreateProperties,
+  KeyVaultContractProperties,
+  KeyVaultLastAccessStatusContractProperties,
   LoggerContract,
   NamedValueContract,
   NamedValueCreateContract,
@@ -86,6 +93,7 @@ export {
   SubscriptionsDelegationSettingsProperties,
   TagContract,
   TagDescriptionContract,
+  TenantSettingsContract,
   TermsOfServiceProperties,
   TokenBodyParameterContract,
   UserContract,

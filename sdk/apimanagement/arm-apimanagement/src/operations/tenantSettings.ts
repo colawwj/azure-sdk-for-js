@@ -10,16 +10,16 @@
 
 import * as msRest from "@azure/ms-rest-js";
 import * as Models from "../models";
-import * as Mappers from "../models/issueMappers";
+import * as Mappers from "../models/tenantSettingsMappers";
 import * as Parameters from "../models/parameters";
 import { ApiManagementClientContext } from "../apiManagementClientContext";
 
-/** Class representing a Issue. */
-export class Issue {
+/** Class representing a TenantSettings. */
+export class TenantSettings {
   private readonly client: ApiManagementClientContext;
 
   /**
-   * Create a Issue.
+   * Create a TenantSettings.
    * @param {ApiManagementClientContext} client Reference to the service client.
    */
   constructor(client: ApiManagementClientContext) {
@@ -27,27 +27,27 @@ export class Issue {
   }
 
   /**
-   * Lists a collection of issues in the specified service instance.
+   * Returns empty list.
    * @param resourceGroupName The name of the resource group.
    * @param serviceName The name of the API Management service.
    * @param [options] The optional parameters
-   * @returns Promise<Models.IssueListByServiceResponse>
+   * @returns Promise<Models.TenantSettingsListByServiceResponse>
    */
-  listByService(resourceGroupName: string, serviceName: string, options?: Models.IssueListByServiceOptionalParams): Promise<Models.IssueListByServiceResponse>;
+  listByService(resourceGroupName: string, serviceName: string, options?: Models.TenantSettingsListByServiceOptionalParams): Promise<Models.TenantSettingsListByServiceResponse>;
   /**
    * @param resourceGroupName The name of the resource group.
    * @param serviceName The name of the API Management service.
    * @param callback The callback
    */
-  listByService(resourceGroupName: string, serviceName: string, callback: msRest.ServiceCallback<Models.IssueCollection>): void;
+  listByService(resourceGroupName: string, serviceName: string, callback: msRest.ServiceCallback<Models.TenantSettingsCollection>): void;
   /**
    * @param resourceGroupName The name of the resource group.
    * @param serviceName The name of the API Management service.
    * @param options The optional parameters
    * @param callback The callback
    */
-  listByService(resourceGroupName: string, serviceName: string, options: Models.IssueListByServiceOptionalParams, callback: msRest.ServiceCallback<Models.IssueCollection>): void;
-  listByService(resourceGroupName: string, serviceName: string, options?: Models.IssueListByServiceOptionalParams | msRest.ServiceCallback<Models.IssueCollection>, callback?: msRest.ServiceCallback<Models.IssueCollection>): Promise<Models.IssueListByServiceResponse> {
+  listByService(resourceGroupName: string, serviceName: string, options: Models.TenantSettingsListByServiceOptionalParams, callback: msRest.ServiceCallback<Models.TenantSettingsCollection>): void;
+  listByService(resourceGroupName: string, serviceName: string, options?: Models.TenantSettingsListByServiceOptionalParams | msRest.ServiceCallback<Models.TenantSettingsCollection>, callback?: msRest.ServiceCallback<Models.TenantSettingsCollection>): Promise<Models.TenantSettingsListByServiceResponse> {
     return this.client.sendOperationRequest(
       {
         resourceGroupName,
@@ -55,71 +55,67 @@ export class Issue {
         options
       },
       listByServiceOperationSpec,
-      callback) as Promise<Models.IssueListByServiceResponse>;
+      callback) as Promise<Models.TenantSettingsListByServiceResponse>;
   }
 
   /**
-   * Gets API Management issue details
+   * Get tenant settings.
    * @param resourceGroupName The name of the resource group.
    * @param serviceName The name of the API Management service.
-   * @param issueId Issue identifier. Must be unique in the current API Management service instance.
    * @param [options] The optional parameters
-   * @returns Promise<Models.IssueGetResponse>
+   * @returns Promise<Models.TenantSettingsGetResponse>
    */
-  get(resourceGroupName: string, serviceName: string, issueId: string, options?: msRest.RequestOptionsBase): Promise<Models.IssueGetResponse>;
+  get(resourceGroupName: string, serviceName: string, options?: msRest.RequestOptionsBase): Promise<Models.TenantSettingsGetResponse>;
   /**
    * @param resourceGroupName The name of the resource group.
    * @param serviceName The name of the API Management service.
-   * @param issueId Issue identifier. Must be unique in the current API Management service instance.
    * @param callback The callback
    */
-  get(resourceGroupName: string, serviceName: string, issueId: string, callback: msRest.ServiceCallback<Models.IssueContract>): void;
+  get(resourceGroupName: string, serviceName: string, callback: msRest.ServiceCallback<Models.TenantSettingsContract>): void;
   /**
    * @param resourceGroupName The name of the resource group.
    * @param serviceName The name of the API Management service.
-   * @param issueId Issue identifier. Must be unique in the current API Management service instance.
    * @param options The optional parameters
    * @param callback The callback
    */
-  get(resourceGroupName: string, serviceName: string, issueId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.IssueContract>): void;
-  get(resourceGroupName: string, serviceName: string, issueId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.IssueContract>, callback?: msRest.ServiceCallback<Models.IssueContract>): Promise<Models.IssueGetResponse> {
+  get(resourceGroupName: string, serviceName: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.TenantSettingsContract>): void;
+  get(resourceGroupName: string, serviceName: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.TenantSettingsContract>, callback?: msRest.ServiceCallback<Models.TenantSettingsContract>): Promise<Models.TenantSettingsGetResponse> {
     return this.client.sendOperationRequest(
       {
         resourceGroupName,
         serviceName,
-        issueId,
         options
       },
       getOperationSpec,
-      callback) as Promise<Models.IssueGetResponse>;
+      callback) as Promise<Models.TenantSettingsGetResponse>;
   }
 
   /**
-   * Lists a collection of issues in the specified service instance.
+   * Returns empty list.
    * @param nextPageLink The NextLink from the previous successful call to List operation.
    * @param [options] The optional parameters
-   * @returns Promise<Models.IssueListByServiceNextResponse>
+   * @returns Promise<Models.TenantSettingsListByServiceNextResponse>
    */
-  listByServiceNext(nextPageLink: string, options?: msRest.RequestOptionsBase): Promise<Models.IssueListByServiceNextResponse>;
+  listByServiceNext(nextPageLink: string, options?: msRest.RequestOptionsBase): Promise<Models.TenantSettingsListByServiceNextResponse>;
   /**
    * @param nextPageLink The NextLink from the previous successful call to List operation.
    * @param callback The callback
    */
-  listByServiceNext(nextPageLink: string, callback: msRest.ServiceCallback<Models.IssueCollection>): void;
+  listByServiceNext(nextPageLink: string, callback: msRest.ServiceCallback<Models.TenantSettingsCollection>): void;
   /**
    * @param nextPageLink The NextLink from the previous successful call to List operation.
    * @param options The optional parameters
    * @param callback The callback
    */
-  listByServiceNext(nextPageLink: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.IssueCollection>): void;
-  listByServiceNext(nextPageLink: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.IssueCollection>, callback?: msRest.ServiceCallback<Models.IssueCollection>): Promise<Models.IssueListByServiceNextResponse> {
+  listByServiceNext(nextPageLink: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.TenantSettingsCollection>): void;
+  listByServiceNext(nextPageLink: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.TenantSettingsCollection>, callback?: msRest.ServiceCallback<Models.TenantSettingsCollection>): Promise<Models.TenantSettingsListByServiceNextResponse> {
     return this.client.sendOperationRequest(
       {
         nextPageLink,
         options
       },
       listByServiceNextOperationSpec,
-      callback) as Promise<Models.IssueListByServiceNextResponse>;
+      callback) as Promise<Models.TenantSettingsListByServiceNextResponse>;
   }
 }
 
@@ -127,7 +123,7 @@ export class Issue {
 const serializer = new msRest.Serializer(Mappers);
 const listByServiceOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
-  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/issues",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/settings",
   urlParameters: [
     Parameters.resourceGroupName,
     Parameters.serviceName,
@@ -135,8 +131,6 @@ const listByServiceOperationSpec: msRest.OperationSpec = {
   ],
   queryParameters: [
     Parameters.filter0,
-    Parameters.top,
-    Parameters.skip,
     Parameters.apiVersion
   ],
   headerParameters: [
@@ -144,7 +138,7 @@ const listByServiceOperationSpec: msRest.OperationSpec = {
   ],
   responses: {
     200: {
-      bodyMapper: Mappers.IssueCollection
+      bodyMapper: Mappers.TenantSettingsCollection
     },
     default: {
       bodyMapper: Mappers.ErrorResponse
@@ -155,12 +149,12 @@ const listByServiceOperationSpec: msRest.OperationSpec = {
 
 const getOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
-  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/issues/{issueId}",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/settings/{settingsType}",
   urlParameters: [
     Parameters.resourceGroupName,
     Parameters.serviceName,
-    Parameters.issueId,
-    Parameters.subscriptionId
+    Parameters.subscriptionId,
+    Parameters.settingsType
   ],
   queryParameters: [
     Parameters.apiVersion
@@ -170,12 +164,12 @@ const getOperationSpec: msRest.OperationSpec = {
   ],
   responses: {
     200: {
-      bodyMapper: Mappers.IssueContract,
-      headersMapper: Mappers.IssueGetHeaders
+      bodyMapper: Mappers.TenantSettingsContract,
+      headersMapper: Mappers.TenantSettingsGetHeaders
     },
     default: {
       bodyMapper: Mappers.ErrorResponse,
-      headersMapper: Mappers.IssueGetHeaders
+      headersMapper: Mappers.TenantSettingsGetHeaders
     }
   },
   serializer
@@ -193,7 +187,7 @@ const listByServiceNextOperationSpec: msRest.OperationSpec = {
   ],
   responses: {
     200: {
-      bodyMapper: Mappers.IssueCollection
+      bodyMapper: Mappers.TenantSettingsCollection
     },
     default: {
       bodyMapper: Mappers.ErrorResponse

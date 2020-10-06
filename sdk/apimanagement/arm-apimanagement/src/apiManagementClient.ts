@@ -37,6 +37,9 @@ class ApiManagementClient extends ApiManagementClientContext {
   backend: operations.Backend;
   cache: operations.Cache;
   certificate: operations.Certificate;
+  contentType: operations.ContentType;
+  contentTypeContentItem: operations.ContentTypeContentItem;
+  deletedServices: operations.DeletedServices;
   apiManagementOperations: operations.ApiManagementOperations;
   apiManagementServiceSkus: operations.ApiManagementServiceSkus;
   apiManagementService: operations.ApiManagementService;
@@ -70,6 +73,7 @@ class ApiManagementClient extends ApiManagementClientContext {
   quotaByPeriodKeys: operations.QuotaByPeriodKeys;
   region: operations.Region;
   reports: operations.Reports;
+  tenantSettings: operations.TenantSettings;
   subscription: operations.Subscription;
   tagResource: operations.TagResource;
   tenantAccess: operations.TenantAccess;
@@ -111,6 +115,9 @@ class ApiManagementClient extends ApiManagementClientContext {
     this.backend = new operations.Backend(this);
     this.cache = new operations.Cache(this);
     this.certificate = new operations.Certificate(this);
+    this.contentType = new operations.ContentType(this);
+    this.contentTypeContentItem = new operations.ContentTypeContentItem(this);
+    this.deletedServices = new operations.DeletedServices(this);
     this.apiManagementOperations = new operations.ApiManagementOperations(this);
     this.apiManagementServiceSkus = new operations.ApiManagementServiceSkus(this);
     this.apiManagementService = new operations.ApiManagementService(this);
@@ -144,6 +151,7 @@ class ApiManagementClient extends ApiManagementClientContext {
     this.quotaByPeriodKeys = new operations.QuotaByPeriodKeys(this);
     this.region = new operations.Region(this);
     this.reports = new operations.Reports(this);
+    this.tenantSettings = new operations.TenantSettings(this);
     this.subscription = new operations.Subscription(this);
     this.tagResource = new operations.TagResource(this);
     this.tenantAccess = new operations.TenantAccess(this);
