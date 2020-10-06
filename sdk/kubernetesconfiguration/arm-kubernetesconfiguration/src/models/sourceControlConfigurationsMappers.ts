@@ -15,5 +15,6 @@ export {
   ProxyResource,
   Resource,
   SourceControlConfiguration,
+  SourceControlConfigurationForCreate,
   SourceControlConfigurationList
 } from "../models/mappers";

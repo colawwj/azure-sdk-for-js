@@ -118,7 +118,7 @@ export interface HelmOperatorProperties {
 }
 
 /**
- * The SourceControl Configuration object.
+ * The SourceControl Configuration object returned in Get & Put response.
  */
 export interface SourceControlConfiguration extends ProxyResource {
   /**
@@ -154,6 +154,11 @@ export interface SourceControlConfiguration extends ProxyResource {
    */
   readonly repositoryPublicKey?: string;
   /**
+   * Base64-encoded known_hosts contents containing public SSH keys required to access private Git
+   * instances
+   */
+  sshKnownHostsContents?: string;
+  /**
    * Option to enable Helm Operator for this git configuration. Possible values include: 'true',
    * 'false'
    */
@@ -173,6 +178,62 @@ export interface SourceControlConfiguration extends ProxyResource {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly complianceStatus?: ComplianceStatus;
+}
+
+/**
+ * The SourceControl Configuration object to create a new configuration.
+ */
+export interface SourceControlConfigurationForCreate extends ProxyResource {
+  /**
+   * Url of the SourceControl Repository.
+   */
+  repositoryUrl?: string;
+  /**
+   * The namespace to which this operator is installed to. Maximum of 253 lower case alphanumeric
+   * characters, hyphen and period only. Default value: 'default'.
+   */
+  operatorNamespace?: string;
+  /**
+   * Instance name of the operator - identifying the specific configuration.
+   */
+  operatorInstanceName?: string;
+  /**
+   * Type of the operator. Possible values include: 'Flux'
+   */
+  operatorType?: OperatorType;
+  /**
+   * Any Parameters for the Operator instance in string format.
+   */
+  operatorParams?: string;
+  /**
+   * Name-value pairs of protected configuration settings for the configuration
+   */
+  configurationProtectedSettings?: { [propertyName: string]: string };
+  /**
+   * Scope at which the operator will be installed. Possible values include: 'cluster',
+   * 'namespace'. Default value: 'cluster'.
+   */
+  operatorScope?: OperatorScope;
+  /**
+   * Public Key associated with this SourceControl configuration (either generated within the
+   * cluster or provided by the user).
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly repositoryPublicKey?: string;
+  /**
+   * Base64-encoded known_hosts contents containing public SSH keys required to access private Git
+   * instances
+   */
+  sshKnownHostsContents?: string;
+  /**
+   * Option to enable Helm Operator for this git configuration. Possible values include: 'true',
+   * 'false'
+   */
+  enableHelmOperator?: EnableHelmOperator;
+  /**
+   * Properties for Helm operator.
+   */
+  helmOperatorProperties?: HelmOperatorProperties;
 }
 
 /**

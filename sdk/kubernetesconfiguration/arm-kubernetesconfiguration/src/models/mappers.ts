@@ -233,6 +233,12 @@ export const SourceControlConfiguration: msRest.CompositeMapper = {
           name: "String"
         }
       },
+      sshKnownHostsContents: {
+        serializedName: "properties.sshKnownHostsContents",
+        type: {
+          name: "String"
+        }
+      },
       enableHelmOperator: {
         serializedName: "properties.enableHelmOperator",
         type: {
@@ -259,6 +265,92 @@ export const SourceControlConfiguration: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "ComplianceStatus"
+        }
+      }
+    }
+  }
+};
+
+export const SourceControlConfigurationForCreate: msRest.CompositeMapper = {
+  serializedName: "SourceControlConfigurationForCreate",
+  type: {
+    name: "Composite",
+    className: "SourceControlConfigurationForCreate",
+    modelProperties: {
+      ...ProxyResource.type.modelProperties,
+      repositoryUrl: {
+        serializedName: "properties.repositoryUrl",
+        type: {
+          name: "String"
+        }
+      },
+      operatorNamespace: {
+        serializedName: "properties.operatorNamespace",
+        defaultValue: 'default',
+        type: {
+          name: "String"
+        }
+      },
+      operatorInstanceName: {
+        serializedName: "properties.operatorInstanceName",
+        type: {
+          name: "String"
+        }
+      },
+      operatorType: {
+        serializedName: "properties.operatorType",
+        type: {
+          name: "String"
+        }
+      },
+      operatorParams: {
+        serializedName: "properties.operatorParams",
+        type: {
+          name: "String"
+        }
+      },
+      configurationProtectedSettings: {
+        serializedName: "properties.configurationProtectedSettings",
+        type: {
+          name: "Dictionary",
+          value: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      operatorScope: {
+        serializedName: "properties.operatorScope",
+        defaultValue: 'cluster',
+        type: {
+          name: "String"
+        }
+      },
+      repositoryPublicKey: {
+        readOnly: true,
+        serializedName: "properties.repositoryPublicKey",
+        type: {
+          name: "String"
+        }
+      },
+      sshKnownHostsContents: {
+        serializedName: "properties.sshKnownHostsContents",
+        type: {
+          name: "String"
+        }
+      },
+      enableHelmOperator: {
+        serializedName: "properties.enableHelmOperator",
+        type: {
+          name: "String"
+        }
+      },
+      helmOperatorProperties: {
+        serializedName: "properties.helmOperatorProperties",
+        type: {
+          name: "Composite",
+          className: "HelmOperatorProperties"
         }
       }
     }
