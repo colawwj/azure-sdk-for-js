@@ -2130,6 +2130,28 @@ export const QuotaListHeaders: msRest.CompositeMapper = {
   }
 };
 
+export const OperationResultsGetHeaders: msRest.CompositeMapper = {
+  serializedName: "operationresults-get-headers",
+  type: {
+    name: "Composite",
+    className: "OperationResultsGetHeaders",
+    modelProperties: {
+      location: {
+        serializedName: "location",
+        type: {
+          name: "String"
+        }
+      },
+      retryAfter: {
+        serializedName: "retry-after",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const QuotaLimits: msRest.CompositeMapper = {
   serializedName: "QuotaLimits",
   type: {

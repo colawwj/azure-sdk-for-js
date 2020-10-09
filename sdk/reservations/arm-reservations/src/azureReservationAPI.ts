@@ -24,6 +24,7 @@ class AzureReservationAPI extends AzureReservationAPIContext {
   reservation: operations.Reservation;
   reservationOrder: operations.ReservationOrder;
   operation: operations.Operation;
+  operationResults: operations.OperationResults;
 
   /**
    * Initializes a new instance of the AzureReservationAPI class.
@@ -38,6 +39,7 @@ class AzureReservationAPI extends AzureReservationAPIContext {
     this.reservation = new operations.Reservation(this);
     this.reservationOrder = new operations.ReservationOrder(this);
     this.operation = new operations.Operation(this);
+    this.operationResults = new operations.OperationResults(this);
   }
 
   /**

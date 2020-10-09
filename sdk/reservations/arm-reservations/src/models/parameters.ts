@@ -123,6 +123,16 @@ export const nextPageLink: msRest.OperationURLParameter = {
   },
   skipEncoding: true
 };
+export const operationResultId: msRest.OperationURLParameter = {
+  parameterPath: "operationResultId",
+  mapper: {
+    required: true,
+    serializedName: "operationResultId",
+    type: {
+      name: "String"
+    }
+  }
+};
 export const providerId: msRest.OperationURLParameter = {
   parameterPath: "providerId",
   mapper: {

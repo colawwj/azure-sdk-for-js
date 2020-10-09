@@ -14,3 +14,4 @@ export * from "./autoQuotaIncrease";
 export * from "./reservation";
 export * from "./reservationOrder";
 export * from "./operation";
+export * from "./operationResults";

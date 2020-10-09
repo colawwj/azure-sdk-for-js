@@ -708,7 +708,9 @@ export interface PurchaseRequest {
   location?: string;
   /**
    * Possible values include: 'VirtualMachines', 'SqlDatabases', 'SuseLinux', 'CosmosDb', 'RedHat',
-   * 'SqlDataWarehouse', 'VMwareCloudSimple', 'RedHatOsa'
+   * 'SqlDataWarehouse', 'VMwareCloudSimple', 'RedHatOsa', 'Databricks', 'AppService',
+   * 'ManagedDisk', 'BlockBlob', 'RedisCache', 'AzureDataExplorer', 'MySql', 'MariaDb',
+   * 'PostgreSql', 'DedicatedHost', 'SapHana', 'SqlAzureHybridBenefit'
    */
   reservedResourceType?: ReservedResourceType;
   billingScopeId?: string;
@@ -778,7 +780,9 @@ export interface RenewPropertiesResponse {
 export interface ReservationProperties {
   /**
    * Possible values include: 'VirtualMachines', 'SqlDatabases', 'SuseLinux', 'CosmosDb', 'RedHat',
-   * 'SqlDataWarehouse', 'VMwareCloudSimple', 'RedHatOsa'
+   * 'SqlDataWarehouse', 'VMwareCloudSimple', 'RedHatOsa', 'Databricks', 'AppService',
+   * 'ManagedDisk', 'BlockBlob', 'RedisCache', 'AzureDataExplorer', 'MySql', 'MariaDb',
+   * 'PostgreSql', 'DedicatedHost', 'SapHana', 'SqlAzureHybridBenefit'
    */
   reservedResourceType?: ReservedResourceType;
   /**
@@ -1232,6 +1236,20 @@ export interface QuotaListHeaders {
 }
 
 /**
+ * Defines headers for Get operation.
+ */
+export interface OperationResultsGetHeaders {
+  /**
+   * URL to query for the status of the operation.
+   */
+  location: string;
+  /**
+   * Clients should wait for the Retry-After interval before polling again
+   */
+  retryAfter: string;
+}
+
+/**
  * @interface
  * Quota limits.
  * @extends Array<CurrentQuotaLimitBase>
@@ -1353,11 +1371,13 @@ export type PaymentStatus = 'Succeeded' | 'Failed' | 'Scheduled' | 'Cancelled';
 /**
  * Defines values for ReservedResourceType.
  * Possible values include: 'VirtualMachines', 'SqlDatabases', 'SuseLinux', 'CosmosDb', 'RedHat',
- * 'SqlDataWarehouse', 'VMwareCloudSimple', 'RedHatOsa'
+ * 'SqlDataWarehouse', 'VMwareCloudSimple', 'RedHatOsa', 'Databricks', 'AppService', 'ManagedDisk',
+ * 'BlockBlob', 'RedisCache', 'AzureDataExplorer', 'MySql', 'MariaDb', 'PostgreSql',
+ * 'DedicatedHost', 'SapHana', 'SqlAzureHybridBenefit'
  * @readonly
  * @enum {string}
  */
-export type ReservedResourceType = 'VirtualMachines' | 'SqlDatabases' | 'SuseLinux' | 'CosmosDb' | 'RedHat' | 'SqlDataWarehouse' | 'VMwareCloudSimple' | 'RedHatOsa';
+export type ReservedResourceType = 'VirtualMachines' | 'SqlDatabases' | 'SuseLinux' | 'CosmosDb' | 'RedHat' | 'SqlDataWarehouse' | 'VMwareCloudSimple' | 'RedHatOsa' | 'Databricks' | 'AppService' | 'ManagedDisk' | 'BlockBlob' | 'RedisCache' | 'AzureDataExplorer' | 'MySql' | 'MariaDb' | 'PostgreSql' | 'DedicatedHost' | 'SapHana' | 'SqlAzureHybridBenefit';
 
 /**
  * Defines values for InstanceFlexibility.
@@ -2082,5 +2102,35 @@ export type OperationListNextResponse = OperationList & {
        * The response body as parsed JSON or XML
        */
       parsedBody: OperationList;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type OperationResultsGetResponse = OperationResultsGetHeaders & {
+  /**
+   * The parsed response body.
+   */
+  body: any;
+
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: OperationResultsGetHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: any;
     };
 };
