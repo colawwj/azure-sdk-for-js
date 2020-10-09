@@ -606,37 +606,6 @@ export interface IssueContractBaseProperties {
 }
 
 /**
- * Issue update Parameters.
- */
-export interface IssueUpdateContract {
-  /**
-   * Date and time when the issue was created.
-   */
-  createdDate?: Date;
-  /**
-   * Status of the issue. Possible values include: 'proposed', 'open', 'removed', 'resolved',
-   * 'closed'
-   */
-  state?: State;
-  /**
-   * A resource identifier for the API the issue was created for.
-   */
-  apiId?: string;
-  /**
-   * The issue title.
-   */
-  title?: string;
-  /**
-   * Text describing the issue.
-   */
-  description?: string;
-  /**
-   * A resource identifier for the user created the issue.
-   */
-  userId?: string;
-}
-
-/**
  * Issue Contract details.
  */
 export interface IssueContract extends Resource {
@@ -668,6 +637,65 @@ export interface IssueContract extends Resource {
 }
 
 /**
+ * Issue update Parameters.
+ */
+export interface IssueUpdateContract {
+  /**
+   * Date and time when the issue was created.
+   */
+  createdDate?: Date;
+  /**
+   * Status of the issue. Possible values include: 'proposed', 'open', 'removed', 'resolved',
+   * 'closed'
+   */
+  state?: State;
+  /**
+   * A resource identifier for the API the issue was created for.
+   */
+  apiId?: string;
+  /**
+   * The issue title.
+   */
+  title?: string;
+  /**
+   * Text describing the issue.
+   */
+  description?: string;
+  /**
+   * A resource identifier for the user created the issue.
+   */
+  userId?: string;
+}
+
+/**
+ * An interface representing DataMaskingEntity.
+ */
+export interface DataMaskingEntity {
+  /**
+   * The name of an entity to mask (e.g. a name of a header or a query parameter).
+   */
+  value?: string;
+  /**
+   * Data masking mode. Possible values include: 'Mask', 'Hide'
+   */
+  mode?: DataMaskingMode;
+}
+
+/**
+ * An interface representing DataMasking.
+ */
+export interface DataMasking {
+  /**
+   * Masking settings for Url query parameters
+   */
+  queryParams?: DataMaskingEntity[];
+  /**
+   * Masking settings for headers
+   */
+  headers?: DataMaskingEntity[];
+}
+
+/**
  * Body logging settings.
  */
 export interface BodyDiagnosticSettings {
@@ -689,6 +717,10 @@ export interface HttpMessageDiagnostic {
    * Body logging settings.
    */
   body?: BodyDiagnosticSettings;
+  /**
+   * Data masking settings.
+   */
+  dataMasking?: DataMasking;
 }
 
 /**
@@ -758,6 +790,11 @@ export interface DiagnosticContract extends Resource {
    * 'verbose', 'information', 'error'
    */
   verbosity?: Verbosity;
+  /**
+   * The format of the Operation Name for Application Insights telemetries. Default is Name.
+   * Possible values include: 'Name', 'Url'
+   */
+  operationNameFormat?: OperationNameFormat;
 }
 
 /**
@@ -990,46 +1027,6 @@ export interface OperationEntityBaseContract {
 }
 
 /**
- * Api Operation Update Contract details.
- */
-export interface OperationUpdateContract {
-  /**
-   * Collection of URL template parameters.
-   */
-  templateParameters?: ParameterContract[];
-  /**
-   * Description of the operation. May include HTML formatting tags.
-   */
-  description?: string;
-  /**
-   * An entity containing request details.
-   */
-  request?: RequestContract;
-  /**
-   * Array of Operation responses.
-   */
-  responses?: ResponseContract[];
-  /**
-   * Operation Policies
-   */
-  policies?: string;
-  /**
-   * Operation Name.
-   */
-  displayName?: string;
-  /**
-   * A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by
-   * only them.
-   */
-  method?: string;
-  /**
-   * Relative URL template identifying the target resource for this operation. May include
-   * parameters. Example: /customers/{cid}/orders/{oid}/?date={date}
-   */
-  urlTemplate?: string;
-}
-
-/**
  * Api Operation details.
  */
 export interface OperationContract extends Resource {
@@ -1067,6 +1064,46 @@ export interface OperationContract extends Resource {
    * parameters. Example: /customers/{cid}/orders/{oid}/?date={date}
    */
   urlTemplate: string;
+}
+
+/**
+ * Api Operation Update Contract details.
+ */
+export interface OperationUpdateContract {
+  /**
+   * Collection of URL template parameters.
+   */
+  templateParameters?: ParameterContract[];
+  /**
+   * Description of the operation. May include HTML formatting tags.
+   */
+  description?: string;
+  /**
+   * An entity containing request details.
+   */
+  request?: RequestContract;
+  /**
+   * Array of Operation responses.
+   */
+  responses?: ResponseContract[];
+  /**
+   * Operation Policies
+   */
+  policies?: string;
+  /**
+   * Operation Name.
+   */
+  displayName?: string;
+  /**
+   * A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by
+   * only them.
+   */
+  method?: string;
+  /**
+   * Relative URL template identifying the target resource for this operation. May include
+   * parameters. Example: /customers/{cid}/orders/{oid}/?date={date}
+   */
+  urlTemplate?: string;
 }
 
 /**
@@ -1140,79 +1177,6 @@ export interface ApiRevisionContract {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly isCurrent?: boolean;
-}
-
-/**
- * API update contract details.
- */
-export interface ApiUpdateContract {
-  /**
-   * Description of the API. May include HTML formatting tags.
-   */
-  description?: string;
-  /**
-   * Collection of authentication settings included into this API.
-   */
-  authenticationSettings?: AuthenticationSettingsContract;
-  /**
-   * Protocols over which API is made available.
-   */
-  subscriptionKeyParameterNames?: SubscriptionKeyParameterNamesContract;
-  /**
-   * Type of API. Possible values include: 'http', 'soap'
-   */
-  apiType?: ApiType;
-  /**
-   * Describes the Revision of the Api. If no value is provided, default revision 1 is created
-   */
-  apiRevision?: string;
-  /**
-   * Indicates the Version identifier of the API if the API is versioned
-   */
-  apiVersion?: string;
-  /**
-   * Indicates if API revision is current api revision.
-   */
-  isCurrent?: boolean;
-  /**
-   * Indicates if API revision is accessible via the gateway.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly isOnline?: boolean;
-  /**
-   * Description of the Api Revision.
-   */
-  apiRevisionDescription?: string;
-  /**
-   * Description of the Api Version.
-   */
-  apiVersionDescription?: string;
-  /**
-   * A resource identifier for the related ApiVersionSet.
-   */
-  apiVersionSetId?: string;
-  /**
-   * Specifies whether an API or Product subscription is required for accessing the API.
-   */
-  subscriptionRequired?: boolean;
-  /**
-   * API name.
-   */
-  displayName?: string;
-  /**
-   * Absolute URL of the backend service implementing this API.
-   */
-  serviceUrl?: string;
-  /**
-   * Relative URL uniquely identifying this API and all of its resource paths within the API
-   * Management service instance. It is appended to the API endpoint base URL specified during the
-   * service instance creation to form a public URL for this API.
-   */
-  path?: string;
-  /**
-   * Describes on which protocols the operations in this API can be invoked.
-   */
-  protocols?: Protocol[];
 }
 
 /**
@@ -1295,6 +1259,79 @@ export interface ApiContract extends Resource {
    * Version set details
    */
   apiVersionSet?: ApiVersionSetContractDetails;
+}
+
+/**
+ * API update contract details.
+ */
+export interface ApiUpdateContract {
+  /**
+   * Description of the API. May include HTML formatting tags.
+   */
+  description?: string;
+  /**
+   * Collection of authentication settings included into this API.
+   */
+  authenticationSettings?: AuthenticationSettingsContract;
+  /**
+   * Protocols over which API is made available.
+   */
+  subscriptionKeyParameterNames?: SubscriptionKeyParameterNamesContract;
+  /**
+   * Type of API. Possible values include: 'http', 'soap'
+   */
+  apiType?: ApiType;
+  /**
+   * Describes the Revision of the Api. If no value is provided, default revision 1 is created
+   */
+  apiRevision?: string;
+  /**
+   * Indicates the Version identifier of the API if the API is versioned
+   */
+  apiVersion?: string;
+  /**
+   * Indicates if API revision is current api revision.
+   */
+  isCurrent?: boolean;
+  /**
+   * Indicates if API revision is accessible via the gateway.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly isOnline?: boolean;
+  /**
+   * Description of the Api Revision.
+   */
+  apiRevisionDescription?: string;
+  /**
+   * Description of the Api Version.
+   */
+  apiVersionDescription?: string;
+  /**
+   * A resource identifier for the related ApiVersionSet.
+   */
+  apiVersionSetId?: string;
+  /**
+   * Specifies whether an API or Product subscription is required for accessing the API.
+   */
+  subscriptionRequired?: boolean;
+  /**
+   * API name.
+   */
+  displayName?: string;
+  /**
+   * Absolute URL of the backend service implementing this API.
+   */
+  serviceUrl?: string;
+  /**
+   * Relative URL uniquely identifying this API and all of its resource paths within the API
+   * Management service instance. It is appended to the API endpoint base URL specified during the
+   * service instance creation to form a public URL for this API.
+   */
+  path?: string;
+  /**
+   * Describes on which protocols the operations in this API can be invoked.
+   */
+  protocols?: Protocol[];
 }
 
 /**
@@ -1420,34 +1457,6 @@ export interface ApiVersionSetEntityBase {
 }
 
 /**
- * Parameters to update or create an Api Version Set Contract.
- */
-export interface ApiVersionSetUpdateParameters {
-  /**
-   * Description of API Version Set.
-   */
-  description?: string;
-  /**
-   * Name of query parameter that indicates the API Version if versioningScheme is set to `query`.
-   */
-  versionQueryName?: string;
-  /**
-   * Name of HTTP header parameter that indicates the API Version if versioningScheme is set to
-   * `header`.
-   */
-  versionHeaderName?: string;
-  /**
-   * Name of API Version Set
-   */
-  displayName?: string;
-  /**
-   * An value that determines where the API Version identifer will be located in a HTTP request.
-   * Possible values include: 'Segment', 'Query', 'Header'
-   */
-  versioningScheme?: VersioningScheme;
-}
-
-/**
  * Api Version Set Contract details.
  */
 export interface ApiVersionSetContract extends Resource {
@@ -1476,13 +1485,51 @@ export interface ApiVersionSetContract extends Resource {
 }
 
 /**
- * Client or app secret used in IdentityProviders, Aad, OpenID or OAuth.
+ * Parameters to update or create an Api Version Set Contract.
  */
-export interface ClientSecretContract {
+export interface ApiVersionSetUpdateParameters {
   /**
-   * Client or app secret used in IdentityProviders, Aad, OpenID or OAuth.
+   * Description of API Version Set.
+   */
+  description?: string;
+  /**
+   * Name of query parameter that indicates the API Version if versioningScheme is set to `query`.
+   */
+  versionQueryName?: string;
+  /**
+   * Name of HTTP header parameter that indicates the API Version if versioningScheme is set to
+   * `header`.
+   */
+  versionHeaderName?: string;
+  /**
+   * Name of API Version Set
+   */
+  displayName?: string;
+  /**
+   * An value that determines where the API Version identifer will be located in a HTTP request.
+   * Possible values include: 'Segment', 'Query', 'Header'
+   */
+  versioningScheme?: VersioningScheme;
+}
+
+/**
+ * OAuth Server Secrets Contract.
+ */
+export interface AuthorizationServerSecretsContract {
+  /**
+   * oAuth Authorization Server Secrets.
    */
   clientSecret?: string;
+  /**
+   * Can be optionally specified when resource owner password grant type is supported by this
+   * authorization server. Default resource owner username.
+   */
+  resourceOwnerUsername?: string;
+  /**
+   * Can be optionally specified when resource owner password grant type is supported by this
+   * authorization server. Default resource owner password.
+   */
+  resourceOwnerPassword?: string;
 }
 
 /**
@@ -1552,87 +1599,6 @@ export interface AuthorizationServerContractBaseProperties {
    * authorization server. Default resource owner password.
    */
   resourceOwnerPassword?: string;
-}
-
-/**
- * External OAuth authorization server settings.
- */
-export interface AuthorizationServerUpdateContract extends Resource {
-  /**
-   * Description of the authorization server. Can contain HTML formatting tags.
-   */
-  description?: string;
-  /**
-   * HTTP verbs supported by the authorization endpoint. GET must be always present. POST is
-   * optional.
-   */
-  authorizationMethods?: AuthorizationMethod[];
-  /**
-   * Method of authentication supported by the token endpoint of this authorization server.
-   * Possible values are Basic and/or Body. When Body is specified, client credentials and other
-   * parameters are passed within the request body in the application/x-www-form-urlencoded format.
-   */
-  clientAuthenticationMethod?: ClientAuthenticationMethod[];
-  /**
-   * Additional parameters required by the token endpoint of this authorization server represented
-   * as an array of JSON objects with name and value string properties, i.e. {"name" : "name
-   * value", "value": "a value"}.
-   */
-  tokenBodyParameters?: TokenBodyParameterContract[];
-  /**
-   * OAuth token endpoint. Contains absolute URI to entity being referenced.
-   */
-  tokenEndpoint?: string;
-  /**
-   * If true, authorization server will include state parameter from the authorization request to
-   * its response. Client may use state parameter to raise protocol security.
-   */
-  supportState?: boolean;
-  /**
-   * Access token scope that is going to be requested by default. Can be overridden at the API
-   * level. Should be provided in the form of a string containing space-delimited values.
-   */
-  defaultScope?: string;
-  /**
-   * Specifies the mechanism by which access token is passed to the API.
-   */
-  bearerTokenSendingMethods?: BearerTokenSendingMethod[];
-  /**
-   * Can be optionally specified when resource owner password grant type is supported by this
-   * authorization server. Default resource owner username.
-   */
-  resourceOwnerUsername?: string;
-  /**
-   * Can be optionally specified when resource owner password grant type is supported by this
-   * authorization server. Default resource owner password.
-   */
-  resourceOwnerPassword?: string;
-  /**
-   * User-friendly authorization server name.
-   */
-  displayName?: string;
-  /**
-   * Optional reference to a page where client or app registration for this authorization server is
-   * performed. Contains absolute URL to entity being referenced.
-   */
-  clientRegistrationEndpoint?: string;
-  /**
-   * OAuth authorization endpoint. See http://tools.ietf.org/html/rfc6749#section-3.2.
-   */
-  authorizationEndpoint?: string;
-  /**
-   * Form of an authorization grant, which the client uses to request the access token.
-   */
-  grantTypes?: GrantType[];
-  /**
-   * Client or app id registered with this authorization server.
-   */
-  clientId?: string;
-  /**
-   * Client or app secret registered with this authorization server. This property will not be
-   * filled on 'GET' operations! Use '/listSecrets' POST request to get the value.
-   */
-  clientSecret?: string;
 }
 
 /**
@@ -1709,6 +1675,87 @@ export interface AuthorizationServerContract extends Resource {
    * Client or app id registered with this authorization server.
    */
   clientId: string;
+  /**
+   * Client or app secret registered with this authorization server. This property will not be
+   * filled on 'GET' operations! Use '/listSecrets' POST request to get the value.
+   */
+  clientSecret?: string;
+}
+
+/**
+ * External OAuth authorization server settings.
+ */
+export interface AuthorizationServerUpdateContract extends Resource {
+  /**
+   * Description of the authorization server. Can contain HTML formatting tags.
+   */
+  description?: string;
+  /**
+   * HTTP verbs supported by the authorization endpoint. GET must be always present. POST is
+   * optional.
+   */
+  authorizationMethods?: AuthorizationMethod[];
+  /**
+   * Method of authentication supported by the token endpoint of this authorization server.
+   * Possible values are Basic and/or Body. When Body is specified, client credentials and other
+   * parameters are passed within the request body in the application/x-www-form-urlencoded format.
+   */
+  clientAuthenticationMethod?: ClientAuthenticationMethod[];
+  /**
+   * Additional parameters required by the token endpoint of this authorization server represented
+   * as an array of JSON objects with name and value string properties, i.e. {"name" : "name
+   * value", "value": "a value"}.
+   */
+  tokenBodyParameters?: TokenBodyParameterContract[];
+  /**
+   * OAuth token endpoint. Contains absolute URI to entity being referenced.
+   */
+  tokenEndpoint?: string;
+  /**
+   * If true, authorization server will include state parameter from the authorization request to
+   * its response. Client may use state parameter to raise protocol security.
+   */
+  supportState?: boolean;
+  /**
+   * Access token scope that is going to be requested by default. Can be overridden at the API
+   * level. Should be provided in the form of a string containing space-delimited values.
+   */
+  defaultScope?: string;
+  /**
+   * Specifies the mechanism by which access token is passed to the API.
+   */
+  bearerTokenSendingMethods?: BearerTokenSendingMethod[];
+  /**
+   * Can be optionally specified when resource owner password grant type is supported by this
+   * authorization server. Default resource owner username.
+   */
+  resourceOwnerUsername?: string;
+  /**
+   * Can be optionally specified when resource owner password grant type is supported by this
+   * authorization server. Default resource owner password.
+   */
+  resourceOwnerPassword?: string;
+  /**
+   * User-friendly authorization server name.
+   */
+  displayName?: string;
+  /**
+   * Optional reference to a page where client or app registration for this authorization server is
+   * performed. Contains absolute URL to entity being referenced.
+   */
+  clientRegistrationEndpoint?: string;
+  /**
+   * OAuth authorization endpoint. See http://tools.ietf.org/html/rfc6749#section-3.2.
+   */
+  authorizationEndpoint?: string;
+  /**
+   * Form of an authorization grant, which the client uses to request the access token.
+   */
+  grantTypes?: GrantType[];
+  /**
+   * Client or app id registered with this authorization server.
+   */
+  clientId?: string;
   /**
    * Client or app secret registered with this authorization server. This property will not be
    * filled on 'GET' operations! Use '/listSecrets' POST request to get the value.
@@ -1884,49 +1931,6 @@ export interface BackendBaseParameters {
 }
 
 /**
- * Backend update parameters.
- */
-export interface BackendUpdateParameters {
-  /**
-   * Backend Title.
-   */
-  title?: string;
-  /**
-   * Backend Description.
-   */
-  description?: string;
-  /**
-   * Management Uri of the Resource in External System. This url can be the Arm Resource Id of
-   * Logic Apps, Function Apps or Api Apps.
-   */
-  resourceId?: string;
-  /**
-   * Backend Properties contract
-   */
-  properties?: BackendProperties;
-  /**
-   * Backend Credentials Contract Properties
-   */
-  credentials?: BackendCredentialsContract;
-  /**
-   * Backend Proxy Contract Properties
-   */
-  proxy?: BackendProxyContract;
-  /**
-   * Backend TLS Properties
-   */
-  tls?: BackendTlsProperties;
-  /**
-   * Runtime Url of the Backend.
-   */
-  url?: string;
-  /**
-   * Backend communication protocol. Possible values include: 'http', 'soap'
-   */
-  protocol?: BackendProtocol;
-}
-
-/**
  * Backend details.
  */
 export interface BackendContract extends Resource {
@@ -1970,21 +1974,46 @@ export interface BackendContract extends Resource {
 }
 
 /**
- * Cache update details.
+ * Backend update parameters.
  */
-export interface CacheUpdateParameters {
+export interface BackendUpdateParameters {
   /**
-   * Cache description
+   * Backend Title.
+   */
+  title?: string;
+  /**
+   * Backend Description.
    */
   description?: string;
   /**
-   * Runtime connection string to cache
-   */
-  connectionString?: string;
-  /**
-   * Original uri of entity in external system cache points to
+   * Management Uri of the Resource in External System. This url can be the Arm Resource Id of
+   * Logic Apps, Function Apps or Api Apps.
    */
   resourceId?: string;
+  /**
+   * Backend Properties contract
+   */
+  properties?: BackendProperties;
+  /**
+   * Backend Credentials Contract Properties
+   */
+  credentials?: BackendCredentialsContract;
+  /**
+   * Backend Proxy Contract Properties
+   */
+  proxy?: BackendProxyContract;
+  /**
+   * Backend TLS Properties
+   */
+  tls?: BackendTlsProperties;
+  /**
+   * Runtime Url of the Backend.
+   */
+  url?: string;
+  /**
+   * Backend communication protocol. Possible values include: 'http', 'soap'
+   */
+  protocol?: BackendProtocol;
 }
 
 /**
@@ -1999,6 +2028,24 @@ export interface CacheContract extends Resource {
    * Runtime connection string to cache
    */
   connectionString: string;
+  /**
+   * Original uri of entity in external system cache points to
+   */
+  resourceId?: string;
+}
+
+/**
+ * Cache update details.
+ */
+export interface CacheUpdateParameters {
+  /**
+   * Cache description
+   */
+  description?: string;
+  /**
+   * Runtime connection string to cache
+   */
+  connectionString?: string;
   /**
    * Original uri of entity in external system cache points to
    */
@@ -2035,7 +2082,68 @@ export interface CertificateCreateOrUpdateParameters {
   /**
    * Password for the Certificate
    */
-  password: string;
+  password?: string;
+}
+
+/**
+ * Content type contract details.
+ */
+export interface ContentItemContract extends Resource {
+  /**
+   * Properties of the content item.
+   */
+  properties?: { [propertyName: string]: any };
+}
+
+/**
+ * Content type contract details.
+ */
+export interface ContentTypeContract extends Resource {
+  /**
+   * Content type identifier
+   */
+  contentTypeContractId?: string;
+  /**
+   * Content type name. Must be 1 to 250 characters long.
+   */
+  contentTypeContractName?: string;
+  /**
+   * Content type description.
+   */
+  description?: string;
+  /**
+   * Content type schema.
+   */
+  schema?: any;
+  /**
+   * Content type version.
+   */
+  version?: string;
+}
+
+/**
+ * Deleted Api Management Service information.
+ */
+export interface DeletedServiceContract extends Resource {
+  /**
+   * Fully-qualified API Management Service Resource ID
+   */
+  serviceId?: string;
+  /**
+   * UTC Date and Time when the service will be automatically purged. The date conforms to the
+   * following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard.
+   */
+  scheduledPurgeDate?: Date;
+  /**
+   * UTC Timestamp when the service was soft-deleted. The date conforms to the following format:
+   * yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard.
+   */
+  deletionDate?: Date;
+  /**
+   * Api Management Service Master Location.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly location?: string;
 }
 
 /**
@@ -2159,6 +2267,11 @@ export interface HostnameConfiguration {
    */
   keyVaultId?: string;
   /**
+   * System or User Assigned Managed identity clientId as generated by Azure AD, which has GET
+   * access to the keyVault containing the SSL certificate.
+   */
+  identityClientId?: string;
+  /**
    * Base64 Encoded certificate.
    */
   encodedCertificate?: string;
@@ -2233,6 +2346,10 @@ export interface AdditionalLocation {
    * SKU properties of the API Management service.
    */
   sku: ApiManagementServiceSkuProperties;
+  /**
+   * A list of availability zones denoting where the resource needs to come from.
+   */
+  zones?: string[];
   /**
    * Public Static Load Balanced IP addresses of the API Management service in the additional
    * location. Available only for Basic, Standard and Premium SKU.
@@ -2436,6 +2553,11 @@ export interface ApiManagementServiceBaseProperties {
    * Control Plane Apis version constraint for the API Management service.
    */
   apiVersionConstraint?: ApiVersionConstraint;
+  /**
+   * Undelete Api Management Service if it was previously soft-deleted. If this flag is specified
+   * and set to True all other properties will be ignored. Default value: false.
+   */
+  restore?: boolean;
 }
 
 /**
@@ -2649,6 +2771,11 @@ export interface ApiManagementServiceResource extends ApimResource {
    */
   apiVersionConstraint?: ApiVersionConstraint;
   /**
+   * Undelete Api Management Service if it was previously soft-deleted. If this flag is specified
+   * and set to True all other properties will be ignored. Default value: false.
+   */
+  restore?: boolean;
+  /**
    * Publisher email.
    */
   publisherEmail: string;
@@ -2673,6 +2800,10 @@ export interface ApiManagementServiceResource extends ApimResource {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly etag?: string;
+  /**
+   * A list of availability zones denoting where the resource needs to come from.
+   */
+  zones?: string[];
 }
 
 /**
@@ -2817,6 +2948,11 @@ export interface ApiManagementServiceUpdateParameters extends ApimResource {
    */
   apiVersionConstraint?: ApiVersionConstraint;
   /**
+   * Undelete Api Management Service if it was previously soft-deleted. If this flag is specified
+   * and set to True all other properties will be ignored. Default value: false.
+   */
+  restore?: boolean;
+  /**
    * Publisher email.
    */
   publisherEmail?: string;
@@ -2960,32 +3096,6 @@ export interface EmailTemplateParametersContractProperties {
 }
 
 /**
- * Email Template update Parameters.
- */
-export interface EmailTemplateUpdateParameters {
-  /**
-   * Subject of the Template.
-   */
-  subject?: string;
-  /**
-   * Title of the Template.
-   */
-  title?: string;
-  /**
-   * Description of the Email Template.
-   */
-  description?: string;
-  /**
-   * Email Template Body. This should be a valid XDocument
-   */
-  body?: string;
-  /**
-   * Email Template Parameter values.
-   */
-  parameters?: EmailTemplateParametersContractProperties[];
-}
-
-/**
  * Email Template details.
  */
 export interface EmailTemplateContract extends Resource {
@@ -3010,6 +3120,32 @@ export interface EmailTemplateContract extends Resource {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly isDefault?: boolean;
+  /**
+   * Email Template Parameter values.
+   */
+  parameters?: EmailTemplateParametersContractProperties[];
+}
+
+/**
+ * Email Template update Parameters.
+ */
+export interface EmailTemplateUpdateParameters {
+  /**
+   * Subject of the Template.
+   */
+  subject?: string;
+  /**
+   * Title of the Template.
+   */
+  title?: string;
+  /**
+   * Description of the Email Template.
+   */
+  description?: string;
+  /**
+   * Email Template Body. This should be a valid XDocument
+   */
+  body?: string;
   /**
    * Email Template Parameter values.
    */
@@ -3042,6 +3178,18 @@ export interface GatewayHostnameConfigurationContract extends Resource {
    * Determines whether gateway requests client certificate
    */
   negotiateClientCertificate?: boolean;
+  /**
+   * Specifies if TLS 1.0 is supported
+   */
+  tls10Enabled?: boolean;
+  /**
+   * Specifies if TLS 1.1 is supported
+   */
+  tls11Enabled?: boolean;
+  /**
+   * Specifies if HTTP/2.0 is supported
+   */
+  http2Enabled?: boolean;
 }
 
 /**
@@ -3237,30 +3385,6 @@ export interface UserContract extends Resource {
 }
 
 /**
- * Parameters supplied to the Update Group operation.
- */
-export interface GroupUpdateParameters {
-  /**
-   * Group name.
-   */
-  displayName?: string;
-  /**
-   * Group description.
-   */
-  description?: string;
-  /**
-   * Group type. Possible values include: 'custom', 'system', 'external'
-   */
-  type?: GroupType;
-  /**
-   * Identifier of the external groups, this property contains the id of the group from the
-   * external identity provider, e.g. for Azure Active Directory
-   * `aad://<tenant>.onmicrosoft.com/groups/<group object id>`; otherwise the value is null.
-   */
-  externalId?: string;
-}
-
-/**
  * Contract details.
  */
 export interface GroupContract extends Resource {
@@ -3291,6 +3415,30 @@ export interface GroupContract extends Resource {
 }
 
 /**
+ * Parameters supplied to the Update Group operation.
+ */
+export interface GroupUpdateParameters {
+  /**
+   * Group name.
+   */
+  displayName?: string;
+  /**
+   * Group description.
+   */
+  description?: string;
+  /**
+   * Group type. Possible values include: 'custom', 'system', 'external'
+   */
+  type?: GroupType;
+  /**
+   * Identifier of the external groups, this property contains the id of the group from the
+   * external identity provider, e.g. for Azure Active Directory
+   * `aad://<tenant>.onmicrosoft.com/groups/<group object id>`; otherwise the value is null.
+   */
+  externalId?: string;
+}
+
+/**
  * Parameters supplied to the Create Group operation.
  */
 export interface GroupCreateParameters {
@@ -3312,6 +3460,16 @@ export interface GroupCreateParameters {
    * `aad://<tenant>.onmicrosoft.com/groups/<group object id>`; otherwise the value is null.
    */
   externalId?: string;
+}
+
+/**
+ * Client or app secret used in IdentityProviders, Aad, OpenID or OAuth.
+ */
+export interface ClientSecretContract {
+  /**
+   * Client or app secret used in IdentityProviders, Aad, OpenID or OAuth.
+   */
+  clientSecret?: string;
 }
 
 /**
@@ -3351,56 +3509,6 @@ export interface IdentityProviderBaseParameters {
    * Password Reset Policy Name. Only applies to AAD B2C Identity Provider.
    */
   passwordResetPolicyName?: string;
-}
-
-/**
- * Parameters supplied to update Identity Provider
- */
-export interface IdentityProviderUpdateParameters {
-  /**
-   * Identity Provider Type identifier. Possible values include: 'facebook', 'google', 'microsoft',
-   * 'twitter', 'aad', 'aadB2C'
-   */
-  type?: IdentityProviderType;
-  /**
-   * The TenantId to use instead of Common when logging into Active Directory
-   */
-  signinTenant?: string;
-  /**
-   * List of Allowed Tenants when configuring Azure Active Directory login.
-   */
-  allowedTenants?: string[];
-  /**
-   * OpenID Connect discovery endpoint hostname for AAD or AAD B2C.
-   */
-  authority?: string;
-  /**
-   * Signup Policy Name. Only applies to AAD B2C Identity Provider.
-   */
-  signupPolicyName?: string;
-  /**
-   * Signin Policy Name. Only applies to AAD B2C Identity Provider.
-   */
-  signinPolicyName?: string;
-  /**
-   * Profile Editing Policy Name. Only applies to AAD B2C Identity Provider.
-   */
-  profileEditingPolicyName?: string;
-  /**
-   * Password Reset Policy Name. Only applies to AAD B2C Identity Provider.
-   */
-  passwordResetPolicyName?: string;
-  /**
-   * Client Id of the Application in the external Identity Provider. It is App ID for Facebook
-   * login, Client ID for Google login, App ID for Microsoft.
-   */
-  clientId?: string;
-  /**
-   * Client secret of the Application in external Identity Provider, used to authenticate login
-   * request. For example, it is App Secret for Facebook login, API Key for Google login, Public
-   * Key for Microsoft.
-   */
-  clientSecret?: string;
 }
 
 /**
@@ -3450,6 +3558,56 @@ export interface IdentityProviderContract extends Resource {
    * request. For example, it is App Secret for Facebook login, API Key for Google login, Public
    * Key for Microsoft. This property will not be filled on 'GET' operations! Use '/listSecrets'
    * POST request to get the value.
+   */
+  clientSecret?: string;
+}
+
+/**
+ * Parameters supplied to update Identity Provider
+ */
+export interface IdentityProviderUpdateParameters {
+  /**
+   * Identity Provider Type identifier. Possible values include: 'facebook', 'google', 'microsoft',
+   * 'twitter', 'aad', 'aadB2C'
+   */
+  type?: IdentityProviderType;
+  /**
+   * The TenantId to use instead of Common when logging into Active Directory
+   */
+  signinTenant?: string;
+  /**
+   * List of Allowed Tenants when configuring Azure Active Directory login.
+   */
+  allowedTenants?: string[];
+  /**
+   * OpenID Connect discovery endpoint hostname for AAD or AAD B2C.
+   */
+  authority?: string;
+  /**
+   * Signup Policy Name. Only applies to AAD B2C Identity Provider.
+   */
+  signupPolicyName?: string;
+  /**
+   * Signin Policy Name. Only applies to AAD B2C Identity Provider.
+   */
+  signinPolicyName?: string;
+  /**
+   * Profile Editing Policy Name. Only applies to AAD B2C Identity Provider.
+   */
+  profileEditingPolicyName?: string;
+  /**
+   * Password Reset Policy Name. Only applies to AAD B2C Identity Provider.
+   */
+  passwordResetPolicyName?: string;
+  /**
+   * Client Id of the Application in the external Identity Provider. It is App ID for Facebook
+   * login, Client ID for Google login, App ID for Microsoft.
+   */
+  clientId?: string;
+  /**
+   * Client secret of the Application in external Identity Provider, used to authenticate login
+   * request. For example, it is App Secret for Facebook login, API Key for Google login, Public
+   * Key for Microsoft.
    */
   clientSecret?: string;
 }
@@ -3506,11 +3664,39 @@ export interface IdentityProviderCreateContract extends Resource {
 }
 
 /**
+ * Logger details.
+ */
+export interface LoggerContract extends Resource {
+  /**
+   * Logger type. Possible values include: 'azureEventHub', 'applicationInsights', 'azureMonitor'
+   */
+  loggerType: LoggerType;
+  /**
+   * Logger description.
+   */
+  description?: string;
+  /**
+   * The name and SendRule connection string of the event hub for azureEventHub logger.
+   * Instrumentation key for applicationInsights logger.
+   */
+  credentials?: { [propertyName: string]: string };
+  /**
+   * Whether records are buffered in the logger before publishing. Default is assumed to be true.
+   */
+  isBuffered?: boolean;
+  /**
+   * Azure Resource Id of a log target (either Azure Event Hub resource or Azure Application
+   * Insights resource).
+   */
+  resourceId?: string;
+}
+
+/**
  * Logger update contract.
  */
 export interface LoggerUpdateContract {
   /**
-   * Logger type. Possible values include: 'azureEventHub', 'applicationInsights'
+   * Logger type. Possible values include: 'azureEventHub', 'applicationInsights', 'azureMonitor'
    */
   loggerType?: LoggerType;
   /**
@@ -3528,41 +3714,57 @@ export interface LoggerUpdateContract {
 }
 
 /**
- * Logger details.
- */
-export interface LoggerContract extends Resource {
-  /**
-   * Logger type. Possible values include: 'azureEventHub', 'applicationInsights'
-   */
-  loggerType: LoggerType;
-  /**
-   * Logger description.
-   */
-  description?: string;
-  /**
-   * The name and SendRule connection string of the event hub for azureEventHub logger.
-   * Instrumentation key for applicationInsights logger.
-   */
-  credentials: { [propertyName: string]: string };
-  /**
-   * Whether records are buffered in the logger before publishing. Default is assumed to be true.
-   */
-  isBuffered?: boolean;
-  /**
-   * Azure Resource Id of a log target (either Azure Event Hub resource or Azure Application
-   * Insights resource).
-   */
-  resourceId?: string;
-}
-
-/**
  * Client or app secret used in IdentityProviders, Aad, OpenID or OAuth.
  */
-export interface PropertyValueContract {
+export interface NamedValueSecretContract {
   /**
    * This is secret value of the NamedValue entity.
    */
   value?: string;
+}
+
+/**
+ * Issue contract Update Properties.
+ */
+export interface KeyVaultLastAccessStatusContractProperties {
+  /**
+   * Last status code for sync and refresh of secret from key vault.
+   */
+  code?: string;
+  /**
+   * Details of the error else empty.
+   */
+  message?: string;
+  /**
+   * Last time secret was accessed. The date conforms to the following format:
+   * `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
+   */
+  timeStampUtc?: Date;
+}
+
+/**
+ * Create keyVault contract details.
+ */
+export interface KeyVaultContractCreateProperties {
+  /**
+   * Key vault secret identifier for fetching secret.
+   */
+  secretIdentifier?: string;
+  /**
+   * SystemAssignedIdentity or UserAssignedIdentity Client Id which will be used to access key
+   * vault secret.
+   */
+  identityClientId?: string;
+}
+
+/**
+ * KeyVault contract details.
+ */
+export interface KeyVaultContractProperties extends KeyVaultContractCreateProperties {
+  /**
+   * Last time sync and refresh status of secret from key vault.
+   */
+  lastStatus?: KeyVaultLastAccessStatusContractProperties;
 }
 
 /**
@@ -3604,6 +3806,10 @@ export interface NamedValueContract extends Resource {
    * request to get the value.
    */
   value?: string;
+  /**
+   * KeyVault location details of the namedValue.
+   */
+  keyVault?: KeyVaultContractProperties;
 }
 
 /**
@@ -3629,6 +3835,10 @@ export interface NamedValueUpdateParameters {
    * of whitespace.
    */
   value?: string;
+  /**
+   * KeyVault location details of the namedValue.
+   */
+  keyVault?: KeyVaultContractCreateProperties;
 }
 
 /**
@@ -3654,7 +3864,11 @@ export interface NamedValueCreateContract extends Resource {
    * of whitespace. This property will not be filled on 'GET' operations! Use '/listSecrets' POST
    * request to get the value.
    */
-  value: string;
+  value?: string;
+  /**
+   * KeyVault location details of the namedValue.
+   */
+  keyVault?: KeyVaultContractCreateProperties;
 }
 
 /**
@@ -3688,6 +3902,14 @@ export interface ConnectivityStatusContract {
    * the ISO 8601 standard.
    */
   lastStatusChange: Date;
+  /**
+   * Resource Type.
+   */
+  resourceType: string;
+  /**
+   * Whether this is optional.
+   */
+  isOptional: boolean;
 }
 
 /**
@@ -3799,32 +4021,6 @@ export interface NotificationContract extends Resource {
 }
 
 /**
- * Parameters supplied to the Update OpenID Connect Provider operation.
- */
-export interface OpenidConnectProviderUpdateContract {
-  /**
-   * User-friendly OpenID Connect Provider name.
-   */
-  displayName?: string;
-  /**
-   * User-friendly description of OpenID Connect Provider.
-   */
-  description?: string;
-  /**
-   * Metadata endpoint URI.
-   */
-  metadataEndpoint?: string;
-  /**
-   * Client ID of developer console which is the client application.
-   */
-  clientId?: string;
-  /**
-   * Client Secret of developer console which is the client application.
-   */
-  clientSecret?: string;
-}
-
-/**
  * OpenId Connect Provider details.
  */
 export interface OpenidConnectProviderContract extends Resource {
@@ -3844,6 +4040,32 @@ export interface OpenidConnectProviderContract extends Resource {
    * Client ID of developer console which is the client application.
    */
   clientId: string;
+  /**
+   * Client Secret of developer console which is the client application.
+   */
+  clientSecret?: string;
+}
+
+/**
+ * Parameters supplied to the Update OpenID Connect Provider operation.
+ */
+export interface OpenidConnectProviderUpdateContract {
+  /**
+   * User-friendly OpenID Connect Provider name.
+   */
+  displayName?: string;
+  /**
+   * User-friendly description of OpenID Connect Provider.
+   */
+  description?: string;
+  /**
+   * Metadata endpoint URI.
+   */
+  metadataEndpoint?: string;
+  /**
+   * Client ID of developer console which is the client application.
+   */
+  clientId?: string;
   /**
    * Client Secret of developer console which is the client application.
    */
@@ -4047,7 +4269,8 @@ export interface SubscriptionContract extends Resource {
    */
   secondaryKey?: string;
   /**
-   * Optional subscription comment added by an administrator.
+   * Optional subscription comment added by an administrator when the state is changed to the
+   * 'rejected'.
    */
   stateComment?: string;
   /**
@@ -4143,6 +4366,20 @@ export interface QuotaCounterContract {
    * Quota Value Properties
    */
   value?: QuotaCounterValueContractProperties;
+}
+
+/**
+ * Quota counter value details.
+ */
+export interface QuotaCounterValueUpdateContract {
+  /**
+   * Number of times Counter was called.
+   */
+  callsCount?: number;
+  /**
+   * Data Transferred in KiloBytes.
+   */
+  kbTransferred?: number;
 }
 
 /**
@@ -4421,7 +4658,8 @@ export interface SubscriptionUpdateParameters {
    */
   state?: SubscriptionState;
   /**
-   * Comments describing subscription state change by the administrator.
+   * Comments describing subscription state change by the administrator when the state is changed
+   * to the 'rejected'.
    */
   stateComment?: string;
   /**
@@ -4747,8 +4985,8 @@ export interface UserCreateParameters {
    */
   password?: string;
   /**
-   * Determines the type of application which send the create user request. Default is old
-   * publisher portal. Possible values include: 'developerPortal'
+   * Determines the type of application which send the create user request. Default is legacy
+   * portal. Possible values include: 'portal', 'developerPortal'
    */
   appType?: AppType;
   /**
@@ -4799,14 +5037,14 @@ export interface QuotaCounterValueContract {
  */
 export interface ApiListByServiceOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| displayName | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| description |
-   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>|
-   * serviceUrl | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |
-   * </br>| path | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |
-   * </br>
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| displayName | filter |
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| description |
+   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>|
+   * serviceUrl | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith
+   * |</br>| path | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith
+   * |</br>| isCurrent | filter | eq, ne |  |</br>
    */
   filter?: string;
   /**
@@ -4853,16 +5091,15 @@ export interface ApiDeleteMethodOptionalParams extends msRest.RequestOptionsBase
  */
 export interface ApiListByTagsOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * | Field       | Supported operators    | Supported functions               |
-   * |-------------|------------------------|-----------------------------------|
-   *
-   * |name | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith|
-   * |displayName | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith|
-   * |apiRevision | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith|
-   * |path | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith|
-   * |description | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith|
-   * |serviceUrl | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith|
-   * |isCurrent | eq |    |
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
+   * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| displayName | filter |
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| apiRevision |
+   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| path |
+   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>|
+   * description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith
+   * |</br>| serviceUrl | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith,
+   * endswith |</br>| isCurrent | filter | eq |     |</br>
    */
   filter?: string;
   /**
@@ -4895,9 +5132,9 @@ export interface ApiBeginCreateOrUpdateOptionalParams extends msRest.RequestOpti
  */
 export interface ApiRevisionListByServiceOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| apiRevision | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>
    */
   filter?: string;
   /**
@@ -4915,9 +5152,9 @@ export interface ApiRevisionListByServiceOptionalParams extends msRest.RequestOp
  */
 export interface ApiReleaseListByServiceOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| notes | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>
    */
   filter?: string;
   /**
@@ -4946,14 +5183,14 @@ export interface ApiReleaseCreateOrUpdateOptionalParams extends msRest.RequestOp
  */
 export interface ApiOperationListByApiOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| displayName | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| method | filter
-   * | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| description |
-   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>|
-   * urlTemplate | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |
-   * </br>
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| displayName | filter |
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| method | filter |
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| description |
+   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>|
+   * urlTemplate | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith
+   * |</br>
    */
   filter?: string;
   /**
@@ -5007,10 +5244,10 @@ export interface ApiOperationPolicyCreateOrUpdateOptionalParams extends msRest.R
  */
 export interface TagListByOperationOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| displayName | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| name | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| name | filter |
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>
    */
   filter?: string;
   /**
@@ -5028,10 +5265,10 @@ export interface TagListByOperationOptionalParams extends msRest.RequestOptionsB
  */
 export interface TagListByApiOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| displayName | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| name | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| name | filter |
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>
    */
   filter?: string;
   /**
@@ -5049,10 +5286,10 @@ export interface TagListByApiOptionalParams extends msRest.RequestOptionsBase {
  */
 export interface TagListByProductOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| displayName | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| name | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| name | filter |
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>
    */
   filter?: string;
   /**
@@ -5070,10 +5307,10 @@ export interface TagListByProductOptionalParams extends msRest.RequestOptionsBas
  */
 export interface TagListByServiceOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| displayName | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| displayName | filter |
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>
    */
   filter?: string;
   /**
@@ -5106,9 +5343,9 @@ export interface TagCreateOrUpdateOptionalParams extends msRest.RequestOptionsBa
  */
 export interface ApiProductListByApisOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| displayName | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>
    */
   filter?: string;
   /**
@@ -5147,9 +5384,9 @@ export interface ApiPolicyCreateOrUpdateOptionalParams extends msRest.RequestOpt
  */
 export interface ApiSchemaListByApiOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| contentType | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>
    */
   filter?: string;
   /**
@@ -5199,9 +5436,9 @@ export interface ApiSchemaBeginCreateOrUpdateOptionalParams extends msRest.Reque
  */
 export interface ApiDiagnosticListByServiceOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>
    */
   filter?: string;
   /**
@@ -5230,11 +5467,11 @@ export interface ApiDiagnosticCreateOrUpdateOptionalParams extends msRest.Reques
  */
 export interface ApiIssueListByServiceOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| userId | filter | ge,
-   * le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| state | filter | eq
-   * |     | </br>
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| userId | filter | ge, le,
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| state | filter | eq |
+   * |</br>
    */
   filter?: string;
   /**
@@ -5277,10 +5514,10 @@ export interface ApiIssueCreateOrUpdateOptionalParams extends msRest.RequestOpti
  */
 export interface ApiIssueCommentListByServiceOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| userId | filter | ge,
-   * le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| userId | filter | ge, le,
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>
    */
   filter?: string;
   /**
@@ -5309,10 +5546,10 @@ export interface ApiIssueCommentCreateOrUpdateOptionalParams extends msRest.Requ
  */
 export interface ApiIssueAttachmentListByServiceOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| userId | filter | ge,
-   * le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| userId | filter | ge, le,
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>
    */
   filter?: string;
   /**
@@ -5341,10 +5578,10 @@ export interface ApiIssueAttachmentCreateOrUpdateOptionalParams extends msRest.R
  */
 export interface ApiTagDescriptionListByServiceOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| displayName | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| name | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| name | filter |
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>
    */
   filter?: string;
   /**
@@ -5373,15 +5610,15 @@ export interface ApiTagDescriptionCreateOrUpdateOptionalParams extends msRest.Re
  */
 export interface OperationListByTagsOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| displayName | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| apiName | filter
-   * | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| description |
-   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| method
-   * | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>|
-   * urlTemplate | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |
-   * </br>
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| displayName | filter |
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| apiName | filter
+   * | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| description |
+   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| method |
+   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>|
+   * urlTemplate | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith
+   * |</br>
    */
   filter?: string;
   /**
@@ -5403,7 +5640,7 @@ export interface OperationListByTagsOptionalParams extends msRest.RequestOptions
  */
 export interface ApiVersionSetListByServiceOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>
    */
   filter?: string;
@@ -5433,10 +5670,10 @@ export interface ApiVersionSetCreateOrUpdateOptionalParams extends msRest.Reques
  */
 export interface AuthorizationServerListByServiceOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| displayName | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| displayName | filter |
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>
    */
   filter?: string;
   /**
@@ -5465,11 +5702,11 @@ export interface AuthorizationServerCreateOrUpdateOptionalParams extends msRest.
  */
 export interface BackendListByServiceOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| title | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| url | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| title | filter | ge, le,
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| url | filter | ge, le,
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>
    */
   filter?: string;
   /**
@@ -5533,12 +5770,12 @@ export interface CacheCreateOrUpdateOptionalParams extends msRest.RequestOptions
  */
 export interface CertificateListByServiceOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| subject | filter | ge,
-   * le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| thumbprint | filter
-   * | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| expirationDate
-   * | filter | ge, le, eq, ne, gt, lt |     | </br>
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| subject | filter | ge,
+   * le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| thumbprint | filter |
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| expirationDate |
+   * filter | ge, le, eq, ne, gt, lt |     |</br>
    */
   filter?: string;
   /**
@@ -5555,6 +5792,28 @@ export interface CertificateListByServiceOptionalParams extends msRest.RequestOp
  * Optional Parameters.
  */
 export interface CertificateCreateOrUpdateOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * ETag of the Entity. Not required when creating an entity, but required when updating an
+   * entity.
+   */
+  ifMatch?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface ContentTypeCreateOrUpdateOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * ETag of the Entity. Not required when creating an entity, but required when updating an
+   * entity.
+   */
+  ifMatch?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface ContentTypeContentItemCreateOrUpdateOptionalParams extends msRest.RequestOptionsBase {
   /**
    * ETag of the Entity. Not required when creating an entity, but required when updating an
    * entity.
@@ -5591,9 +5850,9 @@ export interface ApiManagementServiceBeginApplyNetworkConfigurationUpdatesOption
  */
 export interface DiagnosticListByServiceOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>
    */
   filter?: string;
   /**
@@ -5622,9 +5881,9 @@ export interface DiagnosticCreateOrUpdateOptionalParams extends msRest.RequestOp
  */
 export interface EmailTemplateListByServiceOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>
    */
   filter?: string;
   /**
@@ -5653,6 +5912,14 @@ export interface EmailTemplateCreateOrUpdateOptionalParams extends msRest.Reques
  */
 export interface GatewayListByServiceOptionalParams extends msRest.RequestOptionsBase {
   /**
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
+   * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| region | filter | ge, le,
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| description | filter |
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>
+   */
+  filter?: string;
+  /**
    * Number of records to return.
    */
   top?: number;
@@ -5678,6 +5945,13 @@ export interface GatewayCreateOrUpdateOptionalParams extends msRest.RequestOptio
  */
 export interface GatewayHostnameConfigurationListByServiceOptionalParams extends msRest.RequestOptionsBase {
   /**
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
+   * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| hostname | filter | ge,
+   * le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>
+   */
+  filter?: string;
+  /**
    * Number of records to return.
    */
   top?: number;
@@ -5690,7 +5964,24 @@ export interface GatewayHostnameConfigurationListByServiceOptionalParams extends
 /**
  * Optional Parameters.
  */
+export interface GatewayHostnameConfigurationCreateOrUpdateOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * ETag of the Entity. Not required when creating an entity, but required when updating an
+   * entity.
+   */
+  ifMatch?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
 export interface GatewayApiListByServiceOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
+   * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>
+   */
+  filter?: string;
   /**
    * Number of records to return.
    */
@@ -5713,12 +6004,12 @@ export interface GatewayApiCreateOrUpdateOptionalParams extends msRest.RequestOp
  */
 export interface GroupListByServiceOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| displayName | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| description |
-   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>|
-   * aadObjectId | filter | eq |     | </br>
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| displayName | filter |
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| description |
+   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>|
+   * externalId | filter | eq |     |</br>
    */
   filter?: string;
   /**
@@ -5747,14 +6038,14 @@ export interface GroupCreateOrUpdateOptionalParams extends msRest.RequestOptions
  */
 export interface GroupUserListOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| firstName | filter | ge,
-   * le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| lastName | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| email | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| registrationDate
-   * | filter | ge, le, eq, ne, gt, lt |     | </br>| note | filter | ge, le, eq, ne, gt, lt |
-   * substringof, contains, startswith, endswith | </br>
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| firstName | filter | ge,
+   * le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| lastName | filter |
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| email | filter |
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| registrationDate
+   * | filter | ge, le, eq, ne, gt, lt |     |</br>| note | filter | ge, le, eq, ne, gt, lt |
+   * substringof, contains, startswith, endswith |</br>
    */
   filter?: string;
   /**
@@ -5783,14 +6074,14 @@ export interface IdentityProviderCreateOrUpdateOptionalParams extends msRest.Req
  */
 export interface IssueListByServiceOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| apiId | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| title | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| description | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| authorName |
-   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| state |
-   * filter | eq |     | </br>
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| apiId | filter | ge, le,
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| title | filter | ge, le,
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| description | filter |
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| authorName |
+   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| state |
+   * filter | eq |     |</br>
    */
   filter?: string;
   /**
@@ -5808,12 +6099,12 @@ export interface IssueListByServiceOptionalParams extends msRest.RequestOptionsB
  */
 export interface LoggerListByServiceOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| description | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| loggerType |
-   * filter | eq |     | </br>| resourceId | filter | ge, le, eq, ne, gt, lt | substringof,
-   * contains, startswith, endswith | </br>
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| description | filter |
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| loggerType |
+   * filter | eq |     |</br>| resourceId | filter | ge, le, eq, ne, gt, lt | substringof,
+   * contains, startswith, endswith |</br>
    */
   filter?: string;
   /**
@@ -5840,22 +6131,12 @@ export interface LoggerCreateOrUpdateOptionalParams extends msRest.RequestOption
 /**
  * Optional Parameters.
  */
-export interface LoggerDeleteMethodOptionalParams extends msRest.RequestOptionsBase {
-  /**
-   * Force deletion even if diagnostic is attached.
-   */
-  force?: boolean;
-}
-
-/**
- * Optional Parameters.
- */
 export interface NamedValueListByServiceOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| tags | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith, any, all | </br>| displayName |
-   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith, any, all |</br>| displayName |
+   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>
    */
   filter?: string;
   /**
@@ -5920,10 +6201,10 @@ export interface NotificationCreateOrUpdateOptionalParams extends msRest.Request
  */
 export interface OpenIdConnectProviderListByServiceOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| displayName | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| displayName | filter |
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>
    */
   filter?: string;
   /**
@@ -6016,13 +6297,13 @@ export interface DelegationSettingsCreateOrUpdateOptionalParams extends msRest.R
  */
 export interface ProductListByServiceOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| displayName | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| description |
-   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| terms |
-   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| state |
-   * filter | eq |     | </br>| groups | expand |     |     | </br>
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| displayName | filter |
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| description |
+   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| terms |
+   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| state |
+   * filter | eq |     |</br>| groups | expand |     |     |</br>
    */
   filter?: string;
   /**
@@ -6070,13 +6351,13 @@ export interface ProductDeleteMethodOptionalParams extends msRest.RequestOptions
  */
 export interface ProductListByTagsOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| displayName | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| description |
-   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| terms |
-   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| state |
-   * filter | eq | substringof, contains, startswith, endswith | </br>
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| displayName | filter |
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| description |
+   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| terms |
+   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| state |
+   * filter | eq | substringof, contains, startswith, endswith |</br>
    */
   filter?: string;
   /**
@@ -6098,14 +6379,14 @@ export interface ProductListByTagsOptionalParams extends msRest.RequestOptionsBa
  */
 export interface ProductApiListByProductOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| displayName | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| description |
-   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>|
-   * serviceUrl | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |
-   * </br>| path | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |
-   * </br>
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| displayName | filter |
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| description |
+   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>|
+   * serviceUrl | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith
+   * |</br>| path | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith
+   * |</br>
    */
   filter?: string;
   /**
@@ -6123,10 +6404,10 @@ export interface ProductApiListByProductOptionalParams extends msRest.RequestOpt
  */
 export interface ProductGroupListByProductOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
-   * eq, ne, gt, lt |     | </br>| displayName | filter | eq, ne |     | </br>| description |
-   * filter | eq, ne |     | </br>
+   * eq, ne, gt, lt |     |</br>| displayName | filter | eq, ne |     |</br>| description | filter
+   * | eq, ne |     |</br>
    */
   filter?: string;
   /**
@@ -6144,16 +6425,16 @@ export interface ProductGroupListByProductOptionalParams extends msRest.RequestO
  */
 export interface ProductSubscriptionsListOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| displayName | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| stateComment |
-   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| ownerId
-   * | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| scope
-   * | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>|
-   * userId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |
-   * </br>| productId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith,
-   * endswith | </br>| state | filter | eq |     | </br>| user | expand |     |     | </br>
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| displayName | filter |
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| stateComment |
+   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| ownerId
+   * | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| scope
+   * | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| userId
+   * | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>|
+   * productId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith
+   * |</br>| state | filter | eq |     |</br>| user | expand |     |     |</br>
    */
   filter?: string;
   /**
@@ -6328,16 +6609,16 @@ export interface ReportsListByRequestOptionalParams extends msRest.RequestOption
  */
 export interface SubscriptionListOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| displayName | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| stateComment |
-   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| ownerId
-   * | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| scope
-   * | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>|
-   * userId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |
-   * </br>| productId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith,
-   * endswith | </br>| state | filter | eq |     | </br>| user | expand |     |     | </br>
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| displayName | filter |
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| stateComment |
+   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| ownerId
+   * | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| scope
+   * | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| userId
+   * | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>|
+   * productId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith
+   * |</br>| state | filter | eq |     |</br>| user | expand |     |     |</br>
    */
   filter?: string;
   /**
@@ -6365,6 +6646,12 @@ export interface SubscriptionCreateOrUpdateOptionalParams extends msRest.Request
    * entity.
    */
   ifMatch?: string;
+  /**
+   * Determines the type of application which send the create user request. Default is legacy
+   * publisher portal. Possible values include: 'portal', 'developerPortal'. Default value:
+   * 'portal'.
+   */
+  appType?: AppType;
 }
 
 /**
@@ -6377,6 +6664,12 @@ export interface SubscriptionUpdateOptionalParams extends msRest.RequestOptionsB
    * - If true, send email notification of change of state of subscription
    */
   notify?: boolean;
+  /**
+   * Determines the type of application which send the create user request. Default is legacy
+   * publisher portal. Possible values include: 'portal', 'developerPortal'. Default value:
+   * 'portal'.
+   */
+  appType?: AppType;
 }
 
 /**
@@ -6384,21 +6677,21 @@ export interface SubscriptionUpdateOptionalParams extends msRest.RequestOptionsB
  */
 export interface TagResourceListByServiceOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| aid | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| name | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| displayName | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| apiName | filter
-   * | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| apiRevision |
-   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| path |
-   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>|
-   * description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |
-   * </br>| serviceUrl | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith,
-   * endswith | </br>| method | filter | ge, le, eq, ne, gt, lt | substringof, contains,
-   * startswith, endswith | </br>| urlTemplate | filter | ge, le, eq, ne, gt, lt | substringof,
-   * contains, startswith, endswith | </br>| terms | filter | ge, le, eq, ne, gt, lt | substringof,
-   * contains, startswith, endswith | </br>| state | filter | eq |     | </br>| isCurrent | filter
-   * | eq |     | </br>
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| name | filter | ge, le,
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| displayName | filter |
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| apiName | filter
+   * | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| apiRevision |
+   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| path |
+   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>|
+   * description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith
+   * |</br>| serviceUrl | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith,
+   * endswith |</br>| method | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith,
+   * endswith |</br>| urlTemplate | filter | ge, le, eq, ne, gt, lt | substringof, contains,
+   * startswith, endswith |</br>| terms | filter | ge, le, eq, ne, gt, lt | substringof, contains,
+   * startswith, endswith |</br>| state | filter | eq |     |</br>| isCurrent | filter | eq |
+   * |</br>
    */
   filter?: string;
   /**
@@ -6416,15 +6709,15 @@ export interface TagResourceListByServiceOptionalParams extends msRest.RequestOp
  */
 export interface UserListByServiceOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
    * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| firstName | filter | ge,
-   * le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| lastName | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| email | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| state | filter |
-   * eq |     | </br>| registrationDate | filter | ge, le, eq, ne, gt, lt |     | </br>| note |
-   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| groups
-   * | expand |     |     | </br>
+   * eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| firstName | filter | ge,
+   * le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| lastName | filter |
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| email | filter |
+   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| state | filter |
+   * eq |     |</br>| registrationDate | filter | ge, le, eq, ne, gt, lt |     |</br>| note |
+   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>| groups |
+   * expand |     |     |</br>
    */
   filter?: string;
   /**
@@ -6446,6 +6739,10 @@ export interface UserListByServiceOptionalParams extends msRest.RequestOptionsBa
  */
 export interface UserCreateOrUpdateOptionalParams extends msRest.RequestOptionsBase {
   /**
+   * Send an Email notification to the User.
+   */
+  notify?: boolean;
+  /**
    * ETag of the Entity. Not required when creating an entity, but required when updating an
    * entity.
    */
@@ -6464,6 +6761,12 @@ export interface UserDeleteMethodOptionalParams extends msRest.RequestOptionsBas
    * Send an Account Closed Email notification to the User.
    */
   notify?: boolean;
+  /**
+   * Determines the type of application which send the create user request. Default is legacy
+   * publisher portal. Possible values include: 'portal', 'developerPortal'. Default value:
+   * 'portal'.
+   */
+  appType?: AppType;
 }
 
 /**
@@ -6471,11 +6774,12 @@ export interface UserDeleteMethodOptionalParams extends msRest.RequestOptionsBas
  */
 export interface UserGroupListOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
-   * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| displayName | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| description |
-   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>
+   * |     Field     |     Usage     |     Supported operators     |     Supported functions
+   * |</br>|-------------|------------------------|-----------------------------------|</br>| name
+   * | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |</br>|
+   * displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith
+   * |</br>| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith,
+   * endswith |</br>
    */
   filter?: string;
   /**
@@ -6493,16 +6797,16 @@ export interface UserGroupListOptionalParams extends msRest.RequestOptionsBase {
  */
 export interface UserSubscriptionListOptionalParams extends msRest.RequestOptionsBase {
   /**
-   * |   Field     |     Usage     |     Supported operators     |     Supported functions
-   * |</br>|-------------|-------------|-------------|-------------|</br>| name | filter | ge, le,
-   * eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| displayName | filter |
-   * ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| stateComment |
-   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| ownerId
-   * | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>| scope
-   * | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith | </br>|
-   * userId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |
-   * </br>| productId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith,
-   * endswith | </br>
+   * | Field     |     Usage     |     Supported operators    | Supported functions
+   * |</br>|-------------|------------------------|-----------------------------------|</br>|name |
+   * filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith
+   * |</br>|displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith,
+   * endswith |</br>|stateComment | filter | ge, le, eq, ne, gt, lt | substringof, contains,
+   * startswith, endswith |</br>|ownerId | filter | ge, le, eq, ne, gt, lt | substringof, contains,
+   * startswith, endswith |</br>|scope | filter | ge, le, eq, ne, gt, lt | substringof, contains,
+   * startswith, endswith |</br>|userId | filter | ge, le, eq, ne, gt, lt | substringof, contains,
+   * startswith, endswith |</br>|productId | filter | ge, le, eq, ne, gt, lt | substringof,
+   * contains, startswith, endswith |</br>
    */
   filter?: string;
   /**
@@ -6513,6 +6817,18 @@ export interface UserSubscriptionListOptionalParams extends msRest.RequestOption
    * Number of records to skip.
    */
   skip?: number;
+}
+
+/**
+ * Optional Parameters.
+ */
+export interface UserConfirmationPasswordSendOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Determines the type of application which send the create user request. Default is legacy
+   * publisher portal. Possible values include: 'portal', 'developerPortal'. Default value:
+   * 'portal'.
+   */
+  appType?: AppType;
 }
 
 /**
@@ -6556,6 +6872,17 @@ export interface ApiCreateOrUpdateHeaders {
 }
 
 /**
+ * Defines headers for Update operation.
+ */
+export interface ApiUpdateHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
  * Defines headers for GetEntityTag operation.
  */
 export interface ApiReleaseGetEntityTagHeaders {
@@ -6589,6 +6916,17 @@ export interface ApiReleaseCreateOrUpdateHeaders {
 }
 
 /**
+ * Defines headers for Update operation.
+ */
+export interface ApiReleaseUpdateHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
  * Defines headers for GetEntityTag operation.
  */
 export interface ApiOperationGetEntityTagHeaders {
@@ -6614,6 +6952,17 @@ export interface ApiOperationGetHeaders {
  * Defines headers for CreateOrUpdate operation.
  */
 export interface ApiOperationCreateOrUpdateHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
+ * Defines headers for Update operation.
+ */
+export interface ApiOperationUpdateHeaders {
   /**
    * Current entity state version. Should be treated as opaque and used to make conditional HTTP
    * requests.
@@ -6776,6 +7125,17 @@ export interface ApiDiagnosticCreateOrUpdateHeaders {
 }
 
 /**
+ * Defines headers for Update operation.
+ */
+export interface ApiDiagnosticUpdateHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
  * Defines headers for GetEntityTag operation.
  */
 export interface ApiIssueGetEntityTagHeaders {
@@ -6801,6 +7161,17 @@ export interface ApiIssueGetHeaders {
  * Defines headers for CreateOrUpdate operation.
  */
 export interface ApiIssueCreateOrUpdateHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
+ * Defines headers for Update operation.
+ */
+export interface ApiIssueUpdateHeaders {
   /**
    * Current entity state version. Should be treated as opaque and used to make conditional HTTP
    * requests.
@@ -6974,6 +7345,17 @@ export interface ApiVersionSetCreateOrUpdateHeaders {
 }
 
 /**
+ * Defines headers for Update operation.
+ */
+export interface ApiVersionSetUpdateHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
  * Defines headers for GetEntityTag operation.
  */
 export interface AuthorizationServerGetEntityTagHeaders {
@@ -6999,6 +7381,28 @@ export interface AuthorizationServerGetHeaders {
  * Defines headers for CreateOrUpdate operation.
  */
 export interface AuthorizationServerCreateOrUpdateHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
+ * Defines headers for Update operation.
+ */
+export interface AuthorizationServerUpdateHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
+ * Defines headers for ListSecrets operation.
+ */
+export interface AuthorizationServerListSecretsHeaders {
   /**
    * Current entity state version. Should be treated as opaque and used to make conditional HTTP
    * requests.
@@ -7040,6 +7444,17 @@ export interface BackendCreateOrUpdateHeaders {
 }
 
 /**
+ * Defines headers for Update operation.
+ */
+export interface BackendUpdateHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
  * Defines headers for GetEntityTag operation.
  */
 export interface CacheGetEntityTagHeaders {
@@ -7065,6 +7480,17 @@ export interface CacheGetHeaders {
  * Defines headers for CreateOrUpdate operation.
  */
 export interface CacheCreateOrUpdateHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
+ * Defines headers for Update operation.
+ */
+export interface CacheUpdateHeaders {
   /**
    * Current entity state version. Should be treated as opaque and used to make conditional HTTP
    * requests.
@@ -7106,6 +7532,61 @@ export interface CertificateCreateOrUpdateHeaders {
 }
 
 /**
+ * Defines headers for Get operation.
+ */
+export interface ContentTypeGetHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
+ * Defines headers for CreateOrUpdate operation.
+ */
+export interface ContentTypeCreateOrUpdateHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
+ * Defines headers for GetEntityTag operation.
+ */
+export interface ContentTypeContentItemGetEntityTagHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
+ * Defines headers for Get operation.
+ */
+export interface ContentTypeContentItemGetHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
+ * Defines headers for CreateOrUpdate operation.
+ */
+export interface ContentTypeContentItemCreateOrUpdateHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
  * Defines headers for GetEntityTag operation.
  */
 export interface DiagnosticGetEntityTagHeaders {
@@ -7139,6 +7620,17 @@ export interface DiagnosticCreateOrUpdateHeaders {
 }
 
 /**
+ * Defines headers for Update operation.
+ */
+export interface DiagnosticUpdateHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
  * Defines headers for GetEntityTag operation.
  */
 export interface EmailTemplateGetEntityTagHeaders {
@@ -7153,6 +7645,17 @@ export interface EmailTemplateGetEntityTagHeaders {
  * Defines headers for Get operation.
  */
 export interface EmailTemplateGetHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
+ * Defines headers for Update operation.
+ */
+export interface EmailTemplateUpdateHeaders {
   /**
    * Current entity state version. Should be treated as opaque and used to make conditional HTTP
    * requests.
@@ -7186,6 +7689,17 @@ export interface GatewayGetHeaders {
  * Defines headers for CreateOrUpdate operation.
  */
 export interface GatewayCreateOrUpdateHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
+ * Defines headers for Update operation.
+ */
+export interface GatewayUpdateHeaders {
   /**
    * Current entity state version. Should be treated as opaque and used to make conditional HTTP
    * requests.
@@ -7282,6 +7796,17 @@ export interface GroupCreateOrUpdateHeaders {
 }
 
 /**
+ * Defines headers for Update operation.
+ */
+export interface GroupUpdateHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
  * Defines headers for GetEntityTag operation.
  */
 export interface IdentityProviderGetEntityTagHeaders {
@@ -7307,6 +7832,28 @@ export interface IdentityProviderGetHeaders {
  * Defines headers for CreateOrUpdate operation.
  */
 export interface IdentityProviderCreateOrUpdateHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
+ * Defines headers for Update operation.
+ */
+export interface IdentityProviderUpdateHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
+ * Defines headers for ListSecrets operation.
+ */
+export interface IdentityProviderListSecretsHeaders {
   /**
    * Current entity state version. Should be treated as opaque and used to make conditional HTTP
    * requests.
@@ -7359,6 +7906,17 @@ export interface LoggerCreateOrUpdateHeaders {
 }
 
 /**
+ * Defines headers for Update operation.
+ */
+export interface LoggerUpdateHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
  * Defines headers for GetEntityTag operation.
  */
 export interface NamedValueGetEntityTagHeaders {
@@ -7403,6 +7961,17 @@ export interface NamedValueUpdateHeaders {
 }
 
 /**
+ * Defines headers for ListValue operation.
+ */
+export interface NamedValueListValueHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
  * Defines headers for GetEntityTag operation.
  */
 export interface OpenIdConnectProviderGetEntityTagHeaders {
@@ -7428,6 +7997,28 @@ export interface OpenIdConnectProviderGetHeaders {
  * Defines headers for CreateOrUpdate operation.
  */
 export interface OpenIdConnectProviderCreateOrUpdateHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
+ * Defines headers for Update operation.
+ */
+export interface OpenIdConnectProviderUpdateHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
+ * Defines headers for ListSecrets operation.
+ */
+export interface OpenIdConnectProviderListSecretsHeaders {
   /**
    * Current entity state version. Should be treated as opaque and used to make conditional HTTP
    * requests.
@@ -7568,6 +8159,17 @@ export interface ProductCreateOrUpdateHeaders {
 }
 
 /**
+ * Defines headers for Update operation.
+ */
+export interface ProductUpdateHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
  * Defines headers for GetEntityTag operation.
  */
 export interface ProductPolicyGetEntityTagHeaders {
@@ -7656,6 +8258,28 @@ export interface SubscriptionCreateOrUpdateHeaders {
 }
 
 /**
+ * Defines headers for Update operation.
+ */
+export interface SubscriptionUpdateHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
+ * Defines headers for ListSecrets operation.
+ */
+export interface SubscriptionListSecretsHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
  * Defines headers for GetEntityState operation.
  */
 export interface TagGetEntityStateHeaders {
@@ -7689,6 +8313,17 @@ export interface TagCreateOrUpdateHeaders {
 }
 
 /**
+ * Defines headers for Update operation.
+ */
+export interface TagUpdateHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
  * Defines headers for GetEntityTag operation.
  */
 export interface TenantAccessGetEntityTagHeaders {
@@ -7703,6 +8338,17 @@ export interface TenantAccessGetEntityTagHeaders {
  * Defines headers for Get operation.
  */
 export interface TenantAccessGetHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
+ * Defines headers for Update operation.
+ */
+export interface TenantAccessUpdateHeaders {
   /**
    * Current entity state version. Should be treated as opaque and used to make conditional HTTP
    * requests.
@@ -7769,6 +8415,17 @@ export interface UserGetHeaders {
  * Defines headers for CreateOrUpdate operation.
  */
 export interface UserCreateOrUpdateHeaders {
+  /**
+   * Current entity state version. Should be treated as opaque and used to make conditional HTTP
+   * requests.
+   */
+  eTag: string;
+}
+
+/**
+ * Defines headers for Update operation.
+ */
+export interface UserUpdateHeaders {
   /**
    * Current entity state version. Should be treated as opaque and used to make conditional HTTP
    * requests.
@@ -8002,6 +8659,45 @@ export interface CertificateCollection extends Array<CertificateContract> {
    * Next page link if any.
    */
   nextLink?: string;
+}
+
+/**
+ * @interface
+ * Paged list of content types.
+ * @extends Array<ContentTypeContract>
+ */
+export interface ContentTypeCollection extends Array<ContentTypeContract> {
+  /**
+   * Next page link, if any.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly nextLink?: string;
+}
+
+/**
+ * @interface
+ * Paged list of content items.
+ * @extends Array<ContentItemContract>
+ */
+export interface ContentItemCollection extends Array<ContentItemContract> {
+  /**
+   * Next page link, if any.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly nextLink?: string;
+}
+
+/**
+ * @interface
+ * Paged deleted Api Management Services List Representation.
+ * @extends Array<DeletedServiceContract>
+ */
+export interface DeletedServicesCollection extends Array<DeletedServiceContract> {
+  /**
+   * Next page link if any.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly nextLink?: string;
 }
 
 /**
@@ -8306,6 +9002,14 @@ export type ApiType = 'http' | 'soap';
 export type State = 'proposed' | 'open' | 'removed' | 'resolved' | 'closed';
 
 /**
+ * Defines values for DataMaskingMode.
+ * Possible values include: 'Mask', 'Hide'
+ * @readonly
+ * @enum {string}
+ */
+export type DataMaskingMode = 'Mask' | 'Hide';
+
+/**
  * Defines values for SamplingType.
  * Possible values include: 'fixed'
  * @readonly
@@ -8336,6 +9040,14 @@ export type HttpCorrelationProtocol = 'None' | 'Legacy' | 'W3C';
  * @enum {string}
  */
 export type Verbosity = 'verbose' | 'information' | 'error';
+
+/**
+ * Defines values for OperationNameFormat.
+ * Possible values include: 'Name', 'Url'
+ * @readonly
+ * @enum {string}
+ */
+export type OperationNameFormat = 'Name' | 'Url';
 
 /**
  * Defines values for PolicyContentFormat.
@@ -8461,11 +9173,11 @@ export type KeyType = 'primary' | 'secondary';
 
 /**
  * Defines values for AppType.
- * Possible values include: 'developerPortal'
+ * Possible values include: 'portal', 'developerPortal'
  * @readonly
  * @enum {string}
  */
-export type AppType = 'developerPortal';
+export type AppType = 'portal' | 'developerPortal';
 
 /**
  * Defines values for Confirmation.
@@ -8501,11 +9213,11 @@ export type IdentityProviderType = 'facebook' | 'google' | 'microsoft' | 'twitte
 
 /**
  * Defines values for LoggerType.
- * Possible values include: 'azureEventHub', 'applicationInsights'
+ * Possible values include: 'azureEventHub', 'applicationInsights', 'azureMonitor'
  * @readonly
  * @enum {string}
  */
-export type LoggerType = 'azureEventHub' | 'applicationInsights';
+export type LoggerType = 'azureEventHub' | 'applicationInsights' | 'azureMonitor';
 
 /**
  * Defines values for ConnectivityStatusType.
@@ -8668,6 +9380,31 @@ export type ApiCreateOrUpdateResponse = ApiContract & ApiCreateOrUpdateHeaders &
        * The parsed HTTP response headers.
        */
       parsedHeaders: ApiCreateOrUpdateHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ApiContract;
+    };
+};
+
+/**
+ * Contains response data for the update operation.
+ */
+export type ApiUpdateResponse = ApiContract & ApiUpdateHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: ApiUpdateHeaders;
 
       /**
        * The response body as text (string format)
@@ -8867,6 +9604,31 @@ export type ApiReleaseCreateOrUpdateResponse = ApiReleaseContract & ApiReleaseCr
 };
 
 /**
+ * Contains response data for the update operation.
+ */
+export type ApiReleaseUpdateResponse = ApiReleaseContract & ApiReleaseUpdateHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: ApiReleaseUpdateHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ApiReleaseContract;
+    };
+};
+
+/**
  * Contains response data for the listByServiceNext operation.
  */
 export type ApiReleaseListByServiceNextResponse = ApiReleaseCollection & {
@@ -8958,6 +9720,31 @@ export type ApiOperationCreateOrUpdateResponse = OperationContract & ApiOperatio
        * The parsed HTTP response headers.
        */
       parsedHeaders: ApiOperationCreateOrUpdateHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: OperationContract;
+    };
+};
+
+/**
+ * Contains response data for the update operation.
+ */
+export type ApiOperationUpdateResponse = OperationContract & ApiOperationUpdateHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: ApiOperationUpdateHeaders;
 
       /**
        * The response body as text (string format)
@@ -9407,6 +10194,31 @@ export type TagCreateOrUpdateResponse = TagContract & TagCreateOrUpdateHeaders &
 };
 
 /**
+ * Contains response data for the update operation.
+ */
+export type TagUpdateResponse = TagContract & TagUpdateHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: TagUpdateHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: TagContract;
+    };
+};
+
+/**
  * Contains response data for the listByOperationNext operation.
  */
 export type TagListByOperationNextResponse = TagCollection & {
@@ -9802,6 +10614,31 @@ export type ApiDiagnosticCreateOrUpdateResponse = DiagnosticContract & ApiDiagno
 };
 
 /**
+ * Contains response data for the update operation.
+ */
+export type ApiDiagnosticUpdateResponse = DiagnosticContract & ApiDiagnosticUpdateHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: ApiDiagnosticUpdateHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: DiagnosticContract;
+    };
+};
+
+/**
  * Contains response data for the listByServiceNext operation.
  */
 export type ApiDiagnosticListByServiceNextResponse = DiagnosticCollection & {
@@ -9893,6 +10730,31 @@ export type ApiIssueCreateOrUpdateResponse = IssueContract & ApiIssueCreateOrUpd
        * The parsed HTTP response headers.
        */
       parsedHeaders: ApiIssueCreateOrUpdateHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: IssueContract;
+    };
+};
+
+/**
+ * Contains response data for the update operation.
+ */
+export type ApiIssueUpdateResponse = IssueContract & ApiIssueUpdateHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: ApiIssueUpdateHeaders;
 
       /**
        * The response body as text (string format)
@@ -10367,6 +11229,31 @@ export type ApiVersionSetCreateOrUpdateResponse = ApiVersionSetContract & ApiVer
 };
 
 /**
+ * Contains response data for the update operation.
+ */
+export type ApiVersionSetUpdateResponse = ApiVersionSetContract & ApiVersionSetUpdateHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: ApiVersionSetUpdateHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ApiVersionSetContract;
+    };
+};
+
+/**
  * Contains response data for the listByServiceNext operation.
  */
 export type ApiVersionSetListByServiceNextResponse = ApiVersionSetCollection & {
@@ -10472,13 +11359,18 @@ export type AuthorizationServerCreateOrUpdateResponse = AuthorizationServerContr
 };
 
 /**
- * Contains response data for the listSecrets operation.
+ * Contains response data for the update operation.
  */
-export type AuthorizationServerListSecretsResponse = ClientSecretContract & {
+export type AuthorizationServerUpdateResponse = AuthorizationServerContract & AuthorizationServerUpdateHeaders & {
   /**
    * The underlying HTTP response.
    */
   _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: AuthorizationServerUpdateHeaders;
+
       /**
        * The response body as text (string format)
        */
@@ -10487,7 +11379,32 @@ export type AuthorizationServerListSecretsResponse = ClientSecretContract & {
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: ClientSecretContract;
+      parsedBody: AuthorizationServerContract;
+    };
+};
+
+/**
+ * Contains response data for the listSecrets operation.
+ */
+export type AuthorizationServerListSecretsResponse = AuthorizationServerSecretsContract & AuthorizationServerListSecretsHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: AuthorizationServerListSecretsHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: AuthorizationServerSecretsContract;
     };
 };
 
@@ -10597,6 +11514,31 @@ export type BackendCreateOrUpdateResponse = BackendContract & BackendCreateOrUpd
 };
 
 /**
+ * Contains response data for the update operation.
+ */
+export type BackendUpdateResponse = BackendContract & BackendUpdateHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: BackendUpdateHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: BackendContract;
+    };
+};
+
+/**
  * Contains response data for the listByServiceNext operation.
  */
 export type BackendListByServiceNextResponse = BackendCollection & {
@@ -10688,6 +11630,31 @@ export type CacheCreateOrUpdateResponse = CacheContract & CacheCreateOrUpdateHea
        * The parsed HTTP response headers.
        */
       parsedHeaders: CacheCreateOrUpdateHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: CacheContract;
+    };
+};
+
+/**
+ * Contains response data for the update operation.
+ */
+export type CacheUpdateResponse = CacheContract & CacheUpdateHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: CacheUpdateHeaders;
 
       /**
        * The response body as text (string format)
@@ -10823,6 +11790,281 @@ export type CertificateListByServiceNextResponse = CertificateCollection & {
        * The response body as parsed JSON or XML
        */
       parsedBody: CertificateCollection;
+    };
+};
+
+/**
+ * Contains response data for the listByService operation.
+ */
+export type ContentTypeListByServiceResponse = ContentTypeCollection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ContentTypeCollection;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type ContentTypeGetResponse = ContentTypeContract & ContentTypeGetHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: ContentTypeGetHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ContentTypeContract;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdate operation.
+ */
+export type ContentTypeCreateOrUpdateResponse = ContentTypeContract & ContentTypeCreateOrUpdateHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: ContentTypeCreateOrUpdateHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ContentTypeContract;
+    };
+};
+
+/**
+ * Contains response data for the listByServiceNext operation.
+ */
+export type ContentTypeListByServiceNextResponse = ContentTypeCollection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ContentTypeCollection;
+    };
+};
+
+/**
+ * Contains response data for the listByService operation.
+ */
+export type ContentTypeContentItemListByServiceResponse = ContentItemCollection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ContentItemCollection;
+    };
+};
+
+/**
+ * Contains response data for the getEntityTag operation.
+ */
+export type ContentTypeContentItemGetEntityTagResponse = ContentTypeContentItemGetEntityTagHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: ContentTypeContentItemGetEntityTagHeaders;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type ContentTypeContentItemGetResponse = ContentItemContract & ContentTypeContentItemGetHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: ContentTypeContentItemGetHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ContentItemContract;
+    };
+};
+
+/**
+ * Contains response data for the createOrUpdate operation.
+ */
+export type ContentTypeContentItemCreateOrUpdateResponse = ContentItemContract & ContentTypeContentItemCreateOrUpdateHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: ContentTypeContentItemCreateOrUpdateHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ContentItemContract;
+    };
+};
+
+/**
+ * Contains response data for the listByServiceNext operation.
+ */
+export type ContentTypeContentItemListByServiceNextResponse = ContentItemCollection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ContentItemCollection;
+    };
+};
+
+/**
+ * Contains response data for the listBySubscription operation.
+ */
+export type DeletedServicesListBySubscriptionResponse = DeletedServicesCollection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: DeletedServicesCollection;
+    };
+};
+
+/**
+ * Contains response data for the getByName operation.
+ */
+export type DeletedServicesGetByNameResponse = DeletedServiceContract & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: DeletedServiceContract;
+    };
+};
+
+/**
+ * Contains response data for the purge operation.
+ */
+export type DeletedServicesPurgeResponse = DeletedServiceContract & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: DeletedServiceContract;
+    };
+};
+
+/**
+ * Contains response data for the listBySubscriptionNext operation.
+ */
+export type DeletedServicesListBySubscriptionNextResponse = DeletedServicesCollection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: DeletedServicesCollection;
     };
 };
 
@@ -11372,6 +12614,31 @@ export type DiagnosticCreateOrUpdateResponse = DiagnosticContract & DiagnosticCr
 };
 
 /**
+ * Contains response data for the update operation.
+ */
+export type DiagnosticUpdateResponse = DiagnosticContract & DiagnosticUpdateHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: DiagnosticUpdateHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: DiagnosticContract;
+    };
+};
+
+/**
  * Contains response data for the listByServiceNext operation.
  */
 export type DiagnosticListByServiceNextResponse = DiagnosticCollection & {
@@ -11459,6 +12726,31 @@ export type EmailTemplateCreateOrUpdateResponse = EmailTemplateContract & {
    * The underlying HTTP response.
    */
   _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: EmailTemplateContract;
+    };
+};
+
+/**
+ * Contains response data for the update operation.
+ */
+export type EmailTemplateUpdateResponse = EmailTemplateContract & EmailTemplateUpdateHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: EmailTemplateUpdateHeaders;
+
       /**
        * The response body as text (string format)
        */
@@ -11563,6 +12855,31 @@ export type GatewayCreateOrUpdateResponse = GatewayContract & GatewayCreateOrUpd
        * The parsed HTTP response headers.
        */
       parsedHeaders: GatewayCreateOrUpdateHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: GatewayContract;
+    };
+};
+
+/**
+ * Contains response data for the update operation.
+ */
+export type GatewayUpdateResponse = GatewayContract & GatewayUpdateHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: GatewayUpdateHeaders;
 
       /**
        * The response body as text (string format)
@@ -11907,6 +13224,31 @@ export type GroupCreateOrUpdateResponse = GroupContract & GroupCreateOrUpdateHea
 };
 
 /**
+ * Contains response data for the update operation.
+ */
+export type GroupUpdateResponse = GroupContract & GroupUpdateHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: GroupUpdateHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: GroupContract;
+    };
+};
+
+/**
  * Contains response data for the listByServiceNext operation.
  */
 export type GroupListByServiceNextResponse = GroupCollection & {
@@ -12097,13 +13439,43 @@ export type IdentityProviderCreateOrUpdateResponse = IdentityProviderContract & 
 };
 
 /**
- * Contains response data for the listSecrets operation.
+ * Contains response data for the update operation.
  */
-export type IdentityProviderListSecretsResponse = ClientSecretContract & {
+export type IdentityProviderUpdateResponse = IdentityProviderContract & IdentityProviderUpdateHeaders & {
   /**
    * The underlying HTTP response.
    */
   _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: IdentityProviderUpdateHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: IdentityProviderContract;
+    };
+};
+
+/**
+ * Contains response data for the listSecrets operation.
+ */
+export type IdentityProviderListSecretsResponse = ClientSecretContract & IdentityProviderListSecretsHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: IdentityProviderListSecretsHeaders;
+
       /**
        * The response body as text (string format)
        */
@@ -12287,6 +13659,31 @@ export type LoggerCreateOrUpdateResponse = LoggerContract & LoggerCreateOrUpdate
 };
 
 /**
+ * Contains response data for the update operation.
+ */
+export type LoggerUpdateResponse = LoggerContract & LoggerUpdateHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: LoggerUpdateHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: LoggerContract;
+    };
+};
+
+/**
  * Contains response data for the listByServiceNext operation.
  */
 export type LoggerListByServiceNextResponse = LoggerCollection & {
@@ -12419,11 +13816,16 @@ export type NamedValueUpdateResponse = NamedValueContract & NamedValueUpdateHead
 /**
  * Contains response data for the listValue operation.
  */
-export type NamedValueListValueResponse = PropertyValueContract & {
+export type NamedValueListValueResponse = NamedValueSecretContract & NamedValueListValueHeaders & {
   /**
    * The underlying HTTP response.
    */
   _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: NamedValueListValueHeaders;
+
       /**
        * The response body as text (string format)
        */
@@ -12432,7 +13834,7 @@ export type NamedValueListValueResponse = PropertyValueContract & {
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: PropertyValueContract;
+      parsedBody: NamedValueSecretContract;
     };
 };
 
@@ -12792,13 +14194,43 @@ export type OpenIdConnectProviderCreateOrUpdateResponse = OpenidConnectProviderC
 };
 
 /**
- * Contains response data for the listSecrets operation.
+ * Contains response data for the update operation.
  */
-export type OpenIdConnectProviderListSecretsResponse = ClientSecretContract & {
+export type OpenIdConnectProviderUpdateResponse = OpenidConnectProviderContract & OpenIdConnectProviderUpdateHeaders & {
   /**
    * The underlying HTTP response.
    */
   _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: OpenIdConnectProviderUpdateHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: OpenidConnectProviderContract;
+    };
+};
+
+/**
+ * Contains response data for the listSecrets operation.
+ */
+export type OpenIdConnectProviderListSecretsResponse = ClientSecretContract & OpenIdConnectProviderListSecretsHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: OpenIdConnectProviderListSecretsHeaders;
+
       /**
        * The response body as text (string format)
        */
@@ -13222,6 +14654,31 @@ export type ProductCreateOrUpdateResponse = ProductContract & ProductCreateOrUpd
 };
 
 /**
+ * Contains response data for the update operation.
+ */
+export type ProductUpdateResponse = ProductContract & ProductUpdateHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: ProductUpdateHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ProductContract;
+    };
+};
+
+/**
  * Contains response data for the listByTags operation.
  */
 export type ProductListByTagsResponse = TagResourceCollection & {
@@ -13547,9 +15004,49 @@ export type QuotaByCounterKeysListByServiceResponse = QuotaCounterCollection & {
 };
 
 /**
+ * Contains response data for the update operation.
+ */
+export type QuotaByCounterKeysUpdateResponse = QuotaCounterCollection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: QuotaCounterCollection;
+    };
+};
+
+/**
  * Contains response data for the get operation.
  */
 export type QuotaByPeriodKeysGetResponse = QuotaCounterContract & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: QuotaCounterContract;
+    };
+};
+
+/**
+ * Contains response data for the update operation.
+ */
+export type QuotaByPeriodKeysUpdateResponse = QuotaCounterContract & {
   /**
    * The underlying HTTP response.
    */
@@ -13992,13 +15489,43 @@ export type SubscriptionCreateOrUpdateResponse = SubscriptionContract & Subscrip
 };
 
 /**
- * Contains response data for the listSecrets operation.
+ * Contains response data for the update operation.
  */
-export type SubscriptionListSecretsResponse = SubscriptionKeysContract & {
+export type SubscriptionUpdateResponse = SubscriptionContract & SubscriptionUpdateHeaders & {
   /**
    * The underlying HTTP response.
    */
   _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: SubscriptionUpdateHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: SubscriptionContract;
+    };
+};
+
+/**
+ * Contains response data for the listSecrets operation.
+ */
+export type SubscriptionListSecretsResponse = SubscriptionKeysContract & SubscriptionListSecretsHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: SubscriptionListSecretsHeaders;
+
       /**
        * The response body as text (string format)
        */
@@ -14098,6 +15625,31 @@ export type TenantAccessGetResponse = AccessInformationContract & TenantAccessGe
        * The parsed HTTP response headers.
        */
       parsedHeaders: TenantAccessGetHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: AccessInformationContract;
+    };
+};
+
+/**
+ * Contains response data for the update operation.
+ */
+export type TenantAccessUpdateResponse = AccessInformationContract & TenantAccessUpdateHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: TenantAccessUpdateHeaders;
 
       /**
        * The response body as text (string format)
@@ -14398,6 +15950,31 @@ export type UserCreateOrUpdateResponse = UserContract & UserCreateOrUpdateHeader
        * The parsed HTTP response headers.
        */
       parsedHeaders: UserCreateOrUpdateHeaders;
+
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: UserContract;
+    };
+};
+
+/**
+ * Contains response data for the update operation.
+ */
+export type UserUpdateResponse = UserContract & UserUpdateHeaders & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The parsed HTTP response headers.
+       */
+      parsedHeaders: UserUpdateHeaders;
 
       /**
        * The response body as text (string format)
