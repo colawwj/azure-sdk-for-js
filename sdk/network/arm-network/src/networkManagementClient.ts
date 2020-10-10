@@ -45,6 +45,7 @@ class NetworkManagementClient extends NetworkManagementClientContext {
   expressRoutePortsLocations: operations.ExpressRoutePortsLocations;
   expressRoutePorts: operations.ExpressRoutePorts;
   expressRouteLinks: operations.ExpressRouteLinks;
+  expressRoutePortAuthorizations: operations.ExpressRoutePortAuthorizations;
   firewallPolicies: operations.FirewallPolicies;
   firewallPolicyRuleCollectionGroups: operations.FirewallPolicyRuleCollectionGroups;
   ipAllocations: operations.IpAllocations;
@@ -69,7 +70,6 @@ class NetworkManagementClient extends NetworkManagementClientContext {
   networkVirtualAppliances: operations.NetworkVirtualAppliances;
   virtualApplianceSites: operations.VirtualApplianceSites;
   virtualApplianceSkus: operations.VirtualApplianceSkus;
-  inboundSecurityRule: operations.InboundSecurityRuleOperations;
   networkWatchers: operations.NetworkWatchers;
   packetCaptures: operations.PacketCaptures;
   connectionMonitors: operations.ConnectionMonitors;
@@ -159,6 +159,7 @@ class NetworkManagementClient extends NetworkManagementClientContext {
     this.expressRoutePortsLocations = new operations.ExpressRoutePortsLocations(this);
     this.expressRoutePorts = new operations.ExpressRoutePorts(this);
     this.expressRouteLinks = new operations.ExpressRouteLinks(this);
+    this.expressRoutePortAuthorizations = new operations.ExpressRoutePortAuthorizations(this);
     this.firewallPolicies = new operations.FirewallPolicies(this);
     this.firewallPolicyRuleCollectionGroups = new operations.FirewallPolicyRuleCollectionGroups(this);
     this.ipAllocations = new operations.IpAllocations(this);
@@ -183,7 +184,6 @@ class NetworkManagementClient extends NetworkManagementClientContext {
     this.networkVirtualAppliances = new operations.NetworkVirtualAppliances(this);
     this.virtualApplianceSites = new operations.VirtualApplianceSites(this);
     this.virtualApplianceSkus = new operations.VirtualApplianceSkus(this);
-    this.inboundSecurityRule = new operations.InboundSecurityRuleOperations(this);
     this.networkWatchers = new operations.NetworkWatchers(this);
     this.packetCaptures = new operations.PacketCaptures(this);
     this.connectionMonitors = new operations.ConnectionMonitors(this);
