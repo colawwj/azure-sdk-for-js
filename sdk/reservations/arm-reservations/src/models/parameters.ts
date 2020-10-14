@@ -26,7 +26,7 @@ export const apiVersion0: msRest.OperationQueryParameter = {
     required: true,
     isConstant: true,
     serializedName: "api-version",
-    defaultValue: '2019-07-19-preview',
+    defaultValue: '2017-11-01',
     type: {
       name: "String"
     }
@@ -38,31 +38,7 @@ export const apiVersion1: msRest.OperationQueryParameter = {
     required: true,
     isConstant: true,
     serializedName: "api-version",
-    defaultValue: '2019-04-01',
-    type: {
-      name: "String"
-    }
-  }
-};
-export const expand0: msRest.OperationQueryParameter = {
-  parameterPath: [
-    "options",
-    "expand"
-  ],
-  mapper: {
-    serializedName: "expand",
-    type: {
-      name: "String"
-    }
-  }
-};
-export const expand1: msRest.OperationQueryParameter = {
-  parameterPath: [
-    "options",
-    "expand"
-  ],
-  mapper: {
-    serializedName: "$expand",
+    defaultValue: '2020-10-25',
     type: {
       name: "String"
     }
@@ -90,22 +66,10 @@ export const id: msRest.OperationURLParameter = {
     }
   }
 };
-export const location0: msRest.OperationURLParameter = {
+export const location: msRest.OperationURLParameter = {
   parameterPath: "location",
   mapper: {
     required: true,
-    serializedName: "location",
-    type: {
-      name: "String"
-    }
-  }
-};
-export const location1: msRest.OperationQueryParameter = {
-  parameterPath: [
-    "options",
-    "location"
-  ],
-  mapper: {
     serializedName: "location",
     type: {
       name: "String"
@@ -148,16 +112,6 @@ export const reservationOrderId: msRest.OperationURLParameter = {
   mapper: {
     required: true,
     serializedName: "reservationOrderId",
-    type: {
-      name: "String"
-    }
-  }
-};
-export const reservedResourceType: msRest.OperationQueryParameter = {
-  parameterPath: "reservedResourceType",
-  mapper: {
-    required: true,
-    serializedName: "reservedResourceType",
     type: {
       name: "String"
     }

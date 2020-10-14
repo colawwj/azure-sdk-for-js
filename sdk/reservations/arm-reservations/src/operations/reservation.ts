@@ -28,20 +28,6 @@ export class Reservation {
   }
 
   /**
-   * Get Available Scopes for `Reservation`.
-   * @summary Get Available Scopes for `Reservation`.
-   * @param reservationOrderId Order Id of the reservation
-   * @param reservationId Id of the Reservation Item
-   * @param body
-   * @param [options] The optional parameters
-   * @returns Promise<Models.ReservationAvailableScopesResponse>
-   */
-  availableScopes(reservationOrderId: string, reservationId: string, body: string[], options?: msRest.RequestOptionsBase): Promise<Models.ReservationAvailableScopesResponse> {
-    return this.beginAvailableScopes(reservationOrderId,reservationId,body,options)
-      .then(lroPoller => lroPoller.pollUntilFinished()) as Promise<Models.ReservationAvailableScopesResponse>;
-  }
-
-  /**
    * Split a `Reservation` into two `Reservation`s with specified quantity distribution.
    * @summary Split the `Reservation`.
    * @param reservationOrderId Order Id of the reservation
@@ -105,7 +91,7 @@ export class Reservation {
    * @param [options] The optional parameters
    * @returns Promise<Models.ReservationGetResponse>
    */
-  get(reservationId: string, reservationOrderId: string, options?: Models.ReservationGetOptionalParams): Promise<Models.ReservationGetResponse>;
+  get(reservationId: string, reservationOrderId: string, options?: msRest.RequestOptionsBase): Promise<Models.ReservationGetResponse>;
   /**
    * @param reservationId Id of the Reservation Item
    * @param reservationOrderId Order Id of the reservation
@@ -118,8 +104,8 @@ export class Reservation {
    * @param options The optional parameters
    * @param callback The callback
    */
-  get(reservationId: string, reservationOrderId: string, options: Models.ReservationGetOptionalParams, callback: msRest.ServiceCallback<Models.ReservationResponse>): void;
-  get(reservationId: string, reservationOrderId: string, options?: Models.ReservationGetOptionalParams | msRest.ServiceCallback<Models.ReservationResponse>, callback?: msRest.ServiceCallback<Models.ReservationResponse>): Promise<Models.ReservationGetResponse> {
+  get(reservationId: string, reservationOrderId: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.ReservationResponse>): void;
+  get(reservationId: string, reservationOrderId: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.ReservationResponse>, callback?: msRest.ServiceCallback<Models.ReservationResponse>): Promise<Models.ReservationGetResponse> {
     return this.client.sendOperationRequest(
       {
         reservationId,
@@ -175,27 +161,6 @@ export class Reservation {
       },
       listRevisionsOperationSpec,
       callback) as Promise<Models.ReservationListRevisionsResponse>;
-  }
-
-  /**
-   * Get Available Scopes for `Reservation`.
-   * @summary Get Available Scopes for `Reservation`.
-   * @param reservationOrderId Order Id of the reservation
-   * @param reservationId Id of the Reservation Item
-   * @param body
-   * @param [options] The optional parameters
-   * @returns Promise<msRestAzure.LROPoller>
-   */
-  beginAvailableScopes(reservationOrderId: string, reservationId: string, body: string[], options?: msRest.RequestOptionsBase): Promise<msRestAzure.LROPoller> {
-    return this.client.sendLRORequest(
-      {
-        reservationOrderId,
-        reservationId,
-        body,
-        options
-      },
-      beginAvailableScopesOperationSpec,
-      options);
   }
 
   /**
@@ -326,7 +291,7 @@ const listOperationSpec: msRest.OperationSpec = {
     Parameters.reservationOrderId
   ],
   queryParameters: [
-    Parameters.apiVersion1
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -350,8 +315,7 @@ const getOperationSpec: msRest.OperationSpec = {
     Parameters.reservationOrderId
   ],
   queryParameters: [
-    Parameters.apiVersion1,
-    Parameters.expand0
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -375,7 +339,7 @@ const listRevisionsOperationSpec: msRest.OperationSpec = {
     Parameters.reservationOrderId
   ],
   queryParameters: [
-    Parameters.apiVersion1
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -391,45 +355,6 @@ const listRevisionsOperationSpec: msRest.OperationSpec = {
   serializer
 };
 
-const beginAvailableScopesOperationSpec: msRest.OperationSpec = {
-  httpMethod: "POST",
-  path: "providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}/availableScopes",
-  urlParameters: [
-    Parameters.reservationOrderId,
-    Parameters.reservationId
-  ],
-  queryParameters: [
-    Parameters.apiVersion1
-  ],
-  headerParameters: [
-    Parameters.acceptLanguage
-  ],
-  requestBody: {
-    parameterPath: "body",
-    mapper: {
-      required: true,
-      serializedName: "body",
-      type: {
-        name: "Sequence",
-        element: {
-          type: {
-            name: "String"
-          }
-        }
-      }
-    }
-  },
-  responses: {
-    200: {
-      bodyMapper: Mappers.Properties
-    },
-    default: {
-      bodyMapper: Mappers.ErrorModel
-    }
-  },
-  serializer
-};
-
 const beginSplitOperationSpec: msRest.OperationSpec = {
   httpMethod: "POST",
   path: "providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/split",
@@ -437,7 +362,7 @@ const beginSplitOperationSpec: msRest.OperationSpec = {
     Parameters.reservationOrderId
   ],
   queryParameters: [
-    Parameters.apiVersion1
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -479,7 +404,7 @@ const beginMergeOperationSpec: msRest.OperationSpec = {
     Parameters.reservationOrderId
   ],
   queryParameters: [
-    Parameters.apiVersion1
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -522,7 +447,7 @@ const beginUpdateOperationSpec: msRest.OperationSpec = {
     Parameters.reservationId
   ],
   queryParameters: [
-    Parameters.apiVersion1
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage

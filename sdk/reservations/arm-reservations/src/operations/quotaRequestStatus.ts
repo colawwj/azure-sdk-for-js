@@ -145,11 +145,11 @@ const getOperationSpec: msRest.OperationSpec = {
   urlParameters: [
     Parameters.subscriptionId,
     Parameters.providerId,
-    Parameters.location0,
+    Parameters.location,
     Parameters.id
   ],
   queryParameters: [
-    Parameters.apiVersion0
+    Parameters.apiVersion1
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -171,10 +171,10 @@ const listOperationSpec: msRest.OperationSpec = {
   urlParameters: [
     Parameters.subscriptionId,
     Parameters.providerId,
-    Parameters.location0
+    Parameters.location
   ],
   queryParameters: [
-    Parameters.apiVersion0,
+    Parameters.apiVersion1,
     Parameters.filter,
     Parameters.top,
     Parameters.skiptoken
