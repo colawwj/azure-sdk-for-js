@@ -2657,6 +2657,17 @@ export interface RollingUpgradePolicy {
    * 0 seconds (PT0S).
    */
   pauseTimeBetweenBatches?: string;
+  /**
+   * Enable rolling upgrade across multiple zones during UD walk within the limit of
+   * MaxBatchInstanceCount or BatchInstancePercent
+   */
+  enableCrossZoneUpgrade?: boolean;
+  /**
+   * Enable rolling upgrade to start with the batch which has most unhealthy VMs in percentage. If
+   * enableCrossZoneUpgrade is not enabled, the rolling upgrade will start from the most unhealthy
+   * availability zone,and within the zone, walk the UD that has the most unhealhty VMs first
+   */
+  prioritizeUnhealthyInstances?: boolean;
 }
 
 /**

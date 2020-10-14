@@ -3856,6 +3856,18 @@ export const RollingUpgradePolicy: msRest.CompositeMapper = {
         type: {
           name: "String"
         }
+      },
+      enableCrossZoneUpgrade: {
+        serializedName: "enableCrossZoneUpgrade",
+        type: {
+          name: "Boolean"
+        }
+      },
+      prioritizeUnhealthyInstances: {
+        serializedName: "prioritizeUnhealthyInstances",
+        type: {
+          name: "Boolean"
+        }
       }
     }
   }
