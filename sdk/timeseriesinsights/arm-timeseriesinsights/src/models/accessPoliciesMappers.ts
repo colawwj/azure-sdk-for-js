@@ -15,16 +15,17 @@ export {
   BaseResource,
   CloudError,
   EnvironmentResource,
-  EnvironmentStateDetails,
-  EnvironmentStatus,
   EventHubEventSourceResource,
   EventSourceResource,
-  IngressEnvironmentStatus,
+  Gen1EnvironmentResource,
+  Gen2EnvironmentResource,
+  Gen2StorageConfigurationOutput,
   IoTHubEventSourceResource,
-  PartitionKeyProperty,
   ReferenceDataSetKeyProperty,
   ReferenceDataSetResource,
   Resource,
   Sku,
-  TrackedResource
+  TimeSeriesIdProperty,
+  TrackedResource,
+  WarmStoreConfigurationProperties
 } from "../models/mappers";
