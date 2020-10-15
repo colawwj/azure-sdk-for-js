@@ -34,6 +34,7 @@ export * from "./expressRouteCrossConnectionPeerings";
 export * from "./expressRoutePortsLocations";
 export * from "./expressRoutePorts";
 export * from "./expressRouteLinks";
+export * from "./expressRoutePortAuthorizations";
 export * from "./firewallPolicies";
 export * from "./firewallPolicyRuleCollectionGroups";
 export * from "./ipAllocations";
