@@ -12,17 +12,17 @@ import * as msRest from "@azure/ms-rest-js";
 import * as Models from "../models";
 import * as Mappers from "../models/virtualMachineSizesMappers";
 import * as Parameters from "../models/parameters";
-import { AzureMachineLearningWorkspacesContext } from "../azureMachineLearningWorkspacesContext";
+import { AzureMachineLearningWorkspacesDummyChangeContext } from "../azureMachineLearningWorkspacesDummyChangeContext";
 
 /** Class representing a VirtualMachineSizes. */
 export class VirtualMachineSizes {
-  private readonly client: AzureMachineLearningWorkspacesContext;
+  private readonly client: AzureMachineLearningWorkspacesDummyChangeContext;
 
   /**
    * Create a VirtualMachineSizes.
-   * @param {AzureMachineLearningWorkspacesContext} client Reference to the service client.
+   * @param {AzureMachineLearningWorkspacesDummyChangeContext} client Reference to the service client.
    */
-  constructor(client: AzureMachineLearningWorkspacesContext) {
+  constructor(client: AzureMachineLearningWorkspacesDummyChangeContext) {
     this.client = client;
   }
 
@@ -32,7 +32,7 @@ export class VirtualMachineSizes {
    * @param [options] The optional parameters
    * @returns Promise<Models.VirtualMachineSizesListResponse>
    */
-  list(location: string, options?: msRest.RequestOptionsBase): Promise<Models.VirtualMachineSizesListResponse>;
+  list(location: string, options?: Models.VirtualMachineSizesListOptionalParams): Promise<Models.VirtualMachineSizesListResponse>;
   /**
    * @param location The location upon which virtual-machine-sizes is queried.
    * @param callback The callback
@@ -43,8 +43,8 @@ export class VirtualMachineSizes {
    * @param options The optional parameters
    * @param callback The callback
    */
-  list(location: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.VirtualMachineSizeListResult>): void;
-  list(location: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.VirtualMachineSizeListResult>, callback?: msRest.ServiceCallback<Models.VirtualMachineSizeListResult>): Promise<Models.VirtualMachineSizesListResponse> {
+  list(location: string, options: Models.VirtualMachineSizesListOptionalParams, callback: msRest.ServiceCallback<Models.VirtualMachineSizeListResult>): void;
+  list(location: string, options?: Models.VirtualMachineSizesListOptionalParams | msRest.ServiceCallback<Models.VirtualMachineSizeListResult>, callback?: msRest.ServiceCallback<Models.VirtualMachineSizeListResult>): Promise<Models.VirtualMachineSizesListResponse> {
     return this.client.sendOperationRequest(
       {
         location,
@@ -65,7 +65,9 @@ const listOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion,
+    Parameters.computeType,
+    Parameters.recommended
   ],
   headerParameters: [
     Parameters.acceptLanguage

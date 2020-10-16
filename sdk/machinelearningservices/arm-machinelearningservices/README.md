@@ -1,6 +1,6 @@
-## Azure AzureMachineLearningWorkspaces SDK for JavaScript
+## Azure AzureMachineLearningWorkspacesDummyChange SDK for JavaScript
 
-This package contains an isomorphic SDK for AzureMachineLearningWorkspaces.
+This package contains an isomorphic SDK for AzureMachineLearningWorkspacesDummyChange.
 
 ### Currently supported environments
 
@@ -19,8 +19,9 @@ npm install @azure/arm-machinelearningservices
 
 ##### Install @azure/ms-rest-nodeauth
 
+- Please install minimum version of `"@azure/ms-rest-nodeauth": "^3.0.0"`.
 ```bash
-npm install @azure/ms-rest-nodeauth
+npm install @azure/ms-rest-nodeauth@"^3.0.0"
 ```
 
 ##### Sample code
@@ -29,11 +30,11 @@ npm install @azure/ms-rest-nodeauth
 import * as msRest from "@azure/ms-rest-js";
 import * as msRestAzure from "@azure/ms-rest-azure-js";
 import * as msRestNodeAuth from "@azure/ms-rest-nodeauth";
-import { AzureMachineLearningWorkspaces, AzureMachineLearningWorkspacesModels, AzureMachineLearningWorkspacesMappers } from "@azure/arm-machinelearningservices";
+import { AzureMachineLearningWorkspacesDummyChange, AzureMachineLearningWorkspacesDummyChangeModels, AzureMachineLearningWorkspacesDummyChangeMappers } from "@azure/arm-machinelearningservices";
 const subscriptionId = process.env["AZURE_SUBSCRIPTION_ID"];
 
 msRestNodeAuth.interactiveLogin().then((creds) => {
-  const client = new AzureMachineLearningWorkspaces(creds, subscriptionId);
+  const client = new AzureMachineLearningWorkspacesDummyChange(creds, subscriptionId);
   client.operations.list().then((result) => {
     console.log("The result is:");
     console.log(result);
@@ -76,7 +77,7 @@ See https://github.com/Azure/ms-rest-browserauth to learn how to authenticate to
           // may cause redirects
           authManager.login();
         }
-        const client = new Azure.ArmMachinelearningservices.AzureMachineLearningWorkspaces(res.creds, subscriptionId);
+        const client = new Azure.ArmMachinelearningservices.AzureMachineLearningWorkspacesDummyChange(res.creds, subscriptionId);
         client.operations.list().then((result) => {
           console.log("The result is:");
           console.log(result);
@@ -95,4 +96,4 @@ See https://github.com/Azure/ms-rest-browserauth to learn how to authenticate to
 
 - [Microsoft Azure SDK for Javascript](https://github.com/Azure/azure-sdk-for-js)
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-js%2Fsdk%2Fmachinelearningservices%2Farm-machinelearningservices%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-js/sdk/machinelearningservices/arm-machinelearningservices/README.png)

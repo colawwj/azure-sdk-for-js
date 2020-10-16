@@ -12,17 +12,17 @@ import * as msRest from "@azure/ms-rest-js";
 import * as Models from "../models";
 import * as Mappers from "../models/operationsMappers";
 import * as Parameters from "../models/parameters";
-import { AzureMachineLearningWorkspacesContext } from "../azureMachineLearningWorkspacesContext";
+import { AzureMachineLearningWorkspacesDummyChangeContext } from "../azureMachineLearningWorkspacesDummyChangeContext";
 
 /** Class representing a Operations. */
 export class Operations {
-  private readonly client: AzureMachineLearningWorkspacesContext;
+  private readonly client: AzureMachineLearningWorkspacesDummyChangeContext;
 
   /**
    * Create a Operations.
-   * @param {AzureMachineLearningWorkspacesContext} client Reference to the service client.
+   * @param {AzureMachineLearningWorkspacesDummyChangeContext} client Reference to the service client.
    */
-  constructor(client: AzureMachineLearningWorkspacesContext) {
+  constructor(client: AzureMachineLearningWorkspacesDummyChangeContext) {
     this.client = client;
   }
 
