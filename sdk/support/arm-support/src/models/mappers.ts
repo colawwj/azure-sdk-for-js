@@ -69,6 +69,12 @@ export const Operation: msRest.CompositeMapper = {
           name: "Composite",
           className: "OperationDisplay"
         }
+      },
+      isDataAction: {
+        serializedName: "isDataAction",
+        type: {
+          name: "Boolean"
+        }
       }
     }
   }
