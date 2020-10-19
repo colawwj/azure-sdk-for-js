@@ -8,9 +8,9 @@
 
 export {
   ErrorResponse,
-  SoftareUpdateConfigurationRunTaskProperties,
-  SoftareUpdateConfigurationRunTasks,
   SoftwareUpdateConfigurationRun,
   SoftwareUpdateConfigurationRunListResult,
+  SoftwareUpdateConfigurationRunTaskProperties,
+  SoftwareUpdateConfigurationRunTasks,
   UpdateConfigurationNavigation
 } from "../models/mappers";

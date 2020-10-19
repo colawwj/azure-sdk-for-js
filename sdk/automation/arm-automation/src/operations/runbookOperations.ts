@@ -510,7 +510,8 @@ const beginPublishOperationSpec: msRest.OperationSpec = {
       headersMapper: Mappers.RunbookPublishHeaders
     },
     default: {
-      bodyMapper: Mappers.ErrorResponse
+      bodyMapper: Mappers.ErrorResponse,
+      headersMapper: Mappers.RunbookPublishHeaders
     }
   },
   serializer

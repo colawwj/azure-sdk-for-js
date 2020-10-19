@@ -13,7 +13,6 @@ export {
   AzureQueryProperties,
   BaseResource,
   Certificate,
-  CollectionItemUpdateConfiguration,
   Connection,
   ConnectionTypeAssociationProperty,
   ContentHash,

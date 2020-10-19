@@ -297,7 +297,8 @@ const beginReplaceContentOperationSpec: msRest.OperationSpec = {
       headersMapper: Mappers.RunbookDraftReplaceContentHeaders
     },
     default: {
-      bodyMapper: Mappers.ErrorResponse
+      bodyMapper: Mappers.ErrorResponse,
+      headersMapper: Mappers.RunbookDraftReplaceContentHeaders
     }
   },
   serializer
