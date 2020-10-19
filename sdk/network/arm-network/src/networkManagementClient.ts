@@ -28,6 +28,7 @@ class NetworkManagementClient extends NetworkManagementClientContext {
   availableServiceAliases: operations.AvailableServiceAliases;
   azureFirewalls: operations.AzureFirewalls;
   azureFirewallFqdnTags: operations.AzureFirewallFqdnTags;
+  webCategories: operations.WebCategories;
   bastionHosts: operations.BastionHosts;
   customIPPrefixes: operations.CustomIPPrefixes;
   ddosCustomPolicies: operations.DdosCustomPolicies;
@@ -45,6 +46,7 @@ class NetworkManagementClient extends NetworkManagementClientContext {
   expressRoutePortsLocations: operations.ExpressRoutePortsLocations;
   expressRoutePorts: operations.ExpressRoutePorts;
   expressRouteLinks: operations.ExpressRouteLinks;
+  expressRoutePortAuthorizations: operations.ExpressRoutePortAuthorizations;
   firewallPolicies: operations.FirewallPolicies;
   firewallPolicyRuleCollectionGroups: operations.FirewallPolicyRuleCollectionGroups;
   ipAllocations: operations.IpAllocations;
@@ -142,6 +144,7 @@ class NetworkManagementClient extends NetworkManagementClientContext {
     this.availableServiceAliases = new operations.AvailableServiceAliases(this);
     this.azureFirewalls = new operations.AzureFirewalls(this);
     this.azureFirewallFqdnTags = new operations.AzureFirewallFqdnTags(this);
+    this.webCategories = new operations.WebCategories(this);
     this.bastionHosts = new operations.BastionHosts(this);
     this.customIPPrefixes = new operations.CustomIPPrefixes(this);
     this.ddosCustomPolicies = new operations.DdosCustomPolicies(this);
@@ -159,6 +162,7 @@ class NetworkManagementClient extends NetworkManagementClientContext {
     this.expressRoutePortsLocations = new operations.ExpressRoutePortsLocations(this);
     this.expressRoutePorts = new operations.ExpressRoutePorts(this);
     this.expressRouteLinks = new operations.ExpressRouteLinks(this);
+    this.expressRoutePortAuthorizations = new operations.ExpressRoutePortAuthorizations(this);
     this.firewallPolicies = new operations.FirewallPolicies(this);
     this.firewallPolicyRuleCollectionGroups = new operations.FirewallPolicyRuleCollectionGroups(this);
     this.ipAllocations = new operations.IpAllocations(this);
