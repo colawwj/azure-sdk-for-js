@@ -904,6 +904,17 @@ export const LogAnalytics: msRest.CompositeMapper = {
             }
           }
         }
+      },
+      workspaceResourceId: {
+        serializedName: "workspaceResourceId",
+        type: {
+          name: "Dictionary",
+          value: {
+            type: {
+              name: "String"
+            }
+          }
+        }
       }
     }
   }

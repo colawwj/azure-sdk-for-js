@@ -538,6 +538,10 @@ export interface LogAnalytics {
    * Metadata for log analytics.
    */
   metadata?: { [propertyName: string]: string };
+  /**
+   * The workspace resource id for log analytics
+   */
+  workspaceResourceId?: { [propertyName: string]: string };
 }
 
 /**
