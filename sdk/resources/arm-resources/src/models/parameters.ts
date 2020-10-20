@@ -69,6 +69,18 @@ export const filter: msRest.OperationQueryParameter = {
     }
   }
 };
+export const forceDeletionResourceTypes: msRest.OperationQueryParameter = {
+  parameterPath: [
+    "options",
+    "forceDeletionResourceTypes"
+  ],
+  mapper: {
+    serializedName: "forceDeletionResourceTypes",
+    type: {
+      name: "String"
+    }
+  }
+};
 export const groupId: msRest.OperationURLParameter = {
   parameterPath: "groupId",
   mapper: {

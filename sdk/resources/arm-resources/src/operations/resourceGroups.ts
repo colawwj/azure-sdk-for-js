@@ -101,7 +101,7 @@ export class ResourceGroups {
    * @param [options] The optional parameters
    * @returns Promise<msRest.RestResponse>
    */
-  deleteMethod(resourceGroupName: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse> {
+  deleteMethod(resourceGroupName: string, options?: Models.ResourceGroupsDeleteMethodOptionalParams): Promise<msRest.RestResponse> {
     return this.beginDeleteMethod(resourceGroupName,options)
       .then(lroPoller => lroPoller.pollUntilFinished());
   }
@@ -213,7 +213,7 @@ export class ResourceGroups {
    * @param [options] The optional parameters
    * @returns Promise<msRestAzure.LROPoller>
    */
-  beginDeleteMethod(resourceGroupName: string, options?: msRest.RequestOptionsBase): Promise<msRestAzure.LROPoller> {
+  beginDeleteMethod(resourceGroupName: string, options?: Models.ResourceGroupsBeginDeleteMethodOptionalParams): Promise<msRestAzure.LROPoller> {
     return this.client.sendLRORequest(
       {
         resourceGroupName,
@@ -417,6 +417,7 @@ const beginDeleteMethodOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
+    Parameters.forceDeletionResourceTypes,
     Parameters.apiVersion
   ],
   headerParameters: [
