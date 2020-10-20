@@ -373,7 +373,8 @@ const updateOperationSpec: msRest.OperationSpec = {
       headersMapper: Mappers.PoolUpdateHeaders
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.CloudError,
+      headersMapper: Mappers.PoolUpdateHeaders
     }
   },
   serializer
@@ -400,7 +401,8 @@ const getOperationSpec: msRest.OperationSpec = {
       headersMapper: Mappers.PoolGetHeaders
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.CloudError,
+      headersMapper: Mappers.PoolGetHeaders
     }
   },
   serializer
@@ -427,7 +429,8 @@ const disableAutoScaleOperationSpec: msRest.OperationSpec = {
       headersMapper: Mappers.PoolDisableAutoScaleHeaders
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.CloudError,
+      headersMapper: Mappers.PoolDisableAutoScaleHeaders
     }
   },
   serializer
@@ -454,7 +457,8 @@ const stopResizeOperationSpec: msRest.OperationSpec = {
       headersMapper: Mappers.PoolStopResizeHeaders
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.CloudError,
+      headersMapper: Mappers.PoolStopResizeHeaders
     }
   },
   serializer
@@ -490,7 +494,8 @@ const beginCreateOperationSpec: msRest.OperationSpec = {
       headersMapper: Mappers.PoolCreateHeaders
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.CloudError,
+      headersMapper: Mappers.PoolCreateHeaders
     }
   },
   serializer
@@ -522,7 +527,8 @@ const beginDeleteMethodOperationSpec: msRest.OperationSpec = {
       headersMapper: Mappers.PoolDeleteHeaders
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.CloudError,
+      headersMapper: Mappers.PoolDeleteHeaders
     }
   },
   serializer

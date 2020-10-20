@@ -360,7 +360,8 @@ const updateOperationSpec: msRest.OperationSpec = {
       headersMapper: Mappers.CertificateUpdateHeaders
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.CloudError,
+      headersMapper: Mappers.CertificateUpdateHeaders
     }
   },
   serializer
@@ -387,7 +388,8 @@ const getOperationSpec: msRest.OperationSpec = {
       headersMapper: Mappers.CertificateGetHeaders
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.CloudError,
+      headersMapper: Mappers.CertificateGetHeaders
     }
   },
   serializer
@@ -414,7 +416,8 @@ const cancelDeletionOperationSpec: msRest.OperationSpec = {
       headersMapper: Mappers.CertificateCancelDeletionHeaders
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.CloudError,
+      headersMapper: Mappers.CertificateCancelDeletionHeaders
     }
   },
   serializer
@@ -450,7 +453,8 @@ const beginCreateOperationSpec: msRest.OperationSpec = {
       headersMapper: Mappers.CertificateCreateHeaders
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.CloudError,
+      headersMapper: Mappers.CertificateCreateHeaders
     }
   },
   serializer
@@ -482,7 +486,8 @@ const beginDeleteMethodOperationSpec: msRest.OperationSpec = {
       headersMapper: Mappers.CertificateDeleteHeaders
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.CloudError,
+      headersMapper: Mappers.CertificateDeleteHeaders
     }
   },
   serializer

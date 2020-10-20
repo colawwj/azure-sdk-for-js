@@ -31,11 +31,7 @@ export class BatchAccountOperations {
    * Creates a new Batch account with the specified parameters. Existing accounts cannot be updated
    * with this API and should instead be updated with the Update Batch Account API.
    * @param resourceGroupName The name of the resource group that contains the Batch account.
-   * @param accountName A name for the Batch account which must be unique within the region. Batch
-   * account names must be between 3 and 24 characters in length and must use only numbers and
-   * lowercase letters. This name is used as part of the DNS name that is used to access the Batch
-   * service in the region in which the account is created. For example:
-   * http://accountname.region.batch.azure.com/.
+   * @param accountName The name of the Batch account.
    * @param parameters Additional parameters for account creation.
    * @param [options] The optional parameters
    * @returns Promise<Models.BatchAccountCreateResponse>
@@ -289,11 +285,7 @@ export class BatchAccountOperations {
    * Creates a new Batch account with the specified parameters. Existing accounts cannot be updated
    * with this API and should instead be updated with the Update Batch Account API.
    * @param resourceGroupName The name of the resource group that contains the Batch account.
-   * @param accountName A name for the Batch account which must be unique within the region. Batch
-   * account names must be between 3 and 24 characters in length and must use only numbers and
-   * lowercase letters. This name is used as part of the DNS name that is used to access the Batch
-   * service in the region in which the account is created. For example:
-   * http://accountname.region.batch.azure.com/.
+   * @param accountName The name of the Batch account.
    * @param parameters Additional parameters for account creation.
    * @param [options] The optional parameters
    * @returns Promise<msRestAzure.LROPoller>
@@ -603,7 +595,8 @@ const beginCreateOperationSpec: msRest.OperationSpec = {
       headersMapper: Mappers.BatchAccountCreateHeaders
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.CloudError,
+      headersMapper: Mappers.BatchAccountCreateHeaders
     }
   },
   serializer
@@ -634,7 +627,8 @@ const beginDeleteMethodOperationSpec: msRest.OperationSpec = {
       headersMapper: Mappers.BatchAccountDeleteHeaders
     },
     default: {
-      bodyMapper: Mappers.CloudError
+      bodyMapper: Mappers.CloudError,
+      headersMapper: Mappers.BatchAccountDeleteHeaders
     }
   },
   serializer
