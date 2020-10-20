@@ -9,6 +9,7 @@
  */
 
 import * as msRest from "@azure/ms-rest-js";
+import * as msRestAzure from "@azure/ms-rest-azure-js";
 import * as Models from "../models";
 import * as Mappers from "../models/protectionPoliciesMappers";
 import * as Parameters from "../models/parameters";
@@ -115,7 +116,7 @@ export class ProtectionPolicies {
   /**
    * Deletes specified backup policy from your Recovery Services Vault. This is an asynchronous
    * operation. Status of the
-   * operation can be fetched using GetPolicyOperationResult API.
+   * operation can be fetched using GetProtectionPolicyOperationResult API.
    * @param vaultName The name of the recovery services vault.
    * @param resourceGroupName The name of the resource group where the recovery services vault is
    * present.
@@ -123,34 +124,32 @@ export class ProtectionPolicies {
    * @param [options] The optional parameters
    * @returns Promise<msRest.RestResponse>
    */
-  deleteMethod(vaultName: string, resourceGroupName: string, policyName: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse>;
+  deleteMethod(vaultName: string, resourceGroupName: string, policyName: string, options?: msRest.RequestOptionsBase): Promise<msRest.RestResponse> {
+    return this.beginDeleteMethod(vaultName,resourceGroupName,policyName,options)
+      .then(lroPoller => lroPoller.pollUntilFinished());
+  }
+
   /**
+   * Deletes specified backup policy from your Recovery Services Vault. This is an asynchronous
+   * operation. Status of the
+   * operation can be fetched using GetProtectionPolicyOperationResult API.
    * @param vaultName The name of the recovery services vault.
    * @param resourceGroupName The name of the resource group where the recovery services vault is
    * present.
    * @param policyName Backup policy to be deleted.
-   * @param callback The callback
+   * @param [options] The optional parameters
+   * @returns Promise<msRestAzure.LROPoller>
    */
-  deleteMethod(vaultName: string, resourceGroupName: string, policyName: string, callback: msRest.ServiceCallback<void>): void;
-  /**
-   * @param vaultName The name of the recovery services vault.
-   * @param resourceGroupName The name of the resource group where the recovery services vault is
-   * present.
-   * @param policyName Backup policy to be deleted.
-   * @param options The optional parameters
-   * @param callback The callback
-   */
-  deleteMethod(vaultName: string, resourceGroupName: string, policyName: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<void>): void;
-  deleteMethod(vaultName: string, resourceGroupName: string, policyName: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<void>, callback?: msRest.ServiceCallback<void>): Promise<msRest.RestResponse> {
-    return this.client.sendOperationRequest(
+  beginDeleteMethod(vaultName: string, resourceGroupName: string, policyName: string, options?: msRest.RequestOptionsBase): Promise<msRestAzure.LROPoller> {
+    return this.client.sendLRORequest(
       {
         vaultName,
         resourceGroupName,
         policyName,
         options
       },
-      deleteMethodOperationSpec,
-      callback);
+      beginDeleteMethodOperationSpec,
+      options);
   }
 }
 
@@ -166,7 +165,7 @@ const getOperationSpec: msRest.OperationSpec = {
     Parameters.policyName
   ],
   queryParameters: [
-    Parameters.apiVersion1
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -192,7 +191,7 @@ const createOrUpdateOperationSpec: msRest.OperationSpec = {
     Parameters.policyName
   ],
   queryParameters: [
-    Parameters.apiVersion1
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -216,7 +215,7 @@ const createOrUpdateOperationSpec: msRest.OperationSpec = {
   serializer
 };
 
-const deleteMethodOperationSpec: msRest.OperationSpec = {
+const beginDeleteMethodOperationSpec: msRest.OperationSpec = {
   httpMethod: "DELETE",
   path: "Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupPolicies/{policyName}",
   urlParameters: [
@@ -226,7 +225,7 @@ const deleteMethodOperationSpec: msRest.OperationSpec = {
     Parameters.policyName
   ],
   queryParameters: [
-    Parameters.apiVersion2
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage

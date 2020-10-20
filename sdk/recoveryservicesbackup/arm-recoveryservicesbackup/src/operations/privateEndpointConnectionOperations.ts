@@ -162,7 +162,7 @@ const getOperationSpec: msRest.OperationSpec = {
       bodyMapper: Mappers.PrivateEndpointConnectionResource
     },
     default: {
-      bodyMapper: Mappers.ErrorResponse
+      bodyMapper: Mappers.NewErrorResponse
     }
   },
   serializer
