@@ -3518,6 +3518,12 @@ export const VirtualMachine: msRest.CompositeMapper = {
           className: "SubResource"
         }
       },
+      platformFaultDomain: {
+        serializedName: "properties.platformFaultDomain",
+        type: {
+          name: "Number"
+        }
+      },
       priority: {
         serializedName: "properties.priority",
         type: {
@@ -3702,6 +3708,12 @@ export const VirtualMachineUpdate: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "SubResource"
+        }
+      },
+      platformFaultDomain: {
+        serializedName: "properties.platformFaultDomain",
+        type: {
+          name: "Number"
         }
       },
       priority: {

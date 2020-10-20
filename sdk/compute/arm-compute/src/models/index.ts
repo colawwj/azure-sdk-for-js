@@ -2392,6 +2392,16 @@ export interface VirtualMachine extends Resource {
    */
   proximityPlacementGroup?: SubResource;
   /**
+   * Specifies the scale set logical fault domain into which the Virtual Machine will be created.
+   * By default, the Virtual Machine will by automatically assigned to a fault domain that best
+   * maintains balance across available fault domains.<br><li>This is applicable only if the
+   * 'virtualMachineScaleSet' property of this Virtual Machine is set.<li>The Virtual Machine Scale
+   * Set that is referenced, must have 'platformFaultDomainCount' &gt; 1.<li>This property cannot
+   * be updated once the Virtual Machine is created.<li>Fault domain assignment can be viewed in
+   * the Virtual Machine Instance View.<br><br>Minimum api‐version: 2020‐12‐01
+   */
+  platformFaultDomain?: number;
+  /**
    * Specifies the priority for the virtual machine. <br><br>Minimum api-version: 2019-03-01.
    * Possible values include: 'Regular', 'Low', 'Spot'
    */
@@ -2537,6 +2547,16 @@ export interface VirtualMachineUpdate extends UpdateResource {
    * assigned to. <br><br>Minimum api-version: 2018-04-01.
    */
   proximityPlacementGroup?: SubResource;
+  /**
+   * Specifies the scale set logical fault domain into which the Virtual Machine will be created.
+   * By default, the Virtual Machine will by automatically assigned to a fault domain that best
+   * maintains balance across available fault domains.<br><li>This is applicable only if the
+   * 'virtualMachineScaleSet' property of this Virtual Machine is set.<li>The Virtual Machine Scale
+   * Set that is referenced, must have 'platformFaultDomainCount' &gt; 1.<li>This property cannot
+   * be updated once the Virtual Machine is created.<li>Fault domain assignment can be viewed in
+   * the Virtual Machine Instance View.<br><br>Minimum api‐version: 2020‐12‐01
+   */
+  platformFaultDomain?: number;
   /**
    * Specifies the priority for the virtual machine. <br><br>Minimum api-version: 2019-03-01.
    * Possible values include: 'Regular', 'Low', 'Spot'
