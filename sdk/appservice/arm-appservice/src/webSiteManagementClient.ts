@@ -61,6 +61,39 @@ class WebSiteManagementClient extends WebSiteManagementClientContext {
   }
 
   /**
+   * Description for Exchange code for GitHub access token for AppService CLI
+   * @summary Exchange code for GitHub access token for AppService CLI
+   * @param code Code string to exchange for Github Access token
+   * @param state State string used for verification.
+   * @param [options] The optional parameters
+   * @returns Promise<Models.GenerateGithubAccessTokenForAppserviceCLIAsyncResponse>
+   */
+  generateGithubAccessTokenForAppserviceCLIAsync(code: string, state: string, options?: msRest.RequestOptionsBase): Promise<Models.GenerateGithubAccessTokenForAppserviceCLIAsyncResponse>;
+  /**
+   * @param code Code string to exchange for Github Access token
+   * @param state State string used for verification.
+   * @param callback The callback
+   */
+  generateGithubAccessTokenForAppserviceCLIAsync(code: string, state: string, callback: msRest.ServiceCallback<Models.AppserviceGithubToken>): void;
+  /**
+   * @param code Code string to exchange for Github Access token
+   * @param state State string used for verification.
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  generateGithubAccessTokenForAppserviceCLIAsync(code: string, state: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.AppserviceGithubToken>): void;
+  generateGithubAccessTokenForAppserviceCLIAsync(code: string, state: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.AppserviceGithubToken>, callback?: msRest.ServiceCallback<Models.AppserviceGithubToken>): Promise<Models.GenerateGithubAccessTokenForAppserviceCLIAsyncResponse> {
+    return this.sendOperationRequest(
+      {
+        code,
+        state,
+        options
+      },
+      generateGithubAccessTokenForAppserviceCLIAsyncOperationSpec,
+      callback) as Promise<Models.GenerateGithubAccessTokenForAppserviceCLIAsyncResponse>;
+  }
+
+  /**
    * Description for Gets publishing user
    * @summary Gets publishing user
    * @param [options] The optional parameters
@@ -668,11 +701,41 @@ class WebSiteManagementClient extends WebSiteManagementClientContext {
 
 // Operation Specifications
 const serializer = new msRest.Serializer(Mappers);
+const generateGithubAccessTokenForAppserviceCLIAsyncOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "providers/Microsoft.Web/generateGithubAccessTokenForAppserviceCLI",
+  queryParameters: [
+    Parameters.apiVersion1
+  ],
+  headerParameters: [
+    Parameters.acceptLanguage
+  ],
+  requestBody: {
+    parameterPath: {
+      code: "code",
+      state: "state"
+    },
+    mapper: {
+      ...Mappers.AppserviceGithubTokenRequest,
+      required: true
+    }
+  },
+  responses: {
+    200: {
+      bodyMapper: Mappers.AppserviceGithubToken
+    },
+    default: {
+      bodyMapper: Mappers.DefaultErrorResponse
+    }
+  },
+  serializer
+};
+
 const getPublishingUserOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
   path: "providers/Microsoft.Web/publishingUsers/web",
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion1
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -692,7 +755,7 @@ const updatePublishingUserOperationSpec: msRest.OperationSpec = {
   httpMethod: "PUT",
   path: "providers/Microsoft.Web/publishingUsers/web",
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion1
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -719,7 +782,7 @@ const listSourceControlsOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
   path: "providers/Microsoft.Web/sourcecontrols",
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion1
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -742,7 +805,7 @@ const getSourceControlOperationSpec: msRest.OperationSpec = {
     Parameters.sourceControlType
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion1
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -765,7 +828,7 @@ const updateSourceControlOperationSpec: msRest.OperationSpec = {
     Parameters.sourceControlType
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion1
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -797,7 +860,7 @@ const listBillingMetersOperationSpec: msRest.OperationSpec = {
   queryParameters: [
     Parameters.billingLocation,
     Parameters.osType,
-    Parameters.apiVersion
+    Parameters.apiVersion1
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -820,7 +883,7 @@ const checkNameAvailabilityOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion1
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -857,7 +920,7 @@ const getSubscriptionDeploymentLocationsOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion1
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -884,7 +947,7 @@ const listGeoRegionsOperationSpec: msRest.OperationSpec = {
     Parameters.linuxWorkersEnabled,
     Parameters.xenonWorkersEnabled,
     Parameters.linuxDynamicWorkersEnabled,
-    Parameters.apiVersion
+    Parameters.apiVersion1
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -907,7 +970,7 @@ const listSiteIdentifiersAssignedToHostNameOperationSpec: msRest.OperationSpec =
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion1
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -942,7 +1005,7 @@ const listPremierAddOnOffersOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion1
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -965,7 +1028,7 @@ const listSkusOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion1
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -988,7 +1051,7 @@ const verifyHostingEnvironmentVnetOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion1
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -1019,7 +1082,7 @@ const moveOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion1
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -1048,7 +1111,7 @@ const validateOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion1
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -1079,7 +1142,7 @@ const validateMoveOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion1
   ],
   headerParameters: [
     Parameters.acceptLanguage

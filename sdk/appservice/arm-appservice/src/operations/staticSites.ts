@@ -27,6 +27,42 @@ export class StaticSites {
   }
 
   /**
+   * Description for Generates a preview workflow file for the static site
+   * @summary Generates a preview workflow file for the static site
+   * @param location Location where you plan to create the static site.
+   * @param staticSitesWorkflowPreviewRequest A JSON representation of the
+   * StaticSitesWorkflowPreviewRequest properties. See example.
+   * @param [options] The optional parameters
+   * @returns Promise<Models.StaticSitesPreviewWorkflowResponse>
+   */
+  previewWorkflow(location: string, staticSitesWorkflowPreviewRequest: Models.StaticSitesWorkflowPreviewRequest, options?: msRest.RequestOptionsBase): Promise<Models.StaticSitesPreviewWorkflowResponse>;
+  /**
+   * @param location Location where you plan to create the static site.
+   * @param staticSitesWorkflowPreviewRequest A JSON representation of the
+   * StaticSitesWorkflowPreviewRequest properties. See example.
+   * @param callback The callback
+   */
+  previewWorkflow(location: string, staticSitesWorkflowPreviewRequest: Models.StaticSitesWorkflowPreviewRequest, callback: msRest.ServiceCallback<Models.StaticSitesWorkflowPreview>): void;
+  /**
+   * @param location Location where you plan to create the static site.
+   * @param staticSitesWorkflowPreviewRequest A JSON representation of the
+   * StaticSitesWorkflowPreviewRequest properties. See example.
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  previewWorkflow(location: string, staticSitesWorkflowPreviewRequest: Models.StaticSitesWorkflowPreviewRequest, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.StaticSitesWorkflowPreview>): void;
+  previewWorkflow(location: string, staticSitesWorkflowPreviewRequest: Models.StaticSitesWorkflowPreviewRequest, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.StaticSitesWorkflowPreview>, callback?: msRest.ServiceCallback<Models.StaticSitesWorkflowPreview>): Promise<Models.StaticSitesPreviewWorkflowResponse> {
+    return this.client.sendOperationRequest(
+      {
+        location,
+        staticSitesWorkflowPreviewRequest,
+        options
+      },
+      previewWorkflowOperationSpec,
+      callback) as Promise<Models.StaticSitesPreviewWorkflowResponse>;
+  }
+
+  /**
    * Description for Get all Static Sites for a subscription.
    * @summary Get all Static Sites for a subscription.
    * @param [options] The optional parameters
@@ -1166,6 +1202,37 @@ export class StaticSites {
 
 // Operation Specifications
 const serializer = new msRest.Serializer(Mappers);
+const previewWorkflowOperationSpec: msRest.OperationSpec = {
+  httpMethod: "POST",
+  path: "subscriptions/{subscriptionId}/providers/Microsoft.Web/locations/{location}/previewStaticSiteWorkflowFile",
+  urlParameters: [
+    Parameters.location,
+    Parameters.subscriptionId
+  ],
+  queryParameters: [
+    Parameters.apiVersion0
+  ],
+  headerParameters: [
+    Parameters.acceptLanguage
+  ],
+  requestBody: {
+    parameterPath: "staticSitesWorkflowPreviewRequest",
+    mapper: {
+      ...Mappers.StaticSitesWorkflowPreviewRequest,
+      required: true
+    }
+  },
+  responses: {
+    200: {
+      bodyMapper: Mappers.StaticSitesWorkflowPreview
+    },
+    default: {
+      bodyMapper: Mappers.DefaultErrorResponse
+    }
+  },
+  serializer
+};
+
 const listOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
   path: "subscriptions/{subscriptionId}/providers/Microsoft.Web/staticSites",
@@ -1173,7 +1240,7 @@ const listOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -1197,7 +1264,7 @@ const getStaticSitesByResourceGroupOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -1222,7 +1289,7 @@ const getStaticSiteOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -1247,7 +1314,7 @@ const createOrUpdateStaticSiteOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -1282,7 +1349,7 @@ const deleteStaticSiteOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -1306,7 +1373,7 @@ const updateStaticSiteOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -1342,7 +1409,7 @@ const listStaticSiteUsersOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -1369,7 +1436,7 @@ const deleteStaticSiteUserOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -1394,7 +1461,7 @@ const updateStaticSiteUserOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -1426,7 +1493,7 @@ const getStaticSiteBuildsOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -1452,7 +1519,7 @@ const getStaticSiteBuildOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -1478,7 +1545,7 @@ const deleteStaticSiteBuildOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -1503,7 +1570,7 @@ const createOrUpdateStaticSiteBuildFunctionAppSettingsOperationSpec: msRest.Oper
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -1539,7 +1606,7 @@ const listStaticSiteBuildFunctionsOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -1565,7 +1632,7 @@ const listStaticSiteBuildFunctionAppSettingsOperationSpec: msRest.OperationSpec 
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -1593,7 +1660,7 @@ const createOrUpdateStaticSiteFunctionAppSettingsOperationSpec: msRest.Operation
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -1628,7 +1695,7 @@ const createUserRolesInvitationLinkOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -1660,7 +1727,7 @@ const listStaticSiteCustomDomainsOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -1686,7 +1753,7 @@ const createOrUpdateStaticSiteCustomDomainOperationSpec: msRest.OperationSpec = 
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -1715,7 +1782,7 @@ const deleteStaticSiteCustomDomainOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -1740,7 +1807,7 @@ const validateCustomDomainCanBeAddedToStaticSiteOperationSpec: msRest.OperationS
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -1764,7 +1831,7 @@ const detachStaticSiteOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -1788,7 +1855,7 @@ const listStaticSiteFunctionsOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -1813,7 +1880,7 @@ const listStaticSiteFunctionAppSettingsOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -1841,7 +1908,7 @@ const listStaticSiteSecretsOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -1866,7 +1933,7 @@ const resetStaticSiteApiKeyOperationSpec: msRest.OperationSpec = {
     Parameters.subscriptionId
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion0
   ],
   headerParameters: [
     Parameters.acceptLanguage

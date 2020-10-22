@@ -30,21 +30,25 @@ export const analysisName: msRest.OperationURLParameter = {
     }
   }
 };
-export const apiVersion: msRest.OperationQueryParameter = {
+export const apiVersion0: msRest.OperationQueryParameter = {
   parameterPath: "apiVersion",
   mapper: {
     required: true,
+    isConstant: true,
     serializedName: "api-version",
+    defaultValue: '2020-06-01',
     type: {
       name: "String"
     }
   }
 };
-export const appSettingKey: msRest.OperationURLParameter = {
-  parameterPath: "appSettingKey",
+export const apiVersion1: msRest.OperationQueryParameter = {
+  parameterPath: "apiVersion",
   mapper: {
     required: true,
-    serializedName: "appSettingKey",
+    isConstant: true,
+    serializedName: "api-version",
+    defaultValue: '2020-09-01',
     type: {
       name: "String"
     }
