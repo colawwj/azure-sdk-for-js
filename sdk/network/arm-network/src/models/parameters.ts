@@ -26,7 +26,7 @@ export const apiVersion0: msRest.OperationQueryParameter = {
     required: true,
     isConstant: true,
     serializedName: "api-version",
-    defaultValue: '2020-06-01',
+    defaultValue: '2020-11-01',
     type: {
       name: "String"
     }
@@ -158,16 +158,6 @@ export const crossConnectionName: msRest.OperationURLParameter = {
     }
   }
 };
-export const customIpPrefixName: msRest.OperationURLParameter = {
-  parameterPath: "customIpPrefixName",
-  mapper: {
-    required: true,
-    serializedName: "customIpPrefixName",
-    type: {
-      name: "String"
-    }
-  }
-};
 export const ddosCustomPolicyName: msRest.OperationURLParameter = {
   parameterPath: "ddosCustomPolicyName",
   mapper: {
@@ -213,16 +203,6 @@ export const domainNameLabel: msRest.OperationQueryParameter = {
   mapper: {
     required: true,
     serializedName: "domainNameLabel",
-    type: {
-      name: "String"
-    }
-  }
-};
-export const dscpConfigurationName: msRest.OperationURLParameter = {
-  parameterPath: "dscpConfigurationName",
-  mapper: {
-    required: true,
-    serializedName: "dscpConfigurationName",
     type: {
       name: "String"
     }
@@ -307,16 +287,6 @@ export const gatewayVip: msRest.OperationQueryParameter = {
   ],
   mapper: {
     serializedName: "gatewayVip",
-    type: {
-      name: "String"
-    }
-  }
-};
-export const hubName: msRest.OperationURLParameter = {
-  parameterPath: "hubName",
-  mapper: {
-    required: true,
-    serializedName: "hubName",
     type: {
       name: "String"
     }
@@ -734,16 +704,6 @@ export const ruleCollectionGroupName: msRest.OperationURLParameter = {
     }
   }
 };
-export const ruleCollectionName: msRest.OperationURLParameter = {
-  parameterPath: "ruleCollectionName",
-  mapper: {
-    required: true,
-    serializedName: "ruleCollectionName",
-    type: {
-      name: "String"
-    }
-  }
-};
 export const ruleName: msRest.OperationURLParameter = {
   parameterPath: "ruleName",
   mapper: {
@@ -959,16 +919,6 @@ export const virtualWANName1: msRest.OperationURLParameter = {
   mapper: {
     required: true,
     serializedName: "VirtualWANName",
-    type: {
-      name: "String"
-    }
-  }
-};
-export const vpnConnectionName: msRest.OperationURLParameter = {
-  parameterPath: "vpnConnectionName",
-  mapper: {
-    required: true,
-    serializedName: "vpnConnectionName",
     type: {
       name: "String"
     }
