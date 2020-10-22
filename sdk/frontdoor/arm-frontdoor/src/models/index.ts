@@ -522,6 +522,10 @@ export interface RoutingRule extends SubResource {
    */
   rulesEngine?: SubResource;
   /**
+   * Defines the Web Application Firewall policy for each routing rule (if applicable)
+   */
+  webApplicationFirewallPolicyLink?: RoutingRuleUpdateParametersWebApplicationFirewallPolicyLink;
+  /**
    * Resource status. Possible values include: 'Creating', 'Enabling', 'Enabled', 'Disabling',
    * 'Disabled', 'Deleting'
    */
@@ -843,6 +847,16 @@ export interface RouteConfiguration {
 }
 
 /**
+ * Defines the Web Application Firewall policy for each routing rule (if applicable)
+ */
+export interface RoutingRuleUpdateParametersWebApplicationFirewallPolicyLink {
+  /**
+   * Resource ID.
+   */
+  id?: string;
+}
+
+/**
  * Routing rules to apply to an endpoint
  */
 export interface RoutingRuleUpdateParameters {
@@ -871,6 +885,10 @@ export interface RoutingRuleUpdateParameters {
    * A reference to a specific Rules Engine Configuration to apply to this route.
    */
   rulesEngine?: SubResource;
+  /**
+   * Defines the Web Application Firewall policy for each routing rule (if applicable)
+   */
+  webApplicationFirewallPolicyLink?: RoutingRuleUpdateParametersWebApplicationFirewallPolicyLink;
 }
 
 /**
@@ -982,6 +1000,16 @@ export interface Backend {
    * backend is 'Private'
    */
   privateLinkAlias?: string;
+  /**
+   * The Resource Id of the Private Link resource. Populating this optional field indicates that
+   * this backend is 'Private'
+   */
+  privateLinkResourceId?: string;
+  /**
+   * The location of the Private Link resource. Required only if 'privateLinkResourceId' is
+   * populated
+   */
+  privateLinkLocation?: string;
   /**
    * The Approval status for the connection to the Private Link. Possible values include:
    * 'Pending', 'Approved', 'Rejected', 'Disconnected', 'Timeout'
@@ -1350,6 +1378,17 @@ export interface CheckNameAvailabilityOutput {
 }
 
 /**
+ * The pricing tier of the web application firewall policy.
+ */
+export interface Sku {
+  /**
+   * Name of the pricing tier. Possible values include: 'Classic_AzureFrontdoor',
+   * 'Standard_AzureFrontdoor', 'Premium_AzureFrontdoor'
+   */
+  name?: SkuName;
+}
+
+/**
  * Defines top-level WebApplicationFirewallPolicy configuration settings.
  */
 export interface PolicySettings {
@@ -1571,9 +1610,23 @@ export interface FrontendEndpointLink {
 }
 
 /**
+ * Defines the Resource ID for a Routing Rule.
+ */
+export interface RoutingRuleLink {
+  /**
+   * Resource ID.
+   */
+  id?: string;
+}
+
+/**
  * Defines web application firewall policy.
  */
 export interface WebApplicationFirewallPolicy extends Resource {
+  /**
+   * The pricing tier for web application firewall policy.
+   */
+  sku?: Sku;
   /**
    * Describes settings for the policy.
    */
@@ -1591,6 +1644,11 @@ export interface WebApplicationFirewallPolicy extends Resource {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly frontendEndpointLinks?: FrontendEndpointLink[];
+  /**
+   * Describes Routing Rules associated with this Web Application Firewall policy.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly routingRuleLinks?: RoutingRuleLink[];
   /**
    * Provisioning state of the policy.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -2099,6 +2157,15 @@ export type ResourceType = 'Microsoft.Network/frontDoors' | 'Microsoft.Network/f
  * @enum {string}
  */
 export type Availability = 'Available' | 'Unavailable';
+
+/**
+ * Defines values for SkuName.
+ * Possible values include: 'Classic_AzureFrontdoor', 'Standard_AzureFrontdoor',
+ * 'Premium_AzureFrontdoor'
+ * @readonly
+ * @enum {string}
+ */
+export type SkuName = 'Classic_AzureFrontdoor' | 'Standard_AzureFrontdoor' | 'Premium_AzureFrontdoor';
 
 /**
  * Defines values for PolicyEnabledState.
@@ -2617,9 +2684,9 @@ export type ReportsGetTimeseriesResponse = Timeseries & {
 };
 
 /**
- * Contains response data for the checkFrontDoorNameAvailability operation.
+ * Contains response data for the check operation.
  */
-export type CheckFrontDoorNameAvailabilityResponse = CheckNameAvailabilityOutput & {
+export type FrontDoorNameAvailabilityCheckResponse = CheckNameAvailabilityOutput & {
   /**
    * The underlying HTTP response.
    */
@@ -2637,9 +2704,9 @@ export type CheckFrontDoorNameAvailabilityResponse = CheckNameAvailabilityOutput
 };
 
 /**
- * Contains response data for the checkFrontDoorNameAvailabilityWithSubscription operation.
+ * Contains response data for the check operation.
  */
-export type CheckFrontDoorNameAvailabilityWithSubscriptionResponse = CheckNameAvailabilityOutput & {
+export type FrontDoorNameAvailabilityWithSubscriptionCheckResponse = CheckNameAvailabilityOutput & {
   /**
    * The underlying HTTP response.
    */
