@@ -92,6 +92,37 @@ export interface RedisInstanceDetails {
 }
 
 /**
+ * The Private Endpoint resource.
+ */
+export interface PrivateEndpoint {
+  /**
+   * The ARM identifier for Private Endpoint
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+}
+
+/**
+ * A collection of information about the state of the connection between service consumer and
+ * provider.
+ */
+export interface PrivateLinkServiceConnectionState {
+  /**
+   * Indicates whether the connection has been Approved/Rejected/Removed by the owner of the
+   * service. Possible values include: 'Pending', 'Approved', 'Rejected'
+   */
+  status?: PrivateEndpointServiceConnectionStatus;
+  /**
+   * The reason for approval/rejection of the connection.
+   */
+  description?: string;
+  /**
+   * A message indicating if changes on the service provider require any updates on the consumer.
+   */
+  actionsRequired?: string;
+}
+
+/**
  * The Resource definition.
  */
 export interface Resource extends BaseResource {
@@ -110,6 +141,26 @@ export interface Resource extends BaseResource {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly type?: string;
+}
+
+/**
+ * The Private Endpoint Connection resource.
+ */
+export interface PrivateEndpointConnection extends Resource {
+  /**
+   * The resource of private end point.
+   */
+  privateEndpoint?: PrivateEndpoint;
+  /**
+   * A collection of information about the state of the connection between service consumer and
+   * provider.
+   */
+  privateLinkServiceConnectionState: PrivateLinkServiceConnectionState;
+  /**
+   * The provisioning state of the private endpoint connection resource. Possible values include:
+   * 'Succeeded', 'Creating', 'Deleting', 'Failed'
+   */
+  provisioningState?: PrivateEndpointConnectionProvisioningState;
 }
 
 /**
@@ -164,6 +215,12 @@ export interface RedisCreateParameters {
    * '1.1', '1.2'). Possible values include: '1.0', '1.1', '1.2'
    */
   minimumTlsVersion?: TlsVersion;
+  /**
+   * Whether or not public endpoint access is allowed for this cache.  Value is optional but if
+   * passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private endpoints are the exclusive
+   * access method. Default value is 'Enabled'. Possible values include: 'Enabled', 'Disabled'
+   */
+  publicNetworkAccess?: PublicNetworkAccess;
   /**
    * The SKU of the Redis cache to deploy.
    */
@@ -224,6 +281,12 @@ export interface RedisUpdateParameters {
    * '1.1', '1.2'). Possible values include: '1.0', '1.1', '1.2'
    */
   minimumTlsVersion?: TlsVersion;
+  /**
+   * Whether or not public endpoint access is allowed for this cache.  Value is optional but if
+   * passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private endpoints are the exclusive
+   * access method. Default value is 'Enabled'. Possible values include: 'Enabled', 'Disabled'
+   */
+  publicNetworkAccess?: PublicNetworkAccess;
   /**
    * The SKU of the Redis cache to deploy.
    */
@@ -309,6 +372,12 @@ export interface RedisResource extends TrackedResource {
    */
   minimumTlsVersion?: TlsVersion;
   /**
+   * Whether or not public endpoint access is allowed for this cache.  Value is optional but if
+   * passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private endpoints are the exclusive
+   * access method. Default value is 'Enabled'. Possible values include: 'Enabled', 'Disabled'
+   */
+  publicNetworkAccess?: PublicNetworkAccess;
+  /**
    * The SKU of the Redis cache to deploy.
    */
   sku: Sku;
@@ -366,6 +435,11 @@ export interface RedisResource extends TrackedResource {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly instances?: RedisInstanceDetails[];
+  /**
+   * List of private endpoint connection associated with the specified redis cache
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly privateEndpointConnections?: PrivateEndpointConnection[];
   /**
    * A list of availability zones denoting where the resource needs to come from.
    */
@@ -554,42 +628,6 @@ export interface RedisLinkedServerCreateParameters {
 }
 
 /**
- * The object that describes the operation.
- */
-export interface OperationDisplay {
-  /**
-   * Friendly name of the resource provider
-   */
-  provider?: string;
-  /**
-   * Operation type: read, write, delete, listKeys/action, etc.
-   */
-  operation?: string;
-  /**
-   * Resource type on which the operation is performed.
-   */
-  resource?: string;
-  /**
-   * Friendly name of the operation
-   */
-  description?: string;
-}
-
-/**
- * REST API operation
- */
-export interface Operation {
-  /**
-   * Operation name: {provider}/{resource}/{operation}
-   */
-  name?: string;
-  /**
-   * The object that describes the operation.
-   */
-  display?: OperationDisplay;
-}
-
-/**
  * Parameters body to pass for resource name availability check.
  */
 export interface CheckNameAvailabilityParameters {
@@ -641,6 +679,172 @@ export interface NotificationListResponse {
 }
 
 /**
+ * The resource management error additional info.
+ */
+export interface ErrorAdditionalInfo {
+  /**
+   * The additional info type.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * The additional info.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly info?: any;
+}
+
+/**
+ * The error object.
+ */
+export interface ErrorResponseError {
+  /**
+   * The error code.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly code?: string;
+  /**
+   * The error message.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly message?: string;
+  /**
+   * The error target.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly target?: string;
+  /**
+   * The error details.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly details?: ErrorResponse[];
+  /**
+   * The error additional info.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly additionalInfo?: ErrorAdditionalInfo[];
+}
+
+/**
+ * The resource management error response.
+ */
+export interface ErrorResponse {
+  /**
+   * The error object.
+   */
+  error?: ErrorResponseError;
+}
+
+/**
+ * Properties of a private link resource.
+ */
+export interface PrivateLinkResourceProperties {
+  /**
+   * The private link resource group id.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly groupId?: string;
+  /**
+   * The private link resource required member names.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly requiredMembers?: string[];
+  /**
+   * The private link resource Private link DNS zone name.
+   */
+  requiredZoneNames?: string[];
+}
+
+/**
+ * A private link resource
+ */
+export interface PrivateLinkResource extends Resource {
+  /**
+   * The private link resource group id.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly groupId?: string;
+  /**
+   * The private link resource required member names.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly requiredMembers?: string[];
+  /**
+   * The private link resource Private link DNS zone name.
+   */
+  requiredZoneNames?: string[];
+}
+
+/**
+ * Contains the localized display information for this particular operation / action.
+ */
+export interface OperationDisplay {
+  /**
+   * The localized friendly form of the resource provider name, e.g. Microsoft Monitoring Insights"
+   * or "Microsoft Compute"
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly provider?: string;
+  /**
+   * The localized friendly form of the resource type related to this action/operation � it should
+   * match the public documentation for the resource provider, e.g. "Virtual Machines" or "Job
+   * Schedule Collections"
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly resource?: string;
+  /**
+   * Required.The localized friendly name for the operation, as it should be shown to the user. It
+   * should be concise (to fit in drop downs) but clear (i.e. self-documenting), e.g. "Create or
+   * Update Virtual Machine", "Restart Virtual Machine"
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly operation?: string;
+  /**
+   * Required.The localized friendly description for the operation, as it should be shown to the
+   * user. It should be thorough, yet concise � it will be used in tool tips and detailed views.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly description?: string;
+}
+
+/**
+ * Details of a REST API operation, returned from the Resource Provider Operations API
+ * @summary REST API Operation
+ */
+export interface Operation {
+  /**
+   * The name of the operation being performed on this particular object. It should match the
+   * action name that appears in RBAC / the event service. Examples:
+   * "Microsoft.Compute/virtualMachines/write", "Microsoft.Compute/virtualMachines/capture/action"
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Whether the operation applies to data-plane. This is "true" for data-plane operations and
+   * "false" for ARM/control-plane operations.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly isDataAction?: boolean;
+  /**
+   * Contains the localized display information for this particular operation / action.
+   */
+  display?: OperationDisplay;
+  /**
+   * The intended executor of the operation; governs the display of the operation in the RBAC UX
+   * and the audit logs UX. Default value is "user,system". Possible values include: 'user',
+   * 'system', 'user,system'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly origin?: Origin;
+  /**
+   * Enum. Indicates the action type. "Internal" refers to actions that are for internal only APIs.
+   * Possible values include: 'Internal'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly actionType?: ActionType;
+}
+
+/**
  * An interface representing RedisManagementClientOptions.
  */
 export interface RedisManagementClientOptions extends AzureServiceClientOptions {
@@ -649,16 +853,15 @@ export interface RedisManagementClientOptions extends AzureServiceClientOptions 
 
 /**
  * @interface
- * Result of the request to list REST API operations. It contains a list of operations and a URL
- * nextLink to get the next set of results.
+ * A list of REST API operations supported by an Azure Resource Provider. It contains an URL link
+ * to get the next set of results.
  * @extends Array<Operation>
  */
 export interface OperationListResult extends Array<Operation> {
   /**
-   * URL to get the next set of operation list results if there are any.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   * URL to get the next set of operation list results (if there are any).
    */
-  readonly nextLink?: string;
+  nextLink?: string;
 }
 
 /**
@@ -714,6 +917,22 @@ export interface RedisLinkedServerWithPropertiesList extends Array<RedisLinkedSe
 }
 
 /**
+ * @interface
+ * List of private endpoint connection associated with the specified storage account
+ * @extends Array<PrivateEndpointConnection>
+ */
+export interface PrivateEndpointConnectionListResult extends Array<PrivateEndpointConnection> {
+}
+
+/**
+ * @interface
+ * A list of private link resources
+ * @extends Array<PrivateLinkResource>
+ */
+export interface PrivateLinkResourceListResult extends Array<PrivateLinkResource> {
+}
+
+/**
  * Defines values for SkuName.
  * Possible values include: 'Basic', 'Standard', 'Premium'
  * @readonly
@@ -738,6 +957,14 @@ export type SkuFamily = 'C' | 'P';
 export type TlsVersion = '1.0' | '1.1' | '1.2';
 
 /**
+ * Defines values for PublicNetworkAccess.
+ * Possible values include: 'Enabled', 'Disabled'
+ * @readonly
+ * @enum {string}
+ */
+export type PublicNetworkAccess = 'Enabled' | 'Disabled';
+
+/**
  * Defines values for ProvisioningState.
  * Possible values include: 'Creating', 'Deleting', 'Disabled', 'Failed', 'Linking',
  * 'Provisioning', 'RecoveringScaleFailure', 'Scaling', 'Succeeded', 'Unlinking', 'Unprovisioning',
@@ -746,6 +973,22 @@ export type TlsVersion = '1.0' | '1.1' | '1.2';
  * @enum {string}
  */
 export type ProvisioningState = 'Creating' | 'Deleting' | 'Disabled' | 'Failed' | 'Linking' | 'Provisioning' | 'RecoveringScaleFailure' | 'Scaling' | 'Succeeded' | 'Unlinking' | 'Unprovisioning' | 'Updating';
+
+/**
+ * Defines values for PrivateEndpointServiceConnectionStatus.
+ * Possible values include: 'Pending', 'Approved', 'Rejected'
+ * @readonly
+ * @enum {string}
+ */
+export type PrivateEndpointServiceConnectionStatus = 'Pending' | 'Approved' | 'Rejected';
+
+/**
+ * Defines values for PrivateEndpointConnectionProvisioningState.
+ * Possible values include: 'Succeeded', 'Creating', 'Deleting', 'Failed'
+ * @readonly
+ * @enum {string}
+ */
+export type PrivateEndpointConnectionProvisioningState = 'Succeeded' | 'Creating' | 'Deleting' | 'Failed';
 
 /**
  * Defines values for RedisKeyType.
@@ -779,6 +1022,22 @@ export type DayOfWeek = 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Frida
  * @enum {string}
  */
 export type ReplicationRole = 'Primary' | 'Secondary';
+
+/**
+ * Defines values for Origin.
+ * Possible values include: 'user', 'system', 'user,system'
+ * @readonly
+ * @enum {string}
+ */
+export type Origin = 'user' | 'system' | 'user,system';
+
+/**
+ * Defines values for ActionType.
+ * Possible values include: 'Internal'
+ * @readonly
+ * @enum {string}
+ */
+export type ActionType = 'Internal';
 
 /**
  * Contains response data for the list operation.
@@ -921,9 +1180,9 @@ export type RedisListByResourceGroupResponse = RedisListResult & {
 };
 
 /**
- * Contains response data for the list operation.
+ * Contains response data for the listBySubscription operation.
  */
-export type RedisListResponse = RedisListResult & {
+export type RedisListBySubscriptionResponse = RedisListResult & {
   /**
    * The underlying HTTP response.
    */
@@ -1041,9 +1300,9 @@ export type RedisListByResourceGroupNextResponse = RedisListResult & {
 };
 
 /**
- * Contains response data for the listNext operation.
+ * Contains response data for the listBySubscriptionNext operation.
  */
-export type RedisListNextResponse = RedisListResult & {
+export type RedisListBySubscriptionNextResponse = RedisListResult & {
   /**
    * The underlying HTTP response.
    */
@@ -1061,9 +1320,9 @@ export type RedisListNextResponse = RedisListResult & {
 };
 
 /**
- * Contains response data for the listByRedisResource operation.
+ * Contains response data for the list operation.
  */
-export type FirewallRulesListByRedisResourceResponse = RedisFirewallRuleListResult & {
+export type FirewallRulesListResponse = RedisFirewallRuleListResult & {
   /**
    * The underlying HTTP response.
    */
@@ -1121,9 +1380,9 @@ export type FirewallRulesGetResponse = RedisFirewallRule & {
 };
 
 /**
- * Contains response data for the listByRedisResourceNext operation.
+ * Contains response data for the listNext operation.
  */
-export type FirewallRulesListByRedisResourceNextResponse = RedisFirewallRuleListResult & {
+export type FirewallRulesListNextResponse = RedisFirewallRuleListResult & {
   /**
    * The underlying HTTP response.
    */
@@ -1317,5 +1576,105 @@ export type LinkedServerListNextResponse = RedisLinkedServerWithPropertiesList &
        * The response body as parsed JSON or XML
        */
       parsedBody: RedisLinkedServerWithPropertiesList;
+    };
+};
+
+/**
+ * Contains response data for the list operation.
+ */
+export type PrivateEndpointConnectionsListResponse = PrivateEndpointConnectionListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateEndpointConnectionListResult;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type PrivateEndpointConnectionsGetResponse = PrivateEndpointConnection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateEndpointConnection;
+    };
+};
+
+/**
+ * Contains response data for the put operation.
+ */
+export type PrivateEndpointConnectionsPutResponse = PrivateEndpointConnection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateEndpointConnection;
+    };
+};
+
+/**
+ * Contains response data for the beginPut operation.
+ */
+export type PrivateEndpointConnectionsBeginPutResponse = PrivateEndpointConnection & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateEndpointConnection;
+    };
+};
+
+/**
+ * Contains response data for the listByRedisCache operation.
+ */
+export type PrivateLinkResourcesListByRedisCacheResponse = PrivateLinkResourceListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateLinkResourceListResult;
     };
 };
