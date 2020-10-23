@@ -225,7 +225,7 @@ export class Volumes {
 
   /**
    * Resync the connection on the destination volume. If the operation is ran on the source volume it
-   * will reverse-resync the connection and sync from source to destination.
+   * will reverse-resync the connection and sync from destination to source.
    * @summary Resync volume replication
    * @param resourceGroupName The name of the resource group.
    * @param accountName The name of the NetApp account
@@ -422,7 +422,7 @@ export class Volumes {
 
   /**
    * Resync the connection on the destination volume. If the operation is ran on the source volume it
-   * will reverse-resync the connection and sync from source to destination.
+   * will reverse-resync the connection and sync from destination to source.
    * @summary Resync volume replication
    * @param resourceGroupName The name of the resource group.
    * @param accountName The name of the NetApp account
