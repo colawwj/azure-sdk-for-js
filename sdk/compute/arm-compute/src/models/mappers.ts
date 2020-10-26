@@ -1055,6 +1055,32 @@ export const VirtualMachineExtensionImage: msRest.CompositeMapper = {
   }
 };
 
+export const ExtendedLocation: msRest.CompositeMapper = {
+  serializedName: "ExtendedLocation",
+  type: {
+    name: "Composite",
+    className: "ExtendedLocation",
+    modelProperties: {
+      name: {
+        required: true,
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      type: {
+        required: true,
+        isConstant: true,
+        serializedName: "type",
+        defaultValue: 'EdgeZone',
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const VirtualMachineImageResource: msRest.CompositeMapper = {
   serializedName: "VirtualMachineImageResource",
   type: {
@@ -1085,6 +1111,13 @@ export const VirtualMachineImageResource: msRest.CompositeMapper = {
               name: "String"
             }
           }
+        }
+      },
+      extendedLocation: {
+        serializedName: "extendedLocation",
+        type: {
+          name: "Composite",
+          className: "ExtendedLocation"
         }
       }
     }
@@ -3615,6 +3648,13 @@ export const VirtualMachine: msRest.CompositeMapper = {
             }
           }
         }
+      },
+      extendedLocation: {
+        serializedName: "extendedLocation",
+        type: {
+          name: "Composite",
+          className: "ExtendedLocation"
+        }
       }
     }
   }
@@ -4095,6 +4135,13 @@ export const Image: msRest.CompositeMapper = {
         serializedName: "properties.hyperVGeneration",
         type: {
           name: "String"
+        }
+      },
+      extendedLocation: {
+        serializedName: "extendedLocation",
+        type: {
+          name: "Composite",
+          className: "ExtendedLocation"
         }
       }
     }
@@ -5685,6 +5732,13 @@ export const VirtualMachineScaleSet: msRest.CompositeMapper = {
               name: "String"
             }
           }
+        }
+      },
+      extendedLocation: {
+        serializedName: "extendedLocation",
+        type: {
+          name: "Composite",
+          className: "ExtendedLocation"
         }
       }
     }
@@ -8687,6 +8741,62 @@ export const GalleryIdentifier: msRest.CompositeMapper = {
   }
 };
 
+export const SharingProfileGroup: msRest.CompositeMapper = {
+  serializedName: "SharingProfileGroup",
+  type: {
+    name: "Composite",
+    className: "SharingProfileGroup",
+    modelProperties: {
+      type: {
+        serializedName: "type",
+        type: {
+          name: "String"
+        }
+      },
+      ids: {
+        serializedName: "ids",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const SharingProfile: msRest.CompositeMapper = {
+  serializedName: "SharingProfile",
+  type: {
+    name: "Composite",
+    className: "SharingProfile",
+    modelProperties: {
+      permissions: {
+        serializedName: "permissions",
+        type: {
+          name: "String"
+        }
+      },
+      groups: {
+        readOnly: true,
+        serializedName: "groups",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "SharingProfileGroup"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
 export const Gallery: msRest.CompositeMapper = {
   serializedName: "Gallery",
   type: {
@@ -8712,6 +8822,13 @@ export const Gallery: msRest.CompositeMapper = {
         serializedName: "properties.provisioningState",
         type: {
           name: "String"
+        }
+      },
+      sharingProfile: {
+        serializedName: "properties.sharingProfile",
+        type: {
+          name: "Composite",
+          className: "SharingProfile"
         }
       }
     }
@@ -8785,6 +8902,13 @@ export const GalleryUpdate: msRest.CompositeMapper = {
         serializedName: "properties.provisioningState",
         type: {
           name: "String"
+        }
+      },
+      sharingProfile: {
+        serializedName: "properties.sharingProfile",
+        type: {
+          name: "Composite",
+          className: "SharingProfile"
         }
       }
     }
@@ -9139,6 +9263,28 @@ export const GalleryApplicationVersionUpdate: msRest.CompositeMapper = {
   }
 };
 
+export const GalleryImageFeature: msRest.CompositeMapper = {
+  serializedName: "GalleryImageFeature",
+  type: {
+    name: "Composite",
+    className: "GalleryImageFeature",
+    modelProperties: {
+      name: {
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      value: {
+        serializedName: "value",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const GalleryImageIdentifier: msRest.CompositeMapper = {
   serializedName: "GalleryImageIdentifier",
   type: {
@@ -9324,6 +9470,18 @@ export const GalleryImage: msRest.CompositeMapper = {
           name: "String"
         }
       },
+      features: {
+        serializedName: "properties.features",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "GalleryImageFeature"
+            }
+          }
+        }
+      },
       endOfLifeDate: {
         serializedName: "properties.endOfLifeDate",
         type: {
@@ -9429,6 +9587,18 @@ export const GalleryImageUpdate: msRest.CompositeMapper = {
           name: "String"
         }
       },
+      features: {
+        serializedName: "properties.features",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "GalleryImageFeature"
+            }
+          }
+        }
+      },
       endOfLifeDate: {
         serializedName: "properties.endOfLifeDate",
         type: {
@@ -9494,6 +9664,12 @@ export const GalleryArtifactVersionSource: msRest.CompositeMapper = {
     modelProperties: {
       id: {
         serializedName: "id",
+        type: {
+          name: "String"
+        }
+      },
+      uri: {
+        serializedName: "uri",
         type: {
           name: "String"
         }
@@ -9823,6 +9999,196 @@ export const GalleryArtifactSource: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "ManagedArtifact"
+        }
+      }
+    }
+  }
+};
+
+export const SharingUpdate: msRest.CompositeMapper = {
+  serializedName: "SharingUpdate",
+  type: {
+    name: "Composite",
+    className: "SharingUpdate",
+    modelProperties: {
+      operationType: {
+        required: true,
+        serializedName: "operationType",
+        type: {
+          name: "String"
+        }
+      },
+      groups: {
+        serializedName: "groups",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "SharingProfileGroup"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const PirResource: msRest.CompositeMapper = {
+  serializedName: "PirResource",
+  type: {
+    name: "Composite",
+    className: "PirResource",
+    modelProperties: {
+      name: {
+        readOnly: true,
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      location: {
+        readOnly: true,
+        serializedName: "location",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const PirSharedGalleryResource: msRest.CompositeMapper = {
+  serializedName: "PirSharedGalleryResource",
+  type: {
+    name: "Composite",
+    className: "PirSharedGalleryResource",
+    modelProperties: {
+      ...PirResource.type.modelProperties,
+      uniqueId: {
+        serializedName: "identifier.uniqueId",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const SharedGallery: msRest.CompositeMapper = {
+  serializedName: "SharedGallery",
+  type: {
+    name: "Composite",
+    className: "SharedGallery",
+    modelProperties: {
+      ...PirSharedGalleryResource.type.modelProperties
+    }
+  }
+};
+
+export const SharedGalleryImage: msRest.CompositeMapper = {
+  serializedName: "SharedGalleryImage",
+  type: {
+    name: "Composite",
+    className: "SharedGalleryImage",
+    modelProperties: {
+      ...PirSharedGalleryResource.type.modelProperties,
+      osType: {
+        required: true,
+        serializedName: "properties.osType",
+        type: {
+          name: "Enum",
+          allowedValues: [
+            "Windows",
+            "Linux"
+          ]
+        }
+      },
+      osState: {
+        required: true,
+        serializedName: "properties.osState",
+        type: {
+          name: "Enum",
+          allowedValues: [
+            "Generalized",
+            "Specialized"
+          ]
+        }
+      },
+      endOfLifeDate: {
+        serializedName: "properties.endOfLifeDate",
+        type: {
+          name: "DateTime"
+        }
+      },
+      identifier: {
+        required: true,
+        serializedName: "properties.identifier",
+        type: {
+          name: "Composite",
+          className: "GalleryImageIdentifier"
+        }
+      },
+      recommended: {
+        serializedName: "properties.recommended",
+        type: {
+          name: "Composite",
+          className: "RecommendedMachineConfiguration"
+        }
+      },
+      disallowed: {
+        serializedName: "properties.disallowed",
+        type: {
+          name: "Composite",
+          className: "Disallowed"
+        }
+      },
+      hyperVGeneration: {
+        serializedName: "properties.hyperVGeneration",
+        type: {
+          name: "String"
+        }
+      },
+      features: {
+        serializedName: "properties.features",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "GalleryImageFeature"
+            }
+          }
+        }
+      },
+      purchasePlan: {
+        serializedName: "properties.purchasePlan",
+        type: {
+          name: "Composite",
+          className: "ImagePurchasePlan"
+        }
+      }
+    }
+  }
+};
+
+export const SharedGalleryImageVersion: msRest.CompositeMapper = {
+  serializedName: "SharedGalleryImageVersion",
+  type: {
+    name: "Composite",
+    className: "SharedGalleryImageVersion",
+    modelProperties: {
+      ...PirSharedGalleryResource.type.modelProperties,
+      publishedDate: {
+        serializedName: "properties.publishedDate",
+        type: {
+          name: "DateTime"
+        }
+      },
+      endOfLifeDate: {
+        serializedName: "properties.endOfLifeDate",
+        type: {
+          name: "DateTime"
         }
       }
     }
@@ -10980,6 +11346,93 @@ export const GalleryApplicationVersionList: msRest.CompositeMapper = {
             type: {
               name: "Composite",
               className: "GalleryApplicationVersion"
+            }
+          }
+        }
+      },
+      nextLink: {
+        serializedName: "nextLink",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const SharedGalleryList: msRest.CompositeMapper = {
+  serializedName: "SharedGalleryList",
+  type: {
+    name: "Composite",
+    className: "SharedGalleryList",
+    modelProperties: {
+      value: {
+        required: true,
+        serializedName: "",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "SharedGallery"
+            }
+          }
+        }
+      },
+      nextLink: {
+        serializedName: "nextLink",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const SharedGalleryImageList: msRest.CompositeMapper = {
+  serializedName: "SharedGalleryImageList",
+  type: {
+    name: "Composite",
+    className: "SharedGalleryImageList",
+    modelProperties: {
+      value: {
+        required: true,
+        serializedName: "",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "SharedGalleryImage"
+            }
+          }
+        }
+      },
+      nextLink: {
+        serializedName: "nextLink",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const SharedGalleryImageVersionList: msRest.CompositeMapper = {
+  serializedName: "SharedGalleryImageVersionList",
+  type: {
+    name: "Composite",
+    className: "SharedGalleryImageVersionList",
+    modelProperties: {
+      value: {
+        required: true,
+        serializedName: "",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "SharedGalleryImageVersion"
             }
           }
         }
