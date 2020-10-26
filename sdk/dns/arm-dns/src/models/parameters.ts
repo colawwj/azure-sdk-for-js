@@ -65,6 +65,18 @@ export const nextPageLink: msRest.OperationURLParameter = {
   },
   skipEncoding: true
 };
+export const recordsetnamesuffix: msRest.OperationQueryParameter = {
+  parameterPath: [
+    "options",
+    "recordsetnamesuffix"
+  ],
+  mapper: {
+    serializedName: "$recordsetnamesuffix",
+    type: {
+      name: "String"
+    }
+  }
+};
 export const recordSetNameSuffix: msRest.OperationQueryParameter = {
   parameterPath: [
     "options",
@@ -96,18 +108,6 @@ export const recordType: msRest.OperationURLParameter = {
         "SRV",
         "TXT"
       ]
-    }
-  }
-};
-export const recordsetnamesuffix: msRest.OperationQueryParameter = {
-  parameterPath: [
-    "options",
-    "recordsetnamesuffix"
-  ],
-  mapper: {
-    serializedName: "$recordsetnamesuffix",
-    type: {
-      name: "String"
     }
   }
 };
