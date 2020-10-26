@@ -31,30 +31,34 @@ export class Workbooks {
    * @param resourceGroupName The name of the resource group. The name is case insensitive.
    * @param category Category of workbook to return. Possible values include: 'workbook', 'TSG',
    * 'performance', 'retention'
+   * @param sourceId Azure Resource Id that will fetch all linked workbooks.
    * @param [options] The optional parameters
    * @returns Promise<Models.WorkbooksListByResourceGroupResponse>
    */
-  listByResourceGroup(resourceGroupName: string, category: Models.CategoryType, options?: Models.WorkbooksListByResourceGroupOptionalParams): Promise<Models.WorkbooksListByResourceGroupResponse>;
+  listByResourceGroup(resourceGroupName: string, category: Models.CategoryType, sourceId: string, options?: Models.WorkbooksListByResourceGroupOptionalParams): Promise<Models.WorkbooksListByResourceGroupResponse>;
   /**
    * @param resourceGroupName The name of the resource group. The name is case insensitive.
    * @param category Category of workbook to return. Possible values include: 'workbook', 'TSG',
    * 'performance', 'retention'
+   * @param sourceId Azure Resource Id that will fetch all linked workbooks.
    * @param callback The callback
    */
-  listByResourceGroup(resourceGroupName: string, category: Models.CategoryType, callback: msRest.ServiceCallback<Models.WorkbooksListResult>): void;
+  listByResourceGroup(resourceGroupName: string, category: Models.CategoryType, sourceId: string, callback: msRest.ServiceCallback<Models.WorkbooksListResult>): void;
   /**
    * @param resourceGroupName The name of the resource group. The name is case insensitive.
    * @param category Category of workbook to return. Possible values include: 'workbook', 'TSG',
    * 'performance', 'retention'
+   * @param sourceId Azure Resource Id that will fetch all linked workbooks.
    * @param options The optional parameters
    * @param callback The callback
    */
-  listByResourceGroup(resourceGroupName: string, category: Models.CategoryType, options: Models.WorkbooksListByResourceGroupOptionalParams, callback: msRest.ServiceCallback<Models.WorkbooksListResult>): void;
-  listByResourceGroup(resourceGroupName: string, category: Models.CategoryType, options?: Models.WorkbooksListByResourceGroupOptionalParams | msRest.ServiceCallback<Models.WorkbooksListResult>, callback?: msRest.ServiceCallback<Models.WorkbooksListResult>): Promise<Models.WorkbooksListByResourceGroupResponse> {
+  listByResourceGroup(resourceGroupName: string, category: Models.CategoryType, sourceId: string, options: Models.WorkbooksListByResourceGroupOptionalParams, callback: msRest.ServiceCallback<Models.WorkbooksListResult>): void;
+  listByResourceGroup(resourceGroupName: string, category: Models.CategoryType, sourceId: string, options?: Models.WorkbooksListByResourceGroupOptionalParams | msRest.ServiceCallback<Models.WorkbooksListResult>, callback?: msRest.ServiceCallback<Models.WorkbooksListResult>): Promise<Models.WorkbooksListByResourceGroupResponse> {
     return this.client.sendOperationRequest(
       {
         resourceGroupName,
         category,
+        sourceId,
         options
       },
       listByResourceGroupOperationSpec,
@@ -129,31 +133,35 @@ export class Workbooks {
    * Create a new workbook.
    * @param resourceGroupName The name of the resource group. The name is case insensitive.
    * @param resourceName The name of the Application Insights component resource.
+   * @param sourceId Azure Resource Id that will fetch all linked workbooks.
    * @param workbookProperties Properties that need to be specified to create a new workbook.
    * @param [options] The optional parameters
    * @returns Promise<Models.WorkbooksCreateOrUpdateResponse>
    */
-  createOrUpdate(resourceGroupName: string, resourceName: string, workbookProperties: Models.Workbook, options?: msRest.RequestOptionsBase): Promise<Models.WorkbooksCreateOrUpdateResponse>;
+  createOrUpdate(resourceGroupName: string, resourceName: string, sourceId: string, workbookProperties: Models.Workbook, options?: msRest.RequestOptionsBase): Promise<Models.WorkbooksCreateOrUpdateResponse>;
   /**
    * @param resourceGroupName The name of the resource group. The name is case insensitive.
    * @param resourceName The name of the Application Insights component resource.
+   * @param sourceId Azure Resource Id that will fetch all linked workbooks.
    * @param workbookProperties Properties that need to be specified to create a new workbook.
    * @param callback The callback
    */
-  createOrUpdate(resourceGroupName: string, resourceName: string, workbookProperties: Models.Workbook, callback: msRest.ServiceCallback<Models.Workbook>): void;
+  createOrUpdate(resourceGroupName: string, resourceName: string, sourceId: string, workbookProperties: Models.Workbook, callback: msRest.ServiceCallback<Models.Workbook>): void;
   /**
    * @param resourceGroupName The name of the resource group. The name is case insensitive.
    * @param resourceName The name of the Application Insights component resource.
+   * @param sourceId Azure Resource Id that will fetch all linked workbooks.
    * @param workbookProperties Properties that need to be specified to create a new workbook.
    * @param options The optional parameters
    * @param callback The callback
    */
-  createOrUpdate(resourceGroupName: string, resourceName: string, workbookProperties: Models.Workbook, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.Workbook>): void;
-  createOrUpdate(resourceGroupName: string, resourceName: string, workbookProperties: Models.Workbook, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.Workbook>, callback?: msRest.ServiceCallback<Models.Workbook>): Promise<Models.WorkbooksCreateOrUpdateResponse> {
+  createOrUpdate(resourceGroupName: string, resourceName: string, sourceId: string, workbookProperties: Models.Workbook, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.Workbook>): void;
+  createOrUpdate(resourceGroupName: string, resourceName: string, sourceId: string, workbookProperties: Models.Workbook, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.Workbook>, callback?: msRest.ServiceCallback<Models.Workbook>): Promise<Models.WorkbooksCreateOrUpdateResponse> {
     return this.client.sendOperationRequest(
       {
         resourceGroupName,
         resourceName,
+        sourceId,
         workbookProperties,
         options
       },
@@ -165,32 +173,32 @@ export class Workbooks {
    * Updates a workbook that has already been added.
    * @param resourceGroupName The name of the resource group. The name is case insensitive.
    * @param resourceName The name of the Application Insights component resource.
-   * @param workbookProperties Properties that need to be specified to create a new workbook.
+   * @param sourceId Azure Resource Id that will fetch all linked workbooks.
    * @param [options] The optional parameters
    * @returns Promise<Models.WorkbooksUpdateResponse>
    */
-  update(resourceGroupName: string, resourceName: string, workbookProperties: Models.Workbook, options?: msRest.RequestOptionsBase): Promise<Models.WorkbooksUpdateResponse>;
+  update(resourceGroupName: string, resourceName: string, sourceId: string, options?: Models.WorkbooksUpdateOptionalParams): Promise<Models.WorkbooksUpdateResponse>;
   /**
    * @param resourceGroupName The name of the resource group. The name is case insensitive.
    * @param resourceName The name of the Application Insights component resource.
-   * @param workbookProperties Properties that need to be specified to create a new workbook.
+   * @param sourceId Azure Resource Id that will fetch all linked workbooks.
    * @param callback The callback
    */
-  update(resourceGroupName: string, resourceName: string, workbookProperties: Models.Workbook, callback: msRest.ServiceCallback<Models.Workbook>): void;
+  update(resourceGroupName: string, resourceName: string, sourceId: string, callback: msRest.ServiceCallback<Models.Workbook>): void;
   /**
    * @param resourceGroupName The name of the resource group. The name is case insensitive.
    * @param resourceName The name of the Application Insights component resource.
-   * @param workbookProperties Properties that need to be specified to create a new workbook.
+   * @param sourceId Azure Resource Id that will fetch all linked workbooks.
    * @param options The optional parameters
    * @param callback The callback
    */
-  update(resourceGroupName: string, resourceName: string, workbookProperties: Models.Workbook, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.Workbook>): void;
-  update(resourceGroupName: string, resourceName: string, workbookProperties: Models.Workbook, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.Workbook>, callback?: msRest.ServiceCallback<Models.Workbook>): Promise<Models.WorkbooksUpdateResponse> {
+  update(resourceGroupName: string, resourceName: string, sourceId: string, options: Models.WorkbooksUpdateOptionalParams, callback: msRest.ServiceCallback<Models.Workbook>): void;
+  update(resourceGroupName: string, resourceName: string, sourceId: string, options?: Models.WorkbooksUpdateOptionalParams | msRest.ServiceCallback<Models.Workbook>, callback?: msRest.ServiceCallback<Models.Workbook>): Promise<Models.WorkbooksUpdateResponse> {
     return this.client.sendOperationRequest(
       {
         resourceGroupName,
         resourceName,
-        workbookProperties,
+        sourceId,
         options
       },
       updateOperationSpec,
@@ -202,7 +210,7 @@ export class Workbooks {
 const serializer = new msRest.Serializer(Mappers);
 const listByResourceGroupOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
-  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/workbooks",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks",
   urlParameters: [
     Parameters.subscriptionId,
     Parameters.resourceGroupName
@@ -210,8 +218,9 @@ const listByResourceGroupOperationSpec: msRest.OperationSpec = {
   queryParameters: [
     Parameters.category,
     Parameters.tags,
+    Parameters.sourceId,
     Parameters.canFetchContent,
-    Parameters.apiVersion0
+    Parameters.apiVersion
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -229,14 +238,14 @@ const listByResourceGroupOperationSpec: msRest.OperationSpec = {
 
 const getOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
-  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/workbooks/{resourceName}",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}",
   urlParameters: [
     Parameters.subscriptionId,
     Parameters.resourceGroupName,
     Parameters.resourceName
   ],
   queryParameters: [
-    Parameters.apiVersion0
+    Parameters.apiVersion
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -254,14 +263,14 @@ const getOperationSpec: msRest.OperationSpec = {
 
 const deleteMethodOperationSpec: msRest.OperationSpec = {
   httpMethod: "DELETE",
-  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/workbooks/{resourceName}",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}",
   urlParameters: [
     Parameters.subscriptionId,
     Parameters.resourceGroupName,
     Parameters.resourceName
   ],
   queryParameters: [
-    Parameters.apiVersion0
+    Parameters.apiVersion
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -278,14 +287,15 @@ const deleteMethodOperationSpec: msRest.OperationSpec = {
 
 const createOrUpdateOperationSpec: msRest.OperationSpec = {
   httpMethod: "PUT",
-  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/workbooks/{resourceName}",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}",
   urlParameters: [
     Parameters.subscriptionId,
     Parameters.resourceGroupName,
     Parameters.resourceName
   ],
   queryParameters: [
-    Parameters.apiVersion0
+    Parameters.sourceId,
+    Parameters.apiVersion
   ],
   headerParameters: [
     Parameters.acceptLanguage
@@ -313,24 +323,25 @@ const createOrUpdateOperationSpec: msRest.OperationSpec = {
 
 const updateOperationSpec: msRest.OperationSpec = {
   httpMethod: "PATCH",
-  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/workbooks/{resourceName}",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}",
   urlParameters: [
     Parameters.subscriptionId,
     Parameters.resourceGroupName,
     Parameters.resourceName
   ],
   queryParameters: [
-    Parameters.apiVersion0
+    Parameters.sourceId,
+    Parameters.apiVersion
   ],
   headerParameters: [
     Parameters.acceptLanguage
   ],
   requestBody: {
-    parameterPath: "workbookProperties",
-    mapper: {
-      ...Mappers.Workbook,
-      required: true
-    }
+    parameterPath: [
+      "options",
+      "workbookUpdateParameters"
+    ],
+    mapper: Mappers.WorkbookUpdateParameters
   },
   responses: {
     200: {

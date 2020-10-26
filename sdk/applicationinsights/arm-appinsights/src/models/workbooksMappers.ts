@@ -7,26 +7,12 @@
  */
 
 export {
-  ApplicationInsightsComponent,
-  ApplicationInsightsComponentProactiveDetectionConfiguration,
-  ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions,
-  AzureEntityResource,
   BaseResource,
-  ComponentLinkedStorageAccounts,
-  ComponentsResource,
   ErrorFieldContract,
-  MyWorkbook,
-  MyWorkbookResource,
-  PrivateLinkScopedResource,
-  ProxyResource,
+  ManagedIdentity,
   Resource,
-  TrackedResource,
-  WebTest,
-  WebTestGeolocation,
-  WebTestPropertiesConfiguration,
-  WebtestsResource,
   Workbook,
   WorkbookError,
-  WorkbookResource,
-  WorkbooksListResult
+  WorkbooksListResult,
+  WorkbookUpdateParameters
 } from "../models/mappers";
