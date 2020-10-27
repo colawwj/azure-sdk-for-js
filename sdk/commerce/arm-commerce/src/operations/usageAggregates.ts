@@ -27,7 +27,7 @@ export class UsageAggregates {
   }
 
   /**
-   * Query aggregated Azure subscription consumption data for a date range.
+   * Query aggregated Azure subscription consumption data for a date range. Nit.
    * @param reportedStartTime The start of the time range to retrieve data for.
    * @param reportedEndTime The end of the time range to retrieve data for.
    * @param [options] The optional parameters
@@ -59,7 +59,7 @@ export class UsageAggregates {
   }
 
   /**
-   * Query aggregated Azure subscription consumption data for a date range.
+   * Query aggregated Azure subscription consumption data for a date range. Nit.
    * @param nextPageLink The NextLink from the previous successful call to List operation.
    * @param [options] The optional parameters
    * @returns Promise<Models.UsageAggregatesListNextResponse>
