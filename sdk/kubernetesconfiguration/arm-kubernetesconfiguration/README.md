@@ -1,4 +1,4 @@
-## Azure SourceControlConfigurationClient SDK for JavaScript
+## An isomorphic javascript sdk for - SourceControlConfigurationClient
 
 This package contains an isomorphic SDK for SourceControlConfigurationClient.
 
@@ -15,7 +15,7 @@ npm install @azure/arm-kubernetesconfiguration
 
 ### How to use
 
-#### nodejs - Authentication, client creation and get sourceControlConfigurations as an example written in TypeScript.
+#### nodejs - client creation and get sourceControlConfigurations as an example written in TypeScript.
 
 ##### Install @azure/ms-rest-nodeauth
 
@@ -26,11 +26,10 @@ npm install @azure/ms-rest-nodeauth@"^3.0.0"
 
 ##### Sample code
 
+While the below sample uses the interactive login, other authentication options can be found in the [README.md file of @azure/ms-rest-nodeauth](https://www.npmjs.com/package/@azure/ms-rest-nodeauth) package
 ```typescript
-import * as msRest from "@azure/ms-rest-js";
-import * as msRestAzure from "@azure/ms-rest-azure-js";
-import * as msRestNodeAuth from "@azure/ms-rest-nodeauth";
-import { SourceControlConfigurationClient, SourceControlConfigurationModels, SourceControlConfigurationMappers } from "@azure/arm-kubernetesconfiguration";
+const msRestNodeAuth = require("@azure/ms-rest-nodeauth");
+const { SourceControlConfigurationClient } = require("@azure/arm-kubernetesconfiguration");
 const subscriptionId = process.env["AZURE_SUBSCRIPTION_ID"];
 
 msRestNodeAuth.interactiveLogin().then((creds) => {
@@ -68,7 +67,6 @@ See https://github.com/Azure/ms-rest-browserauth to learn how to authenticate to
   <head>
     <title>@azure/arm-kubernetesconfiguration sample</title>
     <script src="node_modules/@azure/ms-rest-js/dist/msRest.browser.js"></script>
-    <script src="node_modules/@azure/ms-rest-azure-js/dist/msRestAzure.js"></script>
     <script src="node_modules/@azure/ms-rest-browserauth/dist/msAuth.js"></script>
     <script src="node_modules/@azure/arm-kubernetesconfiguration/dist/arm-kubernetesconfiguration.js"></script>
     <script type="text/javascript">
