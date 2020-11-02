@@ -9,16 +9,16 @@
 
 import * as msRest from "@azure/ms-rest-js";
 import * as Models from "../models";
-import * as Mappers from "../models/privateLinkResourcesMappers";
+import * as Mappers from "../models/eventGridFiltersMappers";
 import * as Parameters from "../models/parameters";
 import { AppConfigurationManagementClientContext } from "../appConfigurationManagementClientContext";
 
-/** Class representing a PrivateLinkResources. */
-export class PrivateLinkResources {
+/** Class representing a EventGridFilters. */
+export class EventGridFilters {
   private readonly client: AppConfigurationManagementClientContext;
 
   /**
-   * Create a PrivateLinkResources.
+   * Create a EventGridFilters.
    * @param {AppConfigurationManagementClientContext} client Reference to the service client.
    */
   constructor(client: AppConfigurationManagementClientContext) {
@@ -26,27 +26,27 @@ export class PrivateLinkResources {
   }
 
   /**
-   * Gets the private link resources that need to be created for a configuration store.
+   * Lists the event grid filters for a given configuration store.
    * @param resourceGroupName The name of the resource group to which the container registry belongs.
    * @param configStoreName The name of the configuration store.
    * @param [options] The optional parameters
-   * @returns Promise<Models.PrivateLinkResourcesListByConfigurationStoreResponse>
+   * @returns Promise<Models.EventGridFiltersListByConfigurationStoreResponse>
    */
-  listByConfigurationStore(resourceGroupName: string, configStoreName: string, options?: msRest.RequestOptionsBase): Promise<Models.PrivateLinkResourcesListByConfigurationStoreResponse>;
+  listByConfigurationStore(resourceGroupName: string, configStoreName: string, options?: Models.EventGridFiltersListByConfigurationStoreOptionalParams): Promise<Models.EventGridFiltersListByConfigurationStoreResponse>;
   /**
    * @param resourceGroupName The name of the resource group to which the container registry belongs.
    * @param configStoreName The name of the configuration store.
    * @param callback The callback
    */
-  listByConfigurationStore(resourceGroupName: string, configStoreName: string, callback: msRest.ServiceCallback<Models.PrivateLinkResourceListResult>): void;
+  listByConfigurationStore(resourceGroupName: string, configStoreName: string, callback: msRest.ServiceCallback<Models.EventGridFilterListResult>): void;
   /**
    * @param resourceGroupName The name of the resource group to which the container registry belongs.
    * @param configStoreName The name of the configuration store.
    * @param options The optional parameters
    * @param callback The callback
    */
-  listByConfigurationStore(resourceGroupName: string, configStoreName: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.PrivateLinkResourceListResult>): void;
-  listByConfigurationStore(resourceGroupName: string, configStoreName: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.PrivateLinkResourceListResult>, callback?: msRest.ServiceCallback<Models.PrivateLinkResourceListResult>): Promise<Models.PrivateLinkResourcesListByConfigurationStoreResponse> {
+  listByConfigurationStore(resourceGroupName: string, configStoreName: string, options: Models.EventGridFiltersListByConfigurationStoreOptionalParams, callback: msRest.ServiceCallback<Models.EventGridFilterListResult>): void;
+  listByConfigurationStore(resourceGroupName: string, configStoreName: string, options?: Models.EventGridFiltersListByConfigurationStoreOptionalParams | msRest.ServiceCallback<Models.EventGridFilterListResult>, callback?: msRest.ServiceCallback<Models.EventGridFilterListResult>): Promise<Models.EventGridFiltersListByConfigurationStoreResponse> {
     return this.client.sendOperationRequest(
       {
         resourceGroupName,
@@ -54,71 +54,71 @@ export class PrivateLinkResources {
         options
       },
       listByConfigurationStoreOperationSpec,
-      callback) as Promise<Models.PrivateLinkResourcesListByConfigurationStoreResponse>;
+      callback) as Promise<Models.EventGridFiltersListByConfigurationStoreResponse>;
   }
 
   /**
-   * Gets a private link resource that need to be created for a configuration store.
+   * Gets the properties of the specified event grid filter.
    * @param resourceGroupName The name of the resource group to which the container registry belongs.
    * @param configStoreName The name of the configuration store.
-   * @param groupName The name of the private link resource group.
+   * @param eventGridFilterName The name of the event grid filter to retrieve.
    * @param [options] The optional parameters
-   * @returns Promise<Models.PrivateLinkResourcesGetResponse>
+   * @returns Promise<Models.EventGridFiltersGetResponse>
    */
-  get(resourceGroupName: string, configStoreName: string, groupName: string, options?: msRest.RequestOptionsBase): Promise<Models.PrivateLinkResourcesGetResponse>;
+  get(resourceGroupName: string, configStoreName: string, eventGridFilterName: string, options?: msRest.RequestOptionsBase): Promise<Models.EventGridFiltersGetResponse>;
   /**
    * @param resourceGroupName The name of the resource group to which the container registry belongs.
    * @param configStoreName The name of the configuration store.
-   * @param groupName The name of the private link resource group.
+   * @param eventGridFilterName The name of the event grid filter to retrieve.
    * @param callback The callback
    */
-  get(resourceGroupName: string, configStoreName: string, groupName: string, callback: msRest.ServiceCallback<Models.PrivateLinkResource>): void;
+  get(resourceGroupName: string, configStoreName: string, eventGridFilterName: string, callback: msRest.ServiceCallback<Models.EventGridFilter>): void;
   /**
    * @param resourceGroupName The name of the resource group to which the container registry belongs.
    * @param configStoreName The name of the configuration store.
-   * @param groupName The name of the private link resource group.
+   * @param eventGridFilterName The name of the event grid filter to retrieve.
    * @param options The optional parameters
    * @param callback The callback
    */
-  get(resourceGroupName: string, configStoreName: string, groupName: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.PrivateLinkResource>): void;
-  get(resourceGroupName: string, configStoreName: string, groupName: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.PrivateLinkResource>, callback?: msRest.ServiceCallback<Models.PrivateLinkResource>): Promise<Models.PrivateLinkResourcesGetResponse> {
+  get(resourceGroupName: string, configStoreName: string, eventGridFilterName: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.EventGridFilter>): void;
+  get(resourceGroupName: string, configStoreName: string, eventGridFilterName: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.EventGridFilter>, callback?: msRest.ServiceCallback<Models.EventGridFilter>): Promise<Models.EventGridFiltersGetResponse> {
     return this.client.sendOperationRequest(
       {
         resourceGroupName,
         configStoreName,
-        groupName,
+        eventGridFilterName,
         options
       },
       getOperationSpec,
-      callback) as Promise<Models.PrivateLinkResourcesGetResponse>;
+      callback) as Promise<Models.EventGridFiltersGetResponse>;
   }
 
   /**
-   * Gets the private link resources that need to be created for a configuration store.
+   * Lists the event grid filters for a given configuration store.
    * @param nextPageLink The NextLink from the previous successful call to List operation.
    * @param [options] The optional parameters
-   * @returns Promise<Models.PrivateLinkResourcesListByConfigurationStoreNextResponse>
+   * @returns Promise<Models.EventGridFiltersListByConfigurationStoreNextResponse>
    */
-  listByConfigurationStoreNext(nextPageLink: string, options?: msRest.RequestOptionsBase): Promise<Models.PrivateLinkResourcesListByConfigurationStoreNextResponse>;
+  listByConfigurationStoreNext(nextPageLink: string, options?: Models.EventGridFiltersListByConfigurationStoreNextOptionalParams): Promise<Models.EventGridFiltersListByConfigurationStoreNextResponse>;
   /**
    * @param nextPageLink The NextLink from the previous successful call to List operation.
    * @param callback The callback
    */
-  listByConfigurationStoreNext(nextPageLink: string, callback: msRest.ServiceCallback<Models.PrivateLinkResourceListResult>): void;
+  listByConfigurationStoreNext(nextPageLink: string, callback: msRest.ServiceCallback<Models.EventGridFilterListResult>): void;
   /**
    * @param nextPageLink The NextLink from the previous successful call to List operation.
    * @param options The optional parameters
    * @param callback The callback
    */
-  listByConfigurationStoreNext(nextPageLink: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.PrivateLinkResourceListResult>): void;
-  listByConfigurationStoreNext(nextPageLink: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.PrivateLinkResourceListResult>, callback?: msRest.ServiceCallback<Models.PrivateLinkResourceListResult>): Promise<Models.PrivateLinkResourcesListByConfigurationStoreNextResponse> {
+  listByConfigurationStoreNext(nextPageLink: string, options: Models.EventGridFiltersListByConfigurationStoreNextOptionalParams, callback: msRest.ServiceCallback<Models.EventGridFilterListResult>): void;
+  listByConfigurationStoreNext(nextPageLink: string, options?: Models.EventGridFiltersListByConfigurationStoreNextOptionalParams | msRest.ServiceCallback<Models.EventGridFilterListResult>, callback?: msRest.ServiceCallback<Models.EventGridFilterListResult>): Promise<Models.EventGridFiltersListByConfigurationStoreNextResponse> {
     return this.client.sendOperationRequest(
       {
         nextPageLink,
         options
       },
       listByConfigurationStoreNextOperationSpec,
-      callback) as Promise<Models.PrivateLinkResourcesListByConfigurationStoreNextResponse>;
+      callback) as Promise<Models.EventGridFiltersListByConfigurationStoreNextResponse>;
   }
 }
 
@@ -126,21 +126,22 @@ export class PrivateLinkResources {
 const serializer = new msRest.Serializer(Mappers);
 const listByConfigurationStoreOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
-  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateLinkResources",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/eventGridFilters",
   urlParameters: [
     Parameters.subscriptionId,
     Parameters.resourceGroupName,
     Parameters.configStoreName
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion,
+    Parameters.skipToken
   ],
   headerParameters: [
     Parameters.acceptLanguage
   ],
   responses: {
     200: {
-      bodyMapper: Mappers.PrivateLinkResourceListResult
+      bodyMapper: Mappers.EventGridFilterListResult
     },
     default: {
       bodyMapper: Mappers.ErrorResponse
@@ -151,12 +152,12 @@ const listByConfigurationStoreOperationSpec: msRest.OperationSpec = {
 
 const getOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
-  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/privateLinkResources/{groupName}",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}/eventGridFilters/{eventGridFilterName}",
   urlParameters: [
     Parameters.subscriptionId,
     Parameters.resourceGroupName,
     Parameters.configStoreName,
-    Parameters.groupName
+    Parameters.eventGridFilterName
   ],
   queryParameters: [
     Parameters.apiVersion
@@ -166,7 +167,7 @@ const getOperationSpec: msRest.OperationSpec = {
   ],
   responses: {
     200: {
-      bodyMapper: Mappers.PrivateLinkResource
+      bodyMapper: Mappers.EventGridFilter
     },
     default: {
       bodyMapper: Mappers.ErrorResponse
@@ -183,14 +184,15 @@ const listByConfigurationStoreNextOperationSpec: msRest.OperationSpec = {
     Parameters.nextPageLink
   ],
   queryParameters: [
-    Parameters.apiVersion
+    Parameters.apiVersion,
+    Parameters.skipToken
   ],
   headerParameters: [
     Parameters.acceptLanguage
   ],
   responses: {
     200: {
-      bodyMapper: Mappers.PrivateLinkResourceListResult
+      bodyMapper: Mappers.EventGridFilterListResult
     },
     default: {
       bodyMapper: Mappers.ErrorResponse
