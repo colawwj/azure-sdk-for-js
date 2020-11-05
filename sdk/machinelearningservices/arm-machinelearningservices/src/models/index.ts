@@ -79,6 +79,20 @@ export interface NotebookResourceInfo {
 }
 
 /**
+ * An interface representing ListNotebookKeysResult.
+ */
+export interface ListNotebookKeysResult {
+  /**
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly primaryAccessKey?: string;
+  /**
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly secondaryAccessKey?: string;
+}
+
+/**
  * An interface representing KeyVaultProperties.
  */
 export interface KeyVaultProperties {
@@ -2845,6 +2859,26 @@ export type NotebooksPrepareResponse = NotebookResourceInfo & {
        * The response body as parsed JSON or XML
        */
       parsedBody: NotebookResourceInfo;
+    };
+};
+
+/**
+ * Contains response data for the listKeys operation.
+ */
+export type NotebooksListKeysResponse = ListNotebookKeysResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ListNotebookKeysResult;
     };
 };
 
