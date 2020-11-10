@@ -322,7 +322,6 @@ export {
   ManagedPrivateEndpoint,
   ManagedPrivateEndpointResource,
   ManagedVirtualNetwork,
-  ManagedVirtualNetworkListResponse,
   ManagedVirtualNetworkResource,
   MappingDataFlow,
   MariaDBLinkedService,
