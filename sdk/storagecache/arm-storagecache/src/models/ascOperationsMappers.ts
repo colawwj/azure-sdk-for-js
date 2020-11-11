@@ -7,10 +7,7 @@
  */
 
 export {
+  AscOperation,
   CloudError,
-  ResourceSku,
-  ResourceSkuCapabilities,
-  ResourceSkuLocationInfo,
-  ResourceSkusResult,
-  Restriction
+  ErrorResponse
 } from "../models/mappers";
