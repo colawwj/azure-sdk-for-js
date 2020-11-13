@@ -26,13 +26,15 @@ export {
   HyperVCollector,
   Machine,
   MachineProperties,
-  MachineResultList,
-  MachinesGetHeaders,
-  MachinesListByProjectHeaders,
   NetworkAdapter,
   Project,
   ProjectProperties,
   VmFamily,
   VmUptime,
-  VMwareCollector
+  VMwareCollector,
+  VMwareCollectorList,
+  VMwareCollectorsCreateHeaders,
+  VMwareCollectorsDeleteHeaders,
+  VMwareCollectorsGetHeaders,
+  VMwareCollectorsListByProjectHeaders
 } from "../models/mappers";
