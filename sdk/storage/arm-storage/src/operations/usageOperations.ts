@@ -9,16 +9,16 @@
 
 import * as msRest from "@azure/ms-rest-js";
 import * as Models from "../models";
-import * as Mappers from "../models/operationsMappers";
+import * as Mappers from "../models/usageOperationsMappers";
 import * as Parameters from "../models/parameters";
 import { StorageManagementClientContext } from "../storageManagementClientContext";
 
-/** Class representing a Operations. */
-export class Operations {
+/** Class representing a UsageOperations. */
+export class UsageOperations {
   private readonly client: StorageManagementClientContext;
 
   /**
-   * Create a Operations.
+   * Create a UsageOperations.
    * @param {StorageManagementClientContext} client Reference to the service client.
    */
   constructor(client: StorageManagementClientContext) {
@@ -26,27 +26,27 @@ export class Operations {
   }
 
   /**
-   * Lists all of the available Storage Rest API operations.
+   * Gets the current usage count and the limit for the resources under the subscription.
    * @param [options] The optional parameters
-   * @returns Promise<Models.OperationsListResponse>
+   * @returns Promise<Models.UsageListResponse>
    */
-  list(options?: msRest.RequestOptionsBase): Promise<Models.OperationsListResponse>;
+  list(options?: msRest.RequestOptionsBase): Promise<Models.UsageListResponse>;
   /**
    * @param callback The callback
    */
-  list(callback: msRest.ServiceCallback<Models.OperationListResult>): void;
+  list(callback: msRest.ServiceCallback<Models.UsageListResult>): void;
   /**
    * @param options The optional parameters
    * @param callback The callback
    */
-  list(options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.OperationListResult>): void;
-  list(options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.OperationListResult>, callback?: msRest.ServiceCallback<Models.OperationListResult>): Promise<Models.OperationsListResponse> {
+  list(options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.UsageListResult>): void;
+  list(options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.UsageListResult>, callback?: msRest.ServiceCallback<Models.UsageListResult>): Promise<Models.UsageListResponse> {
     return this.client.sendOperationRequest(
       {
         options
       },
       listOperationSpec,
-      callback) as Promise<Models.OperationsListResponse>;
+      callback) as Promise<Models.UsageListResponse>;
   }
 }
 
@@ -54,7 +54,10 @@ export class Operations {
 const serializer = new msRest.Serializer(Mappers);
 const listOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
-  path: "providers/Microsoft.Storage/operations",
+  path: "subscriptions/{subscriptionId}/providers/Microsoft.Storage/usages",
+  urlParameters: [
+    Parameters.subscriptionId
+  ],
   queryParameters: [
     Parameters.apiVersion
   ],
@@ -63,7 +66,7 @@ const listOperationSpec: msRest.OperationSpec = {
   ],
   responses: {
     200: {
-      bodyMapper: Mappers.OperationListResult
+      bodyMapper: Mappers.UsageListResult
     },
     default: {
       bodyMapper: Mappers.CloudError
