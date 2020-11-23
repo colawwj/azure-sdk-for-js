@@ -146,6 +146,7 @@ const createOrUpdateOperationSpec: msRest.OperationSpec = {
     200: {
       bodyMapper: Mappers.ManagedIdentitySqlControlSettingsModel
     },
+    201: {},
     default: {
       bodyMapper: Mappers.ErrorContract
     }
