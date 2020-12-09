@@ -142,6 +142,30 @@ export const NotebookResourceInfo: msRest.CompositeMapper = {
   }
 };
 
+export const ListNotebookKeysResult: msRest.CompositeMapper = {
+  serializedName: "ListNotebookKeysResult",
+  type: {
+    name: "Composite",
+    className: "ListNotebookKeysResult",
+    modelProperties: {
+      primaryAccessKey: {
+        readOnly: true,
+        serializedName: "primaryAccessKey",
+        type: {
+          name: "String"
+        }
+      },
+      secondaryAccessKey: {
+        readOnly: true,
+        serializedName: "secondaryAccessKey",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const KeyVaultProperties: msRest.CompositeMapper = {
   serializedName: "KeyVaultProperties",
   type: {

@@ -10,6 +10,7 @@ export {
   discriminators,
   ErrorDetail,
   ErrorResponse,
+  ListNotebookKeysResult,
   MachineLearningServiceError,
   NotebookPreparationError,
   NotebookResourceInfo
