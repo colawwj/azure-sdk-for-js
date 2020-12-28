@@ -808,6 +808,12 @@ export const NetworkInterface: msRest.CompositeMapper = {
           name: "String"
         }
       },
+      edgeZone: {
+        serializedName: "properties.edgeZone",
+        type: {
+          name: "String"
+        }
+      },
       etag: {
         readOnly: true,
         serializedName: "etag",
@@ -1540,6 +1546,12 @@ export const PublicIPAddress: msRest.CompositeMapper = {
       provisioningState: {
         readOnly: true,
         serializedName: "properties.provisioningState",
+        type: {
+          name: "String"
+        }
+      },
+      edgeZone: {
+        serializedName: "properties.edgeZone",
         type: {
           name: "String"
         }
@@ -2291,6 +2303,12 @@ export const BackendAddressPool: msRest.CompositeMapper = {
     className: "BackendAddressPool",
     modelProperties: {
       ...SubResource.type.modelProperties,
+      location: {
+        serializedName: "properties.location",
+        type: {
+          name: "String"
+        }
+      },
       loadBalancerBackendAddresses: {
         serializedName: "properties.loadBalancerBackendAddresses",
         type: {
@@ -6807,6 +6825,13 @@ export const CustomIpPrefix: msRest.CompositeMapper = {
     className: "CustomIpPrefix",
     modelProperties: {
       ...Resource.type.modelProperties,
+      extendedLocation: {
+        serializedName: "extendedLocation",
+        type: {
+          name: "Composite",
+          className: "ExtendedLocation"
+        }
+      },
       cidr: {
         serializedName: "properties.cidr",
         type: {
@@ -6842,6 +6867,12 @@ export const CustomIpPrefix: msRest.CompositeMapper = {
       provisioningState: {
         readOnly: true,
         serializedName: "properties.provisioningState",
+        type: {
+          name: "String"
+        }
+      },
+      edgeZone: {
+        serializedName: "properties.edgeZone",
         type: {
           name: "String"
         }
@@ -10422,6 +10453,12 @@ export const LoadBalancer: msRest.CompositeMapper = {
       provisioningState: {
         readOnly: true,
         serializedName: "properties.provisioningState",
+        type: {
+          name: "String"
+        }
+      },
+      edgeZone: {
+        serializedName: "properties.edgeZone",
         type: {
           name: "String"
         }
@@ -15699,6 +15736,12 @@ export const PublicIPPrefix: msRest.CompositeMapper = {
           name: "String"
         }
       },
+      edgeZone: {
+        serializedName: "properties.edgeZone",
+        type: {
+          name: "String"
+        }
+      },
       etag: {
         readOnly: true,
         serializedName: "etag",
@@ -16642,6 +16685,12 @@ export const VirtualNetwork: msRest.CompositeMapper = {
               className: "SubResource"
             }
           }
+        }
+      },
+      edgeZone: {
+        serializedName: "properties.edgeZone",
+        type: {
+          name: "String"
         }
       },
       etag: {
@@ -19508,6 +19557,12 @@ export const VpnSiteLinkConnection: msRest.CompositeMapper = {
           name: "Number"
         }
       },
+      vpnLinkConnectionMode: {
+        serializedName: "properties.vpnLinkConnectionMode",
+        type: {
+          name: "String"
+        }
+      },
       connectionStatus: {
         serializedName: "properties.connectionStatus",
         type: {
@@ -19587,6 +19642,30 @@ export const VpnSiteLinkConnection: msRest.CompositeMapper = {
         serializedName: "properties.provisioningState",
         type: {
           name: "String"
+        }
+      },
+      ingressNatRules: {
+        serializedName: "properties.ingressNatRules",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "SubResource"
+            }
+          }
+        }
+      },
+      egressNatRules: {
+        serializedName: "properties.egressNatRules",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "SubResource"
+            }
+          }
         }
       },
       name: {
@@ -19909,6 +19988,128 @@ export const VpnGatewayIpConfiguration: msRest.CompositeMapper = {
   }
 };
 
+export const VpnNatRuleMapping: msRest.CompositeMapper = {
+  serializedName: "VpnNatRuleMapping",
+  type: {
+    name: "Composite",
+    className: "VpnNatRuleMapping",
+    modelProperties: {
+      addressSpace: {
+        serializedName: "addressSpace",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const VpnGatewayNatRule: msRest.CompositeMapper = {
+  serializedName: "VpnGatewayNatRule",
+  type: {
+    name: "Composite",
+    className: "VpnGatewayNatRule",
+    modelProperties: {
+      ...SubResource.type.modelProperties,
+      provisioningState: {
+        readOnly: true,
+        serializedName: "properties.provisioningState",
+        type: {
+          name: "String"
+        }
+      },
+      vpnGatewayNatRulePropertiesType: {
+        serializedName: "properties.type",
+        type: {
+          name: "String"
+        }
+      },
+      mode: {
+        serializedName: "properties.mode",
+        type: {
+          name: "String"
+        }
+      },
+      internalMappings: {
+        serializedName: "properties.internalMappings",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "VpnNatRuleMapping"
+            }
+          }
+        }
+      },
+      externalMappings: {
+        serializedName: "properties.externalMappings",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "VpnNatRuleMapping"
+            }
+          }
+        }
+      },
+      ipConfigurationId: {
+        serializedName: "properties.ipConfigurationId",
+        type: {
+          name: "String"
+        }
+      },
+      egressVpnSiteLinkConnections: {
+        readOnly: true,
+        serializedName: "properties.egressVpnSiteLinkConnections",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "SubResource"
+            }
+          }
+        }
+      },
+      ingressVpnSiteLinkConnections: {
+        readOnly: true,
+        serializedName: "properties.ingressVpnSiteLinkConnections",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "SubResource"
+            }
+          }
+        }
+      },
+      name: {
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      etag: {
+        readOnly: true,
+        serializedName: "etag",
+        type: {
+          name: "String"
+        }
+      },
+      type: {
+        readOnly: true,
+        serializedName: "type",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
 export const VpnGateway: msRest.CompositeMapper = {
   serializedName: "VpnGateway",
   type: {
@@ -19972,6 +20173,18 @@ export const VpnGateway: msRest.CompositeMapper = {
         serializedName: "properties.isRoutingPreferenceInternet",
         type: {
           name: "Boolean"
+        }
+      },
+      natRules: {
+        serializedName: "properties.natRules",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "VpnGatewayNatRule"
+            }
+          }
         }
       },
       etag: {
@@ -21015,6 +21228,12 @@ export const ExpressRouteConnection: msRest.CompositeMapper = {
       },
       enableInternetSecurity: {
         serializedName: "properties.enableInternetSecurity",
+        type: {
+          name: "Boolean"
+        }
+      },
+      expressRouteGatewayBypass: {
+        serializedName: "properties.expressRouteGatewayBypass",
         type: {
           name: "Boolean"
         }
@@ -24272,6 +24491,34 @@ export const ListVpnSiteLinkConnectionsResult: msRest.CompositeMapper = {
             type: {
               name: "Composite",
               className: "VpnSiteLinkConnection"
+            }
+          }
+        }
+      },
+      nextLink: {
+        serializedName: "nextLink",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const ListVpnGatewayNatRulesResult: msRest.CompositeMapper = {
+  serializedName: "ListVpnGatewayNatRulesResult",
+  type: {
+    name: "Composite",
+    className: "ListVpnGatewayNatRulesResult",
+    modelProperties: {
+      value: {
+        serializedName: "",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "VpnGatewayNatRule"
             }
           }
         }
