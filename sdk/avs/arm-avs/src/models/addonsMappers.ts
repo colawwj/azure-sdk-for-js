@@ -9,6 +9,7 @@
 export {
   discriminators,
   Addon,
+  AddonList,
   BaseResource,
   Circuit,
   CloudError,
@@ -18,7 +19,6 @@ export {
   ErrorAdditionalInfo,
   ErrorResponse,
   ExpressRouteAuthorization,
-  ExpressRouteAuthorizationList,
   GlobalReachConnection,
   HcxEnterpriseSite,
   IdentitySource,
