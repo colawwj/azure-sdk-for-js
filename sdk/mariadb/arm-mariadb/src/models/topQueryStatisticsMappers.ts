@@ -14,6 +14,8 @@ export {
   CloudError,
   Configuration,
   Database,
+  ErrorAdditionalInfo,
+  ErrorResponse,
   FirewallRule,
   LogFile,
   PrivateEndpointConnection,
@@ -34,6 +36,8 @@ export {
   ServerSecurityAlertPolicy,
   Sku,
   StorageProfile,
+  TopQueryStatisticsInput,
+  TopQueryStatisticsResultList,
   TrackedResource,
   VirtualNetworkRule,
   WaitStatistic
