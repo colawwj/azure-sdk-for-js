@@ -17,7 +17,6 @@ export {
   ErrorAdditionalInfo,
   ErrorResponse,
   FirewallRule,
-  FirewallRuleListResult,
   LogFile,
   PrivateEndpointConnection,
   PrivateEndpointProperty,
