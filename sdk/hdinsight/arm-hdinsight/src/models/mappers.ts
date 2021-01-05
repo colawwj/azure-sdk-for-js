@@ -530,6 +530,12 @@ export const Role: msRest.CompositeMapper = {
           name: "Number"
         }
       },
+      vmGroupName: {
+        serializedName: "vmGroupName",
+        type: {
+          name: "String"
+        }
+      },
       autoscaleConfiguration: {
         serializedName: "autoscale",
         type: {
@@ -580,6 +586,12 @@ export const Role: msRest.CompositeMapper = {
               className: "ScriptAction"
             }
           }
+        }
+      },
+      encryptDataDisks: {
+        serializedName: "encryptDataDisks",
+        type: {
+          name: "Boolean"
         }
       }
     }
@@ -652,6 +664,18 @@ export const StorageAccount: msRest.CompositeMapper = {
       },
       msiResourceId: {
         serializedName: "msiResourceId",
+        type: {
+          name: "String"
+        }
+      },
+      saskey: {
+        serializedName: "saskey",
+        type: {
+          name: "String"
+        }
+      },
+      fileshare: {
+        serializedName: "fileshare",
         type: {
           name: "String"
         }
@@ -1114,6 +1138,12 @@ export const ClusterGetProperties: msRest.CompositeMapper = {
           name: "String"
         }
       },
+      clusterHdpVersion: {
+        serializedName: "clusterHdpVersion",
+        type: {
+          name: "String"
+        }
+      },
       osType: {
         serializedName: "osType",
         type: {
@@ -1237,6 +1267,13 @@ export const ClusterGetProperties: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "EncryptionInTransitProperties"
+        }
+      },
+      storageProfile: {
+        serializedName: "storageProfile",
+        type: {
+          name: "Composite",
+          className: "StorageProfile"
         }
       },
       minSupportedTlsVersion: {
@@ -1723,22 +1760,98 @@ export const ProxyResource: msRest.CompositeMapper = {
   }
 };
 
-export const ErrorResponse: msRest.CompositeMapper = {
-  serializedName: "ErrorResponse",
+export const ErrorAdditionalInfo: msRest.CompositeMapper = {
+  serializedName: "ErrorAdditionalInfo",
   type: {
     name: "Composite",
-    className: "ErrorResponse",
+    className: "ErrorAdditionalInfo",
+    modelProperties: {
+      type: {
+        readOnly: true,
+        serializedName: "type",
+        type: {
+          name: "String"
+        }
+      },
+      info: {
+        readOnly: true,
+        serializedName: "info",
+        type: {
+          name: "Object"
+        }
+      }
+    }
+  }
+};
+
+export const ErrorDetail: msRest.CompositeMapper = {
+  serializedName: "ErrorDetail",
+  type: {
+    name: "Composite",
+    className: "ErrorDetail",
     modelProperties: {
       code: {
+        readOnly: true,
         serializedName: "code",
         type: {
           name: "String"
         }
       },
       message: {
+        readOnly: true,
         serializedName: "message",
         type: {
           name: "String"
+        }
+      },
+      target: {
+        readOnly: true,
+        serializedName: "target",
+        type: {
+          name: "String"
+        }
+      },
+      details: {
+        readOnly: true,
+        serializedName: "details",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "ErrorDetail"
+            }
+          }
+        }
+      },
+      additionalInfo: {
+        readOnly: true,
+        serializedName: "additionalInfo",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "ErrorAdditionalInfo"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const ErrorResponse: msRest.CompositeMapper = {
+  serializedName: "ErrorResponse",
+  type: {
+    name: "Composite",
+    className: "ErrorResponse",
+    modelProperties: {
+      error: {
+        serializedName: "error",
+        type: {
+          name: "Composite",
+          className: "ErrorDetail"
         }
       }
     }
@@ -2080,13 +2193,13 @@ export const VmSizeCompatibilityFilter: msRest.CompositeMapper = {
     className: "VmSizeCompatibilityFilter",
     modelProperties: {
       filterMode: {
-        serializedName: "FilterMode",
+        serializedName: "filterMode",
         type: {
           name: "String"
         }
       },
       regions: {
-        serializedName: "Regions",
+        serializedName: "regions",
         type: {
           name: "Sequence",
           element: {
@@ -2097,7 +2210,7 @@ export const VmSizeCompatibilityFilter: msRest.CompositeMapper = {
         }
       },
       clusterFlavors: {
-        serializedName: "ClusterFlavors",
+        serializedName: "clusterFlavors",
         type: {
           name: "Sequence",
           element: {
@@ -2108,7 +2221,7 @@ export const VmSizeCompatibilityFilter: msRest.CompositeMapper = {
         }
       },
       nodeTypes: {
-        serializedName: "NodeTypes",
+        serializedName: "nodeTypes",
         type: {
           name: "Sequence",
           element: {
@@ -2119,7 +2232,7 @@ export const VmSizeCompatibilityFilter: msRest.CompositeMapper = {
         }
       },
       clusterVersions: {
-        serializedName: "ClusterVersions",
+        serializedName: "clusterVersions",
         type: {
           name: "Sequence",
           element: {
@@ -2151,19 +2264,19 @@ export const RegionalQuotaCapability: msRest.CompositeMapper = {
     className: "RegionalQuotaCapability",
     modelProperties: {
       regionName: {
-        serializedName: "region_name",
+        serializedName: "regionName",
         type: {
           name: "String"
         }
       },
       coresUsed: {
-        serializedName: "cores_used",
+        serializedName: "coresUsed",
         type: {
           name: "Number"
         }
       },
       coresAvailable: {
-        serializedName: "cores_available",
+        serializedName: "coresAvailable",
         type: {
           name: "Number"
         }
@@ -2179,13 +2292,13 @@ export const QuotaCapability: msRest.CompositeMapper = {
     className: "QuotaCapability",
     modelProperties: {
       coresUsed: {
-        serializedName: "cores_used",
+        serializedName: "coresUsed",
         type: {
           name: "Number"
         }
       },
       maxCoresAllowed: {
-        serializedName: "max_cores_allowed",
+        serializedName: "maxCoresAllowed",
         type: {
           name: "Number"
         }
@@ -2249,7 +2362,7 @@ export const CapabilitiesResult: msRest.CompositeMapper = {
         }
       },
       vmSizeFilters: {
-        serializedName: "vmSize_filters",
+        serializedName: "vmSizeFilters",
         type: {
           name: "Sequence",
           element: {
@@ -2333,28 +2446,6 @@ export const Usage: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "LocalizedName"
-        }
-      }
-    }
-  }
-};
-
-export const UsagesListResult: msRest.CompositeMapper = {
-  serializedName: "UsagesListResult",
-  type: {
-    name: "Composite",
-    className: "UsagesListResult",
-    modelProperties: {
-      value: {
-        serializedName: "value",
-        type: {
-          name: "Sequence",
-          element: {
-            type: {
-              name: "Composite",
-              className: "Usage"
-            }
-          }
         }
       }
     }
@@ -2547,51 +2638,6 @@ export const BillingResources: msRest.CompositeMapper = {
   }
 };
 
-export const BillingResponseListResult: msRest.CompositeMapper = {
-  serializedName: "BillingResponseListResult",
-  type: {
-    name: "Composite",
-    className: "BillingResponseListResult",
-    modelProperties: {
-      vmSizes: {
-        serializedName: "vmSizes",
-        type: {
-          name: "Sequence",
-          element: {
-            type: {
-              name: "String"
-            }
-          }
-        }
-      },
-      vmSizeFilters: {
-        serializedName: "vmSizeFilters",
-        type: {
-          name: "Sequence",
-          element: {
-            type: {
-              name: "Composite",
-              className: "VmSizeCompatibilityFilterV2"
-            }
-          }
-        }
-      },
-      billingResources: {
-        serializedName: "billingResources",
-        type: {
-          name: "Sequence",
-          element: {
-            type: {
-              name: "Composite",
-              className: "BillingResources"
-            }
-          }
-        }
-      }
-    }
-  }
-};
-
 export const ClusterConfigurations: msRest.CompositeMapper = {
   serializedName: "ClusterConfigurations",
   type: {
@@ -2752,6 +2798,12 @@ export const OperationDisplay: msRest.CompositeMapper = {
         type: {
           name: "String"
         }
+      },
+      description: {
+        serializedName: "description",
+        type: {
+          name: "String"
+        }
       }
     }
   }
@@ -2774,6 +2826,12 @@ export const Operation: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "OperationDisplay"
+        }
+      },
+      isDataAction: {
+        serializedName: "isDataAction",
+        type: {
+          name: "Boolean"
         }
       }
     }
@@ -2851,6 +2909,87 @@ export const ApplicationListResult: msRest.CompositeMapper = {
             type: {
               name: "Composite",
               className: "Application"
+            }
+          }
+        }
+      },
+      nextLink: {
+        readOnly: true,
+        serializedName: "nextLink",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const UsagesListResult: msRest.CompositeMapper = {
+  serializedName: "UsagesListResult",
+  type: {
+    name: "Composite",
+    className: "UsagesListResult",
+    modelProperties: {
+      value: {
+        serializedName: "",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "Usage"
+            }
+          }
+        }
+      },
+      nextLink: {
+        readOnly: true,
+        serializedName: "nextLink",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const BillingResponseListResult: msRest.CompositeMapper = {
+  serializedName: "BillingResponseListResult",
+  type: {
+    name: "Composite",
+    className: "BillingResponseListResult",
+    modelProperties: {
+      vmSizes: {
+        serializedName: "vmSizes",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      vmSizeFilters: {
+        serializedName: "vmSizeFilters",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "VmSizeCompatibilityFilterV2"
+            }
+          }
+        }
+      },
+      billingResources: {
+        serializedName: "billingResources",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "BillingResources"
             }
           }
         }

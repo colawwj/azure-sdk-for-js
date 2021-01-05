@@ -9,6 +9,8 @@
 export {
   ClusterMonitoringRequest,
   ClusterMonitoringResponse,
+  ErrorAdditionalInfo,
+  ErrorDetail,
   ErrorResponse,
   Extension
 } from "../models/mappers";

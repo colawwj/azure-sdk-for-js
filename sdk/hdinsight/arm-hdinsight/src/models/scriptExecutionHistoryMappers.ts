@@ -7,6 +7,8 @@
  */
 
 export {
+  ErrorAdditionalInfo,
+  ErrorDetail,
   ErrorResponse,
   RuntimeScriptAction,
   RuntimeScriptActionDetail,

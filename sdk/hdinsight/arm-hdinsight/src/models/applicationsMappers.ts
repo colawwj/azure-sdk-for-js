@@ -30,6 +30,8 @@ export {
   DataDisksGroups,
   DiskEncryptionProperties,
   EncryptionInTransitProperties,
+  ErrorAdditionalInfo,
+  ErrorDetail,
   ErrorResponse,
   Errors,
   HardwareProfile,
@@ -48,6 +50,8 @@ export {
   SecurityProfile,
   SshProfile,
   SshPublicKey,
+  StorageAccount,
+  StorageProfile,
   TrackedResource,
   VirtualNetworkProfile
 } from "../models/mappers";

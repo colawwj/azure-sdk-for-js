@@ -12,6 +12,8 @@ export {
   BillingResponseListResult,
   CapabilitiesResult,
   DiskBillingMeters,
+  ErrorAdditionalInfo,
+  ErrorDetail,
   ErrorResponse,
   LocalizedName,
   QuotaCapability,

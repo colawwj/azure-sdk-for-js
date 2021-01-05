@@ -36,6 +36,8 @@ export {
   DataDisksGroups,
   DiskEncryptionProperties,
   EncryptionInTransitProperties,
+  ErrorAdditionalInfo,
+  ErrorDetail,
   ErrorResponse,
   Errors,
   ExecuteScriptActionParameters,

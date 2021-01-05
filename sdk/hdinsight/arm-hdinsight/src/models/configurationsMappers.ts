@@ -8,5 +8,7 @@
 
 export {
   ClusterConfigurations,
+  ErrorAdditionalInfo,
+  ErrorDetail,
   ErrorResponse
 } from "../models/mappers";

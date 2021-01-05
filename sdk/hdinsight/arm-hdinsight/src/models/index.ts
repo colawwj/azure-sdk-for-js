@@ -312,6 +312,10 @@ export interface Role {
    */
   targetInstanceCount?: number;
   /**
+   * the vm group name.
+   */
+  vmGroupName?: string;
+  /**
    * The autoscale configurations.
    */
   autoscaleConfiguration?: Autoscale;
@@ -335,6 +339,10 @@ export interface Role {
    * The list of script actions on the role.
    */
   scriptActions?: ScriptAction[];
+  /**
+   * Indicates whether encrypt the data disks.
+   */
+  encryptDataDisks?: boolean;
 }
 
 /**
@@ -380,6 +388,14 @@ export interface StorageAccount {
    * for Azure Data Lake Storage Gen 2.
    */
   msiResourceId?: string;
+  /**
+   * The shared access signature.
+   */
+  saskey?: string;
+  /**
+   * The file share name.
+   */
+  fileshare?: string;
 }
 
 /**
@@ -655,6 +671,10 @@ export interface ClusterGetProperties {
    */
   clusterVersion?: string;
   /**
+   * The hdp version of the cluster.
+   */
+  clusterHdpVersion?: string;
+  /**
    * The type of operating system. Possible values include: 'Windows', 'Linux'
    */
   osType?: OSType;
@@ -715,6 +735,10 @@ export interface ClusterGetProperties {
    * The encryption-in-transit properties.
    */
   encryptionInTransitProperties?: EncryptionInTransitProperties;
+  /**
+   * The storage profile.
+   */
+  storageProfile?: StorageProfile;
   /**
    * The minimal supported tls version.
    */
@@ -1001,17 +1025,62 @@ export interface ProxyResource extends Resource {
 }
 
 /**
- * Describes the format of Error response.
+ * The resource management error additional info.
+ */
+export interface ErrorAdditionalInfo {
+  /**
+   * The additional info type.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * The additional info.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly info?: any;
+}
+
+/**
+ * The error detail.
+ */
+export interface ErrorDetail {
+  /**
+   * The error code.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly code?: string;
+  /**
+   * The error message.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly message?: string;
+  /**
+   * The error target.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly target?: string;
+  /**
+   * The error details.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly details?: ErrorDetail[];
+  /**
+   * The error additional info.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly additionalInfo?: ErrorAdditionalInfo[];
+}
+
+/**
+ * Common error response for all Azure Resource Manager APIs to return error details for failed
+ * operations. (This also follows the OData error response format.).
+ * @summary Error response
  */
 export interface ErrorResponse {
   /**
-   * Error code
+   * The error object.
    */
-  code?: string;
-  /**
-   * Error message indicating why the operation failed.
-   */
-  message?: string;
+  error?: ErrorDetail;
 }
 
 /**
@@ -1319,16 +1388,6 @@ export interface Usage {
 }
 
 /**
- * The response for the operation to get regional usages for a subscription.
- */
-export interface UsagesListResult {
-  /**
-   * The list of usages.
-   */
-  value?: Usage[];
-}
-
-/**
  * This class represent a single filter object that defines a multidimensional set. The dimensions
  * of this set are Regions, ClusterFlavors, NodeTypes and ClusterVersions. The constraint should be
  * defined based on the following: FilterMode (Exclude vs Include), VMSizes (the vm sizes in affect
@@ -1420,25 +1479,6 @@ export interface BillingResources {
    * The managed disk billing information.
    */
   diskBillingMeters?: DiskBillingMeters[];
-}
-
-/**
- * The response for the operation to get regional billingSpecs for a subscription.
- */
-export interface BillingResponseListResult {
-  /**
-   * The virtual machine sizes to include or exclude.
-   */
-  vmSizes?: string[];
-  /**
-   * The virtual machine filtering mode. Effectively this can enabling or disabling the virtual
-   * machine sizes in a particular set.
-   */
-  vmSizeFilters?: VmSizeCompatibilityFilterV2[];
-  /**
-   * The billing and managed disk billing resources for a region.
-   */
-  billingResources?: BillingResources[];
 }
 
 /**
@@ -1535,6 +1575,10 @@ export interface OperationDisplay {
    * The operation type: read, write, delete, etc.
    */
   operation?: string;
+  /**
+   * Localized friendly description for the operation
+   */
+  description?: string;
 }
 
 /**
@@ -1549,6 +1593,10 @@ export interface Operation {
    * The object that represents the operation.
    */
   display?: OperationDisplay;
+  /**
+   * Indicates whether the operation is a data action
+   */
+  isDataAction?: boolean;
 }
 
 /**
@@ -1598,6 +1646,45 @@ export interface ClusterListResult extends Array<Cluster> {
 export interface ApplicationListResult extends Array<Application> {
   /**
    * The URL to get the next set of operation list results if there are any.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly nextLink?: string;
+}
+
+/**
+ * @interface
+ * The response for the operation to get regional usages for a subscription.
+ * @extends Array<Usage>
+ */
+export interface UsagesListResult extends Array<Usage> {
+  /**
+   * The link (url) to the next page of results.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly nextLink?: string;
+}
+
+/**
+ * @interface
+ * The response for the operation to get regional billingSpecs for a subscription.
+ * @extends Array<string>
+ */
+export interface BillingResponseListResult extends Array<string> {
+  /**
+   * The virtual machine sizes to include or exclude.
+   */
+  vmSizes?: string[];
+  /**
+   * The virtual machine filtering mode. Effectively this can enabling or disabling the virtual
+   * machine sizes in a particular set.
+   */
+  vmSizeFilters?: VmSizeCompatibilityFilterV2[];
+  /**
+   * The billing and managed disk billing resources for a region.
+   */
+  billingResources?: BillingResources[];
+  /**
+   * The link (url) to the next page of results.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly nextLink?: string;
@@ -2056,6 +2143,46 @@ export type LocationsListUsagesResponse = UsagesListResult & {
  * Contains response data for the listBillingSpecs operation.
  */
 export type LocationsListBillingSpecsResponse = BillingResponseListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: BillingResponseListResult;
+    };
+};
+
+/**
+ * Contains response data for the listUsagesNext operation.
+ */
+export type LocationsListUsagesNextResponse = UsagesListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: UsagesListResult;
+    };
+};
+
+/**
+ * Contains response data for the listBillingSpecsNext operation.
+ */
+export type LocationsListBillingSpecsNextResponse = BillingResponseListResult & {
   /**
    * The underlying HTTP response.
    */

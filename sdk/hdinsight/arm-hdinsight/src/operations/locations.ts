@@ -108,6 +108,62 @@ export class Locations {
       listBillingSpecsOperationSpec,
       callback) as Promise<Models.LocationsListBillingSpecsResponse>;
   }
+
+  /**
+   * Lists the usages for the specified location.
+   * @param nextPageLink The NextLink from the previous successful call to List operation.
+   * @param [options] The optional parameters
+   * @returns Promise<Models.LocationsListUsagesNextResponse>
+   */
+  listUsagesNext(nextPageLink: string, options?: msRest.RequestOptionsBase): Promise<Models.LocationsListUsagesNextResponse>;
+  /**
+   * @param nextPageLink The NextLink from the previous successful call to List operation.
+   * @param callback The callback
+   */
+  listUsagesNext(nextPageLink: string, callback: msRest.ServiceCallback<Models.UsagesListResult>): void;
+  /**
+   * @param nextPageLink The NextLink from the previous successful call to List operation.
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  listUsagesNext(nextPageLink: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.UsagesListResult>): void;
+  listUsagesNext(nextPageLink: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.UsagesListResult>, callback?: msRest.ServiceCallback<Models.UsagesListResult>): Promise<Models.LocationsListUsagesNextResponse> {
+    return this.client.sendOperationRequest(
+      {
+        nextPageLink,
+        options
+      },
+      listUsagesNextOperationSpec,
+      callback) as Promise<Models.LocationsListUsagesNextResponse>;
+  }
+
+  /**
+   * Lists the billingSpecs for the specified subscription and location.
+   * @param nextPageLink The NextLink from the previous successful call to List operation.
+   * @param [options] The optional parameters
+   * @returns Promise<Models.LocationsListBillingSpecsNextResponse>
+   */
+  listBillingSpecsNext(nextPageLink: string, options?: msRest.RequestOptionsBase): Promise<Models.LocationsListBillingSpecsNextResponse>;
+  /**
+   * @param nextPageLink The NextLink from the previous successful call to List operation.
+   * @param callback The callback
+   */
+  listBillingSpecsNext(nextPageLink: string, callback: msRest.ServiceCallback<Models.BillingResponseListResult>): void;
+  /**
+   * @param nextPageLink The NextLink from the previous successful call to List operation.
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  listBillingSpecsNext(nextPageLink: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.BillingResponseListResult>): void;
+  listBillingSpecsNext(nextPageLink: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.BillingResponseListResult>, callback?: msRest.ServiceCallback<Models.BillingResponseListResult>): Promise<Models.LocationsListBillingSpecsNextResponse> {
+    return this.client.sendOperationRequest(
+      {
+        nextPageLink,
+        options
+      },
+      listBillingSpecsNextOperationSpec,
+      callback) as Promise<Models.LocationsListBillingSpecsNextResponse>;
+  }
 }
 
 // Operation Specifications
@@ -166,6 +222,54 @@ const listBillingSpecsOperationSpec: msRest.OperationSpec = {
   urlParameters: [
     Parameters.subscriptionId,
     Parameters.location
+  ],
+  queryParameters: [
+    Parameters.apiVersion
+  ],
+  headerParameters: [
+    Parameters.acceptLanguage
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.BillingResponseListResult
+    },
+    default: {
+      bodyMapper: Mappers.ErrorResponse
+    }
+  },
+  serializer
+};
+
+const listUsagesNextOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  baseUrl: "https://management.azure.com",
+  path: "{nextLink}",
+  urlParameters: [
+    Parameters.nextPageLink
+  ],
+  queryParameters: [
+    Parameters.apiVersion
+  ],
+  headerParameters: [
+    Parameters.acceptLanguage
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.UsagesListResult
+    },
+    default: {
+      bodyMapper: Mappers.ErrorResponse
+    }
+  },
+  serializer
+};
+
+const listBillingSpecsNextOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  baseUrl: "https://management.azure.com",
+  path: "{nextLink}",
+  urlParameters: [
+    Parameters.nextPageLink
   ],
   queryParameters: [
     Parameters.apiVersion
