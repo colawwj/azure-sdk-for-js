@@ -187,7 +187,7 @@ export interface OperationInputs {
    */
   name: string;
   /**
-   * The type of the IoT Central resource to query. Default value: 'IoTApps'.
+   * The type of the IoT Central resource to query. Default value: 'iotApps'.
    */
   type?: string;
 }
