@@ -23,6 +23,7 @@ export {
   Sku,
   TrackedResource,
   VirtualNetworkPeering,
+  VirtualNetworkPeeringList,
   VirtualNetworkPeeringPropertiesFormatDatabricksVirtualNetwork,
   VirtualNetworkPeeringPropertiesFormatRemoteVirtualNetwork,
   Workspace,
@@ -30,7 +31,5 @@ export {
   WorkspaceCustomParameters,
   WorkspaceCustomStringParameter,
   WorkspaceEncryptionParameter,
-  WorkspaceListResult,
-  WorkspaceProviderAuthorization,
-  WorkspaceUpdate
+  WorkspaceProviderAuthorization
 } from "../models/mappers";
