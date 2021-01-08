@@ -1753,6 +1753,12 @@ export const ManagedClusterPodIdentityProfile: msRest.CompositeMapper = {
           name: "Boolean"
         }
       },
+      allowNetworkPluginKubenet: {
+        serializedName: "allowNetworkPluginKubenet",
+        type: {
+          name: "Boolean"
+        }
+      },
       userAssignedIdentities: {
         serializedName: "userAssignedIdentities",
         type: {

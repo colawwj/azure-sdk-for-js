@@ -1204,6 +1204,10 @@ export interface ManagedClusterPodIdentityProfile {
    */
   enabled?: boolean;
   /**
+   * Customer consent for enabling AAD pod identity addon in cluster using Kubenet network plugin.
+   */
+  allowNetworkPluginKubenet?: boolean;
+  /**
    * User assigned pod identity settings.
    */
   userAssignedIdentities?: ManagedClusterPodIdentity[];
