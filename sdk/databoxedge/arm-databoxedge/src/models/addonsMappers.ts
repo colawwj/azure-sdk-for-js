@@ -9,6 +9,7 @@
 export {
   discriminators,
   Addon,
+  AddonList,
   Address,
   Alert,
   AlertErrorDetails,
@@ -81,7 +82,6 @@ export {
   SystemData,
   TrackingInfo,
   Trigger,
-  TriggerList,
   UpdateSummary,
   User,
   UserAccessRight

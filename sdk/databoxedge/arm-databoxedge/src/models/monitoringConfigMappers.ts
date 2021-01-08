@@ -55,6 +55,7 @@ export {
   MetricCounterSet,
   MetricDimension,
   MonitoringMetricConfiguration,
+  MonitoringMetricConfigurationList,
   MountPointMap,
   NetworkAdapter,
   NetworkAdapterPosition,
@@ -81,7 +82,6 @@ export {
   SystemData,
   TrackingInfo,
   Trigger,
-  TriggerList,
   UpdateSummary,
   User,
   UserAccessRight
