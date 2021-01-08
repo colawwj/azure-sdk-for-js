@@ -178,6 +178,7 @@ export {
   IpTag,
   Ipv6CircuitConnectionConfig,
   Ipv6ExpressRouteCircuitPeeringConfig,
+  ListVpnGatewayNatRulesResult,
   LoadBalancer,
   LoadBalancerBackendAddress,
   LoadBalancerSku,
