@@ -135,7 +135,6 @@ export {
   LinkedInfo,
   LinkedServiceProps,
   LinkedServiceResponse,
-  ListWorkspaceKeysResult,
   LivenessProbeRequirements,
   MachineLearningServiceError,
   ManagedIdentity,
@@ -143,6 +142,7 @@ export {
   Model,
   ModelContainer,
   ModelContainerResource,
+  ModelContainerResourceArmPaginatedResult,
   ModelDataCollection,
   ModelDockerSectionResponse,
   ModelDockerSectionResponseBaseImageRegistry,
@@ -163,7 +163,6 @@ export {
   OnlineEndpointProperties,
   OnlineEndpointPropertiesTrackedResource,
   ParameterSamplingConfiguration,
-  Password,
   PersonalComputeInstanceSettings,
   PrivateEndpoint,
   PrivateEndpointConnection,
@@ -171,7 +170,6 @@ export {
   PrivateLinkServiceConnectionState,
   ProgressMetrics,
   RCranPackage,
-  RegistryListCredentialsResult,
   Resource,
   ResourceId,
   RGitHubPackageResponse,
@@ -202,7 +200,5 @@ export {
   VirtualMachineSshCredentials,
   VnetConfiguration,
   Workspace,
-  WorkspaceConnection,
-  WorkspaceListResult,
-  WorkspaceUpdateParameters
+  WorkspaceConnection
 } from "../models/mappers";

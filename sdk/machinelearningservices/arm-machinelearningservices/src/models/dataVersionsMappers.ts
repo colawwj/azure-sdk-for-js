@@ -90,6 +90,7 @@ export {
   DatastorePropertiesResource,
   DataVersion,
   DataVersionResource,
+  DataVersionResourceArmPaginatedResult,
   DeploymentConfigurationBase,
   DeploymentScaleSettings,
   DistributionConfiguration,
@@ -135,7 +136,6 @@ export {
   LinkedInfo,
   LinkedServiceProps,
   LinkedServiceResponse,
-  ListWorkspaceKeysResult,
   LivenessProbeRequirements,
   MachineLearningServiceError,
   ManagedIdentity,
@@ -163,7 +163,6 @@ export {
   OnlineEndpointProperties,
   OnlineEndpointPropertiesTrackedResource,
   ParameterSamplingConfiguration,
-  Password,
   PersonalComputeInstanceSettings,
   PrivateEndpoint,
   PrivateEndpointConnection,
@@ -171,7 +170,6 @@ export {
   PrivateLinkServiceConnectionState,
   ProgressMetrics,
   RCranPackage,
-  RegistryListCredentialsResult,
   Resource,
   ResourceId,
   RGitHubPackageResponse,
@@ -202,7 +200,5 @@ export {
   VirtualMachineSshCredentials,
   VnetConfiguration,
   Workspace,
-  WorkspaceConnection,
-  WorkspaceListResult,
-  WorkspaceUpdateParameters
+  WorkspaceConnection
 } from "../models/mappers";
