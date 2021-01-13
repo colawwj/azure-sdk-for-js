@@ -581,6 +581,12 @@ export const Role: msRest.CompositeMapper = {
             }
           }
         }
+      },
+      encryptDataDisks: {
+        serializedName: "encryptDataDisks",
+        type: {
+          name: "Boolean"
+        }
       }
     }
   }
@@ -676,6 +682,28 @@ export const StorageProfile: msRest.CompositeMapper = {
               className: "StorageAccount"
             }
           }
+        }
+      }
+    }
+  }
+};
+
+export const ExcludedServicesConfig: msRest.CompositeMapper = {
+  serializedName: "ExcludedServicesConfig",
+  type: {
+    name: "Composite",
+    className: "ExcludedServicesConfig",
+    modelProperties: {
+      excludedServicesConfigId: {
+        serializedName: "excludedServicesConfigId",
+        type: {
+          name: "String"
+        }
+      },
+      excludedServicesList: {
+        serializedName: "excludedServicesList",
+        type: {
+          name: "String"
         }
       }
     }
@@ -914,6 +942,12 @@ export const ClusterIdentityUserAssignedIdentitiesValue: msRest.CompositeMapper 
         type: {
           name: "String"
         }
+      },
+      tenantId: {
+        serializedName: "tenantId",
+        type: {
+          name: "String"
+        }
       }
     }
   }
@@ -1114,6 +1148,12 @@ export const ClusterGetProperties: msRest.CompositeMapper = {
           name: "String"
         }
       },
+      clusterHdpVersion: {
+        serializedName: "clusterHdpVersion",
+        type: {
+          name: "String"
+        }
+      },
       osType: {
         serializedName: "osType",
         type: {
@@ -1239,10 +1279,24 @@ export const ClusterGetProperties: msRest.CompositeMapper = {
           className: "EncryptionInTransitProperties"
         }
       },
+      storageProfile: {
+        serializedName: "storageProfile",
+        type: {
+          name: "Composite",
+          className: "StorageProfile"
+        }
+      },
       minSupportedTlsVersion: {
         serializedName: "minSupportedTlsVersion",
         type: {
           name: "String"
+        }
+      },
+      excludedServicesConfig: {
+        serializedName: "excludedServicesConfig",
+        type: {
+          name: "Composite",
+          className: "ExcludedServicesConfig"
         }
       },
       networkProperties: {
@@ -2447,6 +2501,76 @@ export const VmSizeCompatibilityFilterV2: msRest.CompositeMapper = {
   }
 };
 
+export const VmSizeProperty: msRest.CompositeMapper = {
+  serializedName: "VmSizeProperty",
+  type: {
+    name: "Composite",
+    className: "VmSizeProperty",
+    modelProperties: {
+      name: {
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      cores: {
+        serializedName: "cores",
+        type: {
+          name: "Number"
+        }
+      },
+      dataDiskStorageTier: {
+        serializedName: "dataDiskStorageTier",
+        type: {
+          name: "String"
+        }
+      },
+      label: {
+        serializedName: "label",
+        type: {
+          name: "String"
+        }
+      },
+      maxDataDiskCount: {
+        serializedName: "maxDataDiskCount",
+        type: {
+          name: "Number"
+        }
+      },
+      memoryInMb: {
+        serializedName: "memoryInMb",
+        type: {
+          name: "Number"
+        }
+      },
+      supportedByVirtualMachines: {
+        serializedName: "supportedByVirtualMachines",
+        type: {
+          name: "Boolean"
+        }
+      },
+      supportedByWebWorkerRoles: {
+        serializedName: "supportedByWebWorkerRoles",
+        type: {
+          name: "Boolean"
+        }
+      },
+      virtualMachineResourceDiskSizeInMb: {
+        serializedName: "virtualMachineResourceDiskSizeInMb",
+        type: {
+          name: "Number"
+        }
+      },
+      webWorkerResourceDiskSizeInMb: {
+        serializedName: "webWorkerResourceDiskSizeInMb",
+        type: {
+          name: "Number"
+        }
+      }
+    }
+  }
+};
+
 export const BillingMeters: msRest.CompositeMapper = {
   serializedName: "BillingMeters",
   type: {
@@ -2564,6 +2688,17 @@ export const BillingResponseListResult: msRest.CompositeMapper = {
           }
         }
       },
+      vmSizesWithEncryptionAtHost: {
+        serializedName: "vmSizesWithEncryptionAtHost",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
       vmSizeFilters: {
         serializedName: "vmSizeFilters",
         type: {
@@ -2572,6 +2707,19 @@ export const BillingResponseListResult: msRest.CompositeMapper = {
             type: {
               name: "Composite",
               className: "VmSizeCompatibilityFilterV2"
+            }
+          }
+        }
+      },
+      vmSizeProperties: {
+        readOnly: true,
+        serializedName: "vmSizeProperties",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "VmSizeProperty"
             }
           }
         }

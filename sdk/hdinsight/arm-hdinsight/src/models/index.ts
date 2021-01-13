@@ -335,6 +335,10 @@ export interface Role {
    * The list of script actions on the role.
    */
   scriptActions?: ScriptAction[];
+  /**
+   * Indicates whether encrypt the data disks.
+   */
+  encryptDataDisks?: boolean;
 }
 
 /**
@@ -390,6 +394,20 @@ export interface StorageProfile {
    * The list of storage accounts in the cluster.
    */
   storageaccounts?: StorageAccount[];
+}
+
+/**
+ * The configuration that services will be excluded when creating cluster.
+ */
+export interface ExcludedServicesConfig {
+  /**
+   * The config id of excluded services.
+   */
+  excludedServicesConfigId?: string;
+  /**
+   * The list of excluded services.
+   */
+  excludedServicesList?: string;
 }
 
 /**
@@ -536,6 +554,10 @@ export interface ClusterIdentityUserAssignedIdentitiesValue {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly clientId?: string;
+  /**
+   * The tenant id of user assigned identity.
+   */
+  tenantId?: string;
 }
 
 /**
@@ -655,6 +677,10 @@ export interface ClusterGetProperties {
    */
   clusterVersion?: string;
   /**
+   * The hdp version of the cluster.
+   */
+  clusterHdpVersion?: string;
+  /**
    * The type of operating system. Possible values include: 'Windows', 'Linux'
    */
   osType?: OSType;
@@ -716,9 +742,17 @@ export interface ClusterGetProperties {
    */
   encryptionInTransitProperties?: EncryptionInTransitProperties;
   /**
+   * The storage profile.
+   */
+  storageProfile?: StorageProfile;
+  /**
    * The minimal supported tls version.
    */
   minSupportedTlsVersion?: string;
+  /**
+   * The excluded services config.
+   */
+  excludedServicesConfig?: ExcludedServicesConfig;
   /**
    * The network properties.
    */
@@ -1338,7 +1372,7 @@ export interface UsagesListResult {
 export interface VmSizeCompatibilityFilterV2 {
   /**
    * The filtering mode. Effectively this can enabling or disabling the VM sizes in a particular
-   * set. Possible values include: 'Exclude', 'Include'
+   * set. Possible values include: 'Exclude', 'Include', 'Recommend', 'Default'
    */
   filterMode?: FilterMode;
   /**
@@ -1365,6 +1399,52 @@ export interface VmSizeCompatibilityFilterV2 {
    * The list of virtual machine sizes to include or exclude.
    */
   vmSizes?: string[];
+}
+
+/**
+ * The vm size property
+ */
+export interface VmSizeProperty {
+  /**
+   * The vm size name.
+   */
+  name?: string;
+  /**
+   * The number of cores that the vm size has.
+   */
+  cores?: number;
+  /**
+   * The data disk storage tier of the vm size.
+   */
+  dataDiskStorageTier?: string;
+  /**
+   * The label of the vm size.
+   */
+  label?: string;
+  /**
+   * The max data disk count of the vm size.
+   */
+  maxDataDiskCount?: number;
+  /**
+   * The memory whose unit is MB of the vm size.
+   */
+  memoryInMb?: number;
+  /**
+   * This indicates this vm size is supported by virtual machines or not
+   */
+  supportedByVirtualMachines?: boolean;
+  /**
+   * The indicates this vm size is supported by web worker roles or not
+   */
+  supportedByWebWorkerRoles?: boolean;
+  /**
+   * The virtual machine resource disk size whose unit is MB of the vm size.
+   */
+  virtualMachineResourceDiskSizeInMb?: number;
+  /**
+   * The web worker resource disk size whose unit is MB of the vm size.
+   */
+  webWorkerResourceDiskSizeInMb?: number;
 }
 
 /**
@@ -1431,10 +1511,19 @@ export interface BillingResponseListResult {
    */
   vmSizes?: string[];
   /**
+   * The vm sizes which enable encryption at host.
+   */
+  vmSizesWithEncryptionAtHost?: string[];
+  /**
    * The virtual machine filtering mode. Effectively this can enabling or disabling the virtual
    * machine sizes in a particular set.
    */
   vmSizeFilters?: VmSizeCompatibilityFilterV2[];
+  /**
+   * The vm size properties.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly vmSizeProperties?: VmSizeProperty[];
   /**
    * The billing and managed disk billing resources for a region.
    */
@@ -1726,11 +1815,11 @@ export type AsyncOperationState = 'InProgress' | 'Succeeded' | 'Failed';
 
 /**
  * Defines values for FilterMode.
- * Possible values include: 'Exclude', 'Include'
+ * Possible values include: 'Exclude', 'Include', 'Recommend', 'Default'
  * @readonly
  * @enum {string}
  */
-export type FilterMode = 'Exclude' | 'Include';
+export type FilterMode = 'Exclude' | 'Include' | 'Recommend' | 'Default';
 
 /**
  * Contains response data for the create operation.
