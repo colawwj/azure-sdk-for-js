@@ -8,7 +8,8 @@
 
 export {
   ErrorResponse,
-  Operation,
-  OperationDisplay,
-  OperationListResult
+  IcmIncidents,
+  PotentialOutageErrorResponse,
+  PotentialOutageListResult,
+  PotentialOutagesGetResult
 } from "../models/mappers";
