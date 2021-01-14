@@ -1204,6 +1204,10 @@ export interface ManagedClusterPodIdentityProfile {
    */
   enabled?: boolean;
   /**
+   * Customer consent for enabling AAD pod identity addon in cluster using Kubenet network plugin.
+   */
+  allowNetworkPluginKubenet?: boolean;
+  /**
    * User assigned pod identity settings.
    */
   userAssignedIdentities?: ManagedClusterPodIdentity[];
@@ -1396,6 +1400,10 @@ export interface ManagedCluster extends Resource {
    * DNS prefix specified when creating the managed cluster.
    */
   dnsPrefix?: string;
+  /**
+   * FQDN subdomain specified when creating private cluster with custom private dns zone.
+   */
+  fqdnSubdomain?: string;
   /**
    * FQDN for the master pool.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
