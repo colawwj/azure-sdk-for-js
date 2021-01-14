@@ -58,6 +58,34 @@ export class ServiceTags {
       listOperationSpec,
       callback) as Promise<Models.ServiceTagsListResponse>;
   }
+
+  /**
+   * Gets a list of service tag information resources.
+   * @param nextPageLink The NextLink from the previous successful call to List operation.
+   * @param [options] The optional parameters
+   * @returns Promise<Models.ServiceTagsListNextResponse>
+   */
+  listNext(nextPageLink: string, options?: msRest.RequestOptionsBase): Promise<Models.ServiceTagsListNextResponse>;
+  /**
+   * @param nextPageLink The NextLink from the previous successful call to List operation.
+   * @param callback The callback
+   */
+  listNext(nextPageLink: string, callback: msRest.ServiceCallback<Models.ServiceTagsListResult>): void;
+  /**
+   * @param nextPageLink The NextLink from the previous successful call to List operation.
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  listNext(nextPageLink: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.ServiceTagsListResult>): void;
+  listNext(nextPageLink: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.ServiceTagsListResult>, callback?: msRest.ServiceCallback<Models.ServiceTagsListResult>): Promise<Models.ServiceTagsListNextResponse> {
+    return this.client.sendOperationRequest(
+      {
+        nextPageLink,
+        options
+      },
+      listNextOperationSpec,
+      callback) as Promise<Models.ServiceTagsListNextResponse>;
+  }
 }
 
 // Operation Specifications
@@ -68,6 +96,30 @@ const listOperationSpec: msRest.OperationSpec = {
   urlParameters: [
     Parameters.location0,
     Parameters.subscriptionId
+  ],
+  queryParameters: [
+    Parameters.apiVersion0
+  ],
+  headerParameters: [
+    Parameters.acceptLanguage
+  ],
+  responses: {
+    200: {
+      bodyMapper: Mappers.ServiceTagsListResult
+    },
+    default: {
+      bodyMapper: Mappers.CloudError
+    }
+  },
+  serializer
+};
+
+const listNextOperationSpec: msRest.OperationSpec = {
+  httpMethod: "GET",
+  baseUrl: "https://management.azure.com",
+  path: "{nextLink}",
+  urlParameters: [
+    Parameters.nextPageLink
   ],
   queryParameters: [
     Parameters.apiVersion0
