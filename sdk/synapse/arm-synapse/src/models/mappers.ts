@@ -190,12 +190,6 @@ export const BigDataPoolResourceInfo: msRest.CompositeMapper = {
           name: "Boolean"
         }
       },
-      haveLibraryRequirementsChanged: {
-        serializedName: "properties.haveLibraryRequirementsChanged",
-        type: {
-          name: "Boolean"
-        }
-      },
       sessionLevelPackagesEnabled: {
         serializedName: "properties.sessionLevelPackagesEnabled",
         type: {
@@ -250,6 +244,12 @@ export const BigDataPoolResourceInfo: msRest.CompositeMapper = {
         serializedName: "properties.nodeSizeFamily",
         type: {
           name: "String"
+        }
+      },
+      lastSucceededTimestamp: {
+        serializedName: "properties.lastSucceededTimestamp",
+        type: {
+          name: "DateTime"
         }
       }
     }

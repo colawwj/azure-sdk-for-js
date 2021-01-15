@@ -131,10 +131,6 @@ export interface BigDataPoolResourceInfo extends TrackedResource {
    */
   isComputeIsolationEnabled?: boolean;
   /**
-   * Whether library requirements changed.
-   */
-  haveLibraryRequirementsChanged?: boolean;
-  /**
    * Whether session level packages enabled.
    */
   sessionLevelPackagesEnabled?: boolean;
@@ -172,6 +168,10 @@ export interface BigDataPoolResourceInfo extends TrackedResource {
    * 'MemoryOptimized'
    */
   nodeSizeFamily?: NodeSizeFamily;
+  /**
+   * The time when the Big Data pool was updated successfully.
+   */
+  lastSucceededTimestamp?: Date;
 }
 
 /**
