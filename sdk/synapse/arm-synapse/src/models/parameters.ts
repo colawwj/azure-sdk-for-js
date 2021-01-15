@@ -227,6 +227,26 @@ export const linkId: msRest.OperationURLParameter = {
     }
   }
 };
+export const maintenanceWindowName: msRest.OperationQueryParameter = {
+  parameterPath: "maintenanceWindowName",
+  mapper: {
+    required: true,
+    serializedName: "maintenanceWindowName",
+    type: {
+      name: "String"
+    }
+  }
+};
+export const maintenanceWindowOptionsName: msRest.OperationQueryParameter = {
+  parameterPath: "maintenanceWindowOptionsName",
+  mapper: {
+    required: true,
+    serializedName: "maintenanceWindowOptionsName",
+    type: {
+      name: "String"
+    }
+  }
+};
 export const nextPageLink: msRest.OperationURLParameter = {
   parameterPath: "nextPageLink",
   mapper: {

@@ -62,6 +62,22 @@ export const AutoPauseProperties: msRest.CompositeMapper = {
   }
 };
 
+export const DynamicExecutorAllocation: msRest.CompositeMapper = {
+  serializedName: "DynamicExecutorAllocation",
+  type: {
+    name: "Composite",
+    className: "DynamicExecutorAllocation",
+    modelProperties: {
+      enabled: {
+        serializedName: "enabled",
+        type: {
+          name: "Boolean"
+        }
+      }
+    }
+  }
+};
+
 export const LibraryRequirements: msRest.CompositeMapper = {
   serializedName: "LibraryRequirements",
   type: {
@@ -190,16 +206,23 @@ export const BigDataPoolResourceInfo: msRest.CompositeMapper = {
           name: "Boolean"
         }
       },
-      haveLibraryRequirementsChanged: {
-        serializedName: "properties.haveLibraryRequirementsChanged",
-        type: {
-          name: "Boolean"
-        }
-      },
       sessionLevelPackagesEnabled: {
         serializedName: "properties.sessionLevelPackagesEnabled",
         type: {
           name: "Boolean"
+        }
+      },
+      cacheSize: {
+        serializedName: "properties.cacheSize",
+        type: {
+          name: "Number"
+        }
+      },
+      dynamicExecutorAllocation: {
+        serializedName: "properties.dynamicExecutorAllocation",
+        type: {
+          name: "Composite",
+          className: "DynamicExecutorAllocation"
         }
       },
       sparkEventsFolder: {
@@ -1539,6 +1562,116 @@ export const ReplicationLink: msRest.CompositeMapper = {
   }
 };
 
+export const MaintenanceWindowTimeRange: msRest.CompositeMapper = {
+  serializedName: "MaintenanceWindowTimeRange",
+  type: {
+    name: "Composite",
+    className: "MaintenanceWindowTimeRange",
+    modelProperties: {
+      dayOfWeek: {
+        serializedName: "dayOfWeek",
+        type: {
+          name: "String"
+        }
+      },
+      startTime: {
+        serializedName: "startTime",
+        type: {
+          name: "String"
+        }
+      },
+      duration: {
+        serializedName: "duration",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const MaintenanceWindowOptions: msRest.CompositeMapper = {
+  serializedName: "MaintenanceWindowOptions",
+  type: {
+    name: "Composite",
+    className: "MaintenanceWindowOptions",
+    modelProperties: {
+      ...ProxyResource.type.modelProperties,
+      isEnabled: {
+        serializedName: "properties.isEnabled",
+        type: {
+          name: "Boolean"
+        }
+      },
+      maintenanceWindowCycles: {
+        serializedName: "properties.maintenanceWindowCycles",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "MaintenanceWindowTimeRange"
+            }
+          }
+        }
+      },
+      minDurationInMinutes: {
+        serializedName: "properties.minDurationInMinutes",
+        type: {
+          name: "Number"
+        }
+      },
+      defaultDurationInMinutes: {
+        serializedName: "properties.defaultDurationInMinutes",
+        type: {
+          name: "Number"
+        }
+      },
+      minCycles: {
+        serializedName: "properties.minCycles",
+        type: {
+          name: "Number"
+        }
+      },
+      timeGranularityInMinutes: {
+        serializedName: "properties.timeGranularityInMinutes",
+        type: {
+          name: "Number"
+        }
+      },
+      allowMultipleMaintenanceWindowsPerCycle: {
+        serializedName: "properties.allowMultipleMaintenanceWindowsPerCycle",
+        type: {
+          name: "Boolean"
+        }
+      }
+    }
+  }
+};
+
+export const MaintenanceWindows: msRest.CompositeMapper = {
+  serializedName: "MaintenanceWindows",
+  type: {
+    name: "Composite",
+    className: "MaintenanceWindows",
+    modelProperties: {
+      ...ProxyResource.type.modelProperties,
+      timeRanges: {
+        serializedName: "properties.timeRanges",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "MaintenanceWindowTimeRange"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
 export const TransparentDataEncryption: msRest.CompositeMapper = {
   serializedName: "TransparentDataEncryption",
   type: {
@@ -1818,6 +1951,27 @@ export const SensitivityLabel: msRest.CompositeMapper = {
     className: "SensitivityLabel",
     modelProperties: {
       ...ProxyResource.type.modelProperties,
+      schemaName: {
+        readOnly: true,
+        serializedName: "properties.schemaName",
+        type: {
+          name: "String"
+        }
+      },
+      tableName: {
+        readOnly: true,
+        serializedName: "properties.tableName",
+        type: {
+          name: "String"
+        }
+      },
+      columnName: {
+        readOnly: true,
+        serializedName: "properties.columnName",
+        type: {
+          name: "String"
+        }
+      },
       labelName: {
         serializedName: "properties.labelName",
         type: {
@@ -1847,6 +2001,26 @@ export const SensitivityLabel: msRest.CompositeMapper = {
         serializedName: "properties.isDisabled",
         type: {
           name: "Boolean"
+        }
+      },
+      rank: {
+        serializedName: "properties.rank",
+        type: {
+          name: "Enum",
+          allowedValues: [
+            "None",
+            "Low",
+            "Medium",
+            "High",
+            "Critical"
+          ]
+        }
+      },
+      managedBy: {
+        readOnly: true,
+        serializedName: "managedBy",
+        type: {
+          name: "String"
         }
       }
     }
@@ -1886,6 +2060,13 @@ export const SqlPoolColumn: msRest.CompositeMapper = {
         serializedName: "properties.columnType",
         type: {
           name: "String"
+        }
+      },
+      isComputed: {
+        readOnly: true,
+        serializedName: "properties.isComputed",
+        type: {
+          name: "Boolean"
         }
       }
     }
@@ -2639,6 +2820,143 @@ export const DataMaskingRule: msRest.CompositeMapper = {
   }
 };
 
+export const SensitivityLabelUpdate: msRest.CompositeMapper = {
+  serializedName: "SensitivityLabelUpdate",
+  type: {
+    name: "Composite",
+    className: "SensitivityLabelUpdate",
+    modelProperties: {
+      ...ProxyResource.type.modelProperties,
+      op: {
+        required: true,
+        serializedName: "properties.op",
+        type: {
+          name: "Enum",
+          allowedValues: [
+            "set",
+            "remove"
+          ]
+        }
+      },
+      schema: {
+        required: true,
+        serializedName: "properties.schema",
+        type: {
+          name: "String"
+        }
+      },
+      table: {
+        required: true,
+        serializedName: "properties.table",
+        type: {
+          name: "String"
+        }
+      },
+      column: {
+        required: true,
+        serializedName: "properties.column",
+        type: {
+          name: "String"
+        }
+      },
+      sensitivityLabel: {
+        serializedName: "properties.sensitivityLabel",
+        type: {
+          name: "Composite",
+          className: "SensitivityLabel"
+        }
+      }
+    }
+  }
+};
+
+export const SensitivityLabelUpdateList: msRest.CompositeMapper = {
+  serializedName: "SensitivityLabelUpdateList",
+  type: {
+    name: "Composite",
+    className: "SensitivityLabelUpdateList",
+    modelProperties: {
+      operations: {
+        serializedName: "operations",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "SensitivityLabelUpdate"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const RecommendedSensitivityLabelUpdate: msRest.CompositeMapper = {
+  serializedName: "RecommendedSensitivityLabelUpdate",
+  type: {
+    name: "Composite",
+    className: "RecommendedSensitivityLabelUpdate",
+    modelProperties: {
+      ...ProxyResource.type.modelProperties,
+      op: {
+        required: true,
+        serializedName: "properties.op",
+        type: {
+          name: "Enum",
+          allowedValues: [
+            "enable",
+            "disable"
+          ]
+        }
+      },
+      schema: {
+        required: true,
+        serializedName: "properties.schema",
+        type: {
+          name: "String"
+        }
+      },
+      table: {
+        required: true,
+        serializedName: "properties.table",
+        type: {
+          name: "String"
+        }
+      },
+      column: {
+        required: true,
+        serializedName: "properties.column",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const RecommendedSensitivityLabelUpdateList: msRest.CompositeMapper = {
+  serializedName: "RecommendedSensitivityLabelUpdateList",
+  type: {
+    name: "Composite",
+    className: "RecommendedSensitivityLabelUpdateList",
+    modelProperties: {
+      operations: {
+        serializedName: "operations",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "RecommendedSensitivityLabelUpdate"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
 export const DataLakeStorageAccountDetails: msRest.CompositeMapper = {
   serializedName: "DataLakeStorageAccountDetails",
   type: {
@@ -2905,6 +3223,18 @@ export const WorkspaceRepositoryConfiguration: msRest.CompositeMapper = {
         type: {
           name: "String"
         }
+      },
+      lastCommitId: {
+        serializedName: "lastCommitId",
+        type: {
+          name: "String"
+        }
+      },
+      tenantId: {
+        serializedName: "tenantId",
+        type: {
+          name: "Uuid"
+        }
       }
     }
   }
@@ -3080,6 +3410,13 @@ export const Workspace: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "PurviewConfiguration"
+        }
+      },
+      adlaResourceId: {
+        readOnly: true,
+        serializedName: "properties.adlaResourceId",
+        type: {
+          name: "String"
         }
       },
       identity: {
