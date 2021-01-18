@@ -580,6 +580,18 @@ export const nextPageLink: msRest.OperationURLParameter = {
   },
   skipEncoding: true
 };
+export const noaddressprefixes: msRest.OperationQueryParameter = {
+  parameterPath: [
+    "options",
+    "noaddressprefixes"
+  ],
+  mapper: {
+    serializedName: "noaddressprefixes",
+    type: {
+      name: "Boolean"
+    }
+  }
+};
 export const outboundRuleName: msRest.OperationURLParameter = {
   parameterPath: "outboundRuleName",
   mapper: {
@@ -890,6 +902,18 @@ export const subscriptionId: msRest.OperationURLParameter = {
   mapper: {
     required: true,
     serializedName: "subscriptionId",
+    type: {
+      name: "String"
+    }
+  }
+};
+export const tagname: msRest.OperationQueryParameter = {
+  parameterPath: [
+    "options",
+    "tagname"
+  ],
+  mapper: {
+    serializedName: "tagname",
     type: {
       name: "String"
     }

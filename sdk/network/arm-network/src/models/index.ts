@@ -13142,6 +13142,20 @@ export interface ServiceEndpointPoliciesGetOptionalParams extends msRest.Request
 /**
  * Optional Parameters.
  */
+export interface ServiceTagsListOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Set to true if addressPrefixes are not required in the response.
+   */
+  noaddressprefixes?: boolean;
+  /**
+   * Specify single tagname such that response contains data for this tag only.
+   */
+  tagname?: string;
+}
+
+/**
+ * Optional Parameters.
+ */
 export interface VirtualNetworksGetOptionalParams extends msRest.RequestOptionsBase {
   /**
    * Expands referenced resources.
