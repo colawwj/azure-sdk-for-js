@@ -63,6 +63,46 @@ export class SqlPoolGeoBackupPolicies {
   }
 
   /**
+   * Updates a SQL Pool geo backup policy.
+   * @param resourceGroupName The name of the resource group. The name is case insensitive.
+   * @param workspaceName The name of the workspace
+   * @param sqlPoolName SQL pool name
+   * @param parameters The required parameters for creating or updating the geo backup policy.
+   * @param [options] The optional parameters
+   * @returns Promise<Models.SqlPoolGeoBackupPoliciesCreateOrUpdateResponse>
+   */
+  createOrUpdate(resourceGroupName: string, workspaceName: string, sqlPoolName: string, parameters: Models.GeoBackupPolicy, options?: msRest.RequestOptionsBase): Promise<Models.SqlPoolGeoBackupPoliciesCreateOrUpdateResponse>;
+  /**
+   * @param resourceGroupName The name of the resource group. The name is case insensitive.
+   * @param workspaceName The name of the workspace
+   * @param sqlPoolName SQL pool name
+   * @param parameters The required parameters for creating or updating the geo backup policy.
+   * @param callback The callback
+   */
+  createOrUpdate(resourceGroupName: string, workspaceName: string, sqlPoolName: string, parameters: Models.GeoBackupPolicy, callback: msRest.ServiceCallback<Models.GeoBackupPolicy>): void;
+  /**
+   * @param resourceGroupName The name of the resource group. The name is case insensitive.
+   * @param workspaceName The name of the workspace
+   * @param sqlPoolName SQL pool name
+   * @param parameters The required parameters for creating or updating the geo backup policy.
+   * @param options The optional parameters
+   * @param callback The callback
+   */
+  createOrUpdate(resourceGroupName: string, workspaceName: string, sqlPoolName: string, parameters: Models.GeoBackupPolicy, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.GeoBackupPolicy>): void;
+  createOrUpdate(resourceGroupName: string, workspaceName: string, sqlPoolName: string, parameters: Models.GeoBackupPolicy, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.GeoBackupPolicy>, callback?: msRest.ServiceCallback<Models.GeoBackupPolicy>): Promise<Models.SqlPoolGeoBackupPoliciesCreateOrUpdateResponse> {
+    return this.client.sendOperationRequest(
+      {
+        resourceGroupName,
+        workspaceName,
+        sqlPoolName,
+        parameters,
+        options
+      },
+      createOrUpdateOperationSpec,
+      callback) as Promise<Models.SqlPoolGeoBackupPoliciesCreateOrUpdateResponse>;
+  }
+
+  /**
    * Get the specified SQL pool geo backup policy
    * @summary Get a SQL pool geo backup policy
    * @param resourceGroupName The name of the resource group. The name is case insensitive.
@@ -120,6 +160,43 @@ const listOperationSpec: msRest.OperationSpec = {
   responses: {
     200: {
       bodyMapper: Mappers.GeoBackupPolicyListResult
+    },
+    default: {
+      bodyMapper: Mappers.ErrorContract
+    }
+  },
+  serializer
+};
+
+const createOrUpdateOperationSpec: msRest.OperationSpec = {
+  httpMethod: "PUT",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/geoBackupPolicies/{geoBackupPolicyName}",
+  urlParameters: [
+    Parameters.subscriptionId,
+    Parameters.resourceGroupName,
+    Parameters.workspaceName,
+    Parameters.sqlPoolName,
+    Parameters.geoBackupPolicyName
+  ],
+  queryParameters: [
+    Parameters.apiVersion
+  ],
+  headerParameters: [
+    Parameters.acceptLanguage
+  ],
+  requestBody: {
+    parameterPath: "parameters",
+    mapper: {
+      ...Mappers.GeoBackupPolicy,
+      required: true
+    }
+  },
+  responses: {
+    200: {
+      bodyMapper: Mappers.GeoBackupPolicy
+    },
+    201: {
+      bodyMapper: Mappers.GeoBackupPolicy
     },
     default: {
       bodyMapper: Mappers.ErrorContract
