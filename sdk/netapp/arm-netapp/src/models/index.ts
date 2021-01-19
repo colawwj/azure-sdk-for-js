@@ -192,7 +192,7 @@ export interface QuotaAvailabilityRequest {
  */
 export interface ActiveDirectory {
   /**
-   * Id of the Active Directory
+   * Id of the Active Directory. Default value: 'guid id'.
    */
   activeDirectoryId?: string;
   /**
@@ -228,7 +228,8 @@ export interface ActiveDirectory {
    */
   smbServerName?: string;
   /**
-   * The Organizational Unit (OU) within the Windows Active Directory
+   * The Organizational Unit (OU) within the Windows Active Directory. Default value:
+   * 'CN=Computers'.
    */
   organizationalUnit?: string;
   /**
@@ -497,7 +498,7 @@ export interface ExportPolicyRule {
    */
   kerberos5pReadWrite?: boolean;
   /**
-   * Allows CIFS protocol
+   * Allows CIFS protocol. Default value: false.
    */
   cifs?: boolean;
   /**
@@ -665,6 +666,11 @@ export interface Volume extends BaseResource {
    */
   readonly fileSystemId?: string;
   /**
+   * Resource name
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name1?: string;
+  /**
    * Creation Token or File Path. A unique file path for the volume. Used when creating mount
    * targets
    */
@@ -685,7 +691,7 @@ export interface Volume extends BaseResource {
    */
   exportPolicy?: VolumePropertiesExportPolicy;
   /**
-   * protocolTypes. Set of protocol types
+   * protocolTypes. Set of protocol types, default NFSv3, CIFS for SMB protocol
    */
   protocolTypes?: string[];
   /**
@@ -713,8 +719,9 @@ export interface Volume extends BaseResource {
   subnetId: string;
   /**
    * mountTargets. List of mount targets
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
-  mountTargets?: MountTargetProperties[];
+  readonly mountTargets?: MountTargetProperties[];
   /**
    * What type of volume is this
    */
@@ -730,7 +737,7 @@ export interface Volume extends BaseResource {
   isRestoring?: boolean;
   /**
    * If enabled (true) the volume will contain a read-only .snapshot directory which provides
-   * access to each of the volume's snapshots (default to true).
+   * access to each of the volume's snapshots (default to true). Default value: true.
    */
   snapshotDirectoryVisible?: boolean;
   /**
@@ -739,7 +746,8 @@ export interface Volume extends BaseResource {
    */
   kerberosEnabled?: boolean;
   /**
-   * The security style of volume. Possible values include: 'ntfs', 'unix'
+   * The security style of volume, default unix, ntfs for dual protocol or CIFS protocol. Possible
+   * values include: 'ntfs', 'unix'. Default value: 'unix'.
    */
   securityStyle?: SecurityStyle;
   /**
@@ -753,7 +761,7 @@ export interface Volume extends BaseResource {
    */
   smbContinuouslyAvailable?: boolean;
   /**
-   * Maximum throughput in Mibps that can be achieved by this volume.
+   * Maximum throughput in Mibps that can be achieved by this volume. Default value: 0.
    */
   throughputMibps?: number;
 }

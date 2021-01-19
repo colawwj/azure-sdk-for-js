@@ -294,6 +294,7 @@ export const ActiveDirectory: msRest.CompositeMapper = {
     modelProperties: {
       activeDirectoryId: {
         serializedName: "activeDirectoryId",
+        defaultValue: 'guid id',
         type: {
           name: "String"
         }
@@ -347,6 +348,7 @@ export const ActiveDirectory: msRest.CompositeMapper = {
       },
       organizationalUnit: {
         serializedName: "organizationalUnit",
+        defaultValue: 'CN=Computers',
         type: {
           name: "String"
         }
@@ -801,6 +803,7 @@ export const ExportPolicyRule: msRest.CompositeMapper = {
       },
       cifs: {
         serializedName: "cifs",
+        defaultValue: false,
         type: {
           name: "Boolean"
         }
@@ -1083,6 +1086,13 @@ export const Volume: msRest.CompositeMapper = {
           name: "String"
         }
       },
+      name1: {
+        readOnly: true,
+        serializedName: "properties.name",
+        type: {
+          name: "String"
+        }
+      },
       creationToken: {
         required: true,
         serializedName: "properties.creationToken",
@@ -1140,6 +1150,7 @@ export const Volume: msRest.CompositeMapper = {
         }
       },
       snapshotId: {
+        nullable: true,
         serializedName: "properties.snapshotId",
         constraints: {
           MaxLength: 36,
@@ -1176,6 +1187,7 @@ export const Volume: msRest.CompositeMapper = {
         }
       },
       mountTargets: {
+        readOnly: true,
         serializedName: "properties.mountTargets",
         type: {
           name: "Sequence",
@@ -1208,6 +1220,7 @@ export const Volume: msRest.CompositeMapper = {
       },
       snapshotDirectoryVisible: {
         serializedName: "properties.snapshotDirectoryVisible",
+        defaultValue: true,
         type: {
           name: "Boolean"
         }
@@ -1221,6 +1234,7 @@ export const Volume: msRest.CompositeMapper = {
       },
       securityStyle: {
         serializedName: "properties.securityStyle",
+        defaultValue: 'unix',
         type: {
           name: "String"
         }
@@ -1241,9 +1255,10 @@ export const Volume: msRest.CompositeMapper = {
       },
       throughputMibps: {
         serializedName: "properties.throughputMibps",
+        defaultValue: 0,
         constraints: {
           InclusiveMaximum: 4500,
-          InclusiveMinimum: 1,
+          InclusiveMinimum: 0,
           MultipleOf: 0.001
         },
         type: {
