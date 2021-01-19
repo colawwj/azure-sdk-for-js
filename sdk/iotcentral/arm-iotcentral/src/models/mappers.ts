@@ -278,6 +278,20 @@ export const Operation: msRest.CompositeMapper = {
           name: "Composite",
           className: "OperationDisplay"
         }
+      },
+      origin: {
+        readOnly: true,
+        serializedName: "origin",
+        type: {
+          name: "String"
+        }
+      },
+      properties: {
+        readOnly: true,
+        serializedName: "properties",
+        type: {
+          name: "Object"
+        }
       }
     }
   }
