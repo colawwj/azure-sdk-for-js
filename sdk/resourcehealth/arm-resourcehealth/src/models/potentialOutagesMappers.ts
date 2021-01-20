@@ -7,14 +7,9 @@
  */
 
 export {
-  AvailabilityStatus,
-  AvailabilityStatusListResult,
-  AvailabilityStatusProperties,
-  AvailabilityStatusPropertiesRecentlyResolved,
   ErrorResponse,
-  RecommendedAction,
-  ServiceImpactingEvent,
-  ServiceImpactingEventIncidentProperties,
-  ServiceImpactingEventStatus,
+  IcmIncidents,
+  PotentialOutageListResult,
+  PotentialOutagesGetResult,
   WrappedErrorResponse
 } from "../models/mappers";
