@@ -154,6 +154,7 @@ export {
   FirewallPolicyRuleCollection,
   FirewallPolicyRuleCollectionGroup,
   FirewallPolicySku,
+  FirewallPolicySNAT,
   FirewallPolicyThreatIntelWhitelist,
   FirewallPolicyTransportSecurity,
   FlowLog,
