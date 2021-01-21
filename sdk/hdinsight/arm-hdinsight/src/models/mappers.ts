@@ -99,10 +99,7 @@ export const SecurityProfile: msRest.CompositeMapper = {
       directoryType: {
         serializedName: "directoryType",
         type: {
-          name: "Enum",
-          allowedValues: [
-            "ActiveDirectory"
-          ]
+          name: "String"
         }
       },
       domain: {
@@ -207,16 +204,7 @@ export const AutoscaleSchedule: msRest.CompositeMapper = {
           name: "Sequence",
           element: {
             type: {
-              name: "Enum",
-              allowedValues: [
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday",
-                "Saturday",
-                "Sunday"
-              ]
+              name: "String"
             }
           }
         }
@@ -581,6 +569,12 @@ export const Role: msRest.CompositeMapper = {
             }
           }
         }
+      },
+      encryptDataDisks: {
+        serializedName: "encryptDataDisks",
+        type: {
+          name: "Boolean"
+        }
       }
     }
   }
@@ -676,6 +670,28 @@ export const StorageProfile: msRest.CompositeMapper = {
               className: "StorageAccount"
             }
           }
+        }
+      }
+    }
+  }
+};
+
+export const ExcludedServicesConfig: msRest.CompositeMapper = {
+  serializedName: "ExcludedServicesConfig",
+  type: {
+    name: "Composite",
+    className: "ExcludedServicesConfig",
+    modelProperties: {
+      excludedServicesConfigId: {
+        serializedName: "excludedServicesConfigId",
+        type: {
+          name: "String"
+        }
+      },
+      excludedServicesList: {
+        serializedName: "excludedServicesList",
+        type: {
+          name: "String"
         }
       }
     }
@@ -805,21 +821,13 @@ export const ClusterCreateProperties: msRest.CompositeMapper = {
       osType: {
         serializedName: "osType",
         type: {
-          name: "Enum",
-          allowedValues: [
-            "Windows",
-            "Linux"
-          ]
+          name: "String"
         }
       },
       tier: {
         serializedName: "tier",
         type: {
-          name: "Enum",
-          allowedValues: [
-            "Standard",
-            "Premium"
-          ]
+          name: "String"
         }
       },
       clusterDefinition: {
@@ -914,6 +922,12 @@ export const ClusterIdentityUserAssignedIdentitiesValue: msRest.CompositeMapper 
         type: {
           name: "String"
         }
+      },
+      tenantId: {
+        serializedName: "tenantId",
+        type: {
+          name: "String"
+        }
       }
     }
   }
@@ -942,13 +956,7 @@ export const ClusterIdentity: msRest.CompositeMapper = {
       type: {
         serializedName: "type",
         type: {
-          name: "Enum",
-          allowedValues: [
-            "SystemAssigned",
-            "UserAssigned",
-            "SystemAssigned, UserAssigned",
-            "None"
-          ]
+          name: "String"
         }
       },
       userAssignedIdentities: {
@@ -1097,6 +1105,12 @@ export const ConnectivityEndpoint: msRest.CompositeMapper = {
         type: {
           name: "Number"
         }
+      },
+      privateIPAddress: {
+        serializedName: "privateIPAddress",
+        type: {
+          name: "String"
+        }
       }
     }
   }
@@ -1114,24 +1128,22 @@ export const ClusterGetProperties: msRest.CompositeMapper = {
           name: "String"
         }
       },
+      clusterHdpVersion: {
+        serializedName: "clusterHdpVersion",
+        type: {
+          name: "String"
+        }
+      },
       osType: {
         serializedName: "osType",
         type: {
-          name: "Enum",
-          allowedValues: [
-            "Windows",
-            "Linux"
-          ]
+          name: "String"
         }
       },
       tier: {
         serializedName: "tier",
         type: {
-          name: "Enum",
-          allowedValues: [
-            "Standard",
-            "Premium"
-          ]
+          name: "String"
         }
       },
       clusterId: {
@@ -1172,14 +1184,7 @@ export const ClusterGetProperties: msRest.CompositeMapper = {
       provisioningState: {
         serializedName: "provisioningState",
         type: {
-          name: "Enum",
-          allowedValues: [
-            "InProgress",
-            "Failed",
-            "Succeeded",
-            "Canceled",
-            "Deleting"
-          ]
+          name: "String"
         }
       },
       createdDate: {
@@ -1239,10 +1244,24 @@ export const ClusterGetProperties: msRest.CompositeMapper = {
           className: "EncryptionInTransitProperties"
         }
       },
+      storageProfile: {
+        serializedName: "storageProfile",
+        type: {
+          name: "Composite",
+          className: "StorageProfile"
+        }
+      },
       minSupportedTlsVersion: {
         serializedName: "minSupportedTlsVersion",
         type: {
           name: "String"
+        }
+      },
+      excludedServicesConfig: {
+        serializedName: "excludedServicesConfig",
+        type: {
+          name: "Composite",
+          className: "ExcludedServicesConfig"
         }
       },
       networkProperties: {
@@ -1693,12 +1712,7 @@ export const OperationResource: msRest.CompositeMapper = {
       status: {
         serializedName: "status",
         type: {
-          name: "Enum",
-          allowedValues: [
-            "InProgress",
-            "Succeeded",
-            "Failed"
-          ]
+          name: "String"
         }
       },
       error: {
@@ -1818,6 +1832,12 @@ export const ApplicationGetEndpoint: msRest.CompositeMapper = {
         serializedName: "publicPort",
         type: {
           name: "Number"
+        }
+      },
+      privateIPAddress: {
+        serializedName: "privateIPAddress",
+        type: {
+          name: "String"
         }
       }
     }
@@ -2423,11 +2443,7 @@ export const VmSizeCompatibilityFilterV2: msRest.CompositeMapper = {
           name: "Sequence",
           element: {
             type: {
-              name: "Enum",
-              allowedValues: [
-                "Windows",
-                "Linux"
-              ]
+              name: "String"
             }
           }
         }
@@ -2441,6 +2457,76 @@ export const VmSizeCompatibilityFilterV2: msRest.CompositeMapper = {
               name: "String"
             }
           }
+        }
+      }
+    }
+  }
+};
+
+export const VmSizeProperty: msRest.CompositeMapper = {
+  serializedName: "VmSizeProperty",
+  type: {
+    name: "Composite",
+    className: "VmSizeProperty",
+    modelProperties: {
+      name: {
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      cores: {
+        serializedName: "cores",
+        type: {
+          name: "Number"
+        }
+      },
+      dataDiskStorageTier: {
+        serializedName: "dataDiskStorageTier",
+        type: {
+          name: "String"
+        }
+      },
+      label: {
+        serializedName: "label",
+        type: {
+          name: "String"
+        }
+      },
+      maxDataDiskCount: {
+        serializedName: "maxDataDiskCount",
+        type: {
+          name: "Number"
+        }
+      },
+      memoryInMb: {
+        serializedName: "memoryInMb",
+        type: {
+          name: "Number"
+        }
+      },
+      supportedByVirtualMachines: {
+        serializedName: "supportedByVirtualMachines",
+        type: {
+          name: "Boolean"
+        }
+      },
+      supportedByWebWorkerRoles: {
+        serializedName: "supportedByWebWorkerRoles",
+        type: {
+          name: "Boolean"
+        }
+      },
+      virtualMachineResourceDiskSizeInMb: {
+        serializedName: "virtualMachineResourceDiskSizeInMb",
+        type: {
+          name: "Number"
+        }
+      },
+      webWorkerResourceDiskSizeInMb: {
+        serializedName: "webWorkerResourceDiskSizeInMb",
+        type: {
+          name: "Number"
         }
       }
     }
@@ -2496,11 +2582,7 @@ export const DiskBillingMeters: msRest.CompositeMapper = {
       tier: {
         serializedName: "tier",
         type: {
-          name: "Enum",
-          allowedValues: [
-            "Standard",
-            "Premium"
-          ]
+          name: "String"
         }
       }
     }
@@ -2564,6 +2646,17 @@ export const BillingResponseListResult: msRest.CompositeMapper = {
           }
         }
       },
+      vmSizesWithEncryptionAtHost: {
+        serializedName: "vmSizesWithEncryptionAtHost",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
       vmSizeFilters: {
         serializedName: "vmSizeFilters",
         type: {
@@ -2572,6 +2665,19 @@ export const BillingResponseListResult: msRest.CompositeMapper = {
             type: {
               name: "Composite",
               className: "VmSizeCompatibilityFilterV2"
+            }
+          }
+        }
+      },
+      vmSizeProperties: {
+        readOnly: true,
+        serializedName: "vmSizeProperties",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "VmSizeProperty"
             }
           }
         }
@@ -2752,6 +2858,213 @@ export const OperationDisplay: msRest.CompositeMapper = {
         type: {
           name: "String"
         }
+      },
+      description: {
+        serializedName: "description",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const Dimension: msRest.CompositeMapper = {
+  serializedName: "Dimension",
+  type: {
+    name: "Composite",
+    className: "Dimension",
+    modelProperties: {
+      name: {
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      displayName: {
+        serializedName: "displayName",
+        type: {
+          name: "String"
+        }
+      },
+      internalName: {
+        serializedName: "internalName",
+        type: {
+          name: "String"
+        }
+      },
+      toBeExportedForShoebox: {
+        serializedName: "toBeExportedForShoebox",
+        type: {
+          name: "Boolean"
+        }
+      }
+    }
+  }
+};
+
+export const MetricSpecifications: msRest.CompositeMapper = {
+  serializedName: "MetricSpecifications",
+  type: {
+    name: "Composite",
+    className: "MetricSpecifications",
+    modelProperties: {
+      name: {
+        serializedName: "name",
+        type: {
+          name: "String"
+        }
+      },
+      displayName: {
+        serializedName: "displayName",
+        type: {
+          name: "String"
+        }
+      },
+      displayDescription: {
+        serializedName: "displayDescription",
+        type: {
+          name: "String"
+        }
+      },
+      unit: {
+        serializedName: "unit",
+        type: {
+          name: "String"
+        }
+      },
+      aggregationType: {
+        serializedName: "aggregationType",
+        type: {
+          name: "String"
+        }
+      },
+      supportedAggregationTypes: {
+        serializedName: "supportedAggregationTypes",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      supportedTimeGrainTypes: {
+        serializedName: "supportedTimeGrainTypes",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      enableRegionalMdmAccount: {
+        serializedName: "enableRegionalMdmAccount",
+        type: {
+          name: "Boolean"
+        }
+      },
+      sourceMdmAccount: {
+        serializedName: "sourceMdmAccount",
+        type: {
+          name: "String"
+        }
+      },
+      sourceMdmNamespace: {
+        serializedName: "sourceMdmNamespace",
+        type: {
+          name: "String"
+        }
+      },
+      metricFilterPattern: {
+        serializedName: "metricFilterPattern",
+        type: {
+          name: "String"
+        }
+      },
+      fillGapWithZero: {
+        serializedName: "fillGapWithZero",
+        type: {
+          name: "Boolean"
+        }
+      },
+      category: {
+        serializedName: "category",
+        type: {
+          name: "String"
+        }
+      },
+      resourceIdDimensionNameOverride: {
+        serializedName: "resourceIdDimensionNameOverride",
+        type: {
+          name: "String"
+        }
+      },
+      isInternal: {
+        serializedName: "isInternal",
+        type: {
+          name: "Boolean"
+        }
+      },
+      delegateMetricNameOverride: {
+        serializedName: "delegateMetricNameOverride",
+        type: {
+          name: "String"
+        }
+      },
+      dimensions: {
+        serializedName: "dimensions",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "Dimension"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const ServiceSpecification: msRest.CompositeMapper = {
+  serializedName: "ServiceSpecification",
+  type: {
+    name: "Composite",
+    className: "ServiceSpecification",
+    modelProperties: {
+      metricSpecifications: {
+        serializedName: "metricSpecifications",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "MetricSpecifications"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const OperationProperties: msRest.CompositeMapper = {
+  serializedName: "OperationProperties",
+  type: {
+    name: "Composite",
+    className: "OperationProperties",
+    modelProperties: {
+      serviceSpecification: {
+        serializedName: "serviceSpecification",
+        type: {
+          name: "Composite",
+          className: "ServiceSpecification"
+        }
       }
     }
   }
@@ -2774,6 +3087,13 @@ export const Operation: msRest.CompositeMapper = {
         type: {
           name: "Composite",
           className: "OperationDisplay"
+        }
+      },
+      properties: {
+        serializedName: "properties",
+        type: {
+          name: "Composite",
+          className: "OperationProperties"
         }
       }
     }
