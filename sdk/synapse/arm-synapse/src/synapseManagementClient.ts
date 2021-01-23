@@ -26,11 +26,14 @@ class SynapseManagementClient extends SynapseManagementClientContext {
   sqlPoolDataWarehouseUserActivities: operations.SqlPoolDataWarehouseUserActivities;
   sqlPoolRestorePoints: operations.SqlPoolRestorePoints;
   sqlPoolReplicationLinks: operations.SqlPoolReplicationLinks;
+  sqlPoolMaintenanceWindows: operations.SqlPoolMaintenanceWindows;
+  sqlPoolMaintenanceWindowOptions: operations.SqlPoolMaintenanceWindowOptions;
   sqlPoolTransparentDataEncryptions: operations.SqlPoolTransparentDataEncryptions;
   sqlPoolBlobAuditingPolicies: operations.SqlPoolBlobAuditingPolicies;
   sqlPoolOperations: operations.SqlPoolOperations;
   sqlPoolUsages: operations.SqlPoolUsages;
   sqlPoolSensitivityLabels: operations.SqlPoolSensitivityLabels;
+  sqlPoolRecommendedSensitivityLabels: operations.SqlPoolRecommendedSensitivityLabels;
   sqlPoolSchemas: operations.SqlPoolSchemas;
   sqlPoolTables: operations.SqlPoolTables;
   sqlPoolTableColumns: operations.SqlPoolTableColumns;
@@ -60,6 +63,7 @@ class SynapseManagementClient extends SynapseManagementClientContext {
   integrationRuntimeMonitoringData: operations.IntegrationRuntimeMonitoringDataOperations;
   integrationRuntimeStatus: operations.IntegrationRuntimeStatusOperations;
   privateLinkResources: operations.PrivateLinkResources;
+  privateLinkHubPrivateLinkResources: operations.PrivateLinkHubPrivateLinkResources;
   privateEndpointConnections: operations.PrivateEndpointConnections;
   privateLinkHubs: operations.PrivateLinkHubs;
   privateEndpointConnectionsPrivateLinkHub: operations.PrivateEndpointConnectionsPrivateLinkHub;
@@ -89,11 +93,14 @@ class SynapseManagementClient extends SynapseManagementClientContext {
     this.sqlPoolDataWarehouseUserActivities = new operations.SqlPoolDataWarehouseUserActivities(this);
     this.sqlPoolRestorePoints = new operations.SqlPoolRestorePoints(this);
     this.sqlPoolReplicationLinks = new operations.SqlPoolReplicationLinks(this);
+    this.sqlPoolMaintenanceWindows = new operations.SqlPoolMaintenanceWindows(this);
+    this.sqlPoolMaintenanceWindowOptions = new operations.SqlPoolMaintenanceWindowOptions(this);
     this.sqlPoolTransparentDataEncryptions = new operations.SqlPoolTransparentDataEncryptions(this);
     this.sqlPoolBlobAuditingPolicies = new operations.SqlPoolBlobAuditingPolicies(this);
     this.sqlPoolOperations = new operations.SqlPoolOperations(this);
     this.sqlPoolUsages = new operations.SqlPoolUsages(this);
     this.sqlPoolSensitivityLabels = new operations.SqlPoolSensitivityLabels(this);
+    this.sqlPoolRecommendedSensitivityLabels = new operations.SqlPoolRecommendedSensitivityLabels(this);
     this.sqlPoolSchemas = new operations.SqlPoolSchemas(this);
     this.sqlPoolTables = new operations.SqlPoolTables(this);
     this.sqlPoolTableColumns = new operations.SqlPoolTableColumns(this);
@@ -123,6 +130,7 @@ class SynapseManagementClient extends SynapseManagementClientContext {
     this.integrationRuntimeMonitoringData = new operations.IntegrationRuntimeMonitoringDataOperations(this);
     this.integrationRuntimeStatus = new operations.IntegrationRuntimeStatusOperations(this);
     this.privateLinkResources = new operations.PrivateLinkResources(this);
+    this.privateLinkHubPrivateLinkResources = new operations.PrivateLinkHubPrivateLinkResources(this);
     this.privateEndpointConnections = new operations.PrivateEndpointConnections(this);
     this.privateLinkHubs = new operations.PrivateLinkHubs(this);
     this.privateEndpointConnectionsPrivateLinkHub = new operations.PrivateEndpointConnectionsPrivateLinkHub(this);
