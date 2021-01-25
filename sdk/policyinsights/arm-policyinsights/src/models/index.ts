@@ -503,6 +503,11 @@ export interface ExpressionEvaluationDetails {
    */
   expression?: string;
   /**
+   * The kind of expression that was evaluated.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly expressionKind?: string;
+  /**
    * Property path if the expression is a field or an alias.
    */
   path?: string;
@@ -1047,6 +1052,173 @@ export interface SlimPolicyMetadata {
 }
 
 /**
+ * The information about the resource that will be evaluated.
+ */
+export interface CheckRestrictionsResourceDetails {
+  /**
+   * The resource content. This should include whatever properties are already known and can be a
+   * partial set of all resource properties.
+   */
+  resourceContent: any;
+  /**
+   * The api-version of the resource content.
+   */
+  apiVersion?: string;
+  /**
+   * The scope where the resource is being created. For example, if the resource is a child
+   * resource this would be the parent resource's resource ID.
+   */
+  scope?: string;
+}
+
+/**
+ * A field that should be evaluated against Azure Policy to determine restrictions.
+ */
+export interface PendingField {
+  /**
+   * The name of the field. This can be a top-level property like 'name' or 'type' or an Azure
+   * Policy field alias.
+   */
+  field: string;
+  /**
+   * The list of potential values for the field that should be evaluated against Azure Policy.
+   */
+  values?: string[];
+}
+
+/**
+ * The check policy restrictions parameters describing the resource that is being evaluated.
+ */
+export interface CheckRestrictionsRequest {
+  /**
+   * The information about the resource that will be evaluated.
+   */
+  resourceDetails: CheckRestrictionsResourceDetails;
+  /**
+   * The list of fields and values that should be evaluated for potential restrictions.
+   */
+  pendingFields?: PendingField[];
+}
+
+/**
+ * Resource identifiers for a policy.
+ */
+export interface PolicyReference {
+  /**
+   * The resource identifier of the policy definition.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly policyDefinitionId?: string;
+  /**
+   * The resource identifier of the policy set definition.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly policySetDefinitionId?: string;
+  /**
+   * The reference identifier of a specific policy definition within a policy set definition.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly policyDefinitionReferenceId?: string;
+  /**
+   * The resource identifier of the policy assignment.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly policyAssignmentId?: string;
+}
+
+/**
+ * The restrictions on a field imposed by a specific policy.
+ */
+export interface FieldRestriction {
+  /**
+   * The type of restriction that is imposed on the field. Possible values include: 'Required',
+   * 'Removed', 'Deny'
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly result?: FieldRestrictionResult;
+  /**
+   * The value that policy will set for the field if the user does not provide a value.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly defaultValue?: string;
+  /**
+   * The values that policy either requires or denies for the field.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly values?: string[];
+  /**
+   * The details of the policy that is causing the field restriction.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly policy?: PolicyReference;
+}
+
+/**
+ * The restrictions that will be placed on a field in the resource by policy.
+ */
+export interface FieldRestrictions {
+  /**
+   * The name of the field. This can be a top-level property like 'name' or 'type' or an Azure
+   * Policy field alias.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly field?: string;
+  /**
+   * The restrictions placed on that field by policy.
+   */
+  restrictions?: FieldRestriction[];
+}
+
+/**
+ * The result of a non-compliant policy evaluation against the given resource content.
+ */
+export interface PolicyEvaluationResult {
+  /**
+   * The details of the policy that was evaluated.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly policyInfo?: PolicyReference;
+  /**
+   * The result of the policy evaluation against the resource. This will typically be
+   * 'NonCompliant' but may contain other values if errors were encountered.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly evaluationResult?: string;
+  /**
+   * The detailed results of the policy expressions and values that were evaluated.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly evaluationDetails?: PolicyEvaluationDetails;
+}
+
+/**
+ * Evaluation results for the provided partial resource content.
+ */
+export interface CheckRestrictionsResultContentEvaluationResult {
+  /**
+   * Policy evaluation results against the given resource content. This will indicate if the
+   * partial content that was provided will be denied as-is.
+   */
+  policyEvaluations?: PolicyEvaluationResult[];
+}
+
+/**
+ * The result of a check policy restrictions evaluation on a resource.
+ */
+export interface CheckRestrictionsResult {
+  /**
+   * The restrictions that will be placed on various fields in the resource by policy.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly fieldRestrictions?: FieldRestrictions[];
+  /**
+   * Evaluation results for the provided partial resource content.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly contentEvaluationResult?: CheckRestrictionsResultContentEvaluationResult;
+}
+
+/**
  * Additional parameters for a set of operations.
  */
 export interface QueryOptions {
@@ -1569,6 +1741,14 @@ export interface PolicyMetadataCollection extends Array<SlimPolicyMetadata> {
  * @enum {string}
  */
 export type ResourceDiscoveryMode = 'ExistingNonCompliant' | 'ReEvaluateCompliance';
+
+/**
+ * Defines values for FieldRestrictionResult.
+ * Possible values include: 'Required', 'Removed', 'Deny'
+ * @readonly
+ * @enum {string}
+ */
+export type FieldRestrictionResult = 'Required' | 'Removed' | 'Deny';
 
 /**
  * Defines values for PolicyStatesResource.
@@ -3259,5 +3439,45 @@ export type PolicyMetadataListNextResponse = PolicyMetadataCollection & {
        * The response body as parsed JSON or XML
        */
       parsedBody: PolicyMetadataCollection;
+    };
+};
+
+/**
+ * Contains response data for the checkAtSubscriptionScope operation.
+ */
+export type PolicyRestrictionsCheckAtSubscriptionScopeResponse = CheckRestrictionsResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: CheckRestrictionsResult;
+    };
+};
+
+/**
+ * Contains response data for the checkAtResourceGroupScope operation.
+ */
+export type PolicyRestrictionsCheckAtResourceGroupScopeResponse = CheckRestrictionsResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: CheckRestrictionsResult;
     };
 };
