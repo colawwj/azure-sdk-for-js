@@ -20,6 +20,7 @@ export {
   PrivateEndpoint,
   PrivateEndpointConnection,
   PrivateEndpointConnectionProperties,
+  PrivateLinkResourcesList,
   PrivateLinkServiceConnectionState,
   Resource,
   Sku,
@@ -32,7 +33,5 @@ export {
   WorkspaceCustomParameters,
   WorkspaceCustomStringParameter,
   WorkspaceEncryptionParameter,
-  WorkspaceListResult,
-  WorkspaceProviderAuthorization,
-  WorkspaceUpdate
+  WorkspaceProviderAuthorization
 } from "../models/mappers";
