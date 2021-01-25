@@ -153,6 +153,7 @@ export {
   FirewallPolicyRuleCollectionGroup,
   FirewallPolicyRuleCollectionGroupListResult,
   FirewallPolicySku,
+  FirewallPolicySNAT,
   FirewallPolicyThreatIntelWhitelist,
   FirewallPolicyTransportSecurity,
   FlowLog,
