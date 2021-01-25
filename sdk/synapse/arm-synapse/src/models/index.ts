@@ -46,6 +46,16 @@ export interface AutoPauseProperties {
 }
 
 /**
+ * Dynamic Executor Allocation Properties
+ */
+export interface DynamicExecutorAllocation {
+  /**
+   * Indicates whether Dynamic Executor Allocation is enabled or not.
+   */
+  enabled?: boolean;
+}
+
+/**
  * Library requirements for a Big Data pool powered by Apache Spark
  * @summary Spark pool library version requirements
  */
@@ -131,13 +141,17 @@ export interface BigDataPoolResourceInfo extends TrackedResource {
    */
   isComputeIsolationEnabled?: boolean;
   /**
-   * Whether library requirements changed.
-   */
-  haveLibraryRequirementsChanged?: boolean;
-  /**
    * Whether session level packages enabled.
    */
   sessionLevelPackagesEnabled?: boolean;
+  /**
+   * The cache size
+   */
+  cacheSize?: number;
+  /**
+   * Dynamic Executor Allocation
+   */
+  dynamicExecutorAllocation?: DynamicExecutorAllocation;
   /**
    * The Spark events folder
    */
@@ -960,6 +974,66 @@ export interface ReplicationLink extends ProxyResource {
 }
 
 /**
+ * Maintenance window time range.
+ */
+export interface MaintenanceWindowTimeRange {
+  /**
+   * Day of maintenance window. Possible values include: 'Sunday', 'Monday', 'Tuesday',
+   * 'Wednesday', 'Thursday', 'Friday', 'Saturday'
+   */
+  dayOfWeek?: DayOfWeek;
+  /**
+   * Start time minutes offset from 12am.
+   */
+  startTime?: string;
+  /**
+   * Duration of maintenance window in minutes.
+   */
+  duration?: string;
+}
+
+/**
+ * Maintenance window options.
+ */
+export interface MaintenanceWindowOptions extends ProxyResource {
+  /**
+   * Whether maintenance windows are enabled for the database.
+   */
+  isEnabled?: boolean;
+  /**
+   * Available maintenance cycles e.g. {Saturday, 0, 48*60}, {Wednesday, 0, 24*60}.
+   */
+  maintenanceWindowCycles?: MaintenanceWindowTimeRange[];
+  /**
+   * Minimum duration of maintenance window.
+   */
+  minDurationInMinutes?: number;
+  /**
+   * Default duration for maintenance window.
+   */
+  defaultDurationInMinutes?: number;
+  /**
+   * Minimum number of maintenance windows cycles to be set on the database.
+   */
+  minCycles?: number;
+  /**
+   * Time granularity in minutes for maintenance windows.
+   */
+  timeGranularityInMinutes?: number;
+  /**
+   * Whether we allow multiple maintenance windows per cycle.
+   */
+  allowMultipleMaintenanceWindowsPerCycle?: boolean;
+}
+
+/**
+ * Maintenance windows.
+ */
+export interface MaintenanceWindows extends ProxyResource {
+  timeRanges?: MaintenanceWindowTimeRange[];
+}
+
+/**
  * Represents a Sql pool transparent data encryption configuration.
  */
 export interface TransparentDataEncryption extends ProxyResource {
@@ -1226,6 +1300,21 @@ export interface SqlPoolUsage {
  */
 export interface SensitivityLabel extends ProxyResource {
   /**
+   * The schema name.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly schemaName?: string;
+  /**
+   * The table name.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly tableName?: string;
+  /**
+   * The column name.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly columnName?: string;
+  /**
    * The label name.
    */
   labelName?: string;
@@ -1248,6 +1337,15 @@ export interface SensitivityLabel extends ProxyResource {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly isDisabled?: boolean;
+  /**
+   * Possible values include: 'None', 'Low', 'Medium', 'High', 'Critical'
+   */
+  rank?: SensitivityLabelRank;
+  /**
+   * managed by
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly managedBy?: string;
 }
 
 /**
@@ -1274,6 +1372,11 @@ export interface SqlPoolColumn extends ProxyResource {
    * 'binary', 'char', 'timestamp', 'nvarchar', 'nchar', 'xml', 'sysname'
    */
   columnType?: ColumnDataType;
+  /**
+   * Indicates whether column value is computed or not
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly isComputed?: boolean;
 }
 
 /**
@@ -1829,6 +1932,68 @@ export interface DataMaskingRule extends ProxyResource {
 }
 
 /**
+ * A sensitivity label update operation.
+ */
+export interface SensitivityLabelUpdate extends ProxyResource {
+  /**
+   * Possible values include: 'set', 'remove'
+   */
+  op: SensitivityLabelUpdateKind;
+  /**
+   * Schema name of the column to update.
+   */
+  schema: string;
+  /**
+   * Table name of the column to update.
+   */
+  table: string;
+  /**
+   * Column name to update.
+   */
+  column: string;
+  /**
+   * The sensitivity label information to apply on a column.
+   */
+  sensitivityLabel?: SensitivityLabel;
+}
+
+/**
+ * A list of sensitivity label update operations.
+ */
+export interface SensitivityLabelUpdateList {
+  operations?: SensitivityLabelUpdate[];
+}
+
+/**
+ * A recommended sensitivity label update operation.
+ */
+export interface RecommendedSensitivityLabelUpdate extends ProxyResource {
+  /**
+   * Possible values include: 'enable', 'disable'
+   */
+  op: RecommendedSensitivityLabelUpdateKind;
+  /**
+   * Schema name of the column to update.
+   */
+  schema: string;
+  /**
+   * Table name of the column to update.
+   */
+  table: string;
+  /**
+   * Column name to update.
+   */
+  column: string;
+}
+
+/**
+ * A list of recommended sensitivity label update operations.
+ */
+export interface RecommendedSensitivityLabelUpdateList {
+  operations?: RecommendedSensitivityLabelUpdate[];
+}
+
+/**
  * Details of the data lake storage account associated with the workspace
  */
 export interface DataLakeStorageAccountDetails {
@@ -1996,6 +2161,14 @@ export interface WorkspaceRepositoryConfiguration {
    * Root folder to use in the repository
    */
   rootFolder?: string;
+  /**
+   * The last commit ID
+   */
+  lastCommitId?: string;
+  /**
+   * The VSTS tenant ID
+   */
+  tenantId?: string;
 }
 
 /**
@@ -2100,6 +2273,11 @@ export interface Workspace extends TrackedResource {
    * Purview Configuration
    */
   purviewConfiguration?: PurviewConfiguration;
+  /**
+   * The ADLA resource ID.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly adlaResourceId?: string;
   /**
    * Identity of the workspace
    */
@@ -4804,6 +4982,15 @@ export type ReplicationRole = 'Primary' | 'Secondary' | 'NonReadableSecondary' |
 export type ReplicationState = 'PENDING' | 'SEEDING' | 'CATCH_UP' | 'SUSPENDED';
 
 /**
+ * Defines values for DayOfWeek.
+ * Possible values include: 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday',
+ * 'Saturday'
+ * @readonly
+ * @enum {string}
+ */
+export type DayOfWeek = 'Sunday' | 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday';
+
+/**
  * Defines values for TransparentDataEncryptionStatus.
  * Possible values include: 'Enabled', 'Disabled'
  * @readonly
@@ -4827,6 +5014,14 @@ export type BlobAuditingPolicyState = 'Enabled' | 'Disabled';
  * @enum {string}
  */
 export type ManagementOperationState = 'Pending' | 'InProgress' | 'Succeeded' | 'Failed' | 'CancelInProgress' | 'Cancelled';
+
+/**
+ * Defines values for SensitivityLabelRank.
+ * Possible values include: 'None', 'Low', 'Medium', 'High', 'Critical'
+ * @readonly
+ * @enum {string}
+ */
+export type SensitivityLabelRank = 'None' | 'Low' | 'Medium' | 'High' | 'Critical';
 
 /**
  * Defines values for ColumnDataType.
@@ -4887,6 +5082,22 @@ export type DataMaskingRuleState = 'Disabled' | 'Enabled';
  * @enum {string}
  */
 export type DataMaskingFunction = 'Default' | 'CCN' | 'Email' | 'Number' | 'SSN' | 'Text';
+
+/**
+ * Defines values for SensitivityLabelUpdateKind.
+ * Possible values include: 'set', 'remove'
+ * @readonly
+ * @enum {string}
+ */
+export type SensitivityLabelUpdateKind = 'set' | 'remove';
+
+/**
+ * Defines values for RecommendedSensitivityLabelUpdateKind.
+ * Possible values include: 'enable', 'disable'
+ * @readonly
+ * @enum {string}
+ */
+export type RecommendedSensitivityLabelUpdateKind = 'enable' | 'disable';
 
 /**
  * Defines values for ResourceIdentityType.
@@ -5818,6 +6029,26 @@ export type SqlPoolGeoBackupPoliciesListResponse = GeoBackupPolicyListResult & {
 };
 
 /**
+ * Contains response data for the createOrUpdate operation.
+ */
+export type SqlPoolGeoBackupPoliciesCreateOrUpdateResponse = GeoBackupPolicy & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: GeoBackupPolicy;
+    };
+};
+
+/**
  * Contains response data for the get operation.
  */
 export type SqlPoolGeoBackupPoliciesGetResponse = GeoBackupPolicy & {
@@ -6014,6 +6245,46 @@ export type SqlPoolReplicationLinksListNextResponse = ReplicationLinkListResult 
        * The response body as parsed JSON or XML
        */
       parsedBody: ReplicationLinkListResult;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type SqlPoolMaintenanceWindowsGetResponse = MaintenanceWindows & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: MaintenanceWindows;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type SqlPoolMaintenanceWindowOptionsGetResponse = MaintenanceWindowOptions & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: MaintenanceWindowOptions;
     };
 };
 
@@ -6961,6 +7232,26 @@ export type DataMaskingPoliciesGetResponse = DataMaskingPolicy & {
  * Contains response data for the createOrUpdate operation.
  */
 export type DataMaskingRulesCreateOrUpdateResponse = DataMaskingRule & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: DataMaskingRule;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type DataMaskingRulesGetResponse = DataMaskingRule & {
   /**
    * The underlying HTTP response.
    */
@@ -8091,6 +8382,66 @@ export type PrivateLinkResourcesGetResponse = PrivateLinkResource & {
  * Contains response data for the listNext operation.
  */
 export type PrivateLinkResourcesListNextResponse = PrivateLinkResourceListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateLinkResourceListResult;
+    };
+};
+
+/**
+ * Contains response data for the list operation.
+ */
+export type PrivateLinkHubPrivateLinkResourcesListResponse = PrivateLinkResourceListResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateLinkResourceListResult;
+    };
+};
+
+/**
+ * Contains response data for the get operation.
+ */
+export type PrivateLinkHubPrivateLinkResourcesGetResponse = PrivateLinkResource & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: PrivateLinkResource;
+    };
+};
+
+/**
+ * Contains response data for the listNext operation.
+ */
+export type PrivateLinkHubPrivateLinkResourcesListNextResponse = PrivateLinkResourceListResult & {
   /**
    * The underlying HTTP response.
    */
