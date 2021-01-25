@@ -2443,7 +2443,7 @@ export interface ApplicationGatewayRewriteRuleCondition {
    */
   pattern?: string;
   /**
-   * Setting this paramter to truth value with force the pattern to do a case in-sensitive
+   * Setting this parameter to truth value with force the pattern to do a case in-sensitive
    * comparison.
    */
   ignoreCase?: boolean;
