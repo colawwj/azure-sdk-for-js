@@ -767,6 +767,13 @@ export const ExpressionEvaluationDetails: msRest.CompositeMapper = {
           name: "String"
         }
       },
+      expressionKind: {
+        readOnly: true,
+        serializedName: "expressionKind",
+        type: {
+          name: "String"
+        }
+      },
       path: {
         serializedName: "path",
         type: {
@@ -1665,6 +1672,290 @@ export const SlimPolicyMetadata: msRest.CompositeMapper = {
         serializedName: "name",
         type: {
           name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const CheckRestrictionsResourceDetails: msRest.CompositeMapper = {
+  serializedName: "CheckRestrictionsResourceDetails",
+  type: {
+    name: "Composite",
+    className: "CheckRestrictionsResourceDetails",
+    modelProperties: {
+      resourceContent: {
+        required: true,
+        serializedName: "resourceContent",
+        type: {
+          name: "Object"
+        }
+      },
+      apiVersion: {
+        serializedName: "apiVersion",
+        type: {
+          name: "String"
+        }
+      },
+      scope: {
+        serializedName: "scope",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const PendingField: msRest.CompositeMapper = {
+  serializedName: "PendingField",
+  type: {
+    name: "Composite",
+    className: "PendingField",
+    modelProperties: {
+      field: {
+        required: true,
+        serializedName: "field",
+        type: {
+          name: "String"
+        }
+      },
+      values: {
+        serializedName: "values",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const CheckRestrictionsRequest: msRest.CompositeMapper = {
+  serializedName: "CheckRestrictionsRequest",
+  type: {
+    name: "Composite",
+    className: "CheckRestrictionsRequest",
+    modelProperties: {
+      resourceDetails: {
+        required: true,
+        serializedName: "resourceDetails",
+        type: {
+          name: "Composite",
+          className: "CheckRestrictionsResourceDetails"
+        }
+      },
+      pendingFields: {
+        serializedName: "pendingFields",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "PendingField"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const PolicyReference: msRest.CompositeMapper = {
+  serializedName: "PolicyReference",
+  type: {
+    name: "Composite",
+    className: "PolicyReference",
+    modelProperties: {
+      policyDefinitionId: {
+        readOnly: true,
+        serializedName: "policyDefinitionId",
+        type: {
+          name: "String"
+        }
+      },
+      policySetDefinitionId: {
+        readOnly: true,
+        serializedName: "policySetDefinitionId",
+        type: {
+          name: "String"
+        }
+      },
+      policyDefinitionReferenceId: {
+        readOnly: true,
+        serializedName: "policyDefinitionReferenceId",
+        type: {
+          name: "String"
+        }
+      },
+      policyAssignmentId: {
+        readOnly: true,
+        serializedName: "policyAssignmentId",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const FieldRestriction: msRest.CompositeMapper = {
+  serializedName: "FieldRestriction",
+  type: {
+    name: "Composite",
+    className: "FieldRestriction",
+    modelProperties: {
+      result: {
+        readOnly: true,
+        serializedName: "result",
+        type: {
+          name: "String"
+        }
+      },
+      defaultValue: {
+        readOnly: true,
+        serializedName: "defaultValue",
+        type: {
+          name: "String"
+        }
+      },
+      values: {
+        readOnly: true,
+        serializedName: "values",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "String"
+            }
+          }
+        }
+      },
+      policy: {
+        readOnly: true,
+        serializedName: "policy",
+        type: {
+          name: "Composite",
+          className: "PolicyReference"
+        }
+      }
+    }
+  }
+};
+
+export const FieldRestrictions: msRest.CompositeMapper = {
+  serializedName: "FieldRestrictions",
+  type: {
+    name: "Composite",
+    className: "FieldRestrictions",
+    modelProperties: {
+      field: {
+        readOnly: true,
+        serializedName: "field",
+        type: {
+          name: "String"
+        }
+      },
+      restrictions: {
+        serializedName: "restrictions",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "FieldRestriction"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const PolicyEvaluationResult: msRest.CompositeMapper = {
+  serializedName: "PolicyEvaluationResult",
+  type: {
+    name: "Composite",
+    className: "PolicyEvaluationResult",
+    modelProperties: {
+      policyInfo: {
+        readOnly: true,
+        serializedName: "policyInfo",
+        type: {
+          name: "Composite",
+          className: "PolicyReference"
+        }
+      },
+      evaluationResult: {
+        readOnly: true,
+        serializedName: "evaluationResult",
+        type: {
+          name: "String"
+        }
+      },
+      evaluationDetails: {
+        readOnly: true,
+        serializedName: "evaluationDetails",
+        type: {
+          name: "Composite",
+          className: "PolicyEvaluationDetails"
+        }
+      }
+    }
+  }
+};
+
+export const CheckRestrictionsResultContentEvaluationResult: msRest.CompositeMapper = {
+  serializedName: "CheckRestrictionsResult_contentEvaluationResult",
+  type: {
+    name: "Composite",
+    className: "CheckRestrictionsResultContentEvaluationResult",
+    modelProperties: {
+      policyEvaluations: {
+        serializedName: "policyEvaluations",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "PolicyEvaluationResult"
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+export const CheckRestrictionsResult: msRest.CompositeMapper = {
+  serializedName: "CheckRestrictionsResult",
+  type: {
+    name: "Composite",
+    className: "CheckRestrictionsResult",
+    modelProperties: {
+      fieldRestrictions: {
+        readOnly: true,
+        serializedName: "fieldRestrictions",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "FieldRestrictions"
+            }
+          }
+        }
+      },
+      contentEvaluationResult: {
+        readOnly: true,
+        serializedName: "contentEvaluationResult",
+        type: {
+          name: "Composite",
+          className: "CheckRestrictionsResultContentEvaluationResult"
         }
       }
     }
