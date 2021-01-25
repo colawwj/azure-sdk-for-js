@@ -179,8 +179,7 @@ export interface ContainerServiceMasterProfile {
   vmSize: ContainerServiceVMSizeTypes;
   /**
    * OS Disk Size in GB to be used to specify the disk size for every machine in this master/agent
-   * pool. If you specify 0, it will apply the default osDisk size according to the vmSize
-   * specified.
+   * pool. Defaults to 128 if unspecified, zero, or negative.
    */
   osDiskSizeGB?: number;
   /**
@@ -469,8 +468,7 @@ export interface ManagedClusterAgentPoolProfileProperties {
   vmSize?: ContainerServiceVMSizeTypes;
   /**
    * OS Disk Size in GB to be used to specify the disk size for every machine in this master/agent
-   * pool. If you specify 0, it will apply the default osDisk size according to the vmSize
-   * specified.
+   * pool. Defaults to 128 if unspecified, zero, or negative.
    */
   osDiskSizeGB?: number;
   /**
@@ -665,8 +663,7 @@ export interface AgentPool extends SubResource {
   vmSize?: ContainerServiceVMSizeTypes;
   /**
    * OS Disk Size in GB to be used to specify the disk size for every machine in this master/agent
-   * pool. If you specify 0, it will apply the default osDisk size according to the vmSize
-   * specified.
+   * pool. Defaults to 128 if unspecified, zero, or negative.
    */
   osDiskSizeGB?: number;
   /**
