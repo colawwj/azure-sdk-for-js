@@ -12,6 +12,7 @@ export {
   AFDDomainHttpsParameters,
   AFDEndpoint,
   AFDEndpointUpdateParameters,
+  AfdErrorResponse,
   AFDOrigin,
   AFDOriginGroup,
   AFDOriginGroupUpdateParameters,
@@ -22,10 +23,8 @@ export {
   CacheKeyQueryStringActionParameters,
   CdnEndpoint,
   CdnWebApplicationFirewallPolicy,
-  CdnWebApplicationFirewallPolicyList,
   CdnWebApplicationFirewallPolicyPatchParameters,
   CidrIpAddress,
-  CloudError,
   CookiesMatchConditionParameters,
   CustomDomain,
   CustomerCertificateParameters,
@@ -105,6 +104,7 @@ export {
   Route,
   Rule,
   RuleSet,
+  RuleSetListResult,
   Secret,
   SecretParameters,
   SecurityPolicy,
@@ -125,5 +125,8 @@ export {
   UrlSigningActionParameters,
   UrlSigningKey,
   UrlSigningKeyParameters,
-  UrlSigningParamIdentifier
+  UrlSigningParamIdentifier,
+  Usage,
+  UsageName,
+  UsagesListResult
 } from "../models/mappers";
