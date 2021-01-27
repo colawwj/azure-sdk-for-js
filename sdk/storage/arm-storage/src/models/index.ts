@@ -354,20 +354,6 @@ export interface Encryption {
 }
 
 /**
- * Resource Access Rule.
- */
-export interface ResourceAccessRule {
-  /**
-   * Tenant Id
-   */
-  tenantId?: string;
-  /**
-   * Resource Id
-   */
-  resourceId?: string;
-}
-
-/**
  * Virtual Network rule.
  */
 export interface VirtualNetworkRule {
@@ -412,7 +398,6 @@ export interface NetworkRuleSet {
    * 'AzureServices'. Default value: 'AzureServices'.
    */
   bypass?: Bypass;
-  resourceAccessRules?: ResourceAccessRule[];
   /**
    * Sets the virtual network rules
    */
@@ -509,20 +494,6 @@ export interface Identity {
 }
 
 /**
- * The complex type of the extended location.
- */
-export interface ExtendedLocation {
-  /**
-   * The name of the extended location.
-   */
-  name?: string;
-  /**
-   * The type of the extended location. Possible values include: 'EdgeZone'
-   */
-  type?: ExtendedLocationTypes;
-}
-
-/**
  * The SKU of the storage account.
  */
 export interface Sku {
@@ -557,11 +528,6 @@ export interface StorageAccountCreateParameters {
    * on update, the request will succeed.
    */
   location: string;
-  /**
-   * Optional. Set the extended location of the resource. If not set, the storage account will be
-   * created in Azure main region. Otherwise it will be created in the specified extended location
-   */
-  extendedLocation?: ExtendedLocation;
   /**
    * Gets or sets a list of key value pairs that describe the resource. These tags can be used for
    * viewing and grouping this resource (across resource groups). A maximum of 15 tags can be
@@ -625,6 +591,13 @@ export interface StorageAccountCreateParameters {
    * is TLS 1.0 for this property. Possible values include: 'TLS1_0', 'TLS1_1', 'TLS1_2'
    */
   minimumTlsVersion?: MinimumTlsVersion;
+  /**
+   * Indicates whether the storage account permits requests to be authorized with the account
+   * access key via Shared Key. If false, then all requests, including shared access signatures,
+   * must be authorized with Azure Active Directory (Azure AD). The default value is null, which is
+   * equivalent to true.
+   */
+  allowSharedKeyAccess?: boolean;
 }
 
 /**
@@ -897,45 +870,6 @@ export interface PrivateEndpointConnection extends Resource {
 }
 
 /**
- * The resource model definition for a Azure Resource Manager proxy resource. It will not have tags
- * and a location
- * @summary Proxy Resource
- */
-export interface ProxyResource extends Resource {
-}
-
-/**
- * Deleted storage account
- */
-export interface DeletedAccount extends ProxyResource {
-  /**
-   * Full resource id of the original storage account.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly storageAccountResourceId?: string;
-  /**
-   * Location of the deleted account.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly location?: string;
-  /**
-   * Can be used to attempt recovering this deleted account via PutStorageAccount API.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly restoreReference?: string;
-  /**
-   * Creation time of the deleted account.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly creationTime?: string;
-  /**
-   * Deletion time of the deleted account.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly deletionTime?: string;
-}
-
-/**
  * The resource model definition for an Azure Resource Manager tracked top level resource which has
  * 'tags' and a 'location'
  * @summary Tracked Resource
@@ -970,10 +904,6 @@ export interface StorageAccount extends TrackedResource {
    * The identity of the resource.
    */
   identity?: Identity;
-  /**
-   * The extendedLocation of the resource.
-   */
-  extendedLocation?: ExtendedLocation;
   /**
    * Gets the status of the storage account at the time the operation was called. Possible values
    * include: 'Creating', 'ResolvingDNS', 'Succeeded'
@@ -1101,6 +1031,13 @@ export interface StorageAccount extends TrackedResource {
    * is TLS 1.0 for this property. Possible values include: 'TLS1_0', 'TLS1_1', 'TLS1_2'
    */
   minimumTlsVersion?: MinimumTlsVersion;
+  /**
+   * Indicates whether the storage account permits requests to be authorized with the account
+   * access key via Shared Key. If false, then all requests, including shared access signatures,
+   * must be authorized with Azure Active Directory (Azure AD). The default value is null, which is
+   * equivalent to true.
+   */
+  allowSharedKeyAccess?: boolean;
 }
 
 /**
@@ -1213,6 +1150,13 @@ export interface StorageAccountUpdateParameters {
    * is TLS 1.0 for this property. Possible values include: 'TLS1_0', 'TLS1_1', 'TLS1_2'
    */
   minimumTlsVersion?: MinimumTlsVersion;
+  /**
+   * Indicates whether the storage account permits requests to be authorized with the account
+   * access key via Shared Key. If false, then all requests, including shared access signatures,
+   * must be authorized with Azure Active Directory (Azure AD). The default value is null, which is
+   * equivalent to true.
+   */
+  allowSharedKeyAccess?: boolean;
   /**
    * Optional. Indicates the type of storage account. Currently only StorageV2 value supported by
    * server. Possible values include: 'Storage', 'StorageV2', 'BlobStorage', 'FileStorage',
@@ -1421,12 +1365,7 @@ export interface DateAfterModification {
   /**
    * Value indicating the age in days after last modification
    */
-  daysAfterModificationGreaterThan?: number;
-  /**
-   * Value indicating the age in days after last blob access. This property can only be used in
-   * conjunction with last access time tracking policy
-   */
-  daysAfterLastAccessTimeGreaterThan?: number;
+  daysAfterModificationGreaterThan: number;
 }
 
 /**
@@ -1445,11 +1384,6 @@ export interface ManagementPolicyBaseBlob {
    * The function to delete the blob
    */
   deleteProperty?: DateAfterModification;
-  /**
-   * This property enables auto tiering of a blob from cool to hot on a blob access. This property
-   * requires tierToCool.daysAfterLastAccessTimeGreaterThan.
-   */
-  enableAutoTierToHotFromCool?: boolean;
 }
 
 /**
@@ -1702,127 +1636,9 @@ export interface ObjectReplicationPolicy extends Resource {
 }
 
 /**
- * An object that defines the blob inventory rule filter conditions.
+ * An error response from the storage resource provider.
  */
-export interface BlobInventoryPolicyFilter {
-  /**
-   * An array of strings for blob prefixes to be matched.
-   */
-  prefixMatch?: string[];
-  /**
-   * An array of predefined enum values. Valid values include blockBlob, appendBlob, pageBlob. Hns
-   * accounts does not support pageBlobs.
-   */
-  blobTypes: string[];
-  /**
-   * Includes blob versions in blob inventory when value set to true.
-   */
-  includeBlobVersions?: boolean;
-  /**
-   * Includes blob snapshots in blob inventory when value set to true.
-   */
-  includeSnapshots?: boolean;
-}
-
-/**
- * An object that defines the blob inventory rule. Each definition consists of a set of filters.
- */
-export interface BlobInventoryPolicyDefinition {
-  /**
-   * An object that defines the filter set.
-   */
-  filters: BlobInventoryPolicyFilter;
-}
-
-/**
- * An object that wraps the blob inventory rule. Each rule is uniquely defined by name.
- */
-export interface BlobInventoryPolicyRule {
-  /**
-   * Rule is enabled when set to true.
-   */
-  enabled: boolean;
-  /**
-   * A rule name can contain any combination of alpha numeric characters. Rule name is
-   * case-sensitive. It must be unique within a policy.
-   */
-  name: string;
-  /**
-   * An object that defines the blob inventory policy rule.
-   */
-  definition: BlobInventoryPolicyDefinition;
-}
-
-/**
- * The storage account blob inventory policy rules.
- */
-export interface BlobInventoryPolicySchema {
-  /**
-   * Policy is enabled if set to true.
-   */
-  enabled: boolean;
-  /**
-   * Container name where blob inventory files are stored. Must be pre-created.
-   */
-  destination: string;
-  /**
-   * The storage account blob inventory policy rules. The rule is applied when it is enabled.
-   */
-  rules: BlobInventoryPolicyRule[];
-}
-
-/**
- * Metadata pertaining to creation and last modification of the resource.
- */
-export interface SystemData {
-  /**
-   * The identity that created the resource.
-   */
-  createdBy?: string;
-  /**
-   * The type of identity that created the resource. Possible values include: 'User',
-   * 'Application', 'ManagedIdentity', 'Key'
-   */
-  createdByType?: CreatedByType;
-  /**
-   * The timestamp of resource creation (UTC).
-   */
-  createdAt?: Date;
-  /**
-   * The identity that last modified the resource.
-   */
-  lastModifiedBy?: string;
-  /**
-   * The type of identity that last modified the resource. Possible values include: 'User',
-   * 'Application', 'ManagedIdentity', 'Key'
-   */
-  lastModifiedByType?: CreatedByType;
-  /**
-   * The type of identity that last modified the resource.
-   */
-  lastModifiedAt?: Date;
-}
-
-/**
- * The storage account blob inventory policy.
- */
-export interface BlobInventoryPolicy extends Resource {
-  /**
-   * Returns the last modified date and time of the blob inventory policy.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly lastModifiedTime?: Date;
-  /**
-   * The storage account blob inventory policy object. It is composed of policy rules.
-   */
-  policy: BlobInventoryPolicySchema;
-  systemData?: SystemData;
-}
-
-/**
- * Error response body contract.
- */
-export interface ErrorResponseBody {
+export interface ErrorResponse {
   /**
    * An identifier for the error. Codes are invariant and are intended to be consumed
    * programmatically.
@@ -1835,13 +1651,11 @@ export interface ErrorResponseBody {
 }
 
 /**
- * An error response from the storage resource provider.
+ * The resource model definition for a Azure Resource Manager proxy resource. It will not have tags
+ * and a location
+ * @summary Proxy Resource
  */
-export interface ErrorResponse {
-  /**
-   * Azure Storage Resource Provider error response body.
-   */
-  error?: ErrorResponseBody;
+export interface ProxyResource extends Resource {
 }
 
 /**
@@ -2318,31 +2132,6 @@ export interface RestorePolicyProperties {
 }
 
 /**
- * The blob service properties for Last access time based tracking policy.
- */
-export interface LastAccessTimeTrackingPolicy {
-  /**
-   * When set to true last access time based tracking is enabled.
-   */
-  enable: boolean;
-  /**
-   * Name of the policy. The valid value is AccessTimeTracking. This field is currently read only.
-   * Possible values include: 'AccessTimeTracking'
-   */
-  name?: Name;
-  /**
-   * The field specifies blob object tracking granularity in days, typically how often the blob
-   * object should be tracked.This field is currently read only with value as 1
-   */
-  trackingGranularityInDays?: number;
-  /**
-   * An array of predefined supported blob types. Only blockBlob is the supported value. This field
-   * is currently read only
-   */
-  blobType?: string[];
-}
-
-/**
  * The properties of a storage account’s Blob service.
  */
 export interface BlobServiceProperties extends Resource {
@@ -2382,10 +2171,6 @@ export interface BlobServiceProperties extends Resource {
    * The blob service properties for container soft delete.
    */
   containerDeleteRetentionPolicy?: DeleteRetentionPolicy;
-  /**
-   * The blob service property to configure last access time based tracking policy.
-   */
-  lastAccessTimeTrackingPolicy?: LastAccessTimeTrackingPolicy;
   /**
    * Sku name and tier.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -2438,36 +2223,6 @@ export interface LeaseContainerResponse {
 }
 
 /**
- * Multichannel setting. Applies to Premium FileStorage only.
- */
-export interface Multichannel {
-  /**
-   * Indicates whether multichannel is enabled
-   */
-  enabled?: boolean;
-}
-
-/**
- * Setting for SMB protocol
- */
-export interface SmbSetting {
-  /**
-   * Multichannel setting. Applies to Premium FileStorage only.
-   */
-  multichannel?: Multichannel;
-}
-
-/**
- * Protocol settings for file service
- */
-export interface ProtocolSettings {
-  /**
-   * Setting for SMB protocol
-   */
-  smb?: SmbSetting;
-}
-
-/**
  * The properties of File services in storage account.
  */
 export interface FileServiceProperties extends Resource {
@@ -2481,10 +2236,6 @@ export interface FileServiceProperties extends Resource {
    * The file service properties for share soft delete.
    */
   shareDeleteRetentionPolicy?: DeleteRetentionPolicy;
-  /**
-   * Protocol settings for file service
-   */
-  protocolSettings?: ProtocolSettings;
   /**
    * Sku name and tier.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -2573,12 +2324,6 @@ export interface FileShare extends AzureEntityResource {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly shareUsageBytes?: number;
-  /**
-   * Creation time of share snapshot returned in the response of list shares with expand param
-   * "snapshots".
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly snapshotTime?: Date;
 }
 
 /**
@@ -2665,12 +2410,6 @@ export interface FileShareItem extends AzureEntityResource {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly shareUsageBytes?: number;
-  /**
-   * Creation time of share snapshot returned in the response of list shares with expand param
-   * "snapshots".
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly snapshotTime?: Date;
 }
 
 /**
@@ -2782,13 +2521,6 @@ export interface StorageAccountsListKeysOptionalParams extends msRest.RequestOpt
 /**
  * Optional Parameters.
  */
-export interface BlobInventoryPoliciesCreateOrUpdateOptionalParams extends msRest.RequestOptionsBase {
-  systemData?: SystemData;
-}
-
-/**
- * Optional Parameters.
- */
 export interface BlobContainersListOptionalParams extends msRest.RequestOptionsBase {
   /**
    * Optional. Specified maximum number of containers that can be included in the list.
@@ -2889,6 +2621,22 @@ export interface BlobContainersListNextOptionalParams extends msRest.RequestOpti
 /**
  * Optional Parameters.
  */
+export interface FileServicesSetServicePropertiesOptionalParams extends msRest.RequestOptionsBase {
+  /**
+   * Specifies CORS rules for the File service. You can include up to five CorsRule elements in the
+   * request. If no CorsRule elements are included in the request body, all CORS rules will be
+   * deleted, and CORS will be disabled for the File service.
+   */
+  cors?: CorsRules;
+  /**
+   * The file service properties for share soft delete.
+   */
+  shareDeleteRetentionPolicy?: DeleteRetentionPolicy;
+}
+
+/**
+ * Optional Parameters.
+ */
 export interface FileSharesListOptionalParams extends msRest.RequestOptionsBase {
   /**
    * Optional. Specified maximum number of shares that can be included in the list.
@@ -2900,19 +2648,9 @@ export interface FileSharesListOptionalParams extends msRest.RequestOptionsBase 
   filter?: string;
   /**
    * Optional, used to expand the properties within share's properties. Possible values include:
-   * 'deleted', 'snapshots'
+   * 'deleted'
    */
   expand?: ListSharesExpand;
-}
-
-/**
- * Optional Parameters.
- */
-export interface FileSharesCreateOptionalParams extends msRest.RequestOptionsBase {
-  /**
-   * Optional, used to create a snapshot. Possible values include: 'snapshots'
-   */
-  expand?: PutSharesExpand;
 }
 
 /**
@@ -2924,20 +2662,6 @@ export interface FileSharesGetOptionalParams extends msRest.RequestOptionsBase {
    * 'stats'
    */
   expand?: GetShareExpand;
-  /**
-   * Optional, used to retrieve properties of a snapshot.
-   */
-  xMsSnapshot?: string;
-}
-
-/**
- * Optional Parameters.
- */
-export interface FileSharesDeleteMethodOptionalParams extends msRest.RequestOptionsBase {
-  /**
-   * Optional, used to delete a snapshot.
-   */
-  xMsSnapshot?: string;
 }
 
 /**
@@ -2954,7 +2678,7 @@ export interface FileSharesListNextOptionalParams extends msRest.RequestOptionsB
   filter?: string;
   /**
    * Optional, used to expand the properties within share's properties. Possible values include:
-   * 'deleted', 'snapshots'
+   * 'deleted'
    */
   expand?: ListSharesExpand;
 }
@@ -3133,32 +2857,10 @@ export interface StorageAccountListResult extends Array<StorageAccount> {
 
 /**
  * @interface
- * The response from the List Deleted Accounts operation.
- * @extends Array<DeletedAccount>
- */
-export interface DeletedAccountListResult extends Array<DeletedAccount> {
-  /**
-   * Request URL that can be used to query next page of deleted accounts. Returned when total
-   * number of requested deleted accounts exceed maximum page size.
-   * **NOTE: This property will not be serialized. It can only be populated by the server.**
-   */
-  readonly nextLink?: string;
-}
-
-/**
- * @interface
  * The response from the List Usages operation.
  * @extends Array<Usage>
  */
 export interface UsageListResult extends Array<Usage> {
-}
-
-/**
- * @interface
- * List of blob inventory policies returned.
- * @extends Array<BlobInventoryPolicy>
- */
-export interface ListBlobInventoryPolicy extends Array<BlobInventoryPolicy> {
 }
 
 /**
@@ -3388,14 +3090,6 @@ export type RoutingChoice = 'MicrosoftRouting' | 'InternetRouting';
 export type MinimumTlsVersion = 'TLS1_0' | 'TLS1_1' | 'TLS1_2';
 
 /**
- * Defines values for ExtendedLocationTypes.
- * Possible values include: 'EdgeZone'
- * @readonly
- * @enum {string}
- */
-export type ExtendedLocationTypes = 'EdgeZone';
-
-/**
  * Defines values for GeoReplicationStatus.
  * Possible values include: 'Live', 'Bootstrap', 'Unavailable'
  * @readonly
@@ -3517,14 +3211,6 @@ export type EncryptionScopeSource = 'Microsoft.Storage' | 'Microsoft.KeyVault';
 export type EncryptionScopeState = 'Enabled' | 'Disabled';
 
 /**
- * Defines values for CreatedByType.
- * Possible values include: 'User', 'Application', 'ManagedIdentity', 'Key'
- * @readonly
- * @enum {string}
- */
-export type CreatedByType = 'User' | 'Application' | 'ManagedIdentity' | 'Key';
-
-/**
  * Defines values for PublicAccess.
  * Possible values include: 'Container', 'Blob', 'None'
  * @readonly
@@ -3571,14 +3257,6 @@ export type ImmutabilityPolicyState = 'Locked' | 'Unlocked';
  * @enum {string}
  */
 export type ImmutabilityPolicyUpdateType = 'put' | 'lock' | 'extend';
-
-/**
- * Defines values for Name.
- * Possible values include: 'AccessTimeTracking'
- * @readonly
- * @enum {string}
- */
-export type Name = 'AccessTimeTracking';
 
 /**
  * Defines values for EnabledProtocols.
@@ -3630,19 +3308,11 @@ export type ListContainersInclude = 'deleted';
 
 /**
  * Defines values for ListSharesExpand.
- * Possible values include: 'deleted', 'snapshots'
+ * Possible values include: 'deleted'
  * @readonly
  * @enum {string}
  */
-export type ListSharesExpand = 'deleted' | 'snapshots';
-
-/**
- * Defines values for PutSharesExpand.
- * Possible values include: 'snapshots'
- * @readonly
- * @enum {string}
- */
-export type PutSharesExpand = 'snapshots';
+export type ListSharesExpand = 'deleted';
 
 /**
  * Defines values for GetShareExpand.
@@ -3981,86 +3651,6 @@ export type StorageAccountsListNextResponse = StorageAccountListResult & {
 };
 
 /**
- * Contains response data for the listByResourceGroupNext operation.
- */
-export type StorageAccountsListByResourceGroupNextResponse = StorageAccountListResult & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: StorageAccountListResult;
-    };
-};
-
-/**
- * Contains response data for the list operation.
- */
-export type DeletedAccountsListResponse = DeletedAccountListResult & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: DeletedAccountListResult;
-    };
-};
-
-/**
- * Contains response data for the get operation.
- */
-export type DeletedAccountsGetResponse = DeletedAccount & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: DeletedAccount;
-    };
-};
-
-/**
- * Contains response data for the listNext operation.
- */
-export type DeletedAccountsListNextResponse = DeletedAccountListResult & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: DeletedAccountListResult;
-    };
-};
-
-/**
  * Contains response data for the listByLocation operation.
  */
 export type UsagesListByLocationResponse = UsageListResult & {
@@ -4117,66 +3707,6 @@ export type ManagementPoliciesCreateOrUpdateResponse = ManagementPolicy & {
        * The response body as parsed JSON or XML
        */
       parsedBody: ManagementPolicy;
-    };
-};
-
-/**
- * Contains response data for the get operation.
- */
-export type BlobInventoryPoliciesGetResponse = BlobInventoryPolicy & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: BlobInventoryPolicy;
-    };
-};
-
-/**
- * Contains response data for the createOrUpdate operation.
- */
-export type BlobInventoryPoliciesCreateOrUpdateResponse = BlobInventoryPolicy & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: BlobInventoryPolicy;
-    };
-};
-
-/**
- * Contains response data for the list operation.
- */
-export type BlobInventoryPoliciesListResponse = ListBlobInventoryPolicy & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ListBlobInventoryPolicy;
     };
 };
 
