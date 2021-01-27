@@ -312,6 +312,10 @@ export interface Role {
    */
   targetInstanceCount?: number;
   /**
+   * The name of the virtual machine group.
+   */
+  vMGroupName?: string;
+  /**
    * The autoscale configurations.
    */
   autoscaleConfiguration?: Autoscale;
@@ -335,6 +339,10 @@ export interface Role {
    * The list of script actions on the role.
    */
   scriptActions?: ScriptAction[];
+  /**
+   * Indicates whether encrypt the data disks.
+   */
+  encryptDataDisks?: boolean;
 }
 
 /**
@@ -380,6 +388,14 @@ export interface StorageAccount {
    * for Azure Data Lake Storage Gen 2.
    */
   msiResourceId?: string;
+  /**
+   * The shared access signature key.
+   */
+  saskey?: string;
+  /**
+   * The file share name.
+   */
+  fileshare?: string;
 }
 
 /**
@@ -390,6 +406,20 @@ export interface StorageProfile {
    * The list of storage accounts in the cluster.
    */
   storageaccounts?: StorageAccount[];
+}
+
+/**
+ * The configuration that services will be excluded when creating cluster.
+ */
+export interface ExcludedServicesConfig {
+  /**
+   * The config id of excluded services.
+   */
+  excludedServicesConfigId?: string;
+  /**
+   * The list of excluded services.
+   */
+  excludedServicesList?: string;
 }
 
 /**
@@ -536,6 +566,10 @@ export interface ClusterIdentityUserAssignedIdentitiesValue {
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
    */
   readonly clientId?: string;
+  /**
+   * The tenant id of user assigned identity.
+   */
+  tenantId?: string;
 }
 
 /**
@@ -644,6 +678,10 @@ export interface ConnectivityEndpoint {
    * The port to connect to.
    */
   port?: number;
+  /**
+   * The private ip address of the endpoint.
+   */
+  privateIPAddress?: string;
 }
 
 /**
@@ -654,6 +692,10 @@ export interface ClusterGetProperties {
    * The version of the cluster.
    */
   clusterVersion?: string;
+  /**
+   * The hdp version of the cluster.
+   */
+  clusterHdpVersion?: string;
   /**
    * The type of operating system. Possible values include: 'Windows', 'Linux'
    */
@@ -716,9 +758,17 @@ export interface ClusterGetProperties {
    */
   encryptionInTransitProperties?: EncryptionInTransitProperties;
   /**
+   * The storage profile.
+   */
+  storageProfile?: StorageProfile;
+  /**
    * The minimal supported tls version.
    */
   minSupportedTlsVersion?: string;
+  /**
+   * The excluded services config.
+   */
+  excludedServicesConfig?: ExcludedServicesConfig;
   /**
    * The network properties.
    */
@@ -982,7 +1032,7 @@ export interface GatewaySettings {
 /**
  * The azure async operation response.
  */
-export interface OperationResource {
+export interface AsyncOperationResult {
   /**
    * The async operation state. Possible values include: 'InProgress', 'Succeeded', 'Failed'
    */
@@ -1035,6 +1085,10 @@ export interface ApplicationGetHttpsEndpoint {
    */
   publicPort?: number;
   /**
+   * The private ip address of the endpoint.
+   */
+  privateIPAddress?: string;
+  /**
    * The subdomain suffix of the application.
    */
   subDomainSuffix?: string;
@@ -1060,6 +1114,10 @@ export interface ApplicationGetEndpoint {
    * The public port to connect to.
    */
   publicPort?: number;
+  /**
+   * The private ip address of the endpoint.
+   */
+  privateIPAddress?: string;
 }
 
 /**
@@ -1149,7 +1207,7 @@ export interface VersionSpec {
   /**
    * Whether or not the version is the default version.
    */
-  isDefault?: string;
+  isDefault?: boolean;
   /**
    * The component version property.
    */
@@ -1267,11 +1325,11 @@ export interface CapabilitiesResult {
   /**
    * The virtual machine sizes.
    */
-  vmSizes?: { [propertyName: string]: VmSizesCapability };
+  vmsizes?: { [propertyName: string]: VmSizesCapability };
   /**
    * The virtual machine size compatibility filters.
    */
-  vmSizeFilters?: VmSizeCompatibilityFilter[];
+  vmsizeFilters?: VmSizeCompatibilityFilter[];
   /**
    * The capability features.
    */
@@ -1338,7 +1396,7 @@ export interface UsagesListResult {
 export interface VmSizeCompatibilityFilterV2 {
   /**
    * The filtering mode. Effectively this can enabling or disabling the VM sizes in a particular
-   * set. Possible values include: 'Exclude', 'Include'
+   * set. Possible values include: 'Exclude', 'Include', 'Recommend', 'Default'
    */
   filterMode?: FilterMode;
   /**
@@ -1365,6 +1423,52 @@ export interface VmSizeCompatibilityFilterV2 {
    * The list of virtual machine sizes to include or exclude.
    */
   vmSizes?: string[];
+}
+
+/**
+ * The vm size property
+ */
+export interface VmSizeProperty {
+  /**
+   * The vm size name.
+   */
+  name?: string;
+  /**
+   * The number of cores that the vm size has.
+   */
+  cores?: number;
+  /**
+   * The data disk storage tier of the vm size.
+   */
+  dataDiskStorageTier?: string;
+  /**
+   * The label of the vm size.
+   */
+  label?: string;
+  /**
+   * The max data disk count of the vm size.
+   */
+  maxDataDiskCount?: number;
+  /**
+   * The memory whose unit is MB of the vm size.
+   */
+  memoryInMb?: number;
+  /**
+   * This indicates this vm size is supported by virtual machines or not
+   */
+  supportedByVirtualMachines?: boolean;
+  /**
+   * The indicates this vm size is supported by web worker roles or not
+   */
+  supportedByWebWorkerRoles?: boolean;
+  /**
+   * The virtual machine resource disk size whose unit is MB of the vm size.
+   */
+  virtualMachineResourceDiskSizeInMb?: number;
+  /**
+   * The web worker resource disk size whose unit is MB of the vm size.
+   */
+  webWorkerResourceDiskSizeInMb?: number;
 }
 
 /**
@@ -1431,10 +1535,19 @@ export interface BillingResponseListResult {
    */
   vmSizes?: string[];
   /**
+   * The vm sizes which enable encryption at host.
+   */
+  vmSizesWithEncryptionAtHost?: string[];
+  /**
    * The virtual machine filtering mode. Effectively this can enabling or disabling the virtual
    * machine sizes in a particular set.
    */
   vmSizeFilters?: VmSizeCompatibilityFilterV2[];
+  /**
+   * The vm size properties.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly vmSizeProperties?: VmSizeProperty[];
   /**
    * The billing and managed disk billing resources for a region.
    */
@@ -1452,7 +1565,7 @@ export interface ClusterConfigurations {
 }
 
 /**
- * Cluster monitoring extensions
+ * Cluster monitoring extensions.
  */
 export interface Extension {
   /**
@@ -1466,29 +1579,29 @@ export interface Extension {
 }
 
 /**
- * The Operations Management Suite (OMS) status response
+ * The cluster monitoring status response.
  */
 export interface ClusterMonitoringResponse {
   /**
-   * The status of the Operations Management Suite (OMS) on the HDInsight cluster.
+   * The status of the monitor on the HDInsight cluster.
    */
   clusterMonitoringEnabled?: boolean;
   /**
-   * The workspace ID of the Operations Management Suite (OMS) on the HDInsight cluster.
+   * The workspace ID of the monitor on the HDInsight cluster.
    */
   workspaceId?: string;
 }
 
 /**
- * The Operations Management Suite (OMS) parameters.
+ * The cluster monitor parameters.
  */
 export interface ClusterMonitoringRequest {
   /**
-   * The Operations Management Suite (OMS) workspace ID.
+   * The cluster monitor workspace ID.
    */
   workspaceId?: string;
   /**
-   * The Operations Management Suite (OMS) workspace key.
+   * The cluster monitor workspace key.
    */
   primaryKey?: string;
 }
@@ -1535,6 +1648,126 @@ export interface OperationDisplay {
    * The operation type: read, write, delete, etc.
    */
   operation?: string;
+  /**
+   * Localized friendly description for the operation
+   */
+  description?: string;
+}
+
+/**
+ * The definition of Dimension.
+ */
+export interface Dimension {
+  /**
+   * The name of the dimension.
+   */
+  name?: string;
+  /**
+   * The display name of the dimension.
+   */
+  displayName?: string;
+  /**
+   * The display name of the dimension.
+   */
+  internalName?: string;
+  /**
+   * The flag indicates whether the metric will be exported for shoebox or not.
+   */
+  toBeExportedForShoebox?: boolean;
+}
+
+/**
+ * The details of metric specifications.
+ */
+export interface MetricSpecifications {
+  /**
+   * The name of the metric specification.
+   */
+  name?: string;
+  /**
+   * The display name of the metric specification.
+   */
+  displayName?: string;
+  /**
+   * The display description of the metric specification.
+   */
+  displayDescription?: string;
+  /**
+   * The unit of the metric specification.
+   */
+  unit?: string;
+  /**
+   * The aggregation type of the metric specification.
+   */
+  aggregationType?: string;
+  /**
+   * The supported aggregation types of the metric specification.
+   */
+  supportedAggregationTypes?: string[];
+  /**
+   * The supported time grain types of the metric specification.
+   */
+  supportedTimeGrainTypes?: string[];
+  /**
+   * The flag indicates whether enable regional mdm account or not.
+   */
+  enableRegionalMdmAccount?: boolean;
+  /**
+   * The source mdm account.
+   */
+  sourceMdmAccount?: string;
+  /**
+   * The source mdm namespace.
+   */
+  sourceMdmNamespace?: string;
+  /**
+   * The metric filter pattern.
+   */
+  metricFilterPattern?: string;
+  /**
+   * The flag indicates whether filling gap with zero.
+   */
+  fillGapWithZero?: boolean;
+  /**
+   * The category of the metric.
+   */
+  category?: string;
+  /**
+   * The override name of resource id dimension name.
+   */
+  resourceIdDimensionNameOverride?: string;
+  /**
+   * The flag indicates whether the metric is internal or not.
+   */
+  isInternal?: boolean;
+  /**
+   * The override name of delegate metric.
+   */
+  delegateMetricNameOverride?: string;
+  /**
+   * The dimensions of the metric specification.
+   */
+  dimensions?: Dimension[];
+}
+
+/**
+ * The specification of the service.
+ */
+export interface ServiceSpecification {
+  /**
+   * The metric specifications.
+   */
+  metricSpecifications?: MetricSpecifications[];
+}
+
+/**
+ * The details of operation.
+ */
+export interface OperationProperties {
+  /**
+   * The specification of the service.
+   */
+  serviceSpecification?: ServiceSpecification;
 }
 
 /**
@@ -1549,6 +1782,10 @@ export interface Operation {
    * The object that represents the operation.
    */
   display?: OperationDisplay;
+  /**
+   * The operation properties.
+   */
+  properties?: OperationProperties;
 }
 
 /**
@@ -1726,11 +1963,11 @@ export type AsyncOperationState = 'InProgress' | 'Succeeded' | 'Failed';
 
 /**
  * Defines values for FilterMode.
- * Possible values include: 'Exclude', 'Include'
+ * Possible values include: 'Exclude', 'Include', 'Recommend', 'Default'
  * @readonly
  * @enum {string}
  */
-export type FilterMode = 'Exclude' | 'Include';
+export type FilterMode = 'Exclude' | 'Include' | 'Recommend' | 'Default';
 
 /**
  * Contains response data for the create operation.
@@ -1849,6 +2086,26 @@ export type ClustersGetGatewaySettingsResponse = GatewaySettings & {
        * The response body as parsed JSON or XML
        */
       parsedBody: GatewaySettings;
+    };
+};
+
+/**
+ * Contains response data for the getAzureAsyncOperationStatus operation.
+ */
+export type ClustersGetAzureAsyncOperationStatusResponse = AsyncOperationResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: AsyncOperationResult;
     };
 };
 
@@ -2073,6 +2330,26 @@ export type LocationsListBillingSpecsResponse = BillingResponseListResult & {
 };
 
 /**
+ * Contains response data for the getAzureAsyncOperationStatus operation.
+ */
+export type LocationsGetAzureAsyncOperationStatusResponse = AsyncOperationResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: AsyncOperationResult;
+    };
+};
+
+/**
  * Contains response data for the list operation.
  */
 export type ConfigurationsListResponse = ClusterConfigurations & {
@@ -2140,7 +2417,7 @@ export type ExtensionsGetMonitoringStatusResponse = ClusterMonitoringResponse & 
 /**
  * Contains response data for the get operation.
  */
-export type ExtensionsGetResponse = Extension & {
+export type ExtensionsGetResponse = ClusterMonitoringResponse & {
   /**
    * The underlying HTTP response.
    */
@@ -2153,7 +2430,7 @@ export type ExtensionsGetResponse = Extension & {
       /**
        * The response body as parsed JSON or XML
        */
-      parsedBody: Extension;
+      parsedBody: ClusterMonitoringResponse;
     };
 };
 
