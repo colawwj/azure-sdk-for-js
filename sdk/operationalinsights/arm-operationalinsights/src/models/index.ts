@@ -22,7 +22,7 @@ export interface DataExport extends BaseResource {
   /**
    * An array of tables to export, for example: [“Heartbeat, SecurityEvent”].
    */
-  tableNames?: string[];
+  tableNames: string[];
   /**
    * The destination resource ID. This can be copied from the Properties entry of the destination
    * resource in Azure.
@@ -179,7 +179,7 @@ export interface DataSource extends ProxyResource {
   /**
    * The data source properties in raw json format, each kind of data source have it's own schema.
    */
-  properties: any;
+  properties: { [propertyName: string]: any };
   /**
    * The ETag of the data source.
    */

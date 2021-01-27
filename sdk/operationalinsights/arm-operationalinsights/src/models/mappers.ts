@@ -25,6 +25,7 @@ export const DataExport: msRest.CompositeMapper = {
         }
       },
       tableNames: {
+        required: true,
         serializedName: "properties.tableNames",
         type: {
           name: "Sequence",
@@ -275,7 +276,12 @@ export const DataSource: msRest.CompositeMapper = {
         required: true,
         serializedName: "properties",
         type: {
-          name: "Object"
+          name: "Dictionary",
+          value: {
+            type: {
+              name: "Object"
+            }
+          }
         }
       },
       etag: {
@@ -1307,6 +1313,7 @@ export const SavedSearch: msRest.CompositeMapper = {
         }
       },
       version: {
+        nullable: true,
         serializedName: "properties.version",
         type: {
           name: "Number"
