@@ -6593,6 +6593,13 @@ export const BastionHost: msRest.CompositeMapper = {
           name: "String"
         }
       },
+      sku: {
+        serializedName: "properties.sku",
+        defaultValue: 'Standard',
+        type: {
+          name: "String"
+        }
+      },
       provisioningState: {
         readOnly: true,
         serializedName: "properties.provisioningState",

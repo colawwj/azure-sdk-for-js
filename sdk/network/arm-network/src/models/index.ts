@@ -3863,6 +3863,11 @@ export interface BastionHost extends Resource {
    */
   dnsName?: string;
   /**
+   * The sku of this Bastion Host. Possible values include: 'Basic', 'Standard'. Default value:
+   * 'Standard'.
+   */
+  sku?: BastionHostSkuName;
+  /**
    * The provisioning state of the bastion host resource. Possible values include: 'Succeeded',
    * 'Updating', 'Deleting', 'Failed'
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -14906,6 +14911,14 @@ export type AzureFirewallSkuName = 'AZFW_VNet' | 'AZFW_Hub';
  * @enum {string}
  */
 export type AzureFirewallSkuTier = 'Standard' | 'Premium';
+
+/**
+ * Defines values for BastionHostSkuName.
+ * Possible values include: 'Basic', 'Standard'
+ * @readonly
+ * @enum {string}
+ */
+export type BastionHostSkuName = 'Basic' | 'Standard';
 
 /**
  * Defines values for BastionConnectProtocol.
