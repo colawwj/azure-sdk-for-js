@@ -1753,6 +1753,12 @@ export const ManagedClusterPodIdentityProfile: msRest.CompositeMapper = {
           name: "Boolean"
         }
       },
+      allowNetworkPluginKubenet: {
+        serializedName: "allowNetworkPluginKubenet",
+        type: {
+          name: "Boolean"
+        }
+      },
       userAssignedIdentities: {
         serializedName: "userAssignedIdentities",
         type: {
@@ -2140,6 +2146,12 @@ export const ManagedCluster: msRest.CompositeMapper = {
       },
       dnsPrefix: {
         serializedName: "properties.dnsPrefix",
+        type: {
+          name: "String"
+        }
+      },
+      fqdnSubdomain: {
+        serializedName: "properties.fqdnSubdomain",
         type: {
           name: "String"
         }

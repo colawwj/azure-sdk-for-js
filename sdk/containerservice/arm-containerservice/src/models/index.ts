@@ -482,7 +482,7 @@ export interface ManagedClusterAgentPoolProfileProperties {
   /**
    * KubeletDiskType determines the placement of emptyDir volumes, container runtime data root, and
    * Kubelet ephemeral storage. Currently allows one value, OS, resulting in Kubelet using the OS
-   * disk for data. Possible values include: 'OS'
+   * disk for data. Possible values include: 'OS', 'Temporary'
    */
   kubeletDiskType?: KubeletDiskType;
   /**
@@ -678,7 +678,7 @@ export interface AgentPool extends SubResource {
   /**
    * KubeletDiskType determines the placement of emptyDir volumes, container runtime data root, and
    * Kubelet ephemeral storage. Currently allows one value, OS, resulting in Kubelet using the OS
-   * disk for data. Possible values include: 'OS'
+   * disk for data. Possible values include: 'OS', 'Temporary'
    */
   kubeletDiskType?: KubeletDiskType;
   /**
@@ -1204,6 +1204,10 @@ export interface ManagedClusterPodIdentityProfile {
    */
   enabled?: boolean;
   /**
+   * Customer consent for enabling AAD pod identity addon in cluster using Kubenet network plugin.
+   */
+  allowNetworkPluginKubenet?: boolean;
+  /**
    * User assigned pod identity settings.
    */
   userAssignedIdentities?: ManagedClusterPodIdentity[];
@@ -1396,6 +1400,10 @@ export interface ManagedCluster extends Resource {
    * DNS prefix specified when creating the managed cluster.
    */
   dnsPrefix?: string;
+  /**
+   * FQDN subdomain specified when creating private cluster with custom private dns zone.
+   */
+  fqdnSubdomain?: string;
   /**
    * FQDN for the master pool.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
@@ -1909,11 +1917,11 @@ export type OSDiskType = 'Managed' | 'Ephemeral';
 
 /**
  * Defines values for KubeletDiskType.
- * Possible values include: 'OS'
+ * Possible values include: 'OS', 'Temporary'
  * @readonly
  * @enum {string}
  */
-export type KubeletDiskType = 'OS';
+export type KubeletDiskType = 'OS' | 'Temporary';
 
 /**
  * Defines values for OSType.
