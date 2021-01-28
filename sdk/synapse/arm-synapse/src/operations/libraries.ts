@@ -9,16 +9,16 @@
 
 import * as msRest from "@azure/ms-rest-js";
 import * as Models from "../models";
-import * as Mappers from "../models/sqlPoolUsagesMappers";
+import * as Mappers from "../models/librariesMappers";
 import * as Parameters from "../models/parameters";
 import { SynapseManagementClientContext } from "../synapseManagementClientContext";
 
-/** Class representing a SqlPoolUsages. */
-export class SqlPoolUsages {
+/** Class representing a Libraries. */
+export class Libraries {
   private readonly client: SynapseManagementClientContext;
 
   /**
-   * Create a SqlPoolUsages.
+   * Create a Libraries.
    * @param {SynapseManagementClientContext} client Reference to the service client.
    */
   constructor(client: SynapseManagementClientContext) {
@@ -26,82 +26,77 @@ export class SqlPoolUsages {
   }
 
   /**
-   * Gets SQL pool usages.
-   * @summary Gets SQL pool usages
+   * List libraries in a workspace.
+   * @summary List the libraries in a workspace.
    * @param resourceGroupName The name of the resource group. The name is case insensitive.
    * @param workspaceName The name of the workspace
-   * @param sqlPoolName SQL pool name
    * @param [options] The optional parameters
-   * @returns Promise<Models.SqlPoolUsagesListResponse>
+   * @returns Promise<Models.LibrariesListByWorkspaceResponse>
    */
-  list(resourceGroupName: string, workspaceName: string, sqlPoolName: string, options?: msRest.RequestOptionsBase): Promise<Models.SqlPoolUsagesListResponse>;
+  listByWorkspace(resourceGroupName: string, workspaceName: string, options?: msRest.RequestOptionsBase): Promise<Models.LibrariesListByWorkspaceResponse>;
   /**
    * @param resourceGroupName The name of the resource group. The name is case insensitive.
    * @param workspaceName The name of the workspace
-   * @param sqlPoolName SQL pool name
    * @param callback The callback
    */
-  list(resourceGroupName: string, workspaceName: string, sqlPoolName: string, callback: msRest.ServiceCallback<Models.SqlPoolUsageListResult>): void;
+  listByWorkspace(resourceGroupName: string, workspaceName: string, callback: msRest.ServiceCallback<Models.LibraryListResponse>): void;
   /**
    * @param resourceGroupName The name of the resource group. The name is case insensitive.
    * @param workspaceName The name of the workspace
-   * @param sqlPoolName SQL pool name
    * @param options The optional parameters
    * @param callback The callback
    */
-  list(resourceGroupName: string, workspaceName: string, sqlPoolName: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.SqlPoolUsageListResult>): void;
-  list(resourceGroupName: string, workspaceName: string, sqlPoolName: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.SqlPoolUsageListResult>, callback?: msRest.ServiceCallback<Models.SqlPoolUsageListResult>): Promise<Models.SqlPoolUsagesListResponse> {
+  listByWorkspace(resourceGroupName: string, workspaceName: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.LibraryListResponse>): void;
+  listByWorkspace(resourceGroupName: string, workspaceName: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.LibraryListResponse>, callback?: msRest.ServiceCallback<Models.LibraryListResponse>): Promise<Models.LibrariesListByWorkspaceResponse> {
     return this.client.sendOperationRequest(
       {
         resourceGroupName,
         workspaceName,
-        sqlPoolName,
         options
       },
-      listOperationSpec,
-      callback) as Promise<Models.SqlPoolUsagesListResponse>;
+      listByWorkspaceOperationSpec,
+      callback) as Promise<Models.LibrariesListByWorkspaceResponse>;
   }
 
   /**
-   * Gets SQL pool usages.
-   * @summary Gets SQL pool usages
+   * List libraries in a workspace.
+   * @summary List the libraries in a workspace.
    * @param nextPageLink The NextLink from the previous successful call to List operation.
    * @param [options] The optional parameters
-   * @returns Promise<Models.SqlPoolUsagesListNextResponse>
+   * @returns Promise<Models.LibrariesListByWorkspaceNextResponse>
    */
-  listNext(nextPageLink: string, options?: msRest.RequestOptionsBase): Promise<Models.SqlPoolUsagesListNextResponse>;
+  listByWorkspaceNext(nextPageLink: string, options?: msRest.RequestOptionsBase): Promise<Models.LibrariesListByWorkspaceNextResponse>;
   /**
    * @param nextPageLink The NextLink from the previous successful call to List operation.
    * @param callback The callback
    */
-  listNext(nextPageLink: string, callback: msRest.ServiceCallback<Models.SqlPoolUsageListResult>): void;
+  listByWorkspaceNext(nextPageLink: string, callback: msRest.ServiceCallback<Models.LibraryListResponse>): void;
   /**
    * @param nextPageLink The NextLink from the previous successful call to List operation.
    * @param options The optional parameters
    * @param callback The callback
    */
-  listNext(nextPageLink: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.SqlPoolUsageListResult>): void;
-  listNext(nextPageLink: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.SqlPoolUsageListResult>, callback?: msRest.ServiceCallback<Models.SqlPoolUsageListResult>): Promise<Models.SqlPoolUsagesListNextResponse> {
+  listByWorkspaceNext(nextPageLink: string, options: msRest.RequestOptionsBase, callback: msRest.ServiceCallback<Models.LibraryListResponse>): void;
+  listByWorkspaceNext(nextPageLink: string, options?: msRest.RequestOptionsBase | msRest.ServiceCallback<Models.LibraryListResponse>, callback?: msRest.ServiceCallback<Models.LibraryListResponse>): Promise<Models.LibrariesListByWorkspaceNextResponse> {
     return this.client.sendOperationRequest(
       {
         nextPageLink,
         options
       },
-      listNextOperationSpec,
-      callback) as Promise<Models.SqlPoolUsagesListNextResponse>;
+      listByWorkspaceNextOperationSpec,
+      callback) as Promise<Models.LibrariesListByWorkspaceNextResponse>;
   }
 }
 
 // Operation Specifications
 const serializer = new msRest.Serializer(Mappers);
-const listOperationSpec: msRest.OperationSpec = {
+const listByWorkspaceOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
-  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/usages",
+  path: "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/libraries",
   urlParameters: [
     Parameters.subscriptionId,
     Parameters.resourceGroupName,
-    Parameters.workspaceName,
-    Parameters.sqlPoolName
+    Parameters.workspaceName
   ],
   queryParameters: [
     Parameters.apiVersion
@@ -111,7 +106,7 @@ const listOperationSpec: msRest.OperationSpec = {
   ],
   responses: {
     200: {
-      bodyMapper: Mappers.SqlPoolUsageListResult
+      bodyMapper: Mappers.LibraryListResponse
     },
     default: {
       bodyMapper: Mappers.ErrorResponse
@@ -120,7 +115,7 @@ const listOperationSpec: msRest.OperationSpec = {
   serializer
 };
 
-const listNextOperationSpec: msRest.OperationSpec = {
+const listByWorkspaceNextOperationSpec: msRest.OperationSpec = {
   httpMethod: "GET",
   baseUrl: "https://management.azure.com",
   path: "{nextLink}",
@@ -135,7 +130,7 @@ const listNextOperationSpec: msRest.OperationSpec = {
   ],
   responses: {
     200: {
-      bodyMapper: Mappers.SqlPoolUsageListResult
+      bodyMapper: Mappers.LibraryListResponse
     },
     default: {
       bodyMapper: Mappers.ErrorResponse
