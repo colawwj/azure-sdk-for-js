@@ -24452,34 +24452,6 @@ export const ListVpnGatewaysResult: msRest.CompositeMapper = {
   }
 };
 
-export const ListVpnConnectionsResult: msRest.CompositeMapper = {
-  serializedName: "ListVpnConnectionsResult",
-  type: {
-    name: "Composite",
-    className: "ListVpnConnectionsResult",
-    modelProperties: {
-      value: {
-        serializedName: "",
-        type: {
-          name: "Sequence",
-          element: {
-            type: {
-              name: "Composite",
-              className: "VpnConnection"
-            }
-          }
-        }
-      },
-      nextLink: {
-        serializedName: "nextLink",
-        type: {
-          name: "String"
-        }
-      }
-    }
-  }
-};
-
 export const ListVpnSiteLinkConnectionsResult: msRest.CompositeMapper = {
   serializedName: "ListVpnSiteLinkConnectionsResult",
   type: {
@@ -24494,6 +24466,34 @@ export const ListVpnSiteLinkConnectionsResult: msRest.CompositeMapper = {
             type: {
               name: "Composite",
               className: "VpnSiteLinkConnection"
+            }
+          }
+        }
+      },
+      nextLink: {
+        serializedName: "nextLink",
+        type: {
+          name: "String"
+        }
+      }
+    }
+  }
+};
+
+export const ListVpnConnectionsResult: msRest.CompositeMapper = {
+  serializedName: "ListVpnConnectionsResult",
+  type: {
+    name: "Composite",
+    className: "ListVpnConnectionsResult",
+    modelProperties: {
+      value: {
+        serializedName: "",
+        type: {
+          name: "Sequence",
+          element: {
+            type: {
+              name: "Composite",
+              className: "VpnConnection"
             }
           }
         }

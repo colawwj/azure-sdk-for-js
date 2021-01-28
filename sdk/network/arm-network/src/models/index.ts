@@ -14499,9 +14499,9 @@ export interface ListVpnGatewaysResult extends Array<VpnGateway> {
  * @interface
  * Result of the request to list all vpn connections to a virtual wan vpn gateway. It contains a
  * list of Vpn Connections and a URL nextLink to get the next set of results.
- * @extends Array<VpnConnection>
+ * @extends Array<VpnSiteLinkConnection>
  */
-export interface ListVpnConnectionsResult extends Array<VpnConnection> {
+export interface ListVpnSiteLinkConnectionsResult extends Array<VpnSiteLinkConnection> {
   /**
    * URL to get the next set of operation list results if there are any.
    */
@@ -14512,9 +14512,9 @@ export interface ListVpnConnectionsResult extends Array<VpnConnection> {
  * @interface
  * Result of the request to list all vpn connections to a virtual wan vpn gateway. It contains a
  * list of Vpn Connections and a URL nextLink to get the next set of results.
- * @extends Array<VpnSiteLinkConnection>
+ * @extends Array<VpnConnection>
  */
-export interface ListVpnSiteLinkConnectionsResult extends Array<VpnSiteLinkConnection> {
+export interface ListVpnConnectionsResult extends Array<VpnConnection> {
   /**
    * URL to get the next set of operation list results if there are any.
    */
@@ -28778,6 +28778,46 @@ export type VpnGatewaysListNextResponse = ListVpnGatewaysResult & {
 };
 
 /**
+ * Contains response data for the listByVpnConnection operation.
+ */
+export type VpnLinkConnectionsListByVpnConnectionResponse = ListVpnSiteLinkConnectionsResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ListVpnSiteLinkConnectionsResult;
+    };
+};
+
+/**
+ * Contains response data for the listByVpnConnectionNext operation.
+ */
+export type VpnLinkConnectionsListByVpnConnectionNextResponse = ListVpnSiteLinkConnectionsResult & {
+  /**
+   * The underlying HTTP response.
+   */
+  _response: msRest.HttpResponse & {
+      /**
+       * The response body as text (string format)
+       */
+      bodyAsText: string;
+
+      /**
+       * The response body as parsed JSON or XML
+       */
+      parsedBody: ListVpnSiteLinkConnectionsResult;
+    };
+};
+
+/**
  * Contains response data for the get operation.
  */
 export type VpnConnectionsGetResponse = VpnConnection & {
@@ -28994,46 +29034,6 @@ export type VpnSiteLinkConnectionsGetResponse = VpnSiteLinkConnection & {
        * The response body as parsed JSON or XML
        */
       parsedBody: VpnSiteLinkConnection;
-    };
-};
-
-/**
- * Contains response data for the listByVpnConnection operation.
- */
-export type VpnLinkConnectionsListByVpnConnectionResponse = ListVpnSiteLinkConnectionsResult & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ListVpnSiteLinkConnectionsResult;
-    };
-};
-
-/**
- * Contains response data for the listByVpnConnectionNext operation.
- */
-export type VpnLinkConnectionsListByVpnConnectionNextResponse = ListVpnSiteLinkConnectionsResult & {
-  /**
-   * The underlying HTTP response.
-   */
-  _response: msRest.HttpResponse & {
-      /**
-       * The response body as text (string format)
-       */
-      bodyAsText: string;
-
-      /**
-       * The response body as parsed JSON or XML
-       */
-      parsedBody: ListVpnSiteLinkConnectionsResult;
     };
 };
 

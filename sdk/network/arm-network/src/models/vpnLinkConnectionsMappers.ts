@@ -112,6 +112,8 @@ export {
   DnsSettings,
   DscpConfiguration,
   EndpointServiceResult,
+  ErrorDetails,
+  ErrorResponse,
   ExpressRouteCircuit,
   ExpressRouteCircuitAuthorization,
   ExpressRouteCircuitConnection,

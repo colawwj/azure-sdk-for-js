@@ -110,9 +110,9 @@ class NetworkManagementClient extends NetworkManagementClientContext {
   virtualHubs: operations.VirtualHubs;
   hubVirtualNetworkConnections: operations.HubVirtualNetworkConnections;
   vpnGateways: operations.VpnGateways;
+  vpnLinkConnections: operations.VpnLinkConnections;
   vpnConnections: operations.VpnConnections;
   vpnSiteLinkConnections: operations.VpnSiteLinkConnections;
-  vpnLinkConnections: operations.VpnLinkConnections;
   natRules: operations.NatRules;
   p2sVpnGateways: operations.P2sVpnGateways;
   vpnServerConfigurationsAssociatedWithVirtualWan: operations.VpnServerConfigurationsAssociatedWithVirtualWan;
@@ -226,9 +226,9 @@ class NetworkManagementClient extends NetworkManagementClientContext {
     this.virtualHubs = new operations.VirtualHubs(this);
     this.hubVirtualNetworkConnections = new operations.HubVirtualNetworkConnections(this);
     this.vpnGateways = new operations.VpnGateways(this);
+    this.vpnLinkConnections = new operations.VpnLinkConnections(this);
     this.vpnConnections = new operations.VpnConnections(this);
     this.vpnSiteLinkConnections = new operations.VpnSiteLinkConnections(this);
-    this.vpnLinkConnections = new operations.VpnLinkConnections(this);
     this.natRules = new operations.NatRules(this);
     this.p2sVpnGateways = new operations.P2sVpnGateways(this);
     this.vpnServerConfigurationsAssociatedWithVirtualWan = new operations.VpnServerConfigurationsAssociatedWithVirtualWan(this);
