@@ -137,8 +137,8 @@ export {
   ModelSparkSection,
   ModelVersion,
   ModelVersionResource,
+  ModelVersionResourceArmPaginatedResult,
   NodeStateCounts,
-  PaginatedWorkspaceConnectionsList,
   ParameterSamplingConfiguration,
   PersonalComputeInstanceSettings,
   PrivateEndpoint,
@@ -176,6 +176,5 @@ export {
   VirtualMachineSshCredentials,
   VnetConfiguration,
   Workspace,
-  WorkspaceConnection,
-  WorkspaceConnectionDto
+  WorkspaceConnection
 } from "../models/mappers";

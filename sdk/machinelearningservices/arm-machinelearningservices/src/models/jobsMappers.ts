@@ -105,6 +105,7 @@ export {
   JobBase,
   JobBaseInteractionEndpoints,
   JobBaseResource,
+  JobBaseResourceArmPaginatedResult,
   JobOutput,
   KeyVaultProperties,
   LabelCategory,
@@ -138,7 +139,6 @@ export {
   ModelVersion,
   ModelVersionResource,
   NodeStateCounts,
-  PaginatedWorkspaceConnectionsList,
   ParameterSamplingConfiguration,
   PersonalComputeInstanceSettings,
   PrivateEndpoint,
@@ -176,6 +176,5 @@ export {
   VirtualMachineSshCredentials,
   VnetConfiguration,
   Workspace,
-  WorkspaceConnection,
-  WorkspaceConnectionDto
+  WorkspaceConnection
 } from "../models/mappers";

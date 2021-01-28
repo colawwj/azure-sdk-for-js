@@ -123,6 +123,7 @@ export {
   Model,
   ModelContainer,
   ModelContainerResource,
+  ModelContainerResourceArmPaginatedResult,
   ModelDataCollection,
   ModelDockerSectionResponse,
   ModelDockerSectionResponseBaseImageRegistry,
@@ -138,7 +139,6 @@ export {
   ModelVersion,
   ModelVersionResource,
   NodeStateCounts,
-  PaginatedWorkspaceConnectionsList,
   ParameterSamplingConfiguration,
   PersonalComputeInstanceSettings,
   PrivateEndpoint,
@@ -176,6 +176,5 @@ export {
   VirtualMachineSshCredentials,
   VnetConfiguration,
   Workspace,
-  WorkspaceConnection,
-  WorkspaceConnectionDto
+  WorkspaceConnection
 } from "../models/mappers";

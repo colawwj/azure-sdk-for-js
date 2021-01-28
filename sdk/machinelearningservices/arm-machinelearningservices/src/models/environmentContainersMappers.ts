@@ -85,6 +85,7 @@ export {
   EncryptionProperty,
   EnvironmentContainer,
   EnvironmentContainerResource,
+  EnvironmentContainerResourceArmPaginatedResult,
   EnvironmentImageRequestEnvironmentReference,
   EnvironmentImageResponse,
   EnvironmentImageResponseEnvironment,
@@ -138,7 +139,6 @@ export {
   ModelVersion,
   ModelVersionResource,
   NodeStateCounts,
-  PaginatedWorkspaceConnectionsList,
   ParameterSamplingConfiguration,
   PersonalComputeInstanceSettings,
   PrivateEndpoint,
@@ -176,6 +176,5 @@ export {
   VirtualMachineSshCredentials,
   VnetConfiguration,
   Workspace,
-  WorkspaceConnection,
-  WorkspaceConnectionDto
+  WorkspaceConnection
 } from "../models/mappers";

@@ -115,7 +115,9 @@ export {
   LabelingJobMediaProperties,
   LabelingJobResource,
   LinkedInfo,
+  LinkedServiceList,
   LinkedServiceProps,
+  LinkedServiceRequest,
   LinkedServiceResponse,
   LivenessProbeRequirements,
   MachineLearningServiceError,
@@ -138,7 +140,6 @@ export {
   ModelVersion,
   ModelVersionResource,
   NodeStateCounts,
-  PaginatedWorkspaceConnectionsList,
   ParameterSamplingConfiguration,
   PersonalComputeInstanceSettings,
   PrivateEndpoint,
@@ -176,6 +177,5 @@ export {
   VirtualMachineSshCredentials,
   VnetConfiguration,
   Workspace,
-  WorkspaceConnection,
-  WorkspaceConnectionDto
+  WorkspaceConnection
 } from "../models/mappers";
