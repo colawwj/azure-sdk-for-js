@@ -46,18 +46,6 @@ export const apiVersion: msRest.OperationQueryParameter = {
     }
   }
 };
-export const blobInventoryPolicyName: msRest.OperationURLParameter = {
-  parameterPath: "blobInventoryPolicyName",
-  mapper: {
-    required: true,
-    isConstant: true,
-    serializedName: "blobInventoryPolicyName",
-    defaultValue: 'default',
-    type: {
-      name: "String"
-    }
-  }
-};
 export const blobServicesName: msRest.OperationURLParameter = {
   parameterPath: "blobServicesName",
   mapper: {
@@ -77,20 +65,6 @@ export const containerName: msRest.OperationURLParameter = {
     serializedName: "containerName",
     constraints: {
       MaxLength: 63,
-      MinLength: 3
-    },
-    type: {
-      name: "String"
-    }
-  }
-};
-export const deletedAccountName: msRest.OperationURLParameter = {
-  parameterPath: "deletedAccountName",
-  mapper: {
-    required: true,
-    serializedName: "deletedAccountName",
-    constraints: {
-      MaxLength: 24,
       MinLength: 3
     },
     type: {
@@ -153,28 +127,12 @@ export const expand2: msRest.OperationQueryParameter = {
     type: {
       name: "Enum",
       allowedValues: [
-        "deleted",
-        "snapshots"
+        "deleted"
       ]
     }
   }
 };
 export const expand3: msRest.OperationQueryParameter = {
-  parameterPath: [
-    "options",
-    "expand"
-  ],
-  mapper: {
-    serializedName: "$expand",
-    type: {
-      name: "Enum",
-      allowedValues: [
-        "snapshots"
-      ]
-    }
-  }
-};
-export const expand4: msRest.OperationQueryParameter = {
   parameterPath: [
     "options",
     "expand"
@@ -418,18 +376,6 @@ export const tableServiceName: msRest.OperationURLParameter = {
     isConstant: true,
     serializedName: "tableServiceName",
     defaultValue: 'default',
-    type: {
-      name: "String"
-    }
-  }
-};
-export const xMsSnapshot: msRest.OperationParameter = {
-  parameterPath: [
-    "options",
-    "xMsSnapshot"
-  ],
-  mapper: {
-    serializedName: "x-ms-snapshot",
     type: {
       name: "String"
     }
