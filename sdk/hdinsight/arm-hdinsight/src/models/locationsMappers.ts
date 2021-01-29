@@ -7,12 +7,14 @@
  */
 
 export {
+  AsyncOperationResult,
   BillingMeters,
   BillingResources,
   BillingResponseListResult,
   CapabilitiesResult,
   DiskBillingMeters,
   ErrorResponse,
+  Errors,
   LocalizedName,
   QuotaCapability,
   RegionalQuotaCapability,
@@ -23,5 +25,6 @@ export {
   VersionSpec,
   VmSizeCompatibilityFilter,
   VmSizeCompatibilityFilterV2,
+  VmSizeProperty,
   VmSizesCapability
 } from "../models/mappers";
