@@ -20,14 +20,26 @@ class AzureMachineLearningWorkspaces extends AzureMachineLearningWorkspacesConte
   operations: operations.Operations;
   workspaces: operations.Workspaces;
   workspaceFeatures: operations.WorkspaceFeatures;
-  notebooks: operations.Notebooks;
   usages: operations.Usages;
   virtualMachineSizes: operations.VirtualMachineSizes;
   quotas: operations.Quotas;
-  workspaceConnections: operations.WorkspaceConnections;
   machineLearningCompute: operations.MachineLearningCompute;
   privateEndpointConnections: operations.PrivateEndpointConnections;
   privateLinkResources: operations.PrivateLinkResources;
+  machineLearningService: operations.MachineLearningService;
+  notebooks: operations.Notebooks;
+  storageAccount: operations.StorageAccount;
+  workspaceConnections: operations.WorkspaceConnections;
+  codeContainers: operations.CodeContainers;
+  codeVersions: operations.CodeVersions;
+  dataContainers: operations.DataContainers;
+  datastores: operations.Datastores;
+  dataVersions: operations.DataVersions;
+  environmentContainers: operations.EnvironmentContainers;
+  environmentSpecificationVersions: operations.EnvironmentSpecificationVersions;
+  jobs: operations.Jobs;
+  modelContainers: operations.ModelContainers;
+  modelVersions: operations.ModelVersions;
 
   /**
    * Initializes a new instance of the AzureMachineLearningWorkspaces class.
@@ -40,14 +52,26 @@ class AzureMachineLearningWorkspaces extends AzureMachineLearningWorkspacesConte
     this.operations = new operations.Operations(this);
     this.workspaces = new operations.Workspaces(this);
     this.workspaceFeatures = new operations.WorkspaceFeatures(this);
-    this.notebooks = new operations.Notebooks(this);
     this.usages = new operations.Usages(this);
     this.virtualMachineSizes = new operations.VirtualMachineSizes(this);
     this.quotas = new operations.Quotas(this);
-    this.workspaceConnections = new operations.WorkspaceConnections(this);
     this.machineLearningCompute = new operations.MachineLearningCompute(this);
     this.privateEndpointConnections = new operations.PrivateEndpointConnections(this);
     this.privateLinkResources = new operations.PrivateLinkResources(this);
+    this.machineLearningService = new operations.MachineLearningService(this);
+    this.notebooks = new operations.Notebooks(this);
+    this.storageAccount = new operations.StorageAccount(this);
+    this.workspaceConnections = new operations.WorkspaceConnections(this);
+    this.codeContainers = new operations.CodeContainers(this);
+    this.codeVersions = new operations.CodeVersions(this);
+    this.dataContainers = new operations.DataContainers(this);
+    this.datastores = new operations.Datastores(this);
+    this.dataVersions = new operations.DataVersions(this);
+    this.environmentContainers = new operations.EnvironmentContainers(this);
+    this.environmentSpecificationVersions = new operations.EnvironmentSpecificationVersions(this);
+    this.jobs = new operations.Jobs(this);
+    this.modelContainers = new operations.ModelContainers(this);
+    this.modelVersions = new operations.ModelVersions(this);
   }
 
   /**
