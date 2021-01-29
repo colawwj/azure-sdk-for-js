@@ -241,6 +241,7 @@ export {
   Probe,
   PropagatedRouteTable,
   ProtocolCustomSettingsFormat,
+  ProxyResource,
   PublicIPAddress,
   PublicIPAddressDnsSettings,
   PublicIPAddressSku,

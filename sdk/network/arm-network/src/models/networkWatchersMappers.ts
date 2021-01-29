@@ -265,6 +265,7 @@ export {
   PropagatedRouteTable,
   ProtocolConfiguration,
   ProtocolCustomSettingsFormat,
+  ProxyResource,
   PublicIPAddress,
   PublicIPAddressDnsSettings,
   PublicIPAddressSku,

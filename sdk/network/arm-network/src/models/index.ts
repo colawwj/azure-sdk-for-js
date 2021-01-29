@@ -6325,6 +6325,32 @@ export interface AzureAsyncOperationResult {
 }
 
 /**
+ * Proxy resource representation.
+ */
+export interface ProxyResource extends BaseResource {
+  /**
+   * Resource ID.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly id?: string;
+  /**
+   * Resource name.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly name?: string;
+  /**
+   * Resource type.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly type?: string;
+  /**
+   * A unique read-only string that changes whenever the resource is updated.
+   * **NOTE: This property will not be serialized. It can only be populated by the server.**
+   */
+  readonly etag?: string;
+}
+
+/**
  * The effective network security group association.
  */
 export interface EffectiveNetworkSecurityGroupAssociation {
