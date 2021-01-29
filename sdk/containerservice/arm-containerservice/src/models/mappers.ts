@@ -723,6 +723,12 @@ export const ManagedClusterAgentPoolProfileProperties: msRest.CompositeMapper = 
           name: "Boolean"
         }
       },
+      nodePublicIPPrefixID: {
+        serializedName: "nodePublicIPPrefixID",
+        type: {
+          name: "String"
+        }
+      },
       scaleSetPriority: {
         serializedName: "scaleSetPriority",
         defaultValue: 'Regular',
@@ -969,6 +975,12 @@ export const AgentPool: msRest.CompositeMapper = {
         serializedName: "properties.enableNodePublicIP",
         type: {
           name: "Boolean"
+        }
+      },
+      nodePublicIPPrefixID: {
+        serializedName: "properties.nodePublicIPPrefixID",
+        type: {
+          name: "String"
         }
       },
       scaleSetPriority: {
@@ -1753,6 +1765,12 @@ export const ManagedClusterPodIdentityProfile: msRest.CompositeMapper = {
           name: "Boolean"
         }
       },
+      allowNetworkPluginKubenet: {
+        serializedName: "allowNetworkPluginKubenet",
+        type: {
+          name: "Boolean"
+        }
+      },
       userAssignedIdentities: {
         serializedName: "userAssignedIdentities",
         type: {
@@ -2140,6 +2158,12 @@ export const ManagedCluster: msRest.CompositeMapper = {
       },
       dnsPrefix: {
         serializedName: "properties.dnsPrefix",
+        type: {
+          name: "String"
+        }
+      },
+      fqdnSubdomain: {
+        serializedName: "properties.fqdnSubdomain",
         type: {
           name: "String"
         }

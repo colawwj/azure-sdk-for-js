@@ -555,6 +555,10 @@ export interface ManagedClusterAgentPoolProfileProperties {
    */
   enableNodePublicIP?: boolean;
   /**
+   * Public IP Prefix ID. VM nodes use IPs assigned from this Public IP Prefix.
+   */
+  nodePublicIPPrefixID?: string;
+  /**
    * ScaleSetPriority to be used to specify virtual machine scale set priority. Default to regular.
    * Possible values include: 'Spot', 'Regular'. Default value: 'Regular'.
    */
@@ -750,6 +754,10 @@ export interface AgentPool extends SubResource {
    * Enable public IP for nodes
    */
   enableNodePublicIP?: boolean;
+  /**
+   * Public IP Prefix ID. VM nodes use IPs assigned from this Public IP Prefix.
+   */
+  nodePublicIPPrefixID?: string;
   /**
    * ScaleSetPriority to be used to specify virtual machine scale set priority. Default to regular.
    * Possible values include: 'Spot', 'Regular'. Default value: 'Regular'.
@@ -1204,6 +1212,10 @@ export interface ManagedClusterPodIdentityProfile {
    */
   enabled?: boolean;
   /**
+   * Customer consent for enabling AAD pod identity addon in cluster using Kubenet network plugin.
+   */
+  allowNetworkPluginKubenet?: boolean;
+  /**
    * User assigned pod identity settings.
    */
   userAssignedIdentities?: ManagedClusterPodIdentity[];
@@ -1396,6 +1408,10 @@ export interface ManagedCluster extends Resource {
    * DNS prefix specified when creating the managed cluster.
    */
   dnsPrefix?: string;
+  /**
+   * FQDN subdomain specified when creating private cluster with custom private dns zone.
+   */
+  fqdnSubdomain?: string;
   /**
    * FQDN for the master pool.
    * **NOTE: This property will not be serialized. It can only be populated by the server.**
